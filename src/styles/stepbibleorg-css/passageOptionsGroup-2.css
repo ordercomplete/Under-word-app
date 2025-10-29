@@ -1,0 +1,346 @@
+.PassageOptionsGroup:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.PassageOptionsGroup [dir="rtl"] a {
+  text-align: right;
+}
+
+.PassageOptionsGroup [dir="rtl"] a > span:first-child {
+  margin-right: 20px;
+}
+
+.PassageOptionsGroup .closeColumn.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.PassageOptionsGroup .closeColumn.disabled:hover,
+.PassageOptionsGroup .closeColumn.disabled:active {
+  background-position: inherit;
+}
+
+.PassageOptionsGroup .btn-group.pull-right {
+  z-index: 30;
+}
+
+.PassageOptionsGroup button span {
+  line-height: 1;
+}
+
+.PassageOptionsGroup button span.smallerFont {
+  font-size: 8px;
+  line-height: 12px;
+}
+
+.PassageOptionsGroup button span.largerFont {
+  font-weight: bold;
+}
+
+.PassageOptionsGroup a {
+  color: var(--clrText);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 28px;
+  padding: 5px 0 5px 15px;
+  position: relative;
+  top: 1px;
+}
+
+.PassageOptionsGroup a:hover,
+.PassageOptionsGroup a:focus {
+  text-decoration: none;
+  background-color: var(--clr2ndHover);
+  color: black;
+}
+
+.PassageOptionsGroup .dropdown-menu {
+  min-width: 180px;
+  padding-top: 0;
+}
+
+.PassageOptionsGroup .dropdown-menu h2 {
+  font-size: 14px;
+  margin: 10px 8px 4px;
+}
+
+.PassageOptionsGroup .dropdown-menu a {
+  display: block;
+}
+
+.PassageOptionsGroup .dropdown-menu a,
+.PassageOptionsGroup .dropdown-menu .noHighlight {
+  line-height: 20px;
+  padding-left: 12px;
+}
+
+.PassageOptionsGroup .dropdown-menu .noHighlight {
+  color: #5d5d5d;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.PassageOptionsGroup .dropdown-menu ul {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.PassageOptionsGroup .dropdown-menu li {
+  font-size: 14px;
+  padding-right: 5px;
+}
+
+.PassageOptionsGroup .dropdown-menu li:hover {
+  background-color: var(--clr2ndHover);
+}
+
+.PassageOptionsGroup .dropdown-menu li.contextContainer {
+  min-width: 220px;
+}
+
+.PassageOptionsGroup .dropdown-menu li.contextContainer button {
+  padding: 5px 7px;
+}
+
+.PassageOptionsGroup .dropdown-menu li.contextContainer:hover {
+  background-color: inherit;
+}
+
+.PassageOptionsGroup .dropdown-menu li.noHighlight:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.PassageOptionsGroup .dropdown-menu li.noHighlight:hover {
+  background-color: inherit;
+}
+
+.PassageOptionsGroup .dropdown-share + .dropdown-menu > ul > li {
+  float: left;
+  padding: 10px 0 0 10px;
+}
+
+.PassageOptionsGroup .dropdown-share + .dropdown-menu > ul > li:hover {
+  background-color: transparent;
+}
+
+.PassageOptionsGroup .nested-btn-group {
+  float: left;
+  margin-left: -1px;
+}
+
+.PassageOptionsGroup .passageOptions,
+.PassageOptionsGroup .displayModes {
+  direction: ltr;
+  text-align: left;
+}
+
+.PassageOptionsGroup .passageOptions .panel,
+.PassageOptionsGroup .displayModes .panel {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.PassageOptionsGroup .passageOptions .panel a,
+.PassageOptionsGroup .displayModes .panel a {
+  cursor: pointer;
+}
+
+.PassageOptionsGroup .passageOptions .panel a:hover,
+.PassageOptionsGroup .displayModes .panel a:hover {
+  background-color: var(--clr2ndHover);
+  color: var(--clrText);
+}
+
+.PassageOptionsGroup .passageOptions .panel .caret,
+.PassageOptionsGroup .displayModes .panel .caret {
+  float: right;
+  margin-right: 15px;
+  margin-top: 8px;
+}
+
+.PassageOptionsGroup .passageOptions .panel .panel-body,
+.PassageOptionsGroup .displayModes .panel .panel-body {
+  padding: 0;
+}
+
+.PassageOptionsGroup .passageOptions .panel .panel-body a,
+.PassageOptionsGroup .displayModes .panel .panel-body a {
+  padding-left: 24px;
+}
+
+.PassageOptionsGroup .argSummary {
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.PassageOptionsGroup .blockquote-reverse footer:before,
+.PassageOptionsGroup blockquote.pull-right footer:before,
+.PassageOptionsGroup .blockquote-reverse small:before,
+.PassageOptionsGroup blockquote.pull-right small:before,
+.PassageOptionsGroup .blockquote-reverse .small:before,
+.PassageOptionsGroup blockquote.pull-right .small:before {
+  content: "";
+}
+
+.PassageOptionsGroup .blockquote-reverse footer:after,
+.PassageOptionsGroup blockquote.pull-right footer:after,
+.PassageOptionsGroup .blockquote-reverse small:after,
+.PassageOptionsGroup blockquote.pull-right small:after,
+.PassageOptionsGroup .blockquote-reverse .small:after,
+.PassageOptionsGroup blockquote.pull-right .small:after {
+  content: "\00A0 \2014";
+}
+
+.PassageOptionsGroup .dropdown-menu.pull-right {
+  right: 0;
+  left: auto;
+}
+
+.PassageOptionsGroup .media > .pull-right {
+  margin-left: 10px;
+}
+
+.PassageOptionsGroup .btn-group.pull-right {
+  z-index: 30;
+}
+
+.PassageOptionsGroup .nextPreviousChapterGroup .previousChapter,
+.PassageOptionsGroup .nextPreviousChapterGroup .nextChapter {
+  display: none;
+  position: absolute;
+  top: auto;
+  bottom: 35px;
+  z-index: 1;
+  padding: 12px;
+  background-color: white;
+  background-color: var(--clrBackground);
+  border-radius: 100%;
+  box-shadow: 0 0 5px;
+}
+
+.PassageOptionsGroup .nextPreviousChapterGroup .previousChapter .glyphicon,
+.PassageOptionsGroup .nextPreviousChapterGroup .nextChapter .glyphicon {
+  top: 0;
+}
+
+.PassageOptionsGroup .nextPreviousChapterGroup .previousChapter {
+  left: 20px;
+}
+
+.PassageOptionsGroup .nextPreviousChapterGroup .nextChapter {
+  right: 20px;
+}
+
+.PassageOptionsGroup .glyphicon-arrow-left:before {
+  content: "\e091";
+}
+
+.PassageOptionsGroup .glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: "Glyphicons Halflings";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.PassageOptionsGroup .help .glyphicon svg {
+  fill: var(--clrText);
+}
+
+.PassageOptionsGroup
+  .select2-results
+  li.select2-highlighted.select-other
+  .glyphicon {
+  font-size: 10px;
+  top: -1px;
+}
+
+.PassageOptionsGroup li.select-other .glyphicon,
+.PassageOptionsGroup span.select-other .glyphicon {
+  font-size: 10px;
+  top: -1px;
+}
+
+.PassageOptionsGroup h4.lexicalGrouping .glyphicon {
+  margin-right: 10px;
+}
+
+.PassageOptionsGroup #history .openBookmark .glyphicon {
+  top: 0;
+}
+
+.PassageOptionsGroup .qtip-titlebar button,
+.PassageOptionsGroup .qtip-titlebar .glyphicon {
+  cursor: pointer;
+}
+
+.PassageOptionsGroup #history .openBookmark .glyphicon {
+  top: 0;
+}
+
+.PassageOptionsGroup #history .glyphicon {
+  font-size: 1em;
+  line-height: 1em;
+  padding: 0;
+}
+
+.PassageOptionsGroup #history .glyphicon:hover {
+  color: #111;
+  cursor: pointer;
+}
+
+.PassageOptionsGroup .help .glyphicon.active {
+  color: #17758f;
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-open {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-pushpin {
+  transition: transform 100ms;
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-pushpin:hover {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-pushpin-pinned {
+  transition: transform 100ms;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-pushpin-pinned:before {
+  content: "\e146";
+}
+
+.PassageOptionsGroup #history .glyphicon.glyphicon-pushpin-pinned:hover {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+}

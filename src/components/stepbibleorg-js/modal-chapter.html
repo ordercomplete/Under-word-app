@@ -1,0 +1,361 @@
+<div class="modal-dialog">
+  <div
+    class="modal-content stepModalFgBg"
+    style="
+      width: 95%;
+      max-width: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      -webkit-overflow-scrolling: touch;
+    "
+  >
+    <div class="modal-header">
+      <button
+        id="pssgModalBackButton"
+        type="button"
+        style="border: none; float: left; font-size: 16px; display: block"
+        onclick="step.passageSelect.σMF()"
+      >
+        <i class="glyphicon glyphicon-arrow-left"></i></button
+      ><span class="pull-right"
+        ><button
+          type="button"
+          style="
+            background: var(--clrBackground);
+            color: var(--clrText);
+            opacity: 0.9;
+          "
+          class="close"
+          data-dismiss="modal"
+          onclick='step.util.closeModal("passageSelectionModal")'
+        >
+          X</button
+        ><span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+        <div id="modalonoffswitch" class="pull-right modalonoffswitch">
+          <span id="select_verse_number">&nbsp;<b>Select verse number</b></span>
+          <div class="onoffswitch2 append pull-right">
+            <input
+              type="checkbox"
+              name="onoffswitch2"
+              class="onoffswitch2-checkbox"
+              id="selectverseonoffswitch"
+              onchange="addSelectVerse()"
+            /><label class="onoffswitch2-label" for="selectverseonoffswitch"
+              ><span class="onoffswitch2-inner"></span
+              ><span class="onoffswitch2-switch"></span
+            ></label>
+          </div></div></span
+      ><br />
+      <div
+        id="displayLocForm"
+        class="form-group"
+        style="clear: both; float: right; font-size: 16px"
+      >
+        <label for="displayLocation">Display new passage in:</label
+        ><select class="stepFgBg" type="text" id="displayLocation">
+          <option value="replace">Current panel</option>
+          <option class="hidden-xs" value="new">New panel</option>
+          <option id="append_to_panel" value="append">
+            Append to current passage
+          </option>
+        </select>
+      </div>
+      <br />
+    </div>
+    <textarea
+      id="enterYourPassage"
+      rows="1"
+      class="stepFgBg"
+      style="
+        font-size: 13px;
+        width: 95%;
+        margin-left: 5px;
+        height: 24px;
+        display: none;
+      "
+      title="Type in your passage"
+      placeholder="Optionally type in passage, e.g.: 'Rev 21' or 'John 3:16, Rom 3:23'"
+    ></textarea>
+    <div id="bookchaptermodalbody" class="modal-body">
+      <div class="header"><h4>Please select a chapter</h4></div>
+      <div style="overflow-y: auto">
+        <table>
+          <colgroup>
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+            <col span="1" style="width: 10%" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.1', '1');">1</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.2', '2');">2</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.3', '3');">3</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.4', '4');">4</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.5', '5');">5</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.6', '6');">6</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.7', '7');">7</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.8', '8');">8</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.9', '9');">9</a>
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.10', '10');"
+                  >10</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.11', '11');"
+                  >11</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.12', '12');"
+                  >12</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.13', '13');"
+                  >13</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.14', '14');"
+                  >14</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.15', '15');"
+                  >15</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.16', '16');"
+                  >16</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.17', '17');"
+                  >17</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.18', '18');"
+                  >18</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.19', '19');"
+                  >19</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.20', '20');"
+                  >20</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.21', '21');"
+                  >21</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.22', '22');"
+                  >22</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.23', '23');"
+                  >23</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.24', '24');"
+                  >24</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.25', '25');"
+                  >25</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.26', '26');"
+                  >26</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.27', '27');"
+                  >27</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.28', '28');"
+                  >28</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.29', '29');"
+                  >29</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.30', '30');"
+                  >30</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.31', '31');"
+                  >31</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.32', '32');"
+                  >32</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.33', '33');"
+                  >33</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.34', '34');"
+                  >34</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.35', '35');"
+                  >35</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.36', '36');"
+                  >36</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.37', '37');"
+                  >37</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.38', '38');"
+                  >38</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.39', '39');"
+                  >39</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.40', '40');"
+                  >40</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.41', '41');"
+                  >41</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.42', '42');"
+                  >42</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.43', '43');"
+                  >43</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.44', '44');"
+                  >44</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.45', '45');"
+                  >45</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.46', '46');"
+                  >46</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.47', '47');"
+                  >47</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.48', '48');"
+                  >48</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.49', '49');"
+                  >49</a
+                >
+              </td>
+              <td>
+                <a href="javascript:step.passageSelect.σME('Gen.50', '50');"
+                  >50</a
+                >
+              </td>
+            </tr>
+            <tr></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <br /><span id="userEnterPassageError" style="color: red"></span>
+    </div>
+    <script>
+      $(document).ready(function () {
+        step.passageSelect.σpA();
+      });
+      function addSelectVerse() {
+        if (document.getElementById("selectverseonoffswitch").checked) {
+          $("#select_verse_number").addClass("checked");
+        } else {
+          $("#select_verse_number").removeClass("checked");
+        }
+      }
+    </script>
+  </div>
+</div>

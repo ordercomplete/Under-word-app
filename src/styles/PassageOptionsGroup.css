@@ -1,0 +1,10 @@
+.passage-options {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f5f5d5;
+}
+
+.option-item {
+  cursor: pointer;
+}

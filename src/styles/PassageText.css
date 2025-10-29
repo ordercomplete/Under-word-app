@@ -1,0 +1,10 @@
+.passage-text {
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .passage-text {
+    margin-right: 0;
+  }
+}

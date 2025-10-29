@@ -1,0 +1,67 @@
+.dropdown-menu {
+  background-color: #f5f5d5; /* Бежевий фон для відповідності темі */
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  min-width: 180px; /* Зменшено з 234px для адаптивності */
+  width: auto; /* Дозволяє меню адаптуватися до вмісту */
+  padding: 0.5rem 0;
+}
+
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-item {
+  color: #333;
+  padding: 0.25rem 1.25rem;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #262626;
+  background-color: #e7e7e7;
+}
+
+.dropdown-item.active,
+.dropdown-item.active:hover,
+.dropdown-item.active:focus {
+  color: #fff;
+  background-color: #0d6efd; /* Bootstrap 5 primary color */
+}
+
+.dropdown-item.disabled,
+.dropdown-item.disabled:hover,
+.dropdown-item.disabled:focus {
+  color: #999;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+@media (max-width: 767px) {
+  .dropdown-menu {
+    position: relative;
+    box-shadow: none;
+    width: 100%; /* Повна ширина на мобільних */
+    max-width: 300px; /* Обмеження максимальної ширини */
+    transform: translateX(0); /* Без зміщення на мобільних */
+  }
+}
+
+@media (min-width: 768px) {
+  .dropdown-menu-end {
+    transform: translateX(-90%); /* Зміщення ліворуч, щоб уникнути обрізання */
+  }
+}
+
+.hidden-touch {
+  display: block;
+}
+
+@media (pointer: coarse) {
+  .hidden-touch {
+    display: none; /* Приховати на сенсорних пристроях */
+  }
+}

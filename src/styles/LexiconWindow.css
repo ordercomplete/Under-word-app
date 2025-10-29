@@ -1,0 +1,17 @@
+.lexicon-window {
+  width: 300px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.lexicon-panel {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .lexicon-window {
+    width: 100%;
+  }
+}

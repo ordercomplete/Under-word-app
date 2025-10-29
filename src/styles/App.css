@@ -1,0 +1,18 @@
+.app-container {
+  /* background-image: url("../papyrus-bg.jpg"); Оновлений шлях */
+  background-image: url("/public/papyrus-bg.jpg");
+  background-color: #f5f5d5; /* Запасний бежевий фон */
+  background-size: cover;
+  min-height: 100vh;
+  font-family: "Helvetica", sans-serif;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+}

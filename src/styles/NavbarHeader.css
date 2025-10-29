@@ -1,0 +1,150 @@
+/* .navbar {
+  background-color: #f5f5d5;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.navbar-items {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-item {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar-items {
+    flex-wrap: wrap;
+  }
+} */
+
+/* ------------------------------------------------------------------------ */
+/* .navbar-custom {
+  background-color: #f5f5d5;
+  border-bottom: 1px solid #ccc;
+  min-height: 50px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #333 !important;
+}
+
+.navbar-brand:hover {
+  color: #555 !important;
+}
+
+.nav-link {
+  color: #777 !important;
+  padding: 10px 15px !important;
+}
+
+.nav-link:hover {
+  color: #333 !important;
+  background-color: #e7e7e7 !important;
+}
+
+.font-icon {
+  color: white;
+  background: #5e5e5e;
+  padding: 2px 6px;
+  font-size: 18px;
+}
+
+.grammar-icon {
+  background: linear-gradient(45deg, #5e5e5e, #777); 
+  color: white;
+  padding: 2px 6px;
+  font-size: 18px;
+}
+
+@media (max-width: 767px) {
+  .navbar-collapse {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #c8c8c8;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    min-width: 270px;
+  }
+
+  .nav-link {
+    color: #1d1d1d !important;
+    padding: 8px 20px !important;
+  }
+
+  .nav-link:hover {
+    background-color: #eaeaea !important;
+  }
+} */
+
+/* ----------------------------------------------------------------------------- */
+
+.navbar-custom {
+  background-color: #f5f5d5;
+  border-bottom: 1px solid #ccc;
+  min-height: 50px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #333 !important;
+}
+
+.navbar-brand:hover {
+  color: #555 !important;
+}
+
+.nav-link {
+  color: #777 !important;
+  padding: 10px 15px !important;
+}
+
+.nav-link:hover {
+  color: #333 !important;
+  background-color: #e7e7e7 !important;
+}
+
+.font-icon {
+  color: white;
+  background: #5e5e5e;
+  padding: 2px 6px;
+  font-size: 18px;
+}
+
+.grammar-icon {
+  background: linear-gradient(45deg, #5e5e5e, #777);
+  color: white;
+  padding: 2px 6px;
+  font-size: 18px;
+}
+
+@media (max-width: 767px) {
+  .navbar-collapse {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #c8c8c8;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    min-width: 270px;
+  }
+
+  .nav-link {
+    color: #1d1d1d !important;
+    padding: 8px 20px !important;
+  }
+
+  .nav-link:hover {
+    background-color: #eaeaea !important;
+  }
+}

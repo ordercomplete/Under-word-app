@@ -1,0 +1,1293 @@
+<div
+  class="modal-content stepModalFgBg"
+  style="
+    width: 95%;
+    max-width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-overflow-scrolling: touch;
+  "
+>
+  <script>
+    $(document).ready(function () {
+      step.searchSelect.σsA(0, "undefined");
+    });
+    function showPreviousSearch() {
+      var element = document.getElementById("showprevioussearchonoff");
+      if (element && element.checked) {
+        step.searchSelect.σsvH = true;
+        $("#listofprevioussearchs").show();
+        $("#searchAndOrNot").show();
+        if (step.searchSelect.σsvE.length == 0) {
+          if (
+            step.searchSelect.σsvI ||
+            step.searchSelect.σsvJ ||
+            step.searchSelect.σsvF.indexOf("") > -1
+          )
+            $("#updateButton").show();
+        }
+      } else {
+        step.searchSelect.σsvH = false;
+        $("#listofprevioussearchs").hide();
+        $("#searchAndOrNot").hide();
+        $("#updateButton").hide();
+        $("#searchResultssubjectWarn").hide();
+        $("#searchResultsmeaningsWarn").hide();
+      }
+    }
+  </script>
+  <div class="modal-header">
+    <button
+      id="srchModalBackButton"
+      type="button"
+      style="border: none; float: left; font-size: 16px; display: block"
+      onclick='step.searchSelect.σMF("undefined")'
+      title="Return to search without updating search range."
+    >
+      <i class="glyphicon glyphicon-arrow-left"></i></button
+    ><span class="pull-right"
+      ><button
+        type="button"
+        style="
+          background: var(--clrBackground);
+          color: var(--clrText);
+          opacity: 0.9;
+        "
+        class="close"
+        data-dismiss="modal"
+        onclick='step.util.closeModal("searchSelectionModal")'
+      >
+        X</button
+      ><span class="pull-right advanced_search_elements"
+        >&nbsp;&nbsp;&nbsp;&nbsp;</span
+      ><span class="dropdown pull-right advanced_search_elements"
+        ><a
+          class="dropdown-toggle showSettings"
+          data-toggle="dropdown"
+          title="Options"
+          ><i
+            class="glyphicon glyphicon-cog"
+            style="
+              font-size: 14px;
+              background-color: var(--clrBackground);
+              color: var(--clrText);
+            "
+          ></i
+        ></a>
+        <div
+          id="srchOptions"
+          class="passageOptionsGroup stepModalFgBg dropdown-menu pull-right"
+          style="opacity: 1"
+          role="menu"
+        >
+          <h5>Show in results</h5>
+          <ul
+            class="displayModes"
+            style="padding-left: 0px"
+            role="presentation"
+          >
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnsstrong_number"
+                >Strong number<span
+                  id="srchOptnsCheckstrong_number"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: hidden"
+                ></span
+              ></a>
+            </li>
+            <br />
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnstransliteration"
+                >Transliteration<span
+                  id="srchOptnsChecktransliteration"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: visible"
+                ></span
+              ></a>
+            </li>
+            <br />
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnsoriginal_language"
+                >Original language<span
+                  id="srchOptnsCheckoriginal_language"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: hidden"
+                ></span
+              ></a>
+            </li>
+            <br />
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnsfrequency"
+                >Frequency<span
+                  id="srchOptnsCheckfrequency"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: visible"
+                ></span
+              ></a>
+            </li>
+            <br />
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnsfrequency_details"
+                >Frequency details<span
+                  id="srchOptnsCheckfrequency_details"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: hidden"
+                ></span
+              ></a>
+            </li>
+            <br />
+            <li
+              class="stepModalFgBg passageOptionsGroup dropdown-menu passage"
+              style="
+                display: block;
+                position: initial;
+                opacity: 1;
+                border: 0px;
+                padding: 0px;
+                box-shadow: none;
+              "
+            >
+              <a
+                data-value="STRONG"
+                data-selected="true"
+                class="searchOptions"
+                id="srchOptnsimmediate_lookup"
+                >Immediate lookup<span
+                  id="srchOptnsCheckimmediate_lookup"
+                  class="glyphicon glyphicon-ok pull-right"
+                  style="visibility: hidden"
+                ></span
+              ></a>
+            </li>
+            <br />
+          </ul></div></span
+      ><span class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span
+      ><span class="pull-right advanced_search_elements"
+        >&nbsp;&nbsp;&nbsp;&nbsp;</span
+      ><span
+        id="displayLocForm"
+        class="form-group pull-right hidden-xs advanced_search_elements"
+        style="font-size: 16px"
+        ><label for="displayLocation">Display result in:</label
+        ><select type="text" id="displayLocation" class="stepFgBg">
+          <option value="replace">Current panel</option>
+          <option class="hidden-xs" value="new">New panel</option>
+        </select></span
+      ></span
+    ><br />
+  </div>
+  <div
+    id="searchmodalbody"
+    class="modal-body scrollPart"
+    style="padding-top: 0px"
+  >
+    <div id="searchHdrTable">
+      <div class="header">
+        <h4>Click to select search range:</h4>
+        <span style="float: right"
+          >Buttons with blue background color are selected.</span
+        >
+      </div>
+      <span id="updateFeedback">All books are not selected.</span>
+      <div id="search_range_table">
+        <button
+          id="ot_hdr"
+          type="button"
+          class="stepButton"
+          style="width: 97%; font-size: 16px"
+          title="Click to select/unselect Всі Старий Заповіт Книга"
+          onclick="step.searchSelect.σsS(this.id)"
+        >
+          <i>Старий Заповіт:</i>
+        </button>
+        <div id="ot_table">
+          <table>
+            <colgroup>
+              <col span="1" style="width: 145px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+            </colgroup>
+            <tbody>
+              <tr style="height: 30px">
+                <td rowspan="1">
+                  <button
+                    id="ot_tableg0"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 29px"
+                    title="Click to select/unselect Всі Book of Moses Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Book of Moses:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg0b0"
+                    title="Click to select/unselect Буття"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Буття
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg0b1"
+                    title="Click to select/unselect Вихід"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Вихід
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg0b2"
+                    title="Click to select/unselect Левит"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Левит
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg0b3"
+                    title="Click to select/unselect Числа"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Числа
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg0b4"
+                    title="Click to select/unselect Повторення Закону"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Повтор
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="2">
+                  <button
+                    id="ot_tableg1"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 58px"
+                    title="Click to select/unselect Всі Книги історичні Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Книги історичні:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b0"
+                    title="Click to select/unselect Ісус Навин"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    ІсусНа
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b1"
+                    title="Click to select/unselect Суддів"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Суддів
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b2"
+                    title="Click to select/unselect Рут"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Рут
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b3"
+                    title="Click to select/unselect 1. Самуїла"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Саму
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b4"
+                    title="Click to select/unselect 2. Самуїла"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Саму
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b5"
+                    title="Click to select/unselect 1. Царів"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Царі
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td>
+                  <button
+                    id="ot_tableg1b6"
+                    title="Click to select/unselect 2. Царів"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Царі
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b7"
+                    title="Click to select/unselect 1. Хроніки"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Хрон
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b8"
+                    title="Click to select/unselect 2. Хроніки"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Хрон
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b9"
+                    title="Click to select/unselect Ездри"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Ездри
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b10"
+                    title="Click to select/unselect Неемії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Неемії
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg1b11"
+                    title="Click to select/unselect Eстер"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Eстер
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="1">
+                  <button
+                    id="ot_tableg2"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 29px"
+                    title="Click to select/unselect Всі Книги поетичні Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Книги поетичні:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg2b0"
+                    title="Click to select/unselect Йова"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Йова
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg2b1"
+                    title="Click to select/unselect Псалмів"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Псалмі
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg2b2"
+                    title="Click to select/unselect Приповістей"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Припов
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg2b3"
+                    title="Click to select/unselect Екклезіяст"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Екклез
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg2b4"
+                    title="Click to select/unselect Пісня над піснями"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Піснян
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="1">
+                  <button
+                    id="ot_tableg3"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 29px"
+                    title="Click to select/unselect Всі Major Prophets Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Major Prophets:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg3b0"
+                    title="Click to select/unselect Ісаї"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Ісаї
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg3b1"
+                    title="Click to select/unselect Єремії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Єремії
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg3b2"
+                    title="Click to select/unselect Плач Єремії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    ПлачЄр
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg3b3"
+                    title="Click to select/unselect Єзекіїля"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Єзекії
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg3b4"
+                    title="Click to select/unselect Даниїла"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Даниїл
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="2">
+                  <button
+                    id="ot_tableg4"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 58px"
+                    title="Click to select/unselect Всі Minor Prophets Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Minor Prophets:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b0"
+                    title="Click to select/unselect Осії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Осії
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b1"
+                    title="Click to select/unselect Йоіла"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Йоіла
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b2"
+                    title="Click to select/unselect Aмоса"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Aмоса
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b3"
+                    title="Click to select/unselect Овдія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Овдія
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b4"
+                    title="Click to select/unselect Йони"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Йони
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b5"
+                    title="Click to select/unselect Mихея"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Mихея
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td>
+                  <button
+                    id="ot_tableg4b6"
+                    title="Click to select/unselect Наума"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Наума
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b7"
+                    title="Click to select/unselect Авакума"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Авакум
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b8"
+                    title="Click to select/unselect Софонії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Софоні
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b9"
+                    title="Click to select/unselect Огія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Огія
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b10"
+                    title="Click to select/unselect Захарія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Захарі
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="ot_tableg4b11"
+                    title="Click to select/unselect Малахії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Малахі
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          id="nt_hdr"
+          type="button"
+          class="stepButton"
+          style="width: 97%; font-size: 16px"
+          title="Click to select/unselect Всі Новий Заповіт Книга"
+          onclick="step.searchSelect.σsS(this.id)"
+        >
+          <i>Новий Заповіт:</i>
+        </button>
+        <div id="nt_table">
+          <table>
+            <colgroup>
+              <col span="1" style="width: 145px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+              <col span="1" style="width: 74px" />
+            </colgroup>
+            <tbody>
+              <tr style="height: 30px">
+                <td rowspan="1">
+                  <button
+                    id="nt_tableg0"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 29px"
+                    title="Click to select/unselect Всі Євангелія і Послання Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Євангелія і Послання:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg0b0"
+                    title="Click to select/unselect Матвія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Матвія
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg0b1"
+                    title="Click to select/unselect Марка"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Марка
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg0b2"
+                    title="Click to select/unselect Луки"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Луки
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg0b3"
+                    title="Click to select/unselect Івана"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Івана
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg0b4"
+                    title="Click to select/unselect Дії"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Дії
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="3">
+                  <button
+                    id="nt_tableg1"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 87px"
+                    title="Click to select/unselect Всі Pauline Epistles Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Pauline Epistles:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b0"
+                    title="Click to select/unselect Римлян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Римлян
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b1"
+                    title="Click to select/unselect 1. Коринтян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Кори
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b2"
+                    title="Click to select/unselect 2. Коринтян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Кори
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b3"
+                    title="Click to select/unselect Галатів"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Галаті
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b4"
+                    title="Click to select/unselect Ефесян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Ефесян
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b5"
+                    title="Click to select/unselect Филип'ян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Филип'
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td>
+                  <button
+                    id="nt_tableg1b6"
+                    title="Click to select/unselect Колосян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Колося
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b7"
+                    title="Click to select/unselect 1. Солунян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Солу
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b8"
+                    title="Click to select/unselect 2. Солунян"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Солу
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b9"
+                    title="Click to select/unselect 1. Тимофія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Тимо
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b10"
+                    title="Click to select/unselect 2. Тимофія"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Тимо
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg1b11"
+                    title="Click to select/unselect Тита"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Тита
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td>
+                  <button
+                    id="nt_tableg1b12"
+                    title="Click to select/unselect Филимона"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Филимо
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td rowspan="2">
+                  <button
+                    id="nt_tableg2"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 100%; min-height: 58px"
+                    title="Click to select/unselect Всі Other NT Книга"
+                    onclick="step.searchSelect.σsT(this.id)"
+                  >
+                    <i>Other NT:</i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b0"
+                    title="Click to select/unselect Євреїв"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Євреїв
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b1"
+                    title="Click to select/unselect Якова"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Якова
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b2"
+                    title="Click to select/unselect 1. Петра"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Петр
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b3"
+                    title="Click to select/unselect 2. Петра"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Петр
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b4"
+                    title="Click to select/unselect 1. Івана"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    1.Іван
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b5"
+                    title="Click to select/unselect 2. Івана"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    2.Іван
+                  </button>
+                </td>
+              </tr>
+              <tr style="height: 30px">
+                <td>
+                  <button
+                    id="nt_tableg2b6"
+                    title="Click to select/unselect 3. Івана"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    3.Іван
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b7"
+                    title="Click to select/unselect Юди"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Юди
+                  </button>
+                </td>
+                <td>
+                  <button
+                    id="nt_tableg2b8"
+                    title="Click to select/unselect Об'явлення"
+                    type="button"
+                    class="stepButton"
+                    style="font-size: 12px; width: 95%; height: 27px"
+                    onclick="step.searchSelect.σsU(this.id)"
+                  >
+                    Об'явл
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 id="other_books_hdr"></h4>
+        <div id="ob_table"></div>
+      </div>
+    </div>
+    <br />
+    <div
+      id="previousSearch"
+      class="advanced_search_elements"
+      style="display: none"
+    ></div>
+  </div>
+  <div class="footer">
+    <textarea
+      id="enterRange"
+      rows="1"
+      class="stepFgBg"
+      style="
+        font-size: 13px;
+        width: 95%;
+        margin-left: 5;
+        resize: none;
+        height: 24px;
+      "
+      placeholder="Optionally"
+      type=""
+      in=""
+      search=""
+      range,=""
+      e.g.:=""
+      psa.1-15=""
+    ></textarea
+    ><br /><span id="userEnterRangeError" style="color: red"></span><br /><span
+      id="userEnterRangeError"
+      style="color: red"
+    ></span
+    ><br /><span id="userEnterRangeError" style="color: red"></span><br /><span
+      id="userEnterRangeError"
+      style="color: red"
+    ></span
+    ><br /><span id="userEnterRangeError" style="color: red"></span><br /><span
+      id="userEnterRangeError"
+      style="color: red"
+    ></span
+    ><br /><span id="userEnterRangeError" style="color: red"></span><br /><span
+      id="searchSelectError"
+    ></span
+    ><button
+      id="updateRangeButton"
+      style="float: right; display: none"
+      type="button"
+      class="stepButton"
+      onclick='step.searchSelect._updateRange("undefined")'
+    >
+      Update search range</button
+    ><button
+      id="updateButton"
+      style="display: none; float: right"
+      type="button"
+      class="stepButton"
+      onclick="step.searchSelect.σsW()"
+    >
+      Update previous search</button
+    ><br /><br /><br />
+  </div>
+</div>

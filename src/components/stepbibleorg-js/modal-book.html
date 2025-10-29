@@ -1,0 +1,552 @@
+<div
+  class="modal-content stepModalFgBg"
+  style="
+    width: 95%;
+    max-width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-overflow-scrolling: touch;
+  "
+>
+  <div class="modal-header">
+    <button
+      id="pssgModalBackButton"
+      type="button"
+      style="border: none; float: left; font-size: 16px; display: none"
+      onclick="step.passageSelect.σMF()"
+    >
+      <i class="glyphicon glyphicon-arrow-left"></i></button
+    ><span class="pull-right"
+      ><button
+        type="button"
+        style="
+          background: var(--clrBackground);
+          color: var(--clrText);
+          opacity: 0.9;
+        "
+        class="close"
+        data-dismiss="modal"
+        onclick='step.util.closeModal("passageSelectionModal")'
+      >
+        X</button
+      ><span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+      <div id="modalonoffswitch" class="pull-right modalonoffswitch">
+        <span id="select_verse_number">&nbsp;<b>Select verse number</b></span>
+        <div class="onoffswitch2 append pull-right">
+          <input
+            type="checkbox"
+            name="onoffswitch2"
+            class="onoffswitch2-checkbox"
+            id="selectverseonoffswitch"
+            onchange="addSelectVerse()"
+          /><label class="onoffswitch2-label" for="selectverseonoffswitch"
+            ><span class="onoffswitch2-inner"></span
+            ><span class="onoffswitch2-switch"></span
+          ></label>
+        </div></div></span
+    ><br />
+    <div
+      id="displayLocForm"
+      class="form-group"
+      style="clear: both; float: right; font-size: 16px"
+    >
+      <label for="displayLocation">Display new passage in:</label
+      ><select class="stepFgBg" type="text" id="displayLocation">
+        <option value="replace">Current panel</option>
+        <option class="hidden-xs" value="new">New panel</option>
+        <option id="append_to_panel" value="append">
+          Append to current passage
+        </option>
+      </select>
+    </div>
+    <br />
+  </div>
+  <textarea
+    id="enterYourPassage"
+    rows="1"
+    class="stepFgBg"
+    style="
+      font-size: 13px;
+      width: 95%;
+      margin-left: 5;
+      resize: none;
+      height: 24px;
+    "
+    title="Type in your passage"
+    placeholder="Optionally type in passage, e.g.: 'Rev 21' or 'John 3:16, Rom 3:23'"
+  ></textarea>
+  <div id="bookchaptermodalbody" class="modal-body">
+    <div class="header" style="overflow-y: auto">
+      <h4>Please select a book</h4>
+    </div>
+    <span id="ot_header" class="stepFgBg" style="font-size: 18px"
+      ><b>Старий Заповіт</b></span
+    >
+    <div id="ot_table">
+      <table>
+        <colgroup>
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td title="Буття">
+              <a
+                href="javascript:step.passageSelect.σpG('Gen', 'Ukrainian', 'uk', 0,false);"
+                >Буття</a
+              >
+            </td>
+            <td title="Вихід">
+              <a
+                href="javascript:step.passageSelect.σpG('Exod', 'Ukrainian', 'uk', 0,false);"
+                >Вихід</a
+              >
+            </td>
+            <td title="Левит">
+              <a
+                href="javascript:step.passageSelect.σpG('Lev', 'Ukrainian', 'uk', 0,false);"
+                >Левит</a
+              >
+            </td>
+            <td title="Числа">
+              <a
+                href="javascript:step.passageSelect.σpG('Num', 'Ukrainian', 'uk', 0,false);"
+                >Числа</a
+              >
+            </td>
+            <td title="Повторення Закону">
+              <a
+                href="javascript:step.passageSelect.σpG('Deut', 'Ukrainian', 'uk', 0,false);"
+                >Повтор</a
+              >
+            </td>
+            <td title="Ісус Навин">
+              <a
+                href="javascript:step.passageSelect.σpG('Josh', 'Ukrainian', 'uk', 0,false);"
+                >ІсусНа</a
+              >
+            </td>
+            <td title="Суддів">
+              <a
+                href="javascript:step.passageSelect.σpG('Judg', 'Ukrainian', 'uk', 0,false);"
+                >Суддів</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="Рут">
+              <a
+                href="javascript:step.passageSelect.σpG('Ruth', 'Ukrainian', 'uk', 0,false);"
+                >Рут</a
+              >
+            </td>
+            <td title="1. Самуїла">
+              <a
+                href="javascript:step.passageSelect.σpG('1Sam', 'Ukrainian', 'uk', 0,false);"
+                >1.Саму</a
+              >
+            </td>
+            <td title="2. Самуїла">
+              <a
+                href="javascript:step.passageSelect.σpG('2Sam', 'Ukrainian', 'uk', 0,false);"
+                >2.Саму</a
+              >
+            </td>
+            <td title="1. Царів">
+              <a
+                href="javascript:step.passageSelect.σpG('1Kgs', 'Ukrainian', 'uk', 0,false);"
+                >1.Царі</a
+              >
+            </td>
+            <td title="2. Царів">
+              <a
+                href="javascript:step.passageSelect.σpG('2Kgs', 'Ukrainian', 'uk', 0,false);"
+                >2.Царі</a
+              >
+            </td>
+            <td title="1. Хроніки">
+              <a
+                href="javascript:step.passageSelect.σpG('1Chr', 'Ukrainian', 'uk', 0,false);"
+                >1.Хрон</a
+              >
+            </td>
+            <td title="2. Хроніки">
+              <a
+                href="javascript:step.passageSelect.σpG('2Chr', 'Ukrainian', 'uk', 0,false);"
+                >2.Хрон</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="Ездри">
+              <a
+                href="javascript:step.passageSelect.σpG('Ezra', 'Ukrainian', 'uk', 0,false);"
+                >Ездри</a
+              >
+            </td>
+            <td title="Неемії">
+              <a
+                href="javascript:step.passageSelect.σpG('Neh', 'Ukrainian', 'uk', 0,false);"
+                >Неемії</a
+              >
+            </td>
+            <td title="Eстер">
+              <a
+                href="javascript:step.passageSelect.σpG('Esth', 'Ukrainian', 'uk', 0,false);"
+                >Eстер</a
+              >
+            </td>
+            <td title="Йова">
+              <a
+                href="javascript:step.passageSelect.σpG('Job', 'Ukrainian', 'uk', 0,false);"
+                >Йова</a
+              >
+            </td>
+            <td title="Псалмів">
+              <a
+                href="javascript:step.passageSelect.σpG('Ps', 'Ukrainian', 'uk', 0,false);"
+                >Псалмі</a
+              >
+            </td>
+            <td title="Приповістей">
+              <a
+                href="javascript:step.passageSelect.σpG('Prov', 'Ukrainian', 'uk', 0,false);"
+                >Припов</a
+              >
+            </td>
+            <td title="Екклезіяст">
+              <a
+                href="javascript:step.passageSelect.σpG('Eccl', 'Ukrainian', 'uk', 0,false);"
+                >Екклез</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="Пісня над піснями">
+              <a
+                href="javascript:step.passageSelect.σpG('Song', 'Ukrainian', 'uk', 0,false);"
+                >Піснян</a
+              >
+            </td>
+            <td title="Ісаї">
+              <a
+                href="javascript:step.passageSelect.σpG('Isa', 'Ukrainian', 'uk', 0,false);"
+                >Ісаї</a
+              >
+            </td>
+            <td title="Єремії">
+              <a
+                href="javascript:step.passageSelect.σpG('Jer', 'Ukrainian', 'uk', 0,false);"
+                >Єремії</a
+              >
+            </td>
+            <td title="Плач Єремії">
+              <a
+                href="javascript:step.passageSelect.σpG('Lam', 'Ukrainian', 'uk', 0,false);"
+                >ПлачЄр</a
+              >
+            </td>
+            <td title="Єзекіїля">
+              <a
+                href="javascript:step.passageSelect.σpG('Ezek', 'Ukrainian', 'uk', 0,false);"
+                >Єзекії</a
+              >
+            </td>
+            <td title="Даниїла">
+              <a
+                href="javascript:step.passageSelect.σpG('Dan', 'Ukrainian', 'uk', 0,false);"
+                >Даниїл</a
+              >
+            </td>
+            <td title="Осії">
+              <a
+                href="javascript:step.passageSelect.σpG('Hos', 'Ukrainian', 'uk', 0,false);"
+                >Осії</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="Йоіла">
+              <a
+                href="javascript:step.passageSelect.σpG('Joel', 'Ukrainian', 'uk', 0,false);"
+                >Йоіла</a
+              >
+            </td>
+            <td title="Aмоса">
+              <a
+                href="javascript:step.passageSelect.σpG('Amos', 'Ukrainian', 'uk', 0,false);"
+                >Aмоса</a
+              >
+            </td>
+            <td title="Овдія">
+              <a
+                href="javascript:step.passageSelect.σpG('Obad', 'Ukrainian', 'uk', 0,false);"
+                >Овдія</a
+              >
+            </td>
+            <td title="Йони">
+              <a
+                href="javascript:step.passageSelect.σpG('Jonah', 'Ukrainian', 'uk', 0,false);"
+                >Йони</a
+              >
+            </td>
+            <td title="Mихея">
+              <a
+                href="javascript:step.passageSelect.σpG('Mic', 'Ukrainian', 'uk', 0,false);"
+                >Mихея</a
+              >
+            </td>
+            <td title="Наума">
+              <a
+                href="javascript:step.passageSelect.σpG('Nah', 'Ukrainian', 'uk', 0,false);"
+                >Наума</a
+              >
+            </td>
+            <td title="Авакума">
+              <a
+                href="javascript:step.passageSelect.σpG('Hab', 'Ukrainian', 'uk', 0,false);"
+                >Авакум</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="Софонії">
+              <a
+                href="javascript:step.passageSelect.σpG('Zeph', 'Ukrainian', 'uk', 0,false);"
+                >Софоні</a
+              >
+            </td>
+            <td title="Огія">
+              <a
+                href="javascript:step.passageSelect.σpG('Hag', 'Ukrainian', 'uk', 0,false);"
+                >Огія</a
+              >
+            </td>
+            <td title="Захарія">
+              <a
+                href="javascript:step.passageSelect.σpG('Zech', 'Ukrainian', 'uk', 0,false);"
+                >Захарі</a
+              >
+            </td>
+            <td title="Малахії">
+              <a
+                href="javascript:step.passageSelect.σpG('Mal', 'Ukrainian', 'uk', 0,false);"
+                >Малахі</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <span id="nt_header" class="stepFgBg" style="font-size: 18px"
+      ><b>Новий Заповіт</b></span
+    >
+    <div id="nt_table">
+      <table>
+        <colgroup>
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+          <col span="1" style="width: 14%" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td title="Матвія">
+              <a
+                href="javascript:step.passageSelect.σpG('Matt', 'Ukrainian', 'uk', 0,false);"
+                >Матвія</a
+              >
+            </td>
+            <td title="Марка">
+              <a
+                href="javascript:step.passageSelect.σpG('Mark', 'Ukrainian', 'uk', 0,false);"
+                >Марка</a
+              >
+            </td>
+            <td title="Луки">
+              <a
+                href="javascript:step.passageSelect.σpG('Luke', 'Ukrainian', 'uk', 0,false);"
+                >Луки</a
+              >
+            </td>
+            <td title="Івана">
+              <a
+                href="javascript:step.passageSelect.σpG('John', 'Ukrainian', 'uk', 0,false);"
+                >Івана</a
+              >
+            </td>
+            <td title="Дії">
+              <a
+                href="javascript:step.passageSelect.σpG('Acts', 'Ukrainian', 'uk', 0,false);"
+                >Дії</a
+              >
+            </td>
+            <td title="Римлян">
+              <a
+                href="javascript:step.passageSelect.σpG('Rom', 'Ukrainian', 'uk', 0,false);"
+                >Римлян</a
+              >
+            </td>
+            <td title="1. Коринтян">
+              <a
+                href="javascript:step.passageSelect.σpG('1Cor', 'Ukrainian', 'uk', 0,false);"
+                >1.Кори</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="2. Коринтян">
+              <a
+                href="javascript:step.passageSelect.σpG('2Cor', 'Ukrainian', 'uk', 0,false);"
+                >2.Кори</a
+              >
+            </td>
+            <td title="Галатів">
+              <a
+                href="javascript:step.passageSelect.σpG('Gal', 'Ukrainian', 'uk', 0,false);"
+                >Галаті</a
+              >
+            </td>
+            <td title="Ефесян">
+              <a
+                href="javascript:step.passageSelect.σpG('Eph', 'Ukrainian', 'uk', 0,false);"
+                >Ефесян</a
+              >
+            </td>
+            <td title="Филип'ян">
+              <a
+                href="javascript:step.passageSelect.σpG('Phil', 'Ukrainian', 'uk', 0,false);"
+                >Филип'</a
+              >
+            </td>
+            <td title="Колосян">
+              <a
+                href="javascript:step.passageSelect.σpG('Col', 'Ukrainian', 'uk', 0,false);"
+                >Колося</a
+              >
+            </td>
+            <td title="1. Солунян">
+              <a
+                href="javascript:step.passageSelect.σpG('1Thess', 'Ukrainian', 'uk', 0,false);"
+                >1.Солу</a
+              >
+            </td>
+            <td title="2. Солунян">
+              <a
+                href="javascript:step.passageSelect.σpG('2Thess', 'Ukrainian', 'uk', 0,false);"
+                >2.Солу</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="1. Тимофія">
+              <a
+                href="javascript:step.passageSelect.σpG('1Tim', 'Ukrainian', 'uk', 0,false);"
+                >1.Тимо</a
+              >
+            </td>
+            <td title="2. Тимофія">
+              <a
+                href="javascript:step.passageSelect.σpG('2Tim', 'Ukrainian', 'uk', 0,false);"
+                >2.Тимо</a
+              >
+            </td>
+            <td title="Тита">
+              <a
+                href="javascript:step.passageSelect.σpG('Titus', 'Ukrainian', 'uk', 0,false);"
+                >Тита</a
+              >
+            </td>
+            <td title="Филимона">
+              <a
+                href="javascript:step.passageSelect.σpG('Phlm', 'Ukrainian', 'uk', 0,false);"
+                >Филимо</a
+              >
+            </td>
+            <td title="Євреїв">
+              <a
+                href="javascript:step.passageSelect.σpG('Heb', 'Ukrainian', 'uk', 0,false);"
+                >Євреїв</a
+              >
+            </td>
+            <td title="Якова">
+              <a
+                href="javascript:step.passageSelect.σpG('Jas', 'Ukrainian', 'uk', 0,false);"
+                >Якова</a
+              >
+            </td>
+            <td title="1. Петра">
+              <a
+                href="javascript:step.passageSelect.σpG('1Pet', 'Ukrainian', 'uk', 0,false);"
+                >1.Петр</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td title="2. Петра">
+              <a
+                href="javascript:step.passageSelect.σpG('2Pet', 'Ukrainian', 'uk', 0,false);"
+                >2.Петр</a
+              >
+            </td>
+            <td title="1. Івана">
+              <a
+                href="javascript:step.passageSelect.σpG('1John', 'Ukrainian', 'uk', 0,false);"
+                >1.Іван</a
+              >
+            </td>
+            <td title="2. Івана">
+              <a
+                href="javascript:step.passageSelect.σpG('2John', 'Ukrainian', 'uk', 0,false);"
+                >2.Іван</a
+              >
+            </td>
+            <td title="3. Івана">
+              <a
+                href="javascript:step.passageSelect.σpG('3John', 'Ukrainian', 'uk', 0,false);"
+                >3.Іван</a
+              >
+            </td>
+            <td title="Юди">
+              <a
+                href="javascript:step.passageSelect.σpG('Jude', 'Ukrainian', 'uk', 0,false);"
+                >Юди</a
+              >
+            </td>
+            <td title="Об'явлення">
+              <a
+                href="javascript:step.passageSelect.σpG('Rev', 'Ukrainian', 'uk', 0,false);"
+                >Об'явл</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="footer">
+    <br /><span id="userEnterPassageError" style="color: red"></span>
+  </div>
+  <script>
+    $(document).ready(function () {
+      step.passageSelect.σpA();
+    });
+    function addSelectVerse() {
+      if (document.getElementById("selectverseonoffswitch").checked) {
+        $("#select_verse_number").addClass("checked");
+      } else {
+        $("#select_verse_number").removeClass("checked");
+      }
+    }
+  </script>
+</div>

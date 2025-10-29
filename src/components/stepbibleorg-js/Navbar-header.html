@@ -1,0 +1,439 @@
+<div id="stepnavbar" class="navbar navbar-default navbar-fixed-top">
+  <div>
+    <div class="navbar-header search-form">
+      <div class="navbar-brand col-xs-12">
+        <span
+          class="title tmp-rm-hidden-xs"
+          title="Reset to default configuration"
+        >
+          <a href="/?noredirect" class="logo">
+            <img
+              class="hidden-narrow"
+              src="/step.png"
+              alt="STEP"
+              width="90px"
+              height="22px"
+            />
+          </a>
+          <a href="/?noredirect" class="logo">
+            <img
+              class="hidden-not-narrow"
+              src="/images/narrow_step_logo.png"
+              alt="STEP"
+            />
+          </a>
+        </span>
+        <span class="help">
+          <div class="headerButtons pull-right">
+            <button
+              type="button"
+              class="navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+            >
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a
+              id="copy-icon"
+              style="padding-left: 5px"
+              href="javascript:step.util.copyModal();"
+              title="Copy"
+            >
+              <i class="glyphicon glyphicon-copy"></i>
+              <span class="hidden-xs navbarIconDesc">&nbsp;&nbsp;Copy</span>
+            </a>
+            <a
+              id="report-icon"
+              style="padding-left: 5px"
+              href="html/reports_by_step.html"
+              target="_blank"
+              title="Resources powered by STEPBible"
+            >
+              <i class="glyphicon glyphicon-th-list"></i>
+              <span class="navbarIconDesc hidden-xs">
+                &nbsp;&nbsp;Resources
+              </span>
+            </a>
+            <a
+              id="stats-icon"
+              style="padding-left: 5px"
+              href="javascript:step.util.ui.initSidebar('analysis');"
+              title="Аналіз уривку"
+            >
+              <i class="glyphicon glyphicon-stats"></i>
+              <span class="hidden-xs navbarIconDesc">
+                &nbsp;&nbsp;Аналіз уривку
+              </span>
+            </a>
+            <a
+              id="bookmark-icon"
+              style="padding-left: 5px"
+              href="javascript:step.util.ui.initSidebar('history');"
+              title="Закладки та останні тексти"
+            >
+              <i class="glyphicon glyphicon-bookmark"></i>
+              <span class="hidden-xs navbarIconDesc">&nbsp;Закладки</span>
+            </a>
+            <a
+              id="fonts-icon"
+              style="padding-left: 5px"
+              href="javascript:step.util.showFontSettings();"
+              title="Розмір шрифту"
+            >
+              <span
+                class="largerFont"
+                style="color: white; background: #5e5e5e; font-size: 18px"
+              >
+                A
+              </span>
+              <span class="hidden-xs navbarIconDesc">&nbsp;Font</span>
+            </a>
+            <a
+              id="colorgrammar-icon"
+              style="padding-left: 5px"
+              href="javascript:step.util.ui.initSidebar('color');"
+              title="Граматика"
+            >
+              <span
+                class="largerFont"
+                style="
+                  background: url(/images/wave.png) repeat-x 100% 100%;
+                  font-size: 18px;
+                  padding-bottom: 7px;
+                "
+              >
+                G
+              </span>
+              <span
+                class="largerFont hidden-xs hidden-sm navbarIconDesc"
+                style="margin-left: -2"
+              >
+                rammar
+              </span>
+            </a>
+            <a
+              id="examples-icon1"
+              style="padding-left: 5px; display: inline"
+              class="navbarIconDesc hidden-sm hideen-md hidden-lg"
+              href="javascript:step.util.ui.showTutorial();"
+              title="Frequently asked questions"
+            >
+              <i
+                style="vertical-align: middle"
+                class="glyphicon glyphicon-question-sign hidden-sm hidden-md hidden-lg"
+              ></i>
+            </a>
+            <span class="navbar-collapse collapse">
+              <span class="dropdown">
+                <a
+                  id="languages-icon"
+                  style="padding-left: 5px"
+                  class="dropdown-toggle extrapad-xs"
+                  data-toggle="dropdown"
+                  title="Мова"
+                >
+                  <i class="glyphicon icon-language">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="22"
+                      width="22"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M0 0h24v24H0z" fill="none"></path>
+                      <path
+                        d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"
+                      ></path>
+                    </svg>
+                  </i>
+                  <span class="navbarIconDesc" style="display: inline">
+                    Мова
+                  </span>
+                </a>
+                {/*
+                <ul
+                  id="languageMenu"
+                  class="kolumny pull-right dropdown-menu"
+                ></ul>
+                */}
+              </span>
+              <a
+                style="padding-left: 5px; vertical-align: top"
+                id="raiseSupportTrigger"
+                data-toggle="modal"
+                data-backdrop="static"
+                data-target="#raiseSupport"
+                title="Зворотний зв'язок"
+              >
+                <svg viewBox="0 0 18 21" width="18" height="21">
+                  <path
+                    d="M 0 3 L 18 3, 18 16, 16 16, 16 21, 12 16, 0 16, 0 3"
+                    stroke="var(--clrText)"
+                    fill="var(--clrText)"
+                    stroke-width="1"
+                  ></path>
+                  <line
+                    x1="2"
+                    y1="8"
+                    x2="16"
+                    y2="8"
+                    stroke-width="1"
+                    stroke="var(--clrBackground)"
+                  ></line>
+                  <line
+                    x1="2"
+                    y1="10"
+                    x2="16"
+                    y2="10"
+                    stroke-width="1"
+                    stroke="var(--clrBackground)"
+                  ></line>
+                  <line
+                    x1="2"
+                    y1="12"
+                    x2="16"
+                    y2="12"
+                    stroke-width="1"
+                    stroke="var(--clrBackground)"
+                  ></line>
+                </svg>
+                <span class="navbarIconDesc hidden-sm">
+                  &nbsp;Зворотний зв'язок
+                </span>
+              </a>
+              <a
+                id="examples-icon2"
+                class="hidden-xs"
+                style="padding-left: 5px"
+                href="javascript:step.util.ui.showTutorial();"
+                title="Frequently asked questions"
+              >
+                <i class="glyphicon glyphicon-question-sign hidden-xs"></i>
+                <span class="hidden-xs hidden-sm navbarIconDesc">
+                  &nbsp;FAQ
+                </span>
+              </a>
+              <span class="dropdown open">
+                <a
+                  id="more-icon"
+                  style="padding-left: 5px"
+                  class="dropdown-toggle helpMenuTrigger"
+                  data-toggle="dropdown"
+                  title="Допомога"
+                >
+                  <i class="glyphicon glyphicon-option-vertical"></i>
+                  <span
+                    style="
+                      vertical-align: bottom;
+                      line-height: 10px;
+                      display: inline;
+                    "
+                    class="navbarIconDesc"
+                  >
+                    More
+                  </span>
+                </a>
+                <ul class="dropdown-menu pull-right helpMenu" dir="ltr">
+                  <li class="hidden-touch">
+                    <a
+                      href="/downloads.jsp"
+                      title="КРОК можна завантажити і використовувати без необхідності підключення до Інтернету."
+                    >
+                      Завантажити крок
+                    </a>
+                  </li>
+                  {/*
+                  <li class="quick_tutorial">
+                    <a href="javascript:void(0)" name="TUTORIAL"
+                      >Короткий посібник</a
+                    >
+                  </li>
+                  */}
+                  <li class="extrapad-other">
+                    <a href="https://www.stepbible.org/videos" target="_blank">
+                      Video demonstrations
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://stepbibleguide.blogspot.com"
+                      target="_blank"
+                    >
+                      Посібник користувача
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://stepweb.atlassian.net/wiki/display/SUG/Resources"
+                      target="_blank"
+                    >
+                      Наявні Біблії і коментарі
+                    </a>
+                  </li>
+                  <li class="classicalUI">
+                    <a href="javascript:void(0)">
+                      Classical interface&nbsp;
+                      <span
+                        id="classicalUICheck"
+                        class="glyphicon glyphicon-check"
+                        style="font-size: 11px; display: none"
+                      ></span>
+                    </a>
+                  </li>
+                  <li class="resetEverything">
+                    <a href="javascript:void(0)">Скинути все</a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://stepbibleguide.blogspot.com/p/volunteers.html"
+                      target="_blank"
+                    >
+                      Нам потрібна Ваша допомога!
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0)"
+                      id="provideFeedback"
+                      data-toggle="modal"
+                      data-backdrop="static"
+                      data-target="#raiseSupport"
+                    >
+                      Зворотний зв'язок
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/html/cookies_policy.html" target="_blank">
+                      Політика конфіденційності
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      target="_new"
+                      href="https://stepbibleguide.blogspot.com/p/copyrights-licences.html"
+                      name="COPYRIGHT"
+                    >
+                      Інформація про авторське право і ліцензію
+                    </a>
+                  </li>
+                  <li class="aboutModalTrigger">
+                    <a href="javascript:void(0)" name="ABOUT"> Про... </a>
+                  </li>
+                </ul>
+              </span>
+            </span>
+          </div>
+        </span>
+        <form role="form">
+          <div class="input-group" id="top_input_area" style="display: none">
+            <div
+              class="select2-container select2-container-multi form-control input-lg"
+              id="s2id_masterSearch"
+            >
+              <ul class="select2-choices">
+                <li
+                  class="select2-search-choice select-version"
+                  draggable="true"
+                >
+                  <div>
+                    <div
+                      class="versionItem masterVersion"
+                      title="[Переклад / коментарі] THOT - Translators Hebrew Old Testament, 2019 with KQ variants OT (Mar'21)
+Це основна версія. Всі посилання, переходами і результати пошуку на основі цієї версії."
+                      data-item-type="version"
+                      data-select-id="THOT"
+                      data-handler="true"
+                    >
+                      THOT
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    onclick="return false;"
+                    class="select2-search-choice-close"
+                    tabindex="-1"
+                  ></a>
+                </li>
+                <li
+                  class="select2-search-choice select-version"
+                  draggable="true"
+                >
+                  <div>
+                    <div
+                      class="versionItem"
+                      title="[Переклад / коментарі] LXX - Septuagint, Morphologically Tagged Rahlfs'"
+                      data-item-type="version"
+                      data-select-id="LXX"
+                      data-handler="true"
+                    >
+                      LXX
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    onclick="return false;"
+                    class="select2-search-choice-close"
+                    tabindex="-1"
+                  ></a>
+                </li>
+                <li
+                  class="select2-search-choice select-reference"
+                  draggable="true"
+                >
+                  <div>
+                    <div
+                      class="referenceItem"
+                      title="[Посилання] Буття 1"
+                      data-item-type="reference"
+                      data-select-id="Gen.1"
+                      data-handler="true"
+                    >
+                      Буття 1
+                    </div>
+                  </div>
+                  <a
+                    href="#"
+                    onclick="return false;"
+                    class="select2-search-choice-close"
+                    tabindex="-1"
+                  ></a>
+                </li>
+                <li class="select2-search-field" draggable="true">
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    class="select2-input"
+                    id="s2id_autogen1"
+                    style="width: 22px"
+                  />
+                </li>
+              </ul>
+              <div class="select2-drop select2-drop-multi select2-display-none">
+                <ul class="select2-results">
+                  <li class="select2-no-results">No matches found</li>
+                  <li class="select2-no-results">No matches found</li>
+                  <li class="select2-no-results">No matches found</li>
+                </ul>
+              </div>
+            </div>
+            <input
+              id="masterSearch"
+              type="text"
+              class="form-control input-lg select2-offscreen"
+              tabindex="-1"
+            />
+            <span class="input-group-btn findButton">
+              <span>Search</span>
+              <i class="find glyphicon glyphicon-search"></i>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+;

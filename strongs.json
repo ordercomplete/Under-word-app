@@ -1,0 +1,98 @@
+{
+  "H7225": {
+    "word": "רֵאשִׁית",
+    "translit": "rē'šît",
+    "definition": "початок, перше",
+    "morphology": "іменник, жіночий рід, однина",
+    "greek_equiv": "G746 (ἀρχή)",
+    "usages": ["Бут. 1:1"]
+  },
+  "G746": {
+    "word": "ἀρχή",
+    "translit": "archē",
+    "definition": "початок, принцип",
+    "morphology": "іменник, жіночий рід, однина",
+    "hebrew_equiv": "H7225 (רֵאשִׁית)",
+    "usages": ["Бут. 1:1 (LXX)", "Мат. 1:1 (NT)"]
+  },
+  "H1254": {
+    "word": "בָּרָא",
+    "translit": "bārā'",
+    "definition": "створити, формувати",
+    "morphology": "дієслово, кал, перфект, 3-й ос., однина",
+    "greek_equiv": "G4160 (ποιέω)",
+    "usages": ["Бут. 1:1"]
+  },
+  "G4160": {
+    "word": "ποιέω",
+    "translit": "poiéō",
+    "definition": "робити, створювати",
+    "morphology": "дієслово, aorist, 3-й ос., однина",
+    "hebrew_equiv": "H1254 (בָּרָא)",
+    "usages": ["Бут. 1:1 (LXX)", "Мат. 1:16"]
+  },
+  "H430": {
+    "word": "אֱלֹהִים",
+    "translit": "’ĕlōhîm",
+    "definition": "Бог, боги",
+    "morphology": "іменник, чоловічий рід, множина",
+    "greek_equiv": "G2316 (θεός)",
+    "usages": ["Бут. 1:1"]
+  },
+  "G2316": {
+    "word": "θεός",
+    "translit": "theós",
+    "definition": "Бог",
+    "morphology": "іменник, чоловічий рід, однина",
+    "hebrew_equiv": "H430 (אֱלֹהִים)",
+    "usages": ["Бут. 1:1 (LXX)", "Мат. 1:23"]
+  },
+  "H8064": {
+    "word": "שָׁמַיִם",
+    "translit": "šāmayim",
+    "definition": "небо, небеса",
+    "morphology": "іменник, чоловічий рід, множина",
+    "greek_equiv": "G3772 (οὐρανός)",
+    "usages": ["Бут. 1:1"]
+  },
+  "G3772": {
+    "word": "οὐρανός",
+    "translit": "ouranós",
+    "definition": "небо",
+    "morphology": "іменник, чоловічий рід, однина",
+    "hebrew_equiv": "H8064 (שָׁמַיִם)",
+    "usages": ["Бут. 1:1 (LXX)", "Мат. 1:1"]
+  },
+  "H776": {
+    "word": "אֶרֶץ",
+    "translit": "’ereṣ",
+    "definition": "земля, країна",
+    "morphology": "іменник, жіночий рід, однина",
+    "greek_equiv": "G1093 (γῆ)",
+    "usages": ["Бут. 1:1"]
+  },
+  "G1093": {
+    "word": "γῆ",
+    "translit": "gē",
+    "definition": "земля",
+    "morphology": "іменник, жіночий рід, однина",
+    "hebrew_equiv": "H776 (אֶרֶץ)",
+    "usages": ["Бут. 1:1 (LXX)", "Мат. 1:1"]
+  },
+  "G1135": {
+    "word": "γυνή",
+    "translit": "gynē",
+    "definition": "жінка, дружина",
+    "morphology": "іменник, жіночий рід, однина",
+    "hebrew_equiv": "H802 (אִשָּׁה)",
+    "usages": ["Мат. 1:20"]
+  },
+  "G3140": {
+    "word": "μαρτυρέω",
+    "translit": "martyreō",
+    "definition": "свідчити, підтверджувати",
+    "morphology": "дієслово, aorist, пасив, 3-й ос., однина",
+    "hebrew_equiv": "H5749 (עוּד)",
+    "usages": ["Мат. 1:2"]
+  }
+}
