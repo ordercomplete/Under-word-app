@@ -1,10 +1,34 @@
-.passage-options {
+/* === ЛОКАЛЬНИЙ ХЕДЕР ПАНЕЛІ === */
+.passage-options-group {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-shrink: 0;
   display: flex;
-  gap: 10px;
-  padding: 10px;
-  background-color: #f5f5d5;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.option-item {
-  cursor: pointer;
+.passage-options-group .btn-link {
+  color: #333;
+  padding: 0.25rem;
+}
+
+.passage-options-group .btn-link:hover {
+  color: #0d6efd;
+}
+
+.arg-summary .btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.arg-summary .btn-outline-secondary {
+  border-color: #ccc;
 }

@@ -89,7 +89,7 @@
 
 /* ----------------------------------------------------------------------------- */
 
-.navbar-custom {
+/* .navbar-custom {
   background-color: #f5f5d5;
   border-bottom: 1px solid #ccc;
   min-height: 50px;
@@ -146,5 +146,51 @@
 
   .nav-link:hover {
     background-color: #eaeaea !important;
+  }
+} */
+
+.navbar-custom {
+  z-index: 1050;
+  padding: 0.5rem 1rem;
+  background: #fff !important;
+}
+
+.navbar-custom .nav-link {
+  white-space: nowrap;
+  color: #333;
+  transition: background 0.2s;
+  border-radius: 0.25rem;
+}
+
+.navbar-custom .nav-link:hover {
+  background-color: #f0f0f0;
+}
+
+.more-dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+/* Фіксований хедер */
+body {
+  padding-top: 76px !important;
+}
+
+.app-container {
+  min-height: 100vh;
+  background: #f5f5d5;
+}
+
+.main-content {
+  height: calc(100vh - 76px);
+  overflow: hidden;
+}
+
+/* Адаптивність */
+@media (max-width: 1431px) {
+  .navbar-custom .nav-link span {
+    display: none;
+  }
+  .navbar-custom .nav-link {
+    padding: 0.5rem !important;
   }
 }

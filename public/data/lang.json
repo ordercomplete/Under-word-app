@@ -21,7 +21,15 @@
     "copyright": "Інформація про авторське право і ліцензію",
     "about": "Про...",
     "admin": "Адмін",
-    "developing": "Функція розробляється"
+    "developing": "Функція розробляється",
+
+    "prev_chapter": "Попередній розділ",
+    "next_chapter": "Наступний розділ",
+    "sync_scroll_on": "Синхронне прокручування увімкнено",
+    "sync_scroll_off": "Синхронне прокручування вимкнено",
+    "copy_link": "Скопіювати посилання",
+    "new_panel": "Нова панель",
+    "close_column": "Закрити колонку"
   },
   "en": {
     "copy": "Copy",
@@ -45,7 +53,14 @@
     "copyright": "Copyright and License Information",
     "about": "About...",
     "admin": "Admin",
-    "developing": "Feature in development"
+    "developing": "Feature in development",
+    "prev_chapter": "Previous Chapter",
+    "next_chapter": "Next Chapter",
+    "sync_scroll_on": "Sync Scroll On",
+    "sync_scroll_off": "Sync Scroll Off",
+    "copy_link": "Copy Link",
+    "new_panel": "New Panel",
+    "close_column": "Close Column"
   },
   "ru": {
     "copy": "Копировать",
@@ -69,6 +84,13 @@
     "copyright": "Информация об авторских правах и лицензии",
     "about": "О...",
     "admin": "Админ",
-    "developing": "Функция в разработке"
+    "developing": "Функция в разработке",
+    "prev_chapter": "Предыдущая глава",
+    "next_chapter": "Следующая глава",
+    "sync_scroll_on": "Синхронная прокрутка включена",
+    "sync_scroll_off": "Синхронная прокрутка выключена",
+    "copy_link": "Скопировать ссылку",
+    "new_panel": "Новая панель",
+    "close_column": "Закрыть колонку"
   }
 }

@@ -1,18 +1,74 @@
-.app-container {
-  /* background-image: url("../papyrus-bg.jpg"); Оновлений шлях */
+/* .app-container {
   background-image: url("/public/papyrus-bg.jpg");
-  background-color: #f5f5d5; /* Запасний бежевий фон */
+  background-color: #f5f5d5; 
   background-size: cover;
   min-height: 100vh;
   font-family: "Helvetica", sans-serif;
+} */
+/* === ГЛОБАЛЬНІ СТИЛІ === */
+* {
+  box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  padding-top: 76px !important; /* ВАЖЛИВО: відступ під NavbarHeader */
+  background: #f5f5d5;
+  font-family: "Helvetica", sans-serif;
+  min-height: 100vh;
+}
+
+/* Фон папірус */
+.app-container {
+  background-image: url("/public/papyrus-bg.jpg"); /* ПРАВИЛЬНИЙ ШЛЯХ: з public/ */
+  background-color: #f5f5d5;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* === ОСНОВНИЙ КОНТЕНТ === */
 .main-content {
-  padding: 20px;
+  height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: row;
 }
 
-@media (max-width: 768px) {
+/* === КОЛОНКИ === */
+.passage-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* дозволяє flex-shrink */
+}
+
+.lexicon-column {
+  width: 320px;
+  border-left: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === ПРОКРУТКА === */
+.chapter-viewer,
+.lexicon-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fff;
+  min-height: 0;
+}
+
+/* === АДАПТИВНІСТЬ === */
+@media (max-width: 992px) {
   .main-content {
     flex-direction: column;
+  }
+  .lexicon-column {
+    width: 100% !important;
+    max-height: 40vh;
+    border-left: none;
+    border-top: 1px solid #ddd;
   }
 }
