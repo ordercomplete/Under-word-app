@@ -3,11 +3,13 @@
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
+  background: #fff;
+  padding: 16px;
 }
 
 .lexicon-panel {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
+  /* border: 1px solid #ccc; */
+  padding: 16px;
 }
 
 @media (max-width: 768px) {
@@ -15,3 +17,19 @@
     width: 100%;
   }
 }
+
+.lexicon-column {
+  width: 320px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+.lexicon-title {
+  min-height: 50px;
+  padding: 8px 16px;
+  align-content: center;
+  margin: 0;
+}
+/* .lexicon-title-text {
+  margin: 0;
+} */

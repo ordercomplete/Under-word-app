@@ -1,22 +1,11 @@
 import React from "react";
 import "../styles/LexiconWindow.css";
-
-// const LexiconWindow = ({ lang }) => {
-//   return (
-//     <div className="lexicon-window">
-//       <div className="lexicon-panel">Original Lexicon</div>
-//       <div className="lexicon-panel">Translation Lexicon</div>
-//     </div>
-//   );
-// };
+import "../elements/CloseIcon.js";
 
 const LexiconWindow = ({ lang }) => {
   return (
-    <div
-      className="lexicon-window p-4 border-start"
-      style={{ width: "300px", background: "#f9f9f9" }}
-    >
-      <h5>{lang?.lexicon || "Лексикон"}</h5>
+    <div className="lexicon-window">
+      <h6 className="lexicon-title">{lang?.lexicon || "Лексикон"}</h6>
       <p className="text-muted">H7225 — רֵאשִׁית (початок)</p>
     </div>
   );

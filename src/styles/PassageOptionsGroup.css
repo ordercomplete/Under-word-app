@@ -13,6 +13,8 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  border: 1px solid #ccc;
+  min-height: 50px;
 }
 
 .passage-options-group .btn-link {
