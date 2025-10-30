@@ -1,3 +1,27 @@
 .chapter-viewer {
   padding: 10px;
 }
+.verse-line {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.verse-num {
+  min-width: 20px;
+  font-weight: bold;
+}
+
+.version-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.strong-word {
+  cursor: help;
+  text-decoration: underline dotted;
+  color: #0d6efd;
+}
+
+.strong-word:hover {
+  background: #e7f3ff;
+}

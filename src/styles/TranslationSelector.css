@@ -1,0 +1,42 @@
+/* Використовуємо ті ж стилі, що й у STEP */
+#bibleVersions .tab-pane {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.lang-group {
+  margin-bottom: 10px;
+}
+
+.langBtn {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.langUL {
+  margin-bottom: 15px;
+}
+
+.list-group-item {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.versionFeature {
+  background: #eee;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  margin-right: 3px;
+}
+
+.resource {
+  color: #333;
+  font-weight: 500;
+}
+
+.resource:hover {
+  text-decoration: underline;
+}

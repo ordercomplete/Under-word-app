@@ -1,0 +1,35 @@
+{
+  "bibles": [
+    {
+      "initials": "THOT",
+      "name": "Translators Hebrew Old Testament",
+      "lang": "en",
+      "features": ["N", "G", "V", "I"]
+    },
+    {
+      "initials": "LXX",
+      "name": "Septuagint",
+      "lang": "grc",
+      "features": ["N", "G", "V", "S"]
+    },
+    {
+      "initials": "UBT",
+      "name": "Українська Біблія (класичний, масоретський)",
+      "lang": "uk",
+      "features": ["R"]
+    },
+    {
+      "initials": "UTT",
+      "name": "Український переклад з LXX",
+      "lang": "uk",
+      "features": ["R", "S"]
+    },
+    {
+      "initials": "Synodal",
+      "name": "Синодальный перевод",
+      "lang": "ru",
+      "features": ["R"]
+    }
+  ],
+  "commentaries": []
+}

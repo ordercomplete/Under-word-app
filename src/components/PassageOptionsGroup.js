@@ -272,16 +272,112 @@
 
 // export default PassageOptionsGroup;
 
-import React from "react";
+// import React from "react";
+// import SyncIcon from "../elements/SyncIcon";
+// import ShareDropdown from "../elements/ShareDropdown";
+// import TranslationSelector from "./TranslationSelector";
+// import "../styles/PassageOptionsGroup.css";
+
+// const PassageOptionsGroup = ({
+//   lang,
+//   currentRef,
+//   versions,
+//   displayMode,
+//   setDisplayMode,
+//   isScrollSynced,
+//   setIsScrollSynced,
+//   onPrevChapter,
+//   onNextChapter,
+//   onNewPanel,
+//   onCloseColumn,
+// }) => {
+//   return (
+//     <div className="passage-options-group">
+//       {/* argSummary */}
+//       <div className="arg-summary ms-3 d-flex align-items-center gap-1 flex-wrap">
+//         <button className="btn btn-sm btn-outline-secondary">
+//           {versions.join(", ")}
+//         </button>
+//         <span className="text-muted">|</span>
+//         <button className="btn btn-sm btn-outline-secondary">
+//           {currentRef}
+//         </button>
+//         <span className="text-muted">|</span>
+//         <button className="btn btn-sm btn-outline-secondary">
+//           <i className="bi bi-search"></i>
+//         </button>
+//       </div>
+//       {/* Prev/Next */}
+//       <div className="d-flex align-items-center gap-2">
+//         <div className="next-prev-group">
+//           <button
+//             className="btn btn-link p-0 me-2"
+//             onClick={onPrevChapter}
+//             title={lang.prev_chapter}
+//           >
+//             <i className="bi bi-arrow-left-circle-fill text-primary"></i>
+//           </button>
+//           <button
+//             className="btn btn-link p-0"
+//             onClick={onNextChapter}
+//             title={lang.next_chapter}
+//           >
+//             <i className="bi bi-arrow-right-circle-fill text-primary"></i>
+//           </button>
+//         </div>
+
+//         {/* Share */}
+//         <ShareDropdown
+//           url={window.location.href}
+//           text={`${currentRef} | ${versions.join(", ")}`}
+//           lang={lang}
+//         />
+
+//         {/* Sync Icon — ПЕРЕД + */}
+//         <SyncIcon
+//           isSynced={isScrollSynced}
+//           onToggle={() => setIsScrollSynced(!isScrollSynced)}
+//           title={isScrollSynced ? lang.sync_scroll_on : lang.sync_scroll_off}
+//         />
+
+//         {/* New Panel */}
+//         <button
+//           className="btn btn-link p-0 d-none d-sm-inline-block"
+//           onClick={onNewPanel}
+//           title={lang.new_panel}
+//         >
+//           <i className="bi bi-plus-circle-fill text-success"></i>
+//         </button>
+
+//         {/* Close Column */}
+//         <button
+//           className="btn btn-link p-0 d-none d-sm-inline-block"
+//           onClick={onCloseColumn}
+//           title={lang.close_column}
+//         >
+//           <i className="bi bi-x-circle-fill text-danger"></i>
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PassageOptionsGroup;
+
+import React, { useState } from "react";
 import SyncIcon from "../elements/SyncIcon";
 import ShareDropdown from "../elements/ShareDropdown";
-// import "./PassageOptionsGroup.css";
+import TranslationSelector from "./TranslationSelector";
+import BookSelector from "./BookSelector"; // ДОДАНО
+import ChapterSelector from "./ChapterSelector.js"; // ДОДАНО
 import "../styles/PassageOptionsGroup.css";
 
 const PassageOptionsGroup = ({
   lang,
   currentRef,
+  setCurrentRef,
   versions,
+  setVersions,
   displayMode,
   setDisplayMode,
   isScrollSynced,
@@ -290,75 +386,166 @@ const PassageOptionsGroup = ({
   onNextChapter,
   onNewPanel,
   onCloseColumn,
+  // onOpenBookSelector,
 }) => {
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
+  // const [showBookModal, setShowBookModal] = useState(false);
+
+  const handleVersionsChange = (selected) => {
+    setVersions(selected);
+    localStorage.setItem("selectedVersions", JSON.stringify(selected));
+  };
+
+  const [showBook, setShowBook] = useState(false);
+  const [showChapter, setShowChapter] = useState(false);
+  const [selectedBook, setSelectedBook] = useState("GEN");
+  const [selectedChapters, setSelectedChapters] = useState(50);
+
+  const [book, chapter] = currentRef.split(".");
+
   return (
-    <div className="passage-options-group">
-      {/* argSummary */}
-      <div className="arg-summary ms-3 d-flex align-items-center gap-1 flex-wrap">
-        <button className="btn btn-sm btn-outline-secondary">
-          {versions.join(", ")}
-        </button>
-        <span className="text-muted">|</span>
-        <button className="btn btn-sm btn-outline-secondary">
-          {currentRef}
-        </button>
-        <span className="text-muted">|</span>
-        <button className="btn btn-sm btn-outline-secondary">
-          <i className="bi bi-search"></i>
-        </button>
-      </div>
-      {/* Prev/Next */}
-      <div className="d-flex align-items-center gap-2">
-        <div className="next-prev-group">
+    <>
+      <div className="passage-options-group">
+        {/* argSummary */}
+        <div className="arg-summary ms-3 d-flex align-items-center gap-1 flex-wrap">
           <button
-            className="btn btn-link p-0 me-2"
-            onClick={onPrevChapter}
-            title={lang.prev_chapter}
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setShowTranslationModal(true)}
+            title={lang.select_translations || "Оберіть переклади"}
           >
-            <i className="bi bi-arrow-left-circle-fill text-primary"></i>
+            {versions.length > 0
+              ? versions.join(", ")
+              : lang.no_versions || "Немає"}
           </button>
-          <button
-            className="btn btn-link p-0"
-            onClick={onNextChapter}
-            title={lang.next_chapter}
+          <span className="text-muted">|</span>
+          {/* <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={onOpenBookSelector}
+            title={lang.change_passage || "Змінити уривок"}
           >
-            <i className="bi bi-arrow-right-circle-fill text-primary"></i>
+            {currentRef}
+          </button> */}
+          {/* <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setShowBookModal(true)}
+            title={lang.change_passage || "Змінити уривок"}
+          >
+            {currentRef}
+          </button> */}
+
+          <button
+            className="btn btn-sm btn-outline-secondary me-1"
+            onClick={() => setShowBook(true)}
+          >
+            {book}
+          </button>
+          <span className="text-muted">|</span>
+          <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setShowChapter(true)}
+          >
+            {chapter}
+          </button>
+
+          <span className="text-muted">|</span>
+          <button className="btn btn-sm btn-outline-secondary">
+            <i className="bi bi-search"></i>
           </button>
         </div>
 
-        {/* Share */}
-        <ShareDropdown
-          url={window.location.href}
-          text={`${currentRef} | ${versions.join(", ")}`}
-          lang={lang}
-        />
+        {/* Prev/Next */}
+        <div className="d-flex align-items-center gap-2">
+          <div className="next-prev-group">
+            <button
+              className="btn btn-link p-0 me-2"
+              onClick={onPrevChapter}
+              title={lang.prev_chapter}
+            >
+              <i className="bi bi-arrow-left-circle-fill text-primary"></i>
+            </button>
+            <button
+              className="btn btn-link p-0"
+              onClick={onNextChapter}
+              title={lang.next_chapter}
+            >
+              <i className="bi bi-arrow-right-circle-fill text-primary"></i>
+            </button>
+          </div>
 
-        {/* Sync Icon — ПЕРЕД + */}
-        <SyncIcon
-          isSynced={isScrollSynced}
-          onToggle={() => setIsScrollSynced(!isScrollSynced)}
-          title={isScrollSynced ? lang.sync_scroll_on : lang.sync_scroll_off}
-        />
+          <ShareDropdown
+            url={window.location.href}
+            text={`${currentRef} | ${versions.join(", ")}`}
+            lang={lang}
+          />
 
-        {/* New Panel */}
-        <button
-          className="btn btn-link p-0 d-none d-sm-inline-block"
-          onClick={onNewPanel}
-          title={lang.new_panel}
-        >
-          <i className="bi bi-plus-circle-fill text-success"></i>
-        </button>
+          <SyncIcon
+            isSynced={isScrollSynced}
+            onToggle={() => setIsScrollSynced(!isScrollSynced)}
+            title={isScrollSynced ? lang.sync_scroll_on : lang.sync_scroll_off}
+          />
 
-        {/* Close Column */}
-        <button
-          className="btn btn-link p-0 d-none d-sm-inline-block"
-          onClick={onCloseColumn}
-          title={lang.close_column}
-        >
-          <i className="bi bi-x-circle-fill text-danger"></i>
-        </button>
+          <button
+            className="btn btn-link p-0 d-none d-sm-inline-block"
+            onClick={onNewPanel}
+            title={lang.new_panel}
+          >
+            <i className="bi bi-plus-circle-fill text-success"></i>
+          </button>
+
+          <button
+            className="btn btn-link p-0 d-none d-sm-inline-block"
+            onClick={onCloseColumn}
+            title={lang.close_column}
+          >
+            <i className="bi bi-x-circle-fill text-danger"></i>
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* Translation Selector Modal */}
+      <TranslationSelector
+        isOpen={showTranslationModal}
+        onRequestClose={() => setShowTranslationModal(false)}
+        lang={lang}
+        onSelectVersions={handleVersionsChange}
+      />
+      {/* <BookSelector
+        isOpen={showBookModal}
+        onRequestClose={() => setShowBookModal(false)}
+        lang={lang}
+        versions={versions}
+        onSelectRef={(ref) => {
+          setCurrentRef(ref);
+          setShowBookModal(false);
+        }}
+      /> */}
+      <BookSelector
+        isOpen={showBook}
+        onRequestClose={() => setShowBook(false)}
+        lang={lang}
+        versions={versions}
+        onSelectBook={(code) => {
+          setSelectedBook(code);
+          // Знаходимо кількість розділів
+          const data = core.json;
+          const bookData = data[versions[0].toLowerCase()]?.OldT?.flatMap(
+            (g) => g.books
+          ).find((b) => b.code === code);
+          setSelectedChapters(bookData?.chapters || 1);
+          setCurrentRef(`${code}.1`);
+        }}
+      />
+      <ChapterSelector
+        isOpen={showChapter}
+        onRequestClose={() => setShowChapter(false)}
+        lang={lang}
+        bookCode={book}
+        chapters={selectedChapters}
+        onSelectChapter={(ch) => {
+          setCurrentRef(`${book}.${ch}`);
+        }}
+      />
+    </>
   );
 };
 
