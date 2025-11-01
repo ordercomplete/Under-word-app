@@ -219,7 +219,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavbarHeader from "./components/NavbarHeader";
 import PassagePage from "./components/PassagePage";
-import LexiconWindow from "./components/LexiconWindow";
+// import LexiconWindow from "./components/LexiconWindow";
 import AdminPanel from "./admin/AdminPanel";
 
 const App = () => {
@@ -264,13 +264,15 @@ const App = () => {
   return (
     <div className="app-container">
       <NavbarHeader lang={lang} onLanguageChange={handleLanguageChange} />
+
       <Routes>
+        {/* З класу className="main-content d-flex flex-column flex-lg-row" був прибраний flex-lg-row */}
         <Route
           path="/"
           element={
-            <div className="main-content d-flex flex-column flex-lg-row">
+            <div className="main-content d-flex flex-column ">
               <PassagePage lang={lang} />
-              <LexiconWindow lang={lang} />
+              {/* <LexiconWindow lang={lang} /> */}
             </div>
           }
         />

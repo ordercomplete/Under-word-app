@@ -1,0 +1,140 @@
+/* .interlinear-verse {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background: #fdfdfd;
+}
+
+.gr-line,
+.uk-line {
+  display: grid;
+  gap: 6px;
+  align-items: center;
+}
+
+.gr-line {
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  font-family: "Gentium Plus", serif;
+  font-size: 18px;
+  color: #1a1a1a;
+}
+
+.uk-line {
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  font-size: 16px;
+  color: #333;
+} */
+
+/* Якщо UTT вимкнено — грецький займає всю ширину */
+/* .interlinear-verse:not(:has(.uk-line)) .gr-line {
+  grid-template-columns: repeat(auto-fit, minmax(80px, auto));
+}
+
+.gr-word,
+.uk-word {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.gr-word:hover,
+.uk-word:hover {
+  background: #fff3cd;
+}
+
+.gr-word[data-strong]:hover::after,
+.uk-word[data-strong]:hover::after {
+  content: attr(data-strong);
+  font-size: 10px;
+  color: #666;
+  display: block;
+  margin-top: 2px;
+} */
+
+.interlinear-verse {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 4px 8px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.verse-number {
+  grid-column: 1;
+  font-weight: bold;
+  color: #555;
+  text-align: right;
+}
+
+.words-grid {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 6px;
+}
+
+.word-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gr-word {
+  font-family: "Gentium Plus", serif;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.uk-word {
+  color: #333;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.gr-word:hover,
+.uk-word:hover {
+  background: #fff3cd;
+  border-radius: 3px;
+}
+.word-pair {
+  position: relative;
+}
+
+.hover-tooltip {
+  position: absolute;
+  background: #2c3e50;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-100%);
+}
+
+.hover-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 12px;
+  border: 6px solid transparent;
+  border-top-color: #2c3e50;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.translation {
+  font-style: italic;
+  opacity: 0.9;
+}

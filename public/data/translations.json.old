@@ -3,44 +3,32 @@
     {
       "initials": "THOT",
       "name": "Translators Hebrew Old Testament",
-      "lang": "he",
-      "features": ["originals", "N", "G", "V", "I"],
-      "path": "originals/thot"
+      "lang": "en",
+      "features": ["originals", "N", "G", "V", "I"]
     },
     {
       "initials": "LXX",
       "name": "Septuagint",
       "lang": "grc",
-      "features": ["originals", "N", "G", "V", "S"],
-      "path": "originals/lxx"
+      "features": ["originals", "N", "G", "V", "S"]
     },
     {
       "initials": "UBT",
       "name": "Українська Біблія (класичний, масоретський)",
       "lang": "uk",
-      "features": ["R"],
-      "path": "translations/UBT"
+      "features": ["R"]
     },
     {
       "initials": "UTT",
       "name": "Український переклад з LXX",
       "lang": "uk",
-      "features": ["R", "S"],
-      "path": "translations/UTT"
+      "features": ["R", "S"]
     },
     {
       "initials": "Synodal",
       "name": "Синодальный перевод",
       "lang": "ru",
-      "features": ["R"],
-      "path": "translations/Synodal"
-    },
-    {
-      "initials": "KJV",
-      "name": "King James Version (1611)",
-      "lang": "en",
-      "features": ["R", "N"],
-      "path": "translations/KJV"
+      "features": ["R"]
     }
   ],
   "commentaries": []

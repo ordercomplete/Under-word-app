@@ -363,13 +363,13 @@
 // };
 
 // export default PassageOptionsGroup;
-
+// ----------------------------------------------------
 import React, { useState } from "react";
 import SyncIcon from "../elements/SyncIcon";
 import ShareDropdown from "../elements/ShareDropdown";
-import TranslationSelector from "./TranslationSelector";
-import BookSelector from "./BookSelector"; // ДОДАНО
-import ChapterSelector from "./ChapterSelector.js"; // ДОДАНО
+import TranslationSelector from "../modals/TranslationSelector.js";
+import BookSelector from "../modals/BookSelector.js"; // ДОДАНО
+import ChapterSelector from "../modals/ChapterSelector.js"; // ДОДАНО
 import "../styles/PassageOptionsGroup.css";
 
 const PassageOptionsGroup = ({
@@ -386,7 +386,7 @@ const PassageOptionsGroup = ({
   onNextChapter,
   onNewPanel,
   onCloseColumn,
-  // onOpenBookSelector,
+  onOpenBookSelector,
 }) => {
   const [showTranslationModal, setShowTranslationModal] = useState(false);
   // const [showBookModal, setShowBookModal] = useState(false);
@@ -507,7 +507,11 @@ const PassageOptionsGroup = ({
         isOpen={showTranslationModal}
         onRequestClose={() => setShowTranslationModal(false)}
         lang={lang}
-        onSelectVersions={handleVersionsChange}
+        // onSelectVersions={handleVersionsChange}
+        // onSelectVersions={(selected) => {
+        //   setVersions(selected); // ← ОНОВЛЮЄМО СТАН
+        // }}
+        onSelectVersions={setVersions} // ← ПРАВИЛЬНО
       />
       {/* <BookSelector
         isOpen={showBookModal}
@@ -550,3 +554,5 @@ const PassageOptionsGroup = ({
 };
 
 export default PassageOptionsGroup;
+
+// ----------------------------------------------------------------------

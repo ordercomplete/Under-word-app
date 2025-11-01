@@ -27,29 +27,15 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 0; /* дозволяє flex-shrink */
+  min-width: 0;
 }
-
-/* .lexicon-column {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-}
-.lexicon-title {
-  min-height: 50px;
-  padding: 8px 16px;
-  align-content: center;
-}
-.lexicon-title-text {
-  margin: 0;
-} */
 
 .chapter-viewer {
   background-image: url("/public/textur-gas-kvas-com-vz3z-p-tekstura-fon-pergament-20.jpg");
 }
-.lexicon-content {
+/* .lexicon-content {
   background-image: url("/public/stoun-bg-1.jpg");
-}
+} */
 
 .chapter-viewer,
 .lexicon-content {
@@ -58,15 +44,24 @@ body {
   padding: 1rem;
 }
 
+.book-selector-content {
+  position: relative;
+}
+
 /* === АДАПТИВНІСТЬ === */
 @media (max-width: 992px) {
   .main-content {
     flex-direction: column;
   }
   .lexicon-column {
-    width: 100% !important;
-    max-height: 40vh;
+    /* width: 100% !important; */
+    width: 100%;
+    height: auto;
+    max-height: 50%;
     border-left: none;
     border-top: 1px solid #ddd;
+  }
+  .lexicon-window {
+    width: 100%;
   }
 }

@@ -1,35 +1,87 @@
+/* src/styles/LexiconWindow.css */
+.lexicon-column {
+  /* width: auto; */
+  width: 300px;
+  border-left: 1px solid #ddd;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  position: sticky;
+  top: 0;
+}
+
 .lexicon-window {
+  flex: 1;
+  background-image: url("/public/stoun-bg-1.jpg");
+  /* width: auto; */
   width: 300px;
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  padding: 16px;
+  /* background: #fff; */
+  height: 100%;
+  /* min-height: 50%; */
+  margin: 0;
+  min-height: 0;
 }
 
-.lexicon-panel {
-  /* border: 1px solid #ccc; */
-  padding: 16px;
-}
-
-@media (max-width: 768px) {
-  .lexicon-window {
-    width: 100%;
-  }
-}
-
-.lexicon-column {
-  width: 320px;
-  border: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-}
 .lexicon-title {
   min-height: 50px;
   padding: 8px 16px;
   align-content: center;
   margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+  color: #333;
 }
-/* .lexicon-title-text {
-  margin: 0;
+
+.lexicon-panel {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.lex-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+  min-width: 90px;
+}
+
+.value {
+  font-weight: 500;
+  text-align: right;
+}
+
+.value.gr {
+  font-family: "Gentium Plus", serif;
+  color: #d35400;
+}
+
+.value.uk {
+  color: #2c3e50;
+}
+
+/* @media (max-width: 768px) {
+  .passage-container {
+    flex-direction: column;
+  }
+  .lexicon-column {
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid #ddd;
+  }
+  .lexicon-window {
+    width: 100%;
+  }
 } */

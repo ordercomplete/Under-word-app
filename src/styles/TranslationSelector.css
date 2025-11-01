@@ -40,3 +40,23 @@
 .resource:hover {
   text-decoration: underline;
 }
+.type-book {
+  /* margin-bottom: 0; */
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.type-book-title {
+  align-items: center;
+  font-size: 13px;
+  margin: auto 12px;
+  font-weight: bold;
+}
+.type-book-text {
+  text-decoration: none;
+  margin: auto 12px;
+}
+.close-end {
+  justify-content: flex-end;
+}
