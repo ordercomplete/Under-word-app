@@ -1,11 +1,12 @@
 /* === ЛОКАЛЬНИЙ ХЕДЕР ПАНЕЛІ === */
 .passage-options-group {
+  top: 65px; /* Під хедером (якщо хедер 65px) */
   background: #fff;
   border-bottom: 1px solid #ddd;
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   position: sticky;
-  top: 0;
+  /* top: 0; */
   z-index: 1000;
   flex-shrink: 0;
   display: flex;

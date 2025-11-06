@@ -1,16 +1,8 @@
+/* PassagePage.css */
 .passage-page {
-  /* background: url("/public/papyrus-bg.jpg") center/cover no-repeat; */
   background-color: #f5f5d5;
   min-height: 100vh;
 }
-
-/* .interleaved-view .panel {
-  padding: 1rem;
-  border: 1px solid #ddd;
-  margin-bottom: 1rem;
-  max-height: 70vh;
-  overflow-y: auto;
-} */
 
 .column-view .panel {
   padding: 1rem;

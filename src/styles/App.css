@@ -16,11 +16,13 @@ body {
 }
 
 .main-content {
-  padding-top: 76px !important;
+  padding-top: 0px !important;
+  /* margin-top: 65px !important; */
   display: flex;
   flex-direction: row;
   height: 100%;
   min-height: 100vh;
+  overflow: hidden; /* Уникаємо скролу на main */
 }
 
 .passage-column {
@@ -28,40 +30,96 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden; /* Уникаємо скролу на колонках */
 }
 
 .chapter-viewer {
   background-image: url("/public/textur-gas-kvas-com-vz3z-p-tekstura-fon-pergament-20.jpg");
 }
-/* .lexicon-content {
-  background-image: url("/public/stoun-bg-1.jpg");
-} */
 
 .chapter-viewer,
 .lexicon-content {
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
+  /* height: auto; */
 }
 
 .book-selector-content {
   position: relative;
 }
 
-/* === АДАПТИВНІСТЬ === */
+.lexicon-column {
+  width: 300px; /* Фіксована ширина справа */
+  display: flex;
+  flex-direction: column; /* Вертикально для кількох вікон */
+  border-left: 1px solid #ddd;
+  /* overflow-y: auto; */
+
+  flex-shrink: 0; /* Не стискається */
+  height: 100vh; /* Повна висота */
+  overflow-y: auto; /* Скрол в лексиконі */
+  position: sticky;
+  top: 65px;
+}
+
+.lexicon-window {
+  background-image: url("/public/stoun-bg-1.jpg");
+  flex: 1; /* Рівний поділ простору між вікнами */
+  min-height: 0; /* Для overflow */
+  position: relative; /* Для CloseIcon */
+  border-bottom: 1px solid #ddd; /* Розділ між вікнами */
+}
+
+.lexicon-window:last-child {
+  border-bottom: none;
+}
+
+.lexicon-title {
+  position: sticky;
+  top: 0;
+  background: white; /* Фіксований заголовок */
+  z-index: 1;
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.passage-container {
+  padding-top: 65px;
+}
+
 @media (max-width: 992px) {
   .main-content {
     flex-direction: column;
   }
+  .passage-container {
+    flex-direction: column; /* Переносимо лексикон під */
+    padding-top: 65px;
+  }
   .lexicon-column {
-    /* width: 100% !important; */
     width: 100%;
+    /* Повна ширина */
+    flex-direction: row;
+    /* Горизонтально для лексиконів */
+    overflow-x: auto; /* Скрол горизонтальний */
     height: auto;
     max-height: 50%;
     border-left: none;
     border-top: 1px solid #ddd;
+    position: sticky;
+    bottom: 0;
+    background: white; /* Фікс до низу */
   }
   .lexicon-window {
-    width: 100%;
+    /* flex: 0 0 300px; */
+    /* Фіксована ширина для кожного вікна */
+    min-width: 300px; /* Для скролу */
+    height: 100%; /* Повна висота */
+    border-bottom: none;
+    border-right: 1px solid #ddd; /* Розділ горизонтальний */
+  }
+  .lexicon-window:last-child {
+    border-right: none;
   }
 }

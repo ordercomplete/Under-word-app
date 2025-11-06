@@ -1,353 +1,69 @@
-// import React, { useState } from "react";
-// import "../styles/Interlinear.css";
+// InterlinearVerse.js
 
-// const InterlinearVerse = ({ verse, showUtt, onWordClick }) => {
-//   if (!verse) return null;
-
-//   return (
-//     <div className="interlinear-verse">
-//       {/* Грецький рядок */}
-//       <div className="gr-line">
-//         {verse.map((pair, i) => (
-//           <span
-//             key={`gr-${i}`}
-//             className="gr-word"
-//             onClick={() => pair.gr.strong && onWordClick(pair.gr, "gr")}
-//             style={{ opacity: pair.gr.word === "—" ? 0.3 : 1 }}
-//           >
-//             {pair.gr.word}
-//           </span>
-//         ))}
-//       </div>
-
-//       {/* Український рядок */}
-//       {showUtt && (
-//         <div className="uk-line">
-//           {verse.map((pair, i) => (
-//             <span
-//               key={`uk-${i}`}
-//               className="uk-word"
-//               onClick={() => pair.uk.strong && onWordClick(pair.uk, "uk")}
-//               style={{ opacity: pair.uk.word === "—" ? 0.3 : 1 }}
-//             >
-//               {pair.uk.word}
-//             </span>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default InterlinearVerse;
-
-// import React, { useState } from "react";
-// import "../styles/Interlinear.css";
-// const InterlinearVerse = ({ verseNum, lxxWords, uttWords, onWordClick }) => {
-//   const maxWords = Math.max(lxxWords.length, uttWords.length);
-//   const aligned = [];
-
-//   for (let i = 0; i < maxWords; i++) {
-//     const lxx = lxxWords[i] || { word: "—", strong: null };
-//     const utt = uttWords[i] || { word: "—", strong: null };
-
-//     aligned.push({ lxx, utt });
-//   }
-
-//   return (
-//     <div className="interlinear-verse">
-//       <div className="verse-number">{verseNum}</div>
-//       <div className="words-grid">
-//         {aligned.map((pair, i) => (
-//           <div key={i} className="word-pair">
-//             <span
-//               className="gr-word"
-//               onClick={() => pair.lxx.strong && onWordClick(pair.lxx, "gr")}
-//               title={pair.lxx.strong || ""}
-//             >
-//               {pair.lxx.word}
-//             </span>
-//             <span
-//               className="uk-word"
-//               onClick={() => pair.utt.strong && onWordClick(pair.utt, "uk")}
-//               title={pair.utt.strong || ""}
-//             >
-//               {pair.utt.word}
-//             </span>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default InterlinearVerse;
-
-// import React, { useState } from "react";
+// import React, { useState, useRef, useEffect } from "react";
 // import "../styles/Interlinear.css";
 
 // const InterlinearVerse = ({
 //   verseNum,
+//   version1,
+//   version2,
+//   onWordClick,
 //   lxxWords,
 //   uttWords,
-//   onWordClick,
-//   onWordHover,
 // }) => {
-//   const [hoveredPair, setHoveredPair] = useState(null);
-
-//   const maxWords = Math.max(lxxWords.length, uttWords.length);
-//   const aligned = [];
-
-//   for (let i = 0; i < maxWords; i++) {
-//     const lxx = lxxWords[i] || { word: "—", strong: null };
-//     const utt = uttWords[i] || { word: "—", strong: null };
-
-//     let translation = null;
-//     if (lxx.strong && utt.strong === lxx.strong) {
-//       translation = utt.word;
-//     } else if (utt.strong && lxx.strong === utt.strong) {
-//       translation = lxx.word;
-//     }
-
-//     aligned.push({
-//       lxx,
-//       utt,
-//       translation: translation || (lxx.strong ? utt.word : lxx.word),
-//     });
-//   }
-//   // додано початок Замість фіксованого left — використовуємо ref + getBoundingClientRect
-//   const verseRef = useRef(null);
-//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-//   const handleMouseMove = (e) => {
-//     if (!verseRef.current) return;
-//     const rect = verseRef.current.getBoundingClientRect();
-//     setMousePos({
-//       x: e.clientX - rect.left,
-//       y: e.clientY - rect.top,
-//     });
-//   };
-//   //   додано кінець
-
-//   return (
-//     <div
-//       className="interlinear-verse"
-//       ref={verseRef}
-//       onMouseMove={handleMouseMove}
-//     >
-//       <div className="verse-number">{verseNum}</div>
-//       <div className="words-grid">
-//         {aligned.map((pair, i) => (
-//           <div
-//             key={i}
-//             className="word-pair"
-//             onMouseEnter={() => {
-//               if (pair.lxx.strong || pair.utt.strong) {
-//                 setHoveredPair({ pair, index: i });
-//                 onWordHover?.({ pair, index: i });
-//               }
-//             }}
-//             onMouseLeave={() => {
-//               setHoveredPair(null);
-//               onWordHover?.(null);
-//             }}
-//           >
-//             <span
-//               className="gr-word"
-//               onClick={() =>
-//                 pair.lxx.strong &&
-//                 onWordClick({
-//                   word: pair.lxx,
-//                   lang: "gr",
-//                   translation: pair.translation,
-//                 })
-//               }
-//             >
-//               {pair.lxx.word}
-//             </span>
-//             <span
-//               className="uk-word"
-//               onClick={() =>
-//                 pair.utt.strong &&
-//                 onWordClick({
-//                   word: pair.utt,
-//                   lang: "uk",
-//                   translation: pair.translation,
-//                 })
-//               }
-//             >
-//               {pair.utt.word}
-//             </span>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Модалка при наведенні */}
-//       {hoveredPair && (
-//         <div
-//           className="hover-tooltip"
-//           style={{
-//             left: `${mousePos.x + 15}px`,
-//             top: `${mousePos.y - 60}px`,
-//           }}
-//         >
-//           <div className="tooltip-content">
-//             {hoveredPair.pair.lxx.strong && (
-//               <div>
-//                 <strong>{hoveredPair.pair.lxx.strong}</strong>{" "}
-//                 {hoveredPair.pair.lxx.word}
-//               </div>
-//             )}
-//             {hoveredPair.pair.utt.strong && (
-//               <div>
-//                 <strong>{hoveredPair.pair.utt.strong}</strong>{" "}
-//                 {hoveredPair.pair.utt.word}
-//               </div>
-//             )}
-//             {hoveredPair.pair.translation && (
-//               <div className="translation">
-//                 → {hoveredPair.pair.translation}
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default InterlinearVerse;
-
-// src/components/InterlinearVerse.js
-// import React, { useState, useRef } from "react";
-// import "../styles/Interlinear.css";
-
-// const InterlinearVerse = ({ verseNum, lxxWords, uttWords, onWordClick }) => {
-//   const [hoveredPair, setHoveredPair] = useState(null);
-//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-//   const verseRef = useRef(null);
-
-//   const handleMouseMove = (e) => {
-//     if (!verseRef.current) return;
-//     const rect = verseRef.current.getBoundingClientRect();
-//     setMousePos({
-//       x: e.clientX - rect.left,
-//       y: e.clientY - rect.top,
-//     });
-//   };
-
-//   const maxWords = Math.max(lxxWords.length, uttWords.length);
-//   const aligned = [];
-
-//   for (let i = 0; i < maxWords; i++) {
-//     const lxx = lxxWords[i] || { word: "—", strong: null };
-//     const utt = uttWords[i] || { word: "—", strong: null };
-
-//     let translation = null;
-//     if (lxx.strong && utt.strong === lxx.strong) {
-//       translation = utt.word;
-//     } else if (utt.strong && lxx.strong === utt.strong) {
-//       translation = lxx.word;
-//     }
-
-//     aligned.push({ lxx, utt, translation });
-//   }
-
-//   return (
-//     <div
-//       className="interlinear-verse"
-//       ref={verseRef}
-//       onMouseMove={handleMouseMove}
-//     >
-//       <div className="verse-number">{verseNum}</div>
-//       <div className="words-grid">
-//         {aligned.map((pair, i) => (
-//           <div
-//             key={i}
-//             className="word-pair"
-//             onMouseEnter={() => {
-//               if (pair.lxx.strong || pair.utt.strong) {
-//                 setHoveredPair({ pair, index: i });
-//               }
-//             }}
-//             onMouseLeave={() => setHoveredPair(null)}
-//           >
-//             <span
-//               className="gr-word"
-//               onClick={() =>
-//                 pair.lxx.strong &&
-//                 onWordClick({
-//                   word: pair.lxx,
-//                   lang: "gr",
-//                   translation: pair.translation,
-//                 })
-//               }
-//             >
-//               {pair.lxx.word}
-//             </span>
-//             <span
-//               className="uk-word"
-//               onClick={() =>
-//                 pair.utt.strong &&
-//                 onWordClick({
-//                   word: pair.utt,
-//                   lang: "uk",
-//                   translation: pair.translation,
-//                 })
-//               }
-//             >
-//               {pair.utt.word}
-//             </span>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Модалка при наведенні */}
-//       {hoveredPair && (
-//         <div
-//           className="hover-tooltip"
-//           style={{
-//             left: `${mousePos.x + 15}px`,
-//             top: `${mousePos.y - 60}px`,
-//           }}
-//         >
-//           <div className="tooltip-content">
-//             {hoveredPair.pair.lxx.strong && (
-//               <div>
-//                 <strong>{hoveredPair.pair.lxx.strong}</strong>{" "}
-//                 {hoveredPair.pair.lxx.word}
-//               </div>
-//             )}
-//             {hoveredPair.pair.utt.strong && (
-//               <div>
-//                 <strong>{hoveredPair.pair.utt.strong}</strong>{" "}
-//                 {hoveredPair.pair.utt.word}
-//               </div>
-//             )}
-//             {hoveredPair.pair.translation && (
-//               <div className="translation">
-//                 → {hoveredPair.pair.translation}
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default InterlinearVerse;
-
-// import React, { useState, useRef } from "react";
-// import "../styles/Interlinear.css";
-
-// const InterlinearVerse = ({ verseNum, lxxWords, uttWords, onWordClick }) => {
 //   const [hoveredWord, setHoveredWord] = useState(null);
 //   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 //   const tooltipRef = useRef(null);
 //   const verseRef = useRef(null);
 
-//   // Оновлення позиції курсору
+//   //   const [origWords, setOrigWords] = useState([]); // version1 (оригінал)
+//   //   const [transWords, setTransWords] = useState([]); // version2 (переклад)
+
+//   // НЕ завантажуємо дані — вони вже є в пропсах
+//   const [origWords, setOrigWords] = useState(lxxWords);
+//   const [transWords, setTransWords] = useState(uttWords);
+
+//   // === ВИЗНАЧЕННЯ ШЛЯХУ ===
+//   const getPath = (version, isOriginal) => {
+//     const base = isOriginal ? "originals" : "translations";
+//     const lower = version.toLowerCase();
+//     return `/data/${base}/${lower}/OldT/GEN/gen1_${lower}.json`;
+//   };
+
+//   // ← Використовуємо пропси
+//   useEffect(() => {
+//     setOrigWords(lxxWords);
+//     setTransWords(uttWords);
+//   }, [lxxWords, uttWords]);
+
+//   // === ВИРІВНЮВАННЯ ПО STRONG'S ===
+//   const alignedWords = [];
+//   const strongMap = new Map();
+
+//   origWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, { ...strongMap.get(w.strong), orig: w });
+//   });
+//   transWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, { ...strongMap.get(w.strong), trans: w });
+//   });
+
+//   strongMap.forEach((pair, strong) => {
+//     alignedWords.push({
+//       strong,
+//       orig: pair.orig || { word: "—", strong: null },
+//       trans: pair.trans || { word: "—", strong: null },
+//     });
+//   });
+
+//   // Сортування за порядком в оригіналі
+//   alignedWords.sort((a, b) => {
+//     const idxA = origWords.findIndex((w) => w.strong === a.strong);
+//     const idxB = origWords.findIndex((w) => w.strong === b.strong);
+//     return idxA !== -1 ? idxA - idxB : 1;
+//   });
+
 //   const handleMouseMove = (e) => {
 //     if (!verseRef.current) return;
 //     const rect = verseRef.current.getBoundingClientRect();
@@ -356,36 +72,6 @@
 //       y: e.clientY - rect.top,
 //     });
 //   };
-
-//   // === ВИРІВНЮВАННЯ ПО STRONG'S ===
-//   const alignedWords = [];
-//   const strongMap = new Map(); // strong -> { lxx, utt }
-
-//   // Заповнюємо мапу
-//   lxxWords.forEach((w) => {
-//     if (w.strong)
-//       strongMap.set(w.strong, { ...strongMap.get(w.strong), lxx: w });
-//   });
-//   uttWords.forEach((w) => {
-//     if (w.strong)
-//       strongMap.set(w.strong, { ...strongMap.get(w.strong), utt: w });
-//   });
-
-//   // Додаємо всі Strong's, навіть без пари
-//   strongMap.forEach((pair, strong) => {
-//     alignedWords.push({
-//       strong,
-//       lxx: pair.lxx || { word: "—", strong: null },
-//       utt: pair.utt || { word: "—", strong: null },
-//     });
-//   });
-
-//   // Сортуємо за порядком у LXX (або можна за UT)
-//   alignedWords.sort((a, b) => {
-//     const idxA = lxxWords.findIndex((w) => w.strong === a.strong);
-//     const idxB = lxxWords.findIndex((w) => w.strong === b.strong);
-//     return idxA - idxB;
-//   });
 
 //   return (
 //     <div
@@ -397,8 +83,10 @@
 
 //       <div className="words-grid">
 //         {alignedWords.map((pair, i) => {
-//           const hasStrong = pair.lxx.strong || pair.utt.strong;
-//           const translation = pair.utt.strong ? pair.utt.word : pair.lxx.word;
+//           const hasStrong = pair.orig.strong || pair.trans.strong;
+//           const translation = pair.trans.strong
+//             ? pair.trans.word
+//             : pair.orig.word;
 
 //           return (
 //             <div
@@ -410,40 +98,40 @@
 //               onMouseLeave={() => setHoveredWord(null)}
 //             >
 //               <span
-//                 className="gr-word"
-//                 style={{ cursor: pair.lxx.strong ? "pointer" : "default" }}
+//                 className="orig-word"
+//                 style={{ cursor: pair.orig.strong ? "pointer" : "default" }}
 //                 onClick={() =>
-//                   pair.lxx.strong &&
+//                   pair.orig.strong &&
 //                   onWordClick({
-//                     word: pair.lxx,
-//                     lang: "gr",
+//                     word: pair.orig,
+//                     lang: pair.orig.strong.startsWith("H") ? "he" : "gr",
 //                     translation,
 //                   })
 //                 }
 //               >
-//                 {pair.lxx.word}
+//                 {pair.orig.word}
 //               </span>
 
 //               <span
-//                 className="uk-word"
-//                 style={{ cursor: pair.utt.strong ? "pointer" : "default" }}
+//                 className="trans-word"
+//                 style={{ cursor: pair.trans.strong ? "pointer" : "default" }}
 //                 onClick={() =>
-//                   pair.utt.strong &&
+//                   pair.trans.strong &&
 //                   onWordClick({
-//                     word: pair.utt,
+//                     word: pair.trans,
 //                     lang: "uk",
 //                     translation,
 //                   })
 //                 }
 //               >
-//                 {pair.utt.word}
+//                 {pair.trans.word}
 //               </span>
 //             </div>
 //           );
 //         })}
 //       </div>
 
-//       {/* === СТАБІЛЬНА МОДАЛКА === */}
+//       {/* === МОДАЛКА === */}
 //       {hoveredWord && (
 //         <div
 //           ref={tooltipRef}
@@ -452,33 +140,272 @@
 //             position: "absolute",
 //             left: `${mousePos.x + 15}px`,
 //             top: `${mousePos.y - 80}px`,
-//             pointerEvents: "none", // Важливо! Не блокує mouseleave
+//             pointerEvents: "none",
 //             zIndex: 1000,
 //           }}
-//           onMouseEnter={() => setHoveredWord(hoveredWord)} // Утримуємо
+//           onMouseEnter={() => setHoveredWord(hoveredWord)}
 //           onMouseLeave={() => setHoveredWord(null)}
 //         >
 //           <div className="tooltip-content">
-//             {hoveredWord.pair.lxx.strong && (
+//             {hoveredWord.pair.orig.strong && (
 //               <div>
-//                 <strong>{hoveredWord.pair.lxx.strong}</strong>:{" "}
-//                 {hoveredWord.pair.lxx.word}
+//                 <strong>{hoveredWord.pair.orig.strong}</strong>:{" "}
+//                 {hoveredWord.pair.orig.word}
+//                 {hoveredWord.pair.orig.lemma &&
+//                   ` (${hoveredWord.pair.orig.lemma})`}
 //               </div>
 //             )}
-//             {hoveredWord.pair.utt.strong && (
+//             {hoveredWord.pair.trans.strong && (
 //               <div>
-//                 <strong>{hoveredWord.pair.utt.strong}</strong>:{" "}
-//                 {hoveredWord.pair.utt.word}
+//                 <strong>{hoveredWord.pair.trans.strong}</strong>:{" "}
+//                 {hoveredWord.pair.trans.word}
 //               </div>
 //             )}
-//             {(hoveredWord.pair.lxx.strong || hoveredWord.pair.utt.strong) && (
-//               <div className="translation">
-//                 →{" "}
-//                 {hoveredWord.pair.utt.strong
-//                   ? hoveredWord.pair.utt.word
-//                   : hoveredWord.pair.lxx.word}
+//             <div className="translation">
+//               →{" "}
+//               {hoveredWord.pair.trans.strong
+//                 ? hoveredWord.pair.trans.word
+//                 : hoveredWord.pair.orig.word}
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+// //work version
+// export default InterlinearVerse;
+
+// InterlinearVerse.js 06.11.2025
+
+// import React, { useState, useRef, useEffect } from "react";
+// import "../styles/Interlinear.css";
+
+// const InterlinearVerse = ({
+//   verseNum,
+//   version1, // Оригінал (якщо null, використовуємо version2)
+//   version2, // Переклад (якщо null, показуємо тільки orig)
+//   onWordClick,
+//   // Видалив lxxWords, uttWords — тепер лоадимо динамічно
+// }) => {
+//   const [hoveredWord, setHoveredWord] = useState(null);
+//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+//   const tooltipRef = useRef(null);
+//   const verseRef = useRef(null);
+
+//   const [origWords, setOrigWords] = useState([]);
+//   const [transWords, setTransWords] = useState([]);
+//   const [isOrig1, setIsOrig1] = useState(false);
+//   const [isOrig2, setIsOrig2] = useState(false);
+
+//   // === ВИЗНАЧЕННЯ ШЛЯХУ ===
+//   const getPath = (version, book = "GEN", chapter = 1) => {
+//     // Додано book/chapter для гнучкості, припустимо GEN1
+//     const lower = version.toLowerCase();
+//     const base = ["THOT", "LXX"].includes(version)
+//       ? "originals"
+//       : "translations"; // ← Узагальнено без features (якщо є translations.json в пропсах, але поки хардкод)
+//     return `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//   };
+
+//   useEffect(() => {
+//     const loadData = async () => {
+//       try {
+//         setIsOrig1(version1 && ["THOT", "LXX"].includes(version1)); // ← Перевірка на оригінал
+//         setIsOrig2(version2 && ["THOT", "LXX"].includes(version2));
+
+//         // ← НОВЕ: якщо тільки одна версія
+//         if (!version1 && !version2) {
+//           console.error("No versions selected");
+//           return;
+//         }
+
+//         let data1 = [],
+//           data2 = [];
+//         if (version1) {
+//           const res1 = await fetch(getPath(version1));
+//           data1 = await res1.json();
+//         }
+//         if (version2) {
+//           const res2 = await fetch(getPath(version2));
+//           data2 = await res2.json();
+//         }
+
+//         // Знаходимо вірш
+//         const verse1 = data1.find((v) => v.v === verseNum)?.words || [];
+//         const verse2 = data2.find((v) => v.v === verseNum)?.words || [];
+
+//         // ← НОВЕ: адаптація ролей
+//         if (!version1) {
+//           // Тільки version2: трактуємо як trans
+//           setOrigWords([]);
+//           setTransWords(verse2);
+//         } else if (!version2) {
+//           // Тільки version1: трактуємо як orig
+//           setOrigWords(verse1);
+//           setTransWords([]);
+//         } else {
+//           // Обидва
+//           setOrigWords(verse1);
+//           setTransWords(verse2);
+//         }
+//       } catch (err) {
+//         console.error("Failed to load interlinear data:", err);
+//         // ← Фолбек: показуємо тире
+//         setOrigWords([]);
+//         setTransWords([]);
+//       }
+//     };
+
+//     loadData();
+//   }, [verseNum, version1, version2]);
+
+//   // === ВИРІВНЮВАННЯ ПО STRONG'S ===
+//   const alignedWords = [];
+//   const strongMap = new Map();
+
+//   // Додаємо з orig
+//   origWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, {
+//         orig: w,
+//         trans: strongMap.get(w.strong)?.trans,
+//       });
+//   });
+//   // Додаємо з trans (якщо немає в orig)
+//   transWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, {
+//         trans: w,
+//         orig: strongMap.get(w.strong)?.orig || { word: "—", strong: null },
+//       });
+//   });
+
+//   strongMap.forEach((pair, strong) => {
+//     alignedWords.push({
+//       strong,
+//       orig: pair.orig || { word: "—", strong: null },
+//       trans: pair.trans || { word: "—", strong: null },
+//     });
+//   });
+
+//   // Сортування за порядком в оригіналі або перекладі
+//   alignedWords.sort((a, b) => {
+//     let idxA = origWords.findIndex((w) => w.strong === a.strong);
+//     let idxB = origWords.findIndex((w) => w.strong === b.strong);
+//     if (idxA === -1) idxA = transWords.findIndex((w) => w.strong === a.strong);
+//     if (idxB === -1) idxB = transWords.findIndex((w) => w.strong === b.strong);
+//     return idxA - idxB;
+//   });
+
+//   const handleMouseMove = (e) => {
+//     if (!verseRef.current) return;
+//     const rect = verseRef.current.getBoundingClientRect();
+//     setMousePos({
+//       x: e.clientX - rect.left,
+//       y: e.clientY - rect.top,
+//     });
+//   };
+
+//   return (
+//     <div
+//       className="interlinear-verse"
+//       ref={verseRef}
+//       onMouseMove={handleMouseMove}
+//     >
+//       <div className="verse-number">{verseNum}</div>
+
+//       <div className="words-grid">
+//         {alignedWords.map((pair, i) => {
+//           const hasStrong = pair.orig.strong || pair.trans.strong;
+//           const translation =
+//             pair.trans.word !== "—" ? pair.trans.word : pair.orig.word;
+
+//           return (
+//             <div
+//               key={pair.strong || `empty-${i}`}
+//               className="word-pair"
+//               onMouseEnter={() =>
+//                 hasStrong && setHoveredWord({ pair, index: i })
+//               }
+//               onMouseLeave={() => setHoveredWord(null)}
+//             >
+//               <span
+//                 className="orig-word"
+//                 style={{
+//                   cursor: pair.orig.strong ? "pointer" : "default",
+//                   display: pair.orig.word === "—" ? "none" : "inline",
+//                 }} // ← НОВЕ: ховаємо тире якщо відсутнє
+//                 onClick={() =>
+//                   pair.orig.strong &&
+//                   onWordClick({
+//                     word: pair.orig,
+//                     lang: pair.orig.strong.startsWith("H") ? "he" : "gr",
+//                     translation,
+//                   })
+//                 }
+//               >
+//                 {pair.orig.word}
+//               </span>
+
+//               <span
+//                 className="trans-word"
+//                 style={{
+//                   cursor: pair.trans.strong ? "pointer" : "default",
+//                   display: pair.trans.word === "—" ? "none" : "inline",
+//                 }} // ← НОВЕ: ховаємо тире
+//                 onClick={() =>
+//                   pair.trans.strong &&
+//                   onWordClick({
+//                     word: pair.trans,
+//                     lang: "uk",
+//                     translation,
+//                   })
+//                 }
+//               >
+//                 {pair.trans.word}
+//               </span>
+//             </div>
+//           );
+//         })}
+//       </div>
+
+//       {/* === МОДАЛКА === */}
+//       {hoveredWord && (
+//         <div
+//           ref={tooltipRef}
+//           className="hover-tooltip"
+//           style={{
+//             position: "absolute",
+//             left: `${mousePos.x + 15}px`,
+//             top: `${mousePos.y - 80}px`,
+//             pointerEvents: "none",
+//             zIndex: 1000,
+//           }}
+//           onMouseEnter={() => setHoveredWord(hoveredWord)}
+//           onMouseLeave={() => setHoveredWord(null)}
+//         >
+//           <div className="tooltip-content">
+//             {hoveredWord.pair.orig.strong && (
+//               <div>
+//                 <strong>{hoveredWord.pair.orig.strong}</strong>:{" "}
+//                 {hoveredWord.pair.orig.word}
+//                 {hoveredWord.pair.orig.lemma &&
+//                   ` (${hoveredWord.pair.orig.lemma})`}
 //               </div>
 //             )}
+//             {hoveredWord.pair.trans.strong && (
+//               <div>
+//                 <strong>{hoveredWord.pair.trans.strong}</strong>:{" "}
+//                 {hoveredWord.pair.trans.word}
+//               </div>
+//             )}
+//             <div className="translation">
+//               →{" "}
+//               {hoveredWord.pair.trans.word !== "—"
+//                 ? hoveredWord.pair.trans.word
+//                 : hoveredWord.pair.orig.word}
+//             </div>
 //           </div>
 //         </div>
 //       )}
@@ -488,78 +415,194 @@
 
 // export default InterlinearVerse;
 
+// InterlinearVerse.js 06.11.2025
+// import React, { useState, useRef, useEffect } from "react";
+// import "../styles/Interlinear.css";
+
+// const InterlinearVerse = ({
+//   verseNum,
+//   origWords, // Слова оригіналу (якщо [], показуємо тільки trans з тире в orig)
+//   transWords, // Слова перекладу (якщо [], показуємо тільки orig з тире в trans)
+//   onWordClick,
+// }) => {
+//   const [hoveredWord, setHoveredWord] = useState(null);
+//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+//   const tooltipRef = useRef(null);
+//   const verseRef = useRef(null);
+
+//   // === ВИРІВНЮВАННЯ ПО STRONG'S ===
+//   const alignedWords = [];
+//   const strongMap = new Map();
+
+//   origWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, { ...strongMap.get(w.strong), orig: w });
+//   });
+//   transWords.forEach((w) => {
+//     if (w.strong)
+//       strongMap.set(w.strong, { ...strongMap.get(w.strong), trans: w });
+//   });
+
+//   strongMap.forEach((pair, strong) => {
+//     alignedWords.push({
+//       strong,
+//       orig: pair.orig || { word: "—", strong: null },
+//       trans: pair.trans || { word: "—", strong: null },
+//     });
+//   });
+
+//   // Сортування за порядком в оригіналі або перекладі (якщо orig порожній)
+//   alignedWords.sort((a, b) => {
+//     let idxA = origWords.findIndex((w) => w.strong === a.strong);
+//     let idxB = origWords.findIndex((w) => w.strong === b.strong);
+//     if (idxA === -1) idxA = transWords.findIndex((w) => w.strong === a.strong);
+//     if (idxB === -1) idxB = transWords.findIndex((w) => w.strong === b.strong);
+//     return idxA - idxB;
+//   });
+
+//   const handleMouseMove = (e) => {
+//     if (!verseRef.current) return;
+//     const rect = verseRef.current.getBoundingClientRect();
+//     setMousePos({
+//       x: e.clientX - rect.left,
+//       y: e.clientY - rect.top,
+//     });
+//   };
+
+//   return (
+//     <div
+//       className="interlinear-verse"
+//       ref={verseRef}
+//       onMouseMove={handleMouseMove}
+//     >
+//       <div className="verse-number">{verseNum}</div>
+
+//       <div className="words-grid">
+//         {alignedWords.map((pair, i) => {
+//           const hasStrong = pair.orig.strong || pair.trans.strong;
+//           const translation =
+//             pair.trans.word !== "—" ? pair.trans.word : pair.orig.word;
+
+//           return (
+//             <div
+//               key={pair.strong || `empty-${i}`}
+//               className="word-pair"
+//               onMouseEnter={() =>
+//                 hasStrong && setHoveredWord({ pair, index: i })
+//               }
+//               onMouseLeave={() => setHoveredWord(null)}
+//             >
+//               <span
+//                 className="orig-word"
+//                 style={{ cursor: pair.orig.strong ? "pointer" : "default" }}
+//                 onClick={() =>
+//                   pair.orig.strong &&
+//                   onWordClick({
+//                     word: pair.orig,
+//                     lang: pair.orig.strong.startsWith("H") ? "he" : "gr",
+//                     translation,
+//                   })
+//                 }
+//               >
+//                 {pair.orig.word}
+//               </span>
+
+//               <span
+//                 className="trans-word"
+//                 style={{ cursor: pair.trans.strong ? "pointer" : "default" }}
+//                 onClick={() =>
+//                   pair.trans.strong &&
+//                   onWordClick({
+//                     word: pair.trans,
+//                     lang: "uk",
+//                     translation,
+//                   })
+//                 }
+//               >
+//                 {pair.trans.word}
+//               </span>
+//             </div>
+//           );
+//         })}
+//       </div>
+
+//       {/* === МОДАЛКА === */}
+//       {hoveredWord && (
+//         <div
+//           ref={tooltipRef}
+//           className="hover-tooltip"
+//           style={{
+//             position: "absolute",
+//             left: `${mousePos.x + 15}px`,
+//             top: `${mousePos.y - 80}px`,
+//             pointerEvents: "none",
+//             zIndex: 1000,
+//           }}
+//           onMouseEnter={() => setHoveredWord(hoveredWord)}
+//           onMouseLeave={() => setHoveredWord(null)}
+//         >
+//           <div className="tooltip-content">
+//             {hoveredWord.pair.orig.strong && (
+//               <div>
+//                 <strong>{hoveredWord.pair.orig.strong}</strong>:{" "}
+//                 {hoveredWord.pair.orig.word}
+//                 {hoveredWord.pair.orig.lemma &&
+//                   ` (${hoveredWord.pair.orig.lemma})`}
+//               </div>
+//             )}
+//             {hoveredWord.pair.trans.strong && (
+//               <div>
+//                 <strong>{hoveredWord.pair.trans.strong}</strong>:{" "}
+//                 {hoveredWord.pair.trans.word}
+//               </div>
+//             )}
+//             <div className="translation">→ {translation}</div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+// // працює, але видає помилку при наведенні курсором на будь-яке слово тексту
+// export default InterlinearVerse;
+
+// -----------------------------------------------
+
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/Interlinear.css";
 
 const InterlinearVerse = ({
   verseNum,
-  version1,
-  version2,
+  origWords, // Слова оригіналу (якщо [], показуємо тільки trans з тире в trans)
+  transWords, // Слова перекладу (якщо [], показуємо тільки orig з тире в orig)
   onWordClick,
-  lxxWords,
-  uttWords,
 }) => {
   const [hoveredWord, setHoveredWord] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const tooltipRef = useRef(null);
   const verseRef = useRef(null);
 
-  //   const [origWords, setOrigWords] = useState([]); // version1 (оригінал)
-  //   const [transWords, setTransWords] = useState([]); // version2 (переклад)
-
-  // НЕ завантажуємо дані — вони вже є в пропсах
-  const [origWords, setOrigWords] = useState(lxxWords);
-  const [transWords, setTransWords] = useState(uttWords);
-
-  // === ВИЗНАЧЕННЯ ШЛЯХУ ===
-  const getPath = (version, isOriginal) => {
-    const base = isOriginal ? "originals" : "translations";
-    const lower = version.toLowerCase();
-    return `/data/${base}/${lower}/OldT/GEN/gen1_${lower}.json`;
-  };
-
-  //   useEffect(() => {
-  //     const loadData = async () => {
-  //       try {
-  //         const isOrig1 = ["THOT", "LXX"].includes(version1);
-  //         const isOrig2 = ["THOT", "LXX"].includes(version2);
-
-  //         const [res1, res2] = await Promise.all([
-  //           fetch(getPath(version1, isOrig1)),
-  //           fetch(getPath(version2, isOrig2)),
-  //         ]);
-
-  //         const [data1, data2] = await Promise.all([res1.json(), res2.json()]);
-
-  //         const verse1 = data1.find((v) => v.v === verseNum)?.words || [];
-  //         const verse2 = data2.find((v) => v.v === verseNum)?.words || [];
-
-  //         setOrigWords(verse1);
-  //         setTransWords(verse2);
-  //       } catch (err) {
-  //         console.error("Failed to load interlinear data:", err);
-  //       }
-  //     };
-
-  //     loadData();
-  //   }, [verseNum, version1, version2]);
-
-  // ← Використовуємо пропси
-  useEffect(() => {
-    setOrigWords(lxxWords);
-    setTransWords(uttWords);
-  }, [lxxWords, uttWords]);
+  // Запобіжник: якщо обидва порожні
+  if (origWords.length === 0 && transWords.length === 0) {
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Дані для вірша відсутні</div>
+      </div>
+    );
+  }
 
   // === ВИРІВНЮВАННЯ ПО STRONG'S ===
   const alignedWords = [];
   const strongMap = new Map();
 
   origWords.forEach((w) => {
-    if (w.strong)
+    if (w?.strong)
+      // Запобіжник на undefined
       strongMap.set(w.strong, { ...strongMap.get(w.strong), orig: w });
   });
   transWords.forEach((w) => {
-    if (w.strong)
+    if (w?.strong)
       strongMap.set(w.strong, { ...strongMap.get(w.strong), trans: w });
   });
 
@@ -571,11 +614,13 @@ const InterlinearVerse = ({
     });
   });
 
-  // Сортування за порядком в оригіналі
+  // Сортування за порядком в оригіналі або перекладі (якщо orig порожній)
   alignedWords.sort((a, b) => {
-    const idxA = origWords.findIndex((w) => w.strong === a.strong);
-    const idxB = origWords.findIndex((w) => w.strong === b.strong);
-    return idxA !== -1 ? idxA - idxB : 1;
+    let idxA = origWords.findIndex((w) => w?.strong === a.strong);
+    let idxB = origWords.findIndex((w) => w?.strong === b.strong);
+    if (idxA === -1) idxA = transWords.findIndex((w) => w?.strong === a.strong);
+    if (idxB === -1) idxB = transWords.findIndex((w) => w?.strong === b.strong);
+    return idxA - idxB;
   });
 
   const handleMouseMove = (e) => {
@@ -597,10 +642,8 @@ const InterlinearVerse = ({
 
       <div className="words-grid">
         {alignedWords.map((pair, i) => {
-          const hasStrong = pair.orig.strong || pair.trans.strong;
-          const translation = pair.trans.strong
-            ? pair.trans.word
-            : pair.orig.word;
+          const hasStrong = pair.orig?.strong || pair.trans?.strong;
+          // Розрахунок translation тут, але не потрібно — для tooltip
 
           return (
             <div
@@ -613,13 +656,13 @@ const InterlinearVerse = ({
             >
               <span
                 className="orig-word"
-                style={{ cursor: pair.orig.strong ? "pointer" : "default" }}
+                style={{ cursor: pair.orig?.strong ? "pointer" : "default" }}
                 onClick={() =>
-                  pair.orig.strong &&
+                  pair.orig?.strong &&
                   onWordClick({
                     word: pair.orig,
                     lang: pair.orig.strong.startsWith("H") ? "he" : "gr",
-                    translation,
+                    translation: pair.trans?.word || pair.orig.word,
                   })
                 }
               >
@@ -628,13 +671,13 @@ const InterlinearVerse = ({
 
               <span
                 className="trans-word"
-                style={{ cursor: pair.trans.strong ? "pointer" : "default" }}
+                style={{ cursor: pair.trans?.strong ? "pointer" : "default" }}
                 onClick={() =>
-                  pair.trans.strong &&
+                  pair.trans?.strong &&
                   onWordClick({
                     word: pair.trans,
                     lang: "uk",
-                    translation,
+                    translation: pair.trans.word || pair.orig?.word,
                   })
                 }
               >
@@ -661,7 +704,7 @@ const InterlinearVerse = ({
           onMouseLeave={() => setHoveredWord(null)}
         >
           <div className="tooltip-content">
-            {hoveredWord.pair.orig.strong && (
+            {hoveredWord.pair.orig?.strong && (
               <div>
                 <strong>{hoveredWord.pair.orig.strong}</strong>:{" "}
                 {hoveredWord.pair.orig.word}
@@ -669,7 +712,7 @@ const InterlinearVerse = ({
                   ` (${hoveredWord.pair.orig.lemma})`}
               </div>
             )}
-            {hoveredWord.pair.trans.strong && (
+            {hoveredWord.pair.trans?.strong && (
               <div>
                 <strong>{hoveredWord.pair.trans.strong}</strong>:{" "}
                 {hoveredWord.pair.trans.word}
@@ -677,9 +720,10 @@ const InterlinearVerse = ({
             )}
             <div className="translation">
               →{" "}
-              {hoveredWord.pair.trans.strong
+              {hoveredWord.pair.trans.word !== "—"
                 ? hoveredWord.pair.trans.word
-                : hoveredWord.pair.orig.word}
+                : hoveredWord.pair.orig.word || "—"}{" "}
+              {/* Фікс: розрахунок тут + запобіжник */}
             </div>
           </div>
         </div>

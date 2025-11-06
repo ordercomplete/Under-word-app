@@ -1,4 +1,4 @@
-// Placeholder for loading chapter JSON
+// loadChapter.js Placeholder for loading chapter JSON
 export const loadChapter = async (version, book, chapter) => {
   try {
     // Example: import(`../../originals/${version}/${book}/chapter${chapter}.json`)

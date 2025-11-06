@@ -224,11 +224,80 @@ import "../styles/LexiconWindow.css";
 
 // export default LexiconWindow;
 
-const LexiconWindow = ({ data, lang }) => {
+// -----------------------------------------------------
+// const LexiconWindow = ({ data, lang }) => {
+//   if (!data || !data.word) {
+//     return (
+//       <div className="text-muted text-center">
+//         {lang.select_word || "Оберіть слово для перегляду"}
+//       </div>
+//     );
+//   }
+
+//   const { word, lang: wordLang, translation } = data;
+
+//   return (
+//     <div className="lexicon-content">
+//       {wordLang === "gr" ? (
+//         <>
+//           <div className="lex-item">
+//             <span className="label">{lang.original || "Оригінал"}:</span>
+//             <span className="value gr">{word.word}</span>
+//           </div>
+//           <div className="lex-item">
+//             <span className="label">{lang.lemma || "Лема"}:</span>
+//             <span className="value">{word.lemma}</span>
+//           </div>
+//           {word.morph && (
+//             <div className="lex-item">
+//               <span className="label">{lang.morphology || "Морфологія"}:</span>
+//               <span className="value">{word.morph}</span>
+//             </div>
+//           )}
+//           <div className="lex-item">
+//             <span className="label">{lang.translation || "Переклад"}:</span>
+//             <span className="value uk">{translation}</span>
+//           </div>
+//         </>
+//       ) : (
+//         <>
+//           <div className="lex-item">
+//             <span className="label">{lang.translation || "Переклад"}:</span>
+//             <span className="value uk">{word.word}</span>
+//           </div>
+//           <div className="lex-item">
+//             <span className="label">{lang.original || "Оригінал"}:</span>
+//             <span className="value gr">{translation}</span>
+//           </div>
+//           <div className="lex-item">
+//             <span className="label">{lang.strong || "Strong's"}:</span>
+//             <span className="value">{word.strong}</span>
+//           </div>
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default LexiconWindow;
+
+// ----------------------------------------
+
+// import React from "react";
+import CloseIcon from "../elements/CloseIcon"; // Шлях до вашого CloseIcon
+
+const LexiconWindow = ({ data, lang, onClose }) => {
   if (!data || !data.word) {
     return (
-      <div className="text-muted text-center">
-        {lang.select_word || "Оберіть слово для перегляду"}
+      <div className="lexicon-window">
+        <h5 className="lexicon-title">
+          {lang.lexicon || "Лексикон"}
+          {onClose && <CloseIcon onClick={onClose} />}{" "}
+          {/* Якщо onClose є, показати */}
+        </h5>
+        <div className="text-muted text-center">
+          {lang.select_word || "Оберіть слово для перегляду"}
+        </div>
       </div>
     );
   }
@@ -236,44 +305,55 @@ const LexiconWindow = ({ data, lang }) => {
   const { word, lang: wordLang, translation } = data;
 
   return (
-    <div className="lexicon-content">
-      {wordLang === "gr" ? (
-        <>
-          <div className="lex-item">
-            <span className="label">{lang.original || "Оригінал"}:</span>
-            <span className="value gr">{word.word}</span>
-          </div>
-          <div className="lex-item">
-            <span className="label">{lang.lemma || "Лема"}:</span>
-            <span className="value">{word.lemma}</span>
-          </div>
-          {word.morph && (
+    <div className="lexicon-window">
+      <h5 className="lexicon-title">
+        {word.strong} —{" "}
+        {wordLang === "gr"
+          ? lang.original || "Оригінал"
+          : lang.translation || "Переклад"}
+        {onClose && <CloseIcon onClick={onClose} />} {/* Додано CloseIcon */}
+      </h5>
+      <div className="lexicon-content">
+        {wordLang === "gr" ? (
+          <>
             <div className="lex-item">
-              <span className="label">{lang.morphology || "Морфологія"}:</span>
-              <span className="value">{word.morph}</span>
+              <span className="label">{lang.original || "Оригінал"}:</span>
+              <span className="value gr">{word.word}</span>
             </div>
-          )}
-          <div className="lex-item">
-            <span className="label">{lang.translation || "Переклад"}:</span>
-            <span className="value uk">{translation}</span>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="lex-item">
-            <span className="label">{lang.translation || "Переклад"}:</span>
-            <span className="value uk">{word.word}</span>
-          </div>
-          <div className="lex-item">
-            <span className="label">{lang.original || "Оригінал"}:</span>
-            <span className="value gr">{translation}</span>
-          </div>
-          <div className="lex-item">
-            <span className="label">{lang.strong || "Strong's"}:</span>
-            <span className="value">{word.strong}</span>
-          </div>
-        </>
-      )}
+            <div className="lex-item">
+              <span className="label">{lang.lemma || "Лема"}:</span>
+              <span className="value">{word.lemma}</span>
+            </div>
+            {word.morph && (
+              <div className="lex-item">
+                <span className="label">
+                  {lang.morphology || "Морфологія"}:
+                </span>
+                <span className="value">{word.morph}</span>
+              </div>
+            )}
+            <div className="lex-item">
+              <span className="label">{lang.translation || "Переклад"}:</span>
+              <span className="value uk">{translation}</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="lex-item">
+              <span className="label">{lang.translation || "Переклад"}:</span>
+              <span className="value uk">{word.word}</span>
+            </div>
+            <div className="lex-item">
+              <span className="label">{lang.original || "Оригінал"}:</span>
+              <span className="value gr">{translation}</span>
+            </div>
+            <div className="lex-item">
+              <span className="label">{lang.strong || "Strong's"}:</span>
+              <span className="value">{word.strong}</span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
