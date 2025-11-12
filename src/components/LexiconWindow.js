@@ -284,7 +284,9 @@ import "../styles/LexiconWindow.css";
 // ----------------------------------------
 
 // import React from "react";
-import CloseIcon from "../elements/CloseIcon"; // Шлях до вашого CloseIcon
+
+// LexiconWindow.js
+import CloseIcon from "../elements/CloseIcon";
 
 const LexiconWindow = ({ data, lang, onClose }) => {
   if (!data || !data.word) {
@@ -307,11 +309,14 @@ const LexiconWindow = ({ data, lang, onClose }) => {
   return (
     <div className="lexicon-window">
       <h5 className="lexicon-title">
-        {word.strong} —{" "}
-        {wordLang === "gr"
-          ? lang.original || "Оригінал"
-          : lang.translation || "Переклад"}
-        {onClose && <CloseIcon onClick={onClose} />} {/* Додано CloseIcon */}
+        <div>
+          {word.strong} —{" "}
+          {wordLang === "gr"
+            ? lang.original || "Оригінал"
+            : lang.translation || "Переклад"}
+        </div>
+        <div>{onClose && <CloseIcon onClick={onClose} />}</div>
+        {/* Додано CloseIcon */}
       </h5>
       <div className="lexicon-content">
         {wordLang === "gr" ? (

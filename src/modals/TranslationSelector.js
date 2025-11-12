@@ -443,12 +443,14 @@ const TranslationSelector = ({
         <div className="modal-dialog modal-lg">
           <div className="modal-content stepModalFgBg">
             <div className="modal-body">
-              <TranslationTabs
-                lang={lang}
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-              />
-              <CloseIcon onClick={onRequestClose} />
+              <div className="modal-body-close">
+                <TranslationTabs
+                  lang={lang}
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+                <CloseIcon onClick={onRequestClose} />
+              </div>
 
               <LanguageFilter
                 lang={lang}

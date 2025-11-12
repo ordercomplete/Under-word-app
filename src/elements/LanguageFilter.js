@@ -4,9 +4,9 @@ const LanguageFilter = ({ lang, languageFilter, onFilterChange }) => {
   const languageOptions = [
     { value: "_all", label: lang.all || "Всі" },
     { value: "en", label: lang.english || "англійська" },
-    { value: "uk", label: lang.ukrainian || "Українська" },
+    { value: "uk", label: lang.ukrainian || "українська" },
     { value: "ru", label: lang.russian || "російська" },
-    { value: "_ancient", label: lang.ancient || "Стародавня" },
+    { value: "_ancient", label: lang.ancient || "стародавня" },
   ];
 
   return (
@@ -18,7 +18,7 @@ const LanguageFilter = ({ lang, languageFilter, onFilterChange }) => {
         {lang.language || "Мова"}:&nbsp;
       </span>
       <div className="form-inline" style={{ marginTop: 8 }}>
-        <div className="btn-group" data-toggle="buttons">
+        <div className="btn-group " data-toggle="buttons">
           {languageOptions.map((opt) => (
             <label
               key={opt.value}
@@ -27,6 +27,7 @@ const LanguageFilter = ({ lang, languageFilter, onFilterChange }) => {
               }`}
             >
               <input
+                className="m-1"
                 type="radio"
                 name="languageFilter"
                 value={opt.value}

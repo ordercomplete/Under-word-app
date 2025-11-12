@@ -89,7 +89,7 @@ const ShareDropdown = ({ url, text, lang }) => {
 
   return (
     <>
-      <Dropdown className="d-none d-sm-block">
+      <Dropdown className=" d-sm-block">
         <Dropdown.Toggle variant="link" className="p-0 text-decoration-none">
           <i className="bi bi-share-fill text-primary"></i>
         </Dropdown.Toggle>

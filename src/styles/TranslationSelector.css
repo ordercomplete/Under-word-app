@@ -60,3 +60,7 @@
 .close-end {
   justify-content: flex-end;
 }
+.modal-body-close {
+  display: flex;
+  justify-content: space-between;
+}

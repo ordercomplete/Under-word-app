@@ -25,12 +25,34 @@ body {
   overflow: hidden; /* Уникаємо скролу на main */
 }
 
+.passage-container {
+  display: flex;
+  height: 100vh;
+}
+
 .passage-column {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden; /* Уникаємо скролу на колонках */
+}
+
+.passage-page {
+  background-color: #f5f5d5;
+  min-height: 100vh;
+}
+.passage-panels {
+  display: flex;
+  flex: 1 1 auto !important;
+  overflow: auto;
+}
+
+.column-view .panel {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .chapter-viewer {
@@ -42,7 +64,7 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-  /* height: auto; */
+  height: auto;
 }
 
 .book-selector-content {
@@ -52,15 +74,18 @@ body {
 .lexicon-column {
   width: 300px; /* Фіксована ширина справа */
   display: flex;
-  flex-direction: column; /* Вертикально для кількох вікон */
+  flex-direction: column;
+  /* Вертикально для кількох вікон */
   border-left: 1px solid #ddd;
-  /* overflow-y: auto; */
+  overflow-y: auto;
 
-  flex-shrink: 0; /* Не стискається */
+  flex-shrink: 0;
+  /* Не стискається */
   height: 100vh; /* Повна висота */
   overflow-y: auto; /* Скрол в лексиконі */
   position: sticky;
-  top: 65px;
+  /* top: 65px; */
+  padding-top: 63px;
 }
 
 .lexicon-window {
@@ -76,40 +101,51 @@ body {
 }
 
 .lexicon-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   background: white; /* Фіксований заголовок */
   z-index: 1;
   margin: 0;
-  padding: 0.5rem;
-  border-bottom: 1px solid #ddd;
+  /* padding: 0.5rem; */
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  min-height: 50px;
 }
-
-.passage-container {
-  padding-top: 65px;
-}
-
-@media (max-width: 992px) {
+/* @media (min-width: 576px) {
+  .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+  }
+} */
+/* .collapse:not(.show) {
+  display: none;
+} */
+@media (max-width: 576px) {
   .main-content {
     flex-direction: column;
   }
   .passage-container {
     flex-direction: column; /* Переносимо лексикон під */
-    padding-top: 65px;
+    /* padding-top: 65px; */
   }
   .lexicon-column {
     width: 100%;
     /* Повна ширина */
+    padding-top: 0px;
     flex-direction: row;
     /* Горизонтально для лексиконів */
     overflow-x: auto; /* Скрол горизонтальний */
     height: auto;
     max-height: 50%;
     border-left: none;
-    border-top: 1px solid #ddd;
+    border: 1px solid #ddd;
     position: sticky;
     bottom: 0;
     background: white; /* Фікс до низу */
+    display: flex;
   }
   .lexicon-window {
     /* flex: 0 0 300px; */
@@ -122,4 +158,29 @@ body {
   .lexicon-window:last-child {
     border-right: none;
   }
+}
+
+.panel {
+  flex: 1;
+  min-width: 400px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel:last-child {
+  border-right: none;
+}
+
+.pair-section {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #8a7878;
+}
+
+.pair-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }

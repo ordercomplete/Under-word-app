@@ -700,7 +700,7 @@ import "../styles/NavbarHeader.css";
 Modal.setAppElement("#root");
 
 const NavbarHeader = ({ lang, onLanguageChange }) => {
-  const isDesktop = useMediaQuery({ minWidth: 1432 });
+  const isDesktop = useMediaQuery({ minWidth: 576 });
 
   const [showCopyModal, setShowCopyModal] = useState(false);
   const [showFontModal, setShowFontModal] = useState(false);
@@ -745,7 +745,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
     <Navbar
       fixed="top"
       bg="light"
-      expand="lg"
+      expand="sm"
       className="navbar-custom border-bottom shadow-sm"
     >
       <Container fluid>

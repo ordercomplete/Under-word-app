@@ -77,9 +77,11 @@
 
     "ancient": "Стародавня",
     "originals": "Оригінал",
-    "english": "English",
-    "russian": "Русский",
+    "english": "Англійська",
+    "russian": "Російська",
     "ukrainian": "Українська",
+
+    "chapter": "Розділ",
 
     "gen_1_1": "На початку Бог створив небо і землю."
   },
@@ -166,6 +168,8 @@
     "russian": "Russian",
     "ukrainian": "Ukrainian",
 
+    "chapter": "Chapter",
+
     "gen_1_1": "In the beginning God created the heavens and the earth."
   },
 
@@ -250,6 +254,8 @@
     "english": "Английский",
     "russian": "Русский",
     "ukrainian": "Украинский",
+
+    "chapter": "Глава",
 
     "gen_1_1": "В начале сотворил Бог небо и землю."
   }
