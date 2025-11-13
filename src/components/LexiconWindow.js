@@ -1,183 +1,41 @@
-import React from "react";
-import "../styles/LexiconWindow.css";
-// import "../elements/CloseIcon.js";
+// LexiconWindow.js
 
-// const LexiconWindow = ({ lang }) => {
-//   return (
-//     <div className="lexicon-window">
-//       <h6 className="lexicon-title">{lang?.lexicon || "Лексикон"}</h6>
-//       <p className="text-muted">H7225 — רֵאשִׁית (початок)</p>
-//     </div>
-//   );
-// };
+// import React from "react";
+// import "../styles/LexiconWindow.css";
 
-// const LexiconWindow = ({ lexicon, lang }) => {
-//   if (!lexicon.gr && !lexicon.uk) return null;
+// import CloseIcon from "../elements/CloseIcon";
 
-//   return (
-//     <div className="lexicon-container">
-//       {lexicon.gr && (
-//         <div className="lex-gr">
-//           <strong>{lexicon.gr.strong}</strong> {lexicon.gr.lemma}
-//           <br />
-//           <small>{lexicon.gr.morph}</small>
+// const LexiconWindow = ({ data, lang, onClose }) => {
+//   if (!data || !data.word) {
+//     return (
+//       <div className="lexicon-window">
+//         <h5 className="lexicon-title">
+//           {lang.lexicon || "Лексикон"}
+//           {onClose && <CloseIcon onClick={onClose} />}{" "}
+//           {/* Якщо onClose є, показати */}
+//         </h5>
+//         <div className="text-muted text-center">
+//           {lang.select_word || "Оберіть слово для перегляду"}
 //         </div>
-//       )}
-//       {lexicon.uk && (
-//         <div className="lex-uk">
-//           <strong>{lexicon.uk.word}</strong>
-//           <br />
-//           <small>→ {lexicon.uk.strong}</small>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// const LexiconWindow = ({ strong, lang }) => {
-//   if (!strong) return null;
-
-//   const isGreek = strong.startsWith("G");
-//   const num = strong.slice(1);
-
-//   return (
-//     <div className="lexicon-popup">
-//       <strong>{strong}</strong> —{" "}
-//       {isGreek ? `Грецьке слово #${num}` : `Івритське слово #${num}`}
-//       <br />
-//       <small>Клікни для детального словника</small>
-//     </div>
-//   );
-// };
-// export default LexiconWindow;
-
-// const LexiconWindow = ({ strong, lang }) => {
-//   if (!strong) return null;
-
-//   const isGreek = strong.startsWith("G");
-//   const num = strong.slice(1);
-
-//   return (
-//     <div
-//       style={{
-//         position: "fixed",
-//         bottom: 20,
-//         right: 20,
-//         background: "#fff",
-//         border: "1px solid #ddd",
-//         borderRadius: 6,
-//         padding: 10,
-//         boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-//         zIndex: 10000,
-//         fontSize: 14,
-//         maxWidth: 300,
-//       }}
-//     >
-//       <strong style={{ color: isGreek ? "#d35400" : "#8e44ad" }}>
-//         {strong}
-//       </strong>
-//       <br />
-//       <small>
-//         {isGreek
-//           ? `${lang.greek_word || "Грецьке слово"} #${num}`
-//           : `${lang.hebrew_word || "Івритське слово"} #${num}`}
-//       </small>
-//     </div>
-//   );
-// };
-
-// const LexiconWindow = ({ data, lang }) => {
-//   if (!data.word) return null;
-
-//   return (
-//     <div
-//       style={{
-//         position: "fixed",
-//         bottom: 20,
-//         right: 20,
-//         background: "white",
-//         border: "1px solid #ddd",
-//         padding: 12,
-//         borderRadius: 8,
-//         boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-//         zIndex: 10000,
-//         fontSize: 14,
-//         maxWidth: 280,
-//       }}
-//     >
-//       <strong style={{ color: data.lang === "gr" ? "#d35400" : "#8e44ad" }}>
-//         {data.word.strong || data.word.word}
-//       </strong>
-//       <br />
-//       <small>
-//         {data.lang === "gr" ? data.word.lemma : data.word.word}
-//         {data.word.morph && ` (${data.word.morph})`}
-//       </small>
-//     </div>
-//   );
-// };
-
-// export default LexiconWindow;
-
-// const LexiconWindow = ({ data, lang }) => {
-//   // ЗАХИСТ: якщо data або data.word — undefined/null
-//   if (!data || !data.word || !data.word.word) return null;
-
-//   const { word, lang: wordLang } = data;
-
-//   return (
-//     <div
-//       style={{
-//         position: "fixed",
-//         bottom: 20,
-//         right: 20,
-//         background: "white",
-//         border: "1px solid #ddd",
-//         padding: 12,
-//         borderRadius: 8,
-//         boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-//         zIndex: 10000,
-//         fontSize: 14,
-//         maxWidth: 280,
-//         fontFamily: "system-ui, sans-serif",
-//       }}
-//     >
-//       <strong
-//         style={{
-//           color: wordLang === "gr" ? "#d35400" : "#8e44ad",
-//           fontSize: 16,
-//         }}
-//       >
-//         {word.strong || word.word}
-//       </strong>
-//       <br />
-//       <small style={{ color: "#555" }}>
-//         {wordLang === "gr"
-//           ? `${word.lemma || word.word} (${word.morph || ""})`
-//           : word.word}
-//       </small>
-//       {word.helper && (
-//         <div style={{ marginTop: 6, fontSize: 12, color: "#999" }}>
-//           {lang.helper_word || "Допоміжне слово"}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default LexiconWindow;
-
-// const LexiconWindow = ({ data, lang }) => {
-//   if (!data || !data.word) return null;
+//       </div>
+//     );
+//   }
 
 //   const { word, lang: wordLang, translation } = data;
 
 //   return (
-//     <div className="lexicon-sidebar">
-//       <div className="lexicon-header">
-//         <strong>{word.strong || "—"}</strong>
-//       </div>
-//       <div className="lexicon-body">
+//     <div className="lexicon-window">
+//       <h5 className="lexicon-title">
+//         <div>
+//           {word.strong} —{" "}
+//           {wordLang === "gr"
+//             ? lang.original || "Оригінал"
+//             : lang.translation || "Переклад"}
+//         </div>
+//         <div>{onClose && <CloseIcon onClick={onClose} />}</div>
+//         {/* Додано CloseIcon */}
+//       </h5>
+//       <div className="lexicon-content">
 //         {wordLang === "gr" ? (
 //           <>
 //             <div className="lex-item">
@@ -224,139 +82,256 @@ import "../styles/LexiconWindow.css";
 
 // export default LexiconWindow;
 
-// -----------------------------------------------------
-// const LexiconWindow = ({ data, lang }) => {
-//   if (!data || !data.word) {
-//     return (
-//       <div className="text-muted text-center">
-//         {lang.select_word || "Оберіть слово для перегляду"}
-//       </div>
-//     );
-//   }
-
-//   const { word, lang: wordLang, translation } = data;
-
-//   return (
-//     <div className="lexicon-content">
-//       {wordLang === "gr" ? (
-//         <>
-//           <div className="lex-item">
-//             <span className="label">{lang.original || "Оригінал"}:</span>
-//             <span className="value gr">{word.word}</span>
-//           </div>
-//           <div className="lex-item">
-//             <span className="label">{lang.lemma || "Лема"}:</span>
-//             <span className="value">{word.lemma}</span>
-//           </div>
-//           {word.morph && (
-//             <div className="lex-item">
-//               <span className="label">{lang.morphology || "Морфологія"}:</span>
-//               <span className="value">{word.morph}</span>
-//             </div>
-//           )}
-//           <div className="lex-item">
-//             <span className="label">{lang.translation || "Переклад"}:</span>
-//             <span className="value uk">{translation}</span>
-//           </div>
-//         </>
-//       ) : (
-//         <>
-//           <div className="lex-item">
-//             <span className="label">{lang.translation || "Переклад"}:</span>
-//             <span className="value uk">{word.word}</span>
-//           </div>
-//           <div className="lex-item">
-//             <span className="label">{lang.original || "Оригінал"}:</span>
-//             <span className="value gr">{translation}</span>
-//           </div>
-//           <div className="lex-item">
-//             <span className="label">{lang.strong || "Strong's"}:</span>
-//             <span className="value">{word.strong}</span>
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default LexiconWindow;
-
-// ----------------------------------------
-
-// import React from "react";
-
-// LexiconWindow.js
+// src/components/LexiconWindow.js
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CloseIcon from "../elements/CloseIcon";
+import "../styles/LexiconWindow.css";
+// origVer та інше в 13.11.25 в 15:59
+const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
+  const [entry, setEntry] = useState(null); //додано в 13.11.25 в 15:59
+  const [loading, setLoading] = useState(true); //додано в 13.11.25 в 15:59
+  const [activeTab, setActiveTab] = useState("dictionary");
 
-const LexiconWindow = ({ data, lang, onClose }) => {
-  if (!data || !data.word) {
+  const strong = data?.word?.strong;
+  const filePath = `/data/strongs/${strong}.json`;
+
+  useEffect(() => {
+    if (!strong) {
+      setLoading(false);
+      return;
+    }
+
+    console.log(`LexiconWindow: Loading ${filePath}`); // Лог завантаження
+
+    fetch(filePath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((json) => {
+        const key = Object.keys(json)[0];
+        const rawEntry = json[key];
+
+        // ЗАГЛУШКИ: заповнюємо відсутні поля
+        const safeEntry = {
+          strong: rawEntry.strong || strong,
+          word: rawEntry.word || "—",
+          translit: rawEntry.translit || "—",
+          translation: rawEntry.translation || "—",
+          morphology: rawEntry.morphology || "—",
+          usages_count: rawEntry.usages_count ?? 0,
+          meanings: Array.isArray(rawEntry.meanings) ? rawEntry.meanings : [],
+          lsj_definition_raw:
+            typeof rawEntry.lsj_definition_raw === "string"
+              ? rawEntry.lsj_definition_raw
+              : "",
+          grammar:
+            typeof rawEntry.grammar === "string" ? rawEntry.grammar : "—",
+        };
+
+        setEntry(safeEntry);
+        console.log(`LexiconWindow: Loaded ${strong}`, safeEntry);
+        // setEntry(json[key]);
+        // console.log(`LexiconWindow: Loaded ${strong}`, json[key]);
+      })
+      .catch((err) => {
+        console.error(`Failed to load ${filePath}:`, err);
+        setEntry(null);
+      })
+      .finally(() => setLoading(false));
+  }, [strong]);
+
+  if (!strong) {
     return (
       <div className="lexicon-window">
         <h5 className="lexicon-title">
           {lang.lexicon || "Лексикон"}
-          {onClose && <CloseIcon onClick={onClose} />}{" "}
-          {/* Якщо onClose є, показати */}
+          {onBroadcasting && <CloseIcon onClick={onClose} />}
         </h5>
-        <div className="text-muted text-center">
-          {lang.select_word || "Оберіть слово для перегляду"}
-        </div>
+        <div className="text-muted text-center p-3">Оберіть слово</div>
       </div>
     );
   }
 
-  const { word, lang: wordLang, translation } = data;
+  if (loading) {
+    return (
+      <div className="lexicon-window">
+        <h5 className="lexicon-title">{strong}</h5>
+        <div className="p-3 text-center">Завантаження...</div>
+      </div>
+    );
+  }
+
+  if (!entry) {
+    return (
+      <div className="lexicon-window">
+        <h5 className="lexicon-title">{strong}</h5>
+        <div className="p-3 text-danger">Дані відсутні</div>
+      </div>
+    );
+  }
+
+  const parseRef = (ref) => {
+    const match = ref.match(/([A-Z]+)\.(\d+):(\d+)/);
+    if (!match) return null;
+    const [, book, ch, v] = match;
+    const bookData =
+      coreData?.lxx?.OldT?.flatMap((g) => g.books).find(
+        (b) => b.code === book
+      ) ||
+      coreData?.mt?.OldT?.flatMap((g) => g.books).find((b) => b.code === book);
+    if (!bookData) return null;
+    return { book: bookData.code, chapter: ch, verse: v };
+  };
+
+  const renderWithLinks = (text) => {
+    return text
+      .split(/(\[[^\]]+\]|\([^\)]+\)|\b[A-Z]+\.\d+:\d+\b)/g)
+      .map((part, i) => {
+        if (part.match(/^\[[^\]]+\]$/)) {
+          return (
+            <sup key={i} className="text-muted">
+              [посилання]
+            </sup>
+          );
+        }
+        if (part.match(/^\([^\)]+\)$/)) {
+          return (
+            <span key={i} className="text-muted">
+              {part}
+            </span>
+          );
+        }
+        const ref = parseRef(part);
+        if (ref) {
+          return (
+            <Link
+              key={i}
+              to={`/original/${strong.startsWith("H") ? "mt" : "lxx"}/${
+                ref.book
+              }.${ref.chapter}#v${ref.verse}`}
+              className="text-primary text-decoration-underline"
+              title={`Відкрити ${ref.book} ${ref.chapter}:${ref.verse}`}
+            >
+              {part}
+            </Link>
+          );
+        }
+        return part;
+      });
+  };
+
+  const renderLSJ = (text) => {
+    if (!text || text.trim() === "") {
+      return <p className="text-muted p-3">Немає даних</p>; // ЗАГЛУШКА
+    }
+    const sections = text.split(/__(.+?)__/).filter(Boolean);
+    return sections.map((sec, i) => {
+      if (i % 2 === 0) {
+        return (
+          <p
+            key={i}
+            dangerouslySetInnerHTML={{ __html: sec.replace(/\n/g, "<br>") }}
+          />
+        );
+      } else {
+        return (
+          <h6 key={i} className="mt-3 text-primary">
+            {sec}
+          </h6>
+        );
+      }
+    });
+  };
 
   return (
     <div className="lexicon-window">
       <h5 className="lexicon-title">
         <div>
-          {word.strong} —{" "}
-          {wordLang === "gr"
-            ? lang.original || "Оригінал"
-            : lang.translation || "Переклад"}
+          <strong>{entry.word}</strong> ({entry.translit})
+          <small className="text-muted"> • {strong}</small>
         </div>
-        <div>{onClose && <CloseIcon onClick={onClose} />}</div>
-        {/* Додано CloseIcon */}
+        {onClose && <CloseIcon onClick={onClose} />}
       </h5>
+
+      <div className="lexicon-tabs">
+        <button
+          className={activeTab === "dictionary" ? "active" : ""}
+          onClick={() => setActiveTab("dictionary")}
+        >
+          Словник
+        </button>
+        <button
+          className={activeTab === "meanings" ? "active" : ""}
+          onClick={() => setActiveTab("meanings")}
+        >
+          Значення
+        </button>
+        <button
+          className={activeTab === "lsj" ? "active" : ""}
+          onClick={() => setActiveTab("lsj")}
+        >
+          LSJ
+        </button>
+        <button
+          className={activeTab === "grammar" ? "active" : ""}
+          onClick={() => setActiveTab("grammar")}
+        >
+          Граматика
+        </button>
+      </div>
+
       <div className="lexicon-content">
-        {wordLang === "gr" ? (
-          <>
+        {activeTab === "dictionary" && (
+          <div className="p-3">
             <div className="lex-item">
-              <span className="label">{lang.original || "Оригінал"}:</span>
-              <span className="value gr">{word.word}</span>
+              <span className="label">Оригінал:</span>
+              <span className="value gr">{entry.word}</span>
             </div>
             <div className="lex-item">
-              <span className="label">{lang.lemma || "Лема"}:</span>
-              <span className="value">{word.lemma}</span>
+              <span className="label">Трансліт:</span>
+              <span className="value">{entry.translit}</span>
             </div>
-            {word.morph && (
-              <div className="lex-item">
-                <span className="label">
-                  {lang.morphology || "Морфологія"}:
-                </span>
-                <span className="value">{word.morph}</span>
-              </div>
+            <div className="lex-item">
+              <span className="label">Переклад:</span>
+              <span className="value uk">{entry.translation}</span>
+            </div>
+            <div className="lex-item">
+              <span className="label">Вживань:</span>
+              <span className="value">{entry.usages_count}</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "meanings" && (
+          <div className="meanings-content ">
+            {entry.meanings && entry.meanings.length > 0 ? (
+              <ul className="list-unstyled ">
+                {entry.meanings.map((m, i) => (
+                  <li
+                    key={i}
+                    className="mb-2"
+                    dangerouslySetInnerHTML={{ __html: renderWithLinks(m) }}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <p className="text-muted p-3">Немає даних</p> // ← ЗАГЛУШКА
             )}
-            <div className="lex-item">
-              <span className="label">{lang.translation || "Переклад"}:</span>
-              <span className="value uk">{translation}</span>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="lex-item">
-              <span className="label">{lang.translation || "Переклад"}:</span>
-              <span className="value uk">{word.word}</span>
-            </div>
-            <div className="lex-item">
-              <span className="label">{lang.original || "Оригінал"}:</span>
-              <span className="value gr">{translation}</span>
-            </div>
-            <div className="lex-item">
-              <span className="label">{lang.strong || "Strong's"}:</span>
-              <span className="value">{word.strong}</span>
-            </div>
-          </>
+          </div>
+        )}
+
+        {activeTab === "lsj" && (
+          <div className=" lsj-content">
+            {renderLSJ(entry.lsj_definition_raw)}
+          </div>
+        )}
+
+        {activeTab === "grammar" && (
+          <div className="p-3">
+            <pre className="bg-light p-3 rounded">{entry.grammar}</pre>
+          </div>
         )}
       </div>
     </div>

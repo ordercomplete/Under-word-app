@@ -81,3 +81,14 @@
   font-style: italic;
   opacity: 0.9;
 }
+.pair-section {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #8a7878;
+}
+
+.pair-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}

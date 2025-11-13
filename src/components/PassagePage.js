@@ -892,6 +892,7 @@ import ChapterSelector from "../modals/ChapterSelector";
 import InterlinearVerse from "./InterlinearVerse";
 import LexiconWindow from "./LexiconWindow";
 import "../styles/LexiconWindow.css";
+import "../styles/PassagePage.css";
 
 const Panel = ({
   id,
@@ -922,26 +923,6 @@ const Panel = ({
       ", "
     )}`
   ); // Лог ініціалізації панелі
-
-  // useEffect(() => {
-  //   console.log(
-  //     `Panel ${id}: Sync changed to ${isScrollSynced}, masterRef: ${masterRef}`
-  //   ); // Лог синхрону
-  //   if (isScrollSynced && !isMaster && masterRef) {
-  //     const [book, chapter] = masterRef.split(".");
-  //     const supported = coreData[versions[0]?.toLowerCase()]?.OldT?.flatMap(
-  //       (g) => g.books
-  //     ).some((b) => b.code === book);
-  //     if (supported) {
-  //       console.log(`Panel ${id}: Syncing ref to ${masterRef}`);
-  //       setCurrentRef(masterRef);
-  //       setMessage(null);
-  //     } else {
-  //       console.log(`Panel ${id}: Book not supported in versions`);
-  //       setMessage("Книга не підтримується в обраних версіях");
-  //     }
-  //   }
-  // }, [isScrollSynced, masterRef, isMaster, versions, coreData]);
 
   useEffect(() => {
     const [book, chapterStr] = currentRef.split(".");
@@ -1115,24 +1096,70 @@ const PassagePage = ({ lang }) => {
   const [coreData, setCoreData] = useState({});
   const [coreLoading, setCoreLoading] = useState(true);
 
+  // const [strongsCache, setStrongsCache] = useState({});
+
   console.log("PassagePage rendered, panels count:", panels.length); // Лог рендеру
 
+  // useEffect(() => {
+  //   console.log("Fetching core.json");
+  //   fetch("/data/core.json")
+  //     .then((r) => {
+  //       if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  //       return r.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("coreData loaded");
+  //       setCoreData(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error("core.json error:", err);
+  //     })
+  //     .finally(() => setCoreLoading(false));
+  // }, []);
+  // У useEffect, після core.json
+
   useEffect(() => {
-    console.log("Fetching core.json");
-    fetch("/data/core.json")
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((data) => {
-        console.log("coreData loaded");
-        setCoreData(data);
-      })
-      .catch((err) => {
-        console.error("core.json error:", err);
-      })
-      .finally(() => setCoreLoading(false));
+    const loadCoreData = async () => {
+      try {
+        const [coreRes, strongsRes] = await Promise.all([
+          fetch("/data/core.json"),
+          fetch("/data/strongs.json"),
+        ]);
+
+        if (!coreRes.ok || !strongsRes.ok) throw new Error("Fetch error");
+
+        const core = await coreRes.json();
+        const strongs = await strongsRes.json();
+
+        setCoreData({ ...core, strongs }); // ← додаємо strongs
+      } catch (err) {
+        console.error("Failed to load core data:", err);
+      } finally {
+        setCoreLoading(false);
+      }
+    };
+
+    loadCoreData();
   }, []);
+
+  // Функція для завантаження strong
+  // useEffect(() => {
+  //   const loadStrong = async (strongCode) => {
+  //     if (strongsCache[strongCode]) return strongsCache[strongCode];
+
+  //     try {
+  //       const res = await fetch(`/data/strongs/strong-${strongCode}.json`);
+  //       if (!res.ok) throw new Error("Not found");
+  //       const data = await res.json();
+  //       setStrongsCache((prev) => ({ ...prev, [strongCode]: data }));
+  //       return data;
+  //     } catch (err) {
+  //       console.warn(`Strong ${strongCode} not found`);
+  //       return null;
+  //     }
+  //   };
+  //   loadStrong();
+  // }, []);
 
   const addPanel = () => {
     const maxPanels = window.innerWidth < 992 ? 2 : 4;
@@ -1156,21 +1183,67 @@ const PassagePage = ({ lang }) => {
     }
   };
 
+  // const handleWordClick = (data) => {
+  //   console.log("Word clicked:", data); // Лог кліку слова
+  //   const wordLang = data.lang;
+  //   const existingIndex = lexicons.findIndex((l) => l.lang === wordLang);
+
+  //   if (existingIndex !== -1) {
+  //     const newLex = [...lexicons];
+  //     newLex[existingIndex].data = data;
+  //     setLexicons(newLex);
+  //   } else if (lexicons.length < 2) {
+  //     setLexicons([...lexicons, { id: Date.now(), data, lang: wordLang }]);
+  //   } else {
+  //     const newLex = [...lexicons];
+  //     newLex[newLex.length - 1].data = data;
+  //     newLex[newLex.length - 1].lang = wordLang;
+  //     setLexicons(newLex);
+  //   }
+  // };
+
+  // const handleWordClick оновлено 13.11.25 в 15:59, поки що відмінено
   const handleWordClick = (data) => {
-    console.log("Word clicked:", data); // Лог кліку слова
-    const wordLang = data.lang;
-    const existingIndex = lexicons.findIndex((l) => l.lang === wordLang);
+    console.log("Word clicked in panel:", data); // Лог кліку
+
+    const { word, origVer } = data; // ← ДОДАНО origVer
+    if (!word?.strong || !origVer) {
+      console.warn("Missing strong or origVer:", data);
+      return;
+    }
+
+    const key = `${origVer}:${word.strong}`; // Унікальний ключ: LXX:G1722
+    const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+    console.log(`Looking for lexicon: ${key}, found: ${existingIndex !== -1}`);
 
     if (existingIndex !== -1) {
+      // Оновлюємо існуюче
       const newLex = [...lexicons];
       newLex[existingIndex].data = data;
       setLexicons(newLex);
     } else if (lexicons.length < 2) {
-      setLexicons([...lexicons, { id: Date.now(), data, lang: wordLang }]);
+      // Додаємо нове
+      setLexicons([
+        ...lexicons,
+        {
+          id: Date.now(),
+          key,
+          data,
+          origVer,
+          lang: word.strong.startsWith("H") ? "he" : "gr",
+        },
+      ]);
     } else {
+      // Замінюємо останнє
       const newLex = [...lexicons];
-      newLex[newLex.length - 1].data = data;
-      newLex[newLex.length - 1].lang = wordLang;
+      newLex[1] = {
+        id: Date.now(),
+        key,
+        data,
+        origVer,
+        lang: word.strong.startsWith("H") ? "he" : "gr",
+      };
       setLexicons(newLex);
     }
   };
@@ -1210,6 +1283,8 @@ const PassagePage = ({ lang }) => {
               data={lex.data}
               lang={lang}
               onClose={() => closeLexicon(lex.id)}
+              coreData={coreData} // ← ДОДАНО
+              origVer={lex.origVer} // ← ДОДАНО 13.11.25 в 15:59
             />
           ))}
         </div>

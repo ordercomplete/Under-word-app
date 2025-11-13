@@ -25,3 +25,124 @@
 .value.uk {
   color: #2c3e50;
 }
+/* ------------------------------------ */
+
+.lexicon-tabs {
+  display: flex;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  min-height: 50px;
+}
+
+.lexicon-tabs button {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lexicon-tabs button.active {
+  background: white;
+  border-bottom: 2px solid #007bff;
+  font-weight: 600;
+}
+
+.list-unstyled {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  /* overflow-y: auto; */
+}
+
+.meanings-content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-y: auto;
+  /* height: 100vh; */
+}
+
+.lsj-content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-y: auto;
+  /* height: 100vh; */
+}
+
+.lsj-content h6 {
+  font-weight: bold;
+  color: #495057;
+}
+/* ------------------------------------ */
+
+.lexicon-column {
+  width: 300px; /* Фіксована ширина справа */
+  display: flex;
+  flex-direction: column;
+  /* Вертикально для кількох вікон */
+  border-left: 1px solid #ddd;
+  /* overflow-y: auto; */
+  overflow: hidden; /* ← не скролити колонку */
+  flex-shrink: 0;
+  /* Не стискається */
+  height: 100vh;
+  /* Повна висота */
+  /* overflow-y: auto;  */
+  /* Скрол в лексиконі */
+  position: sticky;
+  /* top: 65px; */
+  padding-top: 63px;
+}
+
+.lexicon-window {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ddd;
+  /* border-radius: 6px; */
+  /* margin: 4px; */
+  /* overflow: hidden;  */
+  /* ← Вміст не виходить */
+  min-height: 200px;
+  /* max-height: calc(100vh - 80px); */
+  /* ← Не виходить за екран */
+}
+
+.lexicon-content {
+  background-image: url("/public/stoun-bg-1.jpg");
+  /* flex: 1; */
+  padding: 1rem;
+  /* height: auto; */
+  height: 100vh;
+  /* Повна висота */
+  overflow-y: auto;
+  font-size: 0.95rem;
+}
+.lexicon-window:last-child {
+  border-bottom: none;
+}
+
+.lexicon-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: white; /* Фіксований заголовок */
+  z-index: 1;
+  margin: 0;
+  /* padding: 0.5rem; */
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  min-height: 54px;
+
+  align-items: center;
+}

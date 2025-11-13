@@ -334,7 +334,6 @@ const PassageOptionsGroup = ({
 
   const [book, chapter] = currentRef.split(".");
 
-  // const [isHovered, setIsHovered] = useState(false);
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
 
@@ -376,24 +375,6 @@ const PassageOptionsGroup = ({
 
         {/* Prev/Next */}
         <div className="arg-summary-navigation">
-          {/* <button
-            className=" custom-button-nav    d-sm-inline-block"
-            onClick={onPrevChapter}
-            title={lang.prev_chapter}
-          >
-            <i className="bi bi-arrow-left-circle-fill text-primary fs-3"></i>
-          </button> */}
-          {/* <button
-            className="custom-button-nav"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <i
-              className={`bi bi-chevron-left fs-3 ${
-                isHovered ? "text-danger" : "text-primary"
-              }`}
-            ></i>
-          </button> */}
           <button
             className="custom-button-nav"
             onMouseEnter={() => setHoverPrev(true)}
@@ -425,7 +406,6 @@ const PassageOptionsGroup = ({
           </button>
 
           <ShareDropdown
-            // className="btn btn-link d-sm-inline-block "
             url={window.location.href}
             text={`${currentRef} | ${versions.join(", ")}`}
             lang={lang}

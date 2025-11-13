@@ -210,6 +210,7 @@ const InterlinearVerse = ({
 
       <div className="pairs-vertical">
         {pairs.map((pair, pIndex) => {
+          // console.log("Pair in InterlinearVerse:", pair); // ← Перевірте, чи є pair.origVer
           const origVerse = chapterData[pair.origVer]?.find(
             (v) => v?.v === verseNum
           );
@@ -271,52 +272,70 @@ const InterlinearVerse = ({
                   : pair.transVer}
               </h5>
               <div className="words-grid">
-                {alignedWords.map((pair, i) => {
-                  const hasStrong = pair.orig?.strong || pair.trans?.strong;
+                {alignedWords.map((wordPair, i) => {
+                  // const hasStrong = pair.orig?.strong || pair.trans?.strong;
+                  const hasStrong =
+                    wordPair.orig?.strong || wordPair.trans?.strong;
 
                   return (
                     <div
                       key={i}
                       className="word-pair"
                       onMouseEnter={() =>
-                        hasStrong && setHoveredWord({ pair, index: i })
+                        hasStrong && setHoveredWord({ wordPair, index: i })
                       }
                       onMouseLeave={() => setHoveredWord(null)}
                     >
+                      {/* ОРИГІНАЛ */}
                       <span
                         className="orig-word"
                         style={{
-                          cursor: pair.orig?.strong ? "pointer" : "default",
+                          cursor: wordPair.orig?.strong ? "pointer" : "default",
                         }}
                         onClick={() =>
-                          pair.orig?.strong &&
+                          wordPair.orig?.strong &&
                           onWordClick({
-                            word: pair.orig,
-                            lang: pair.orig.strong.startsWith("H")
+                            // word: pair.orig,
+                            word: wordPair.orig,
+                            origVer: pair.origVer, // ДОДАНО 13.11.25 в 15:59
+                            // lang: pair.orig.strong.startsWith("H")
+                            //   ? "he"
+                            //   : "gr",
+                            lang: wordPair.orig.strong.startsWith("H")
                               ? "he"
                               : "gr",
-                            translation: pair.trans?.word || pair.orig.word,
+                            // translation: pair.trans?.word || pair.orig.word,
+                            translation:
+                              wordPair.trans?.word || wordPair.orig.word,
                           })
                         }
                       >
-                        {pair.orig.word}
+                        {/* {pair.orig.word} */}
+                        {wordPair.orig.word}
                       </span>
-
+                      {/* ПЕРЕКЛАД */}
                       <span
                         className="trans-word"
                         style={{
-                          cursor: pair.trans?.strong ? "pointer" : "default",
+                          cursor: wordPair.trans?.strong
+                            ? "pointer"
+                            : "default",
                         }}
                         onClick={() =>
-                          pair.trans?.strong &&
+                          wordPair.trans?.strong &&
                           onWordClick({
-                            word: pair.trans,
+                            // word: pair.trans,
+                            word: wordPair.trans,
+                            origVer: pair.origVer, // ДОДАНО: UTT → LXX, UBT → THOT 13.11.25 в 15:59
                             lang: "uk",
-                            translation: pair.trans.word || pair.orig?.word,
+                            // translation: pair.trans.word || pair.orig?.word,
+                            // translation: pair.trans.word,
+                            translation: wordPair.trans.word,
                           })
                         }
                       >
-                        {pair.trans.word}
+                        {/* {pair.trans.word} */}
+                        {wordPair.trans.word}
                       </span>
                     </div>
                   );
@@ -328,7 +347,7 @@ const InterlinearVerse = ({
       </div>
 
       {/* Tooltip */}
-      {hoveredWord && (
+      {/* {hoveredWord && (
         <div
           ref={tooltipRef}
           className="hover-tooltip"
@@ -360,6 +379,43 @@ const InterlinearVerse = ({
               {hoveredWord.pair.trans.word !== "—"
                 ? hoveredWord.pair.trans.word
                 : hoveredWord.pair.orig.word || "—"}
+            </div>
+          </div>
+        </div>
+      )} */}
+
+      {hoveredWord && hoveredWord.wordPair && (
+        <div
+          ref={tooltipRef}
+          className="hover-tooltip"
+          style={{
+            position: "fixed",
+            left: `${mousePos.x + 15}px`,
+            top: `${mousePos.y - 80}px`,
+          }}
+          onMouseEnter={() => setHoveredWord(hoveredWord)}
+          onMouseLeave={() => setHoveredWord(null)}
+        >
+          <div className="tooltip-content">
+            {hoveredWord.wordPair.orig?.strong && (
+              <div>
+                <strong>{hoveredWord.wordPair.orig.strong}</strong>:{" "}
+                {hoveredWord.wordPair.orig.word}
+                {hoveredWord.wordPair.orig.lemma &&
+                  ` (${hoveredWord.wordPair.orig.lemma})`}
+              </div>
+            )}
+            {hoveredWord.wordPair.trans?.strong && (
+              <div>
+                <strong>{hoveredWord.wordPair.trans.strong}</strong>:{" "}
+                {hoveredWord.wordPair.trans.word}
+              </div>
+            )}
+            <div className="translation">
+              →{" "}
+              {hoveredWord.wordPair.trans?.word !== "—"
+                ? hoveredWord.wordPair.trans?.word
+                : hoveredWord.wordPair.orig?.word || "—"}
             </div>
           </div>
         </div>
