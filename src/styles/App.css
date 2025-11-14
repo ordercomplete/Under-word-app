@@ -84,9 +84,9 @@ body {
     padding-top: 0px;
     flex-direction: row;
     /* Горизонтально для лексиконів */
-    overflow-x: auto;
+    /* overflow-x: auto; */
     /* Скрол горизонтальний */
-    /* overflow: hidden;  */
+    overflow: hidden;
     /* ← не скролити колонку */
     height: auto;
     max-height: 30%;
@@ -94,43 +94,75 @@ body {
     border: 1px solid #ddd;
     position: sticky;
     bottom: 0;
-    background: white; /* Фікс до низу */
+    background: white;
+    /* Фікс до низу */
     display: flex;
   }
   .lexicon-window {
     /* Фіксована ширина для кожного вікна */
     min-width: 50%; /* Для скролу */
+    width: 100%;
     height: 100%; /* Повна висота */
     border-bottom: none;
     border-right: 1px solid #ddd; /* Розділ горизонтальний */
     min-height: 0; /* ← дозволяє overflow */
+    justify-content: center;
   }
   .lexicon-window:last-child {
     border-right: none;
   }
+  .dictionary-content {
+    width: 50%;
+    min-width: 256px;
+  }
+  .grammar-content {
+    width: 50%;
+    min-width: 256px;
+  }
 }
 
-/* .panel {
-  flex: 1;
-  min-width: 400px;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+@media (max-width: 578px) {
+  .dictionary-content {
+    width: 50%;
+    min-width: 200px;
+  }
+  .grammar-content {
+    width: 50%;
+    min-width: 200px;
+  }
+
+  .lexicon-tabs button {
+    padding: 10px 0;
+    margin: 0 auto;
+    flex: 0 0 auto;
+  }
 }
 
-.panel:last-child {
-  border-right: none;
-} */
+@media (max-width: 466px) {
+  .dictionary-content {
+    width: 50%;
+    min-width: 180px;
+  }
+  .grammar-content {
+    width: 50%;
+    min-width: 180px;
+  }
 
-/* .pair-section {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid #8a7878;
+  .lexicon-tabs button {
+    font-size: 0.8rem;
+    width: auto;
+  }
 }
-
-.pair-title {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-} */
+@media (max-width: 426px) {
+  .dictionary-content {
+    width: 50%;
+    min-width: 160px;
+  }
+  .grammar-content {
+    width: 50%;
+    min-width: 160px;
+  }
+  .lexicon-tabs button {
+    font-size: 0.7rem;
+  }
+}

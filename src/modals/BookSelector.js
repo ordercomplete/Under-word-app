@@ -239,12 +239,15 @@ const BookSelector = ({
   lang,
   versions,
   onSelectBook,
-  coreData,
-  coreLoading,
+  // coreData,
+  // coreLoading,
+  coreData = {}, // ← ДЕФОЛТ
+  coreLoading = false, // ← ДЕФОЛТ
 }) => {
   if (!isOpen) return null;
-
+  console.log("1-BookSelector: coreData keys:", Object.keys(coreData || {}));
   if (coreLoading) {
+    console.log("2-BookSelector: coreData keys:", Object.keys(coreData || {}));
     return (
       <div className="book-selector-backdrop" onClick={onRequestClose}>
         <div
@@ -262,8 +265,8 @@ const BookSelector = ({
     );
   }
 
-  // ← НОВЕ: фолбек якщо coreData null або порожнє
   if (!coreData || Object.keys(coreData).length === 0) {
+    console.log("3-BookSelector: coreData keys:", Object.keys(coreData || {}));
     return (
       <div className="book-selector-backdrop" onClick={onRequestClose}>
         <div
@@ -271,18 +274,14 @@ const BookSelector = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-4 text-center text-danger">
-            <p>
-              {lang.error ||
-                "Помилка: дані про книги недоступні. Спробуйте пізніше."}
-            </p>
+            <p>{lang.error || "Помилка: дані про книги недоступні."}</p>
           </div>
         </div>
       </div>
     );
   }
-
+  console.log("BookSelector: coreData keys:", Object.keys(coreData || {}));
   console.log("versions:", versions);
-  console.log("coreData keys:", Object.keys(coreData));
 
   const groupOrder = [
     "Torah",
@@ -377,15 +376,20 @@ const BookSelector = ({
     versions.forEach((v) => {
       const key = v.toLowerCase();
       const data = coreData[key];
+      console.log("BookSelector: coreData keys:", Object.keys(coreData || {}));
       if (!data) {
         console.warn(`coreData[${key}] not found`); // ← Змінено на warn
+        console.log(
+          "BookSelector: coreData keys:",
+          Object.keys(coreData || {})
+        );
         return;
       }
 
-      const ot = data.OldT || [];
-      const nt = data.NewT || [];
+      const sections = [...(data.OldT || []), ...(data.NewT || [])];
 
-      [...ot, ...nt].forEach((group) => {
+      sections.forEach((group) => {
+        if (!group?.group || !Array.isArray(group.books)) return;
         const groupName = group.group;
         if (!result[groupName]) result[groupName] = [];
 
@@ -411,7 +415,7 @@ const BookSelector = ({
     console.log("groupedBooks:", result);
     return result;
   }, [versions, coreData]);
-
+  console.log("BookSelector: coreData keys:", Object.keys(coreData || {}));
   return (
     <div className="book-selector-backdrop" onClick={onRequestClose}>
       <div className="book-selector-modal" onClick={(e) => e.stopPropagation()}>

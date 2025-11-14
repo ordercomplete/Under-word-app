@@ -886,9 +886,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import PassageOptionsGroup from "./PassageOptionsGroup";
-import BookSelector from "../modals/BookSelector";
-import TranslationSelector from "../modals/TranslationSelector";
-import ChapterSelector from "../modals/ChapterSelector";
 import InterlinearVerse from "./InterlinearVerse";
 import LexiconWindow from "./LexiconWindow";
 import "../styles/LexiconWindow.css";
@@ -911,17 +908,15 @@ const Panel = ({
   const [chapterData, setChapterData] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  // const [isScrollSynced, setIsScrollSynced] = useState(false);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
-  const [showBook, setShowBook] = useState(false);
-  const [showChapter, setShowChapter] = useState(false);
-  const [selectedBook, setSelectedBook] = useState("GEN");
-  const [selectedChapters, setSelectedChapters] = useState(50);
 
   console.log(
     `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
       ", "
     )}`
+  );
+  console.log(
+    "Panel: 1-PassagePage coreData keys:",
+    Object.keys(coreData || {})
   ); // Лог ініціалізації панелі
 
   useEffect(() => {
@@ -934,7 +929,7 @@ const Panel = ({
         ", "
       )}`
     ); // Лог завантаження
-
+    console.log("Panel: 2-coreData keys:", Object.keys(coreData || {}));
     setLoading(true);
     setMessage(null);
 
@@ -946,6 +941,7 @@ const Panel = ({
 
       try {
         console.log(`Panel ${id}: Fetching ${url}`); // Лог URL
+        console.log("Panel: 3-coreData keys:", Object.keys(coreData || {}));
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -966,10 +962,12 @@ const Panel = ({
           newData[ver] = data;
         });
         console.log(`Panel ${id}: Chapter loaded successfully`);
+        console.log("Panel: 4-coreData keys:", Object.keys(coreData || {}));
         setChapterData(newData);
       })
       .catch(() => {
         console.error(`Panel ${id}: Error loading chapter`);
+        console.log("Panel: 5-coreData keys:", Object.keys(coreData || {}));
         setMessage("Помилка завантаження");
       })
       .finally(() => setLoading(false));
@@ -1054,38 +1052,6 @@ const Panel = ({
           </>
         )}
       </div>
-
-      {/* Модалки per-panel */}
-      <TranslationSelector
-        isOpen={showTranslationModal}
-        onRequestClose={() => setShowTranslationModal(false)}
-        lang={lang}
-        onSelectVersions={setVersions}
-      />
-      <BookSelector
-        isOpen={showBook}
-        onRequestClose={() => setShowBook(false)}
-        lang={lang}
-        versions={versions}
-        onSelectBook={(code) => {
-          setSelectedBook(code);
-          const bookData = coreData[versions[0].toLowerCase()]?.OldT?.flatMap(
-            (g) => g.books
-          ).find((b) => b.code === code);
-          setSelectedChapters(bookData?.chapters || 1);
-          setCurrentRef(`${code}.1`);
-        }}
-      />
-      <ChapterSelector
-        isOpen={showChapter}
-        onRequestClose={() => setShowChapter(false)}
-        lang={lang}
-        bookCode={book}
-        chapters={selectedChapters}
-        onSelectChapter={(ch) => {
-          setCurrentRef(`${book}.${ch}`);
-        }}
-      />
     </div>
   );
 };
@@ -1100,66 +1066,35 @@ const PassagePage = ({ lang }) => {
 
   console.log("PassagePage rendered, panels count:", panels.length); // Лог рендеру
 
-  // useEffect(() => {
-  //   console.log("Fetching core.json");
-  //   fetch("/data/core.json")
-  //     .then((r) => {
-  //       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  //       return r.json();
-  //     })
-  //     .then((data) => {
-  //       console.log("coreData loaded");
-  //       setCoreData(data);
-  //     })
-  //     .catch((err) => {
-  //       console.error("core.json error:", err);
-  //     })
-  //     .finally(() => setCoreLoading(false));
-  // }, []);
-  // У useEffect, після core.json
-
   useEffect(() => {
+    let isMounted = true;
     const loadCoreData = async () => {
       try {
         const [coreRes, strongsRes] = await Promise.all([
           fetch("/data/core.json"),
-          fetch("/data/strongs.json"),
         ]);
 
-        if (!coreRes.ok || !strongsRes.ok) throw new Error("Fetch error");
+        if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
 
         const core = await coreRes.json();
-        const strongs = await strongsRes.json();
 
-        setCoreData({ ...core, strongs }); // ← додаємо strongs
+        setCoreData(core); // ← ТІЛЬКИ core.json
+        if (isMounted) setCoreData(core);
+        console.log("2-Core data loaded:", Object.keys(core)); //тут перший раз починає грузитись
       } catch (err) {
         console.error("Failed to load core data:", err);
+
+        if (isMounted) setCoreData({});
       } finally {
-        setCoreLoading(false);
+        if (isMounted) setCoreLoading(false);
       }
+      return () => {
+        isMounted = false;
+      };
     };
 
     loadCoreData();
   }, []);
-
-  // Функція для завантаження strong
-  // useEffect(() => {
-  //   const loadStrong = async (strongCode) => {
-  //     if (strongsCache[strongCode]) return strongsCache[strongCode];
-
-  //     try {
-  //       const res = await fetch(`/data/strongs/strong-${strongCode}.json`);
-  //       if (!res.ok) throw new Error("Not found");
-  //       const data = await res.json();
-  //       setStrongsCache((prev) => ({ ...prev, [strongCode]: data }));
-  //       return data;
-  //     } catch (err) {
-  //       console.warn(`Strong ${strongCode} not found`);
-  //       return null;
-  //     }
-  //   };
-  //   loadStrong();
-  // }, []);
 
   const addPanel = () => {
     const maxPanels = window.innerWidth < 992 ? 2 : 4;
@@ -1183,26 +1118,6 @@ const PassagePage = ({ lang }) => {
     }
   };
 
-  // const handleWordClick = (data) => {
-  //   console.log("Word clicked:", data); // Лог кліку слова
-  //   const wordLang = data.lang;
-  //   const existingIndex = lexicons.findIndex((l) => l.lang === wordLang);
-
-  //   if (existingIndex !== -1) {
-  //     const newLex = [...lexicons];
-  //     newLex[existingIndex].data = data;
-  //     setLexicons(newLex);
-  //   } else if (lexicons.length < 2) {
-  //     setLexicons([...lexicons, { id: Date.now(), data, lang: wordLang }]);
-  //   } else {
-  //     const newLex = [...lexicons];
-  //     newLex[newLex.length - 1].data = data;
-  //     newLex[newLex.length - 1].lang = wordLang;
-  //     setLexicons(newLex);
-  //   }
-  // };
-
-  // const handleWordClick оновлено 13.11.25 в 15:59, поки що відмінено
   const handleWordClick = (data) => {
     console.log("Word clicked in panel:", data); // Лог кліку
 

@@ -79,7 +79,7 @@ import AdminPanel from "./admin/AdminPanel";
 
 const App = () => {
   const [lang, setLang] = useState(null);
-  const [coreData, setCoreData] = useState(null); // ← НОВЕ: стан для core.json
+  // const [coreData, setCoreData] = useState(null); // ← НОВЕ: стан для core.json
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -89,19 +89,19 @@ const App = () => {
       try {
         const [langRes, coreRes] = await Promise.all([
           fetch("/data/lang.json"),
-          fetch("/data/core.json"), // ← Завантажуємо core.json
+          // fetch("/data/core.json"), // ← Завантажуємо core.json
         ]);
 
         if (!langRes.ok) throw new Error("lang.json not found");
-        if (!coreRes.ok) throw new Error("core.json not found");
+        // if (!coreRes.ok) throw new Error("core.json not found");
 
         const [langData, core] = await Promise.all([
           langRes.json(),
-          coreRes.json(),
+          // coreRes.json(),
         ]);
 
         setLang(langData[savedLang] || langData.ua);
-        setCoreData(core);
+        // setCoreData(core);
       } catch (err) {
         console.error(err);
         setLang({
@@ -109,7 +109,7 @@ const App = () => {
           loading: "Loading...",
           error: "Помилка завантаження",
         });
-        setCoreData({}); // Фолбек порожній об'єкт
+        // setCoreData({}); // Фолбек порожній об'єкт
       } finally {
         setLoading(false);
       }
@@ -144,8 +144,8 @@ const App = () => {
           path="/"
           element={
             <div className="main-content d-flex flex-column ">
-              <PassagePage lang={lang} coreData={coreData} />{" "}
-              {/* ← Передаємо coreData */}
+              {/* <PassagePage lang={lang} coreData={coreData} />{" "} */}
+              <PassagePage lang={lang} /> {/* ← Передаємо coreData */}
               {/* <LexiconWindow lang={lang} /> */}
             </div>
           }

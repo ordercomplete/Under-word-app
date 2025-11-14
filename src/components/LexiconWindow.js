@@ -284,7 +284,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
 
       <div className="lexicon-content">
         {activeTab === "dictionary" && (
-          <div className="p-3">
+          <div className="dictionary-content ">
             <div className="lex-item">
               <span className="label">Оригінал:</span>
               <span className="value gr">{entry.word}</span>
@@ -329,8 +329,8 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
         )}
 
         {activeTab === "grammar" && (
-          <div className="p-3">
-            <pre className="bg-light p-3 rounded">{entry.grammar}</pre>
+          <div className="grammar-content">
+            <pre className="bg-light rounded">{entry.grammar}</pre>
           </div>
         )}
       </div>
