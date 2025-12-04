@@ -41,6 +41,24 @@
       "lang": "en",
       "features": ["R", "N"],
       "path": "translations/KJV"
+    },
+    {
+      "initials": "OGIENKO",
+      "name": "Переклад Огієнка (масоретський)",
+      "lang": "uk",
+      "features": ["R"]
+    },
+    {
+      "initials": "KHOMENKO",
+      "name": "Переклад Хоменка (масоретський)",
+      "lang": "uk",
+      "features": ["R"]
+    },
+    {
+      "initials": "SIRYY",
+      "name": "Переклад Юрія Сірого (масоретський)",
+      "lang": "uk",
+      "features": ["R"]
     }
   ],
   "commentaries": []

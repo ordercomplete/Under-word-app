@@ -229,7 +229,9 @@ const InterlinearVerse = ({
                     ? `${pair.origVer}/${pair.transVer || ""}`
                     : pair.transVer}
                 </h5>
-                <div className="text-muted">Дані відсутні</div>
+                <div className="text-muted">
+                  Дані відсутні interlinear-verse
+                </div>
               </div>
             );
           }
@@ -345,44 +347,6 @@ const InterlinearVerse = ({
           );
         })}
       </div>
-
-      {/* Tooltip */}
-      {/* {hoveredWord && (
-        <div
-          ref={tooltipRef}
-          className="hover-tooltip"
-          style={{
-            position: "fixed",
-            left: `${mousePos.x + 15}px`,
-            top: `${mousePos.y - 80}px`,
-          }}
-          onMouseEnter={() => setHoveredWord(hoveredWord)}
-          onMouseLeave={() => setHoveredWord(null)}
-        >
-          <div className="tooltip-content">
-            {hoveredWord.pair.orig?.strong && (
-              <div>
-                <strong>{hoveredWord.pair.orig.strong}</strong>:{" "}
-                {hoveredWord.pair.orig.word}
-                {hoveredWord.pair.orig.lemma &&
-                  ` (${hoveredWord.pair.orig.lemma})`}
-              </div>
-            )}
-            {hoveredWord.pair.trans?.strong && (
-              <div>
-                <strong>{hoveredWord.pair.trans.strong}</strong>:{" "}
-                {hoveredWord.pair.trans.word}
-              </div>
-            )}
-            <div className="translation">
-              →{" "}
-              {hoveredWord.pair.trans.word !== "—"
-                ? hoveredWord.pair.trans.word
-                : hoveredWord.pair.orig.word || "—"}
-            </div>
-          </div>
-        </div>
-      )} */}
 
       {hoveredWord && hoveredWord.wordPair && (
         <div

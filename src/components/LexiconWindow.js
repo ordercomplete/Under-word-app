@@ -116,10 +116,10 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
         // ЗАГЛУШКИ: заповнюємо відсутні поля
         const safeEntry = {
           strong: rawEntry.strong || strong,
-          word: rawEntry.word || "—",
-          translit: rawEntry.translit || "—",
-          translation: rawEntry.translation || "—",
-          morphology: rawEntry.morphology || "—",
+          word: rawEntry.word || "Дані відсутні",
+          translit: rawEntry.translit || "Дані відсутні",
+          translation: rawEntry.translation || "Дані відсутні",
+          morphology: rawEntry.morphology || "Дані відсутні",
           usages_count: rawEntry.usages_count ?? 0,
           meanings: Array.isArray(rawEntry.meanings) ? rawEntry.meanings : [],
           lsj_definition_raw:
@@ -129,6 +129,19 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
           grammar:
             typeof rawEntry.grammar === "string" ? rawEntry.grammar : "—",
         };
+        //розкоментувати для скорочених назв в json файлах
+        // const safeEntry = {
+        //   strong: rawEntry.s || strong,
+        //   word: rawEntry.w || "Дані відсутні",
+        //   translit: rawEntry.t || "Дані відсутні",
+        //   translation: rawEntry.tr || "Дані відсутні",
+        //   morphology: rawEntry.m || "Дані відсутні",
+        //   usages_count: rawEntry.u ?? 0,
+        //   meanings: Array.isArray(rawEntry.mn) ? rawEntry.mn : [],
+        //   lsj_definition_raw:
+        //     typeof rawEntry.lsj === "string" ? rawEntry.lsj : "",
+        //   grammar: typeof rawEntry.g === "string" ? rawEntry.g : "—",
+        // };
 
         setEntry(safeEntry);
         console.log(`LexiconWindow: Loaded ${strong}`, safeEntry);
@@ -157,7 +170,10 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
   if (loading) {
     return (
       <div className="lexicon-window">
-        <h5 className="lexicon-title">{strong}</h5>
+        <h5 className="lexicon-title">
+          {strong}
+          {<CloseIcon onClick={onClose} />}
+        </h5>
         <div className="p-3 text-center">Завантаження...</div>
       </div>
     );
@@ -166,8 +182,11 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
   if (!entry) {
     return (
       <div className="lexicon-window">
-        <h5 className="lexicon-title">{strong}</h5>
-        <div className="p-3 text-danger">Дані відсутні</div>
+        <h5 className="lexicon-title">
+          {strong}
+          {<CloseIcon onClick={onClose} />}
+        </h5>
+        <div className="p-3 text-danger">Дані відсутні lexicon-window</div>
       </div>
     );
   }
