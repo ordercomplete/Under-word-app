@@ -387,6 +387,7 @@ const BookSelector = ({
       }
 
       const sections = [...(data.OldT || []), ...(data.NewT || [])];
+      // const sections = [...(data.O || []), ...(data.N || [])];
 
       sections.forEach((group) => {
         if (!group?.group || !Array.isArray(group.books)) return;

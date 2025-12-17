@@ -5,6 +5,8 @@
   "dependencies": {
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.13.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
@@ -15,10 +17,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:with-api": "node server/index.js",
+    "api": "node server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "convert-json": "node scripts/convertTranslations.js",
+    "convert-and-replace": "node scripts/convertTranslations.js && cp -r public/data_compressed/* public/data/",
+    "build:with-data": "react-scripts build && cp -r public/data_compressed/* build/data/",
+    "deploy": "npm run build:with-data && netlify deploy"
   },
+  "proxy": "http://localhost:3000",
   "devDependencies": {
     "react-scripts": "5.0.1"
   },

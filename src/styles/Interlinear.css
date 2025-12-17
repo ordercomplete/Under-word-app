@@ -92,3 +92,50 @@
   margin-bottom: 0.5rem;
   text-align: center;
 }
+
+/* --------------------------------------------- */
+
+/* Додайте до src/styles/Interlinear.css 17.12.2025*/
+
+.lemma-hint {
+  font-size: 0.7em;
+  color: #6c757d;
+  margin-left: 2px;
+  vertical-align: super;
+  cursor: help;
+}
+
+.word-pair {
+  position: relative;
+}
+
+.orig-word {
+  direction: rtl; /* Для івриту та грецького */
+  font-family: "SBL Hebrew", "Times New Roman", serif;
+}
+
+.trans-word {
+  direction: ltr;
+  font-family: inherit;
+}
+
+.hover-tooltip {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: 300px;
+  font-size: 0.9em;
+}
+
+.hover-tooltip strong {
+  color: #0d6efd;
+}
+
+.hover-tooltip .translation {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed #dee2e6;
+  color: #198754;
+}
