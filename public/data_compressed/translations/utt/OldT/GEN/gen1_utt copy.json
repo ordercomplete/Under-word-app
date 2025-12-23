@@ -1,1 +1,20 @@
-{"_meta":{"converter":"under-word-converter","version":2,"converted":"2025-12-09T20:33:45.532Z","info":{"translation":"utt","type":"translation","book":"GEN","chapter":"","language":"ukrainian","name":"Ukrainian Translation","hasStrongs":true,"hasMorphology":false,"hasLemma":false,"originalPath":"translations\\utt\\OldT\\GEN\\gen1_utt copy.json"}},"verses":[{"v":1}]}
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-09T20:33:45.532Z",
+    "info": {
+      "translation": "utt",
+      "type": "translation",
+      "book": "GEN",
+      "chapter": "",
+      "language": "ukrainian",
+      "name": "Ukrainian Translation",
+      "hasStrongs": true,
+      "hasMorphology": false,
+      "hasLemma": false,
+      "originalPath": "translations\\utt\\OldT\\GEN\\gen1_utt copy.json"
+    }
+  },
+  "verses": [{ "v": 1 }]
+}

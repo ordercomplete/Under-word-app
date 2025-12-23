@@ -594,6 +594,10 @@ import "../styles/PassagePage.css";
 // import { normalizeChapter } from "../utils/normalizeData";
 import { loadTranslation, loadOriginal } from "../utils/dataLoader";
 
+// ДОДАЄМО ІМПОРТИ
+import { jsonAdapter } from "../utils/jsonAdapter";
+import { normalizeChapter } from "../utils/normalizeData";
+
 const Panel = ({
   id,
   onClose,
@@ -622,6 +626,62 @@ const Panel = ({
     Object.keys(coreData || {})
   ); // Лог ініціалізації панелі
 
+  // useEffect(() => {
+  //   const [book, chapterStr] = currentRef.split(".");
+  //   const chapter = parseInt(chapterStr);
+  //   if (!book || !chapter) return;
+
+  //   console.log(
+  //     `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+  //       ", "
+  //     )}`
+  //   ); // Лог завантаження
+  //   console.log("Panel: 2-coreData keys:", Object.keys(coreData || {}));
+  //   setLoading(true);
+  //   setMessage(null);
+
+  //   const loadChapter = async (ver) => {
+  //     const lower = ver.toLowerCase();
+  //     const isOriginal = ["lxx", "thot"].includes(lower);
+  //     const base = isOriginal ? "originals" : "translations";
+  //     const url = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+
+  //     try {
+  //       console.log(`Panel ${id}: Fetching ${url}`); // Лог URL
+  //       console.log("Panel: 3-coreData keys:", Object.keys(coreData || {}));
+  //       const res = await fetch(url);
+  //       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  //       const data = await res.json();
+  //       return { ver, data };
+  //       // return { ver, data: normalizeChapter(data) }; // ← нормалізуємо
+  //     } catch (err) {
+  //       console.error(
+  //         `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
+  //         err
+  //       );
+  //       return { ver, data: [] };
+  //     }
+  //   };
+
+  //   Promise.all(versions.map(loadChapter))
+  //     .then((results) => {
+  //       const newData = {};
+  //       results.forEach(({ ver, data }) => {
+  //         newData[ver] = data;
+  //       });
+  //       console.log(`Panel ${id}: Chapter loaded successfully`);
+  //       console.log("Panel: 4-coreData keys:", Object.keys(coreData || {}));
+  //       setChapterData(newData);
+  //     })
+  //     .catch(() => {
+  //       console.error(`Panel ${id}: Error loading chapter`);
+  //       console.log("Panel: 5-coreData keys:", Object.keys(coreData || {}));
+  //       setMessage("Помилка завантаження");
+  //     })
+  //     .finally(() => setLoading(false));
+  // }, [currentRef, versions]);
+
+  //------------------------------------------ useEffect(() =>
   useEffect(() => {
     const [book, chapterStr] = currentRef.split(".");
     const chapter = parseInt(chapterStr);
@@ -631,25 +691,36 @@ const Panel = ({
       `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
         ", "
       )}`
-    ); // Лог завантаження
-    console.log("Panel: 2-coreData keys:", Object.keys(coreData || {}));
+    );
     setLoading(true);
     setMessage(null);
 
     const loadChapter = async (ver) => {
       const lower = ver.toLowerCase();
-      const isOriginal = ["lxx", "thot"].includes(lower);
+      const isOriginal = ["lxx", "thot", "gnt"].includes(lower);
       const base = isOriginal ? "originals" : "translations";
-      const url = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+
+      // Спробуємо спочатку скорочений формат
+      const compressedUrl = `/data_compressed/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+
+      console.log(`Panel ${id}: Fetching ${compressedUrl}`);
 
       try {
-        console.log(`Panel ${id}: Fetching ${url}`); // Лог URL
-        console.log("Panel: 3-coreData keys:", Object.keys(coreData || {}));
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const res = await fetch(compressedUrl);
+        if (!res.ok) {
+          // Спробуємо оригінальний формат
+          const originalUrl = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+          console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
+          const fallbackRes = await fetch(originalUrl);
+
+          if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
+
+          const data = await fallbackRes.json();
+          return { ver, data };
+        }
+
         const data = await res.json();
         return { ver, data };
-        // return { ver, data: normalizeChapter(data) }; // ← нормалізуємо
       } catch (err) {
         console.error(
           `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
@@ -659,112 +730,26 @@ const Panel = ({
       }
     };
 
-    // const loadChapter = async (ver) => {
-    //   try {
-    //     const lower = ver.toLowerCase();
-    //     const isOriginal = ["lxx", "thot", "gnt"].includes(lower);
-
-    //     let data;
-    //     if (isOriginal) {
-    //       data = await loadOriginal(book, chapter, ver);
-    //     } else {
-    //       data = await loadTranslation(book, chapter, ver);
-    //     }
-
-    //     console.log(`✅ Завантажено ${ver}: ${data?.length || 0} віршів`);
-    //     return { ver, data };
-    //   } catch (error) {
-    //     console.error(`❌ Помилка завантаження ${ver}:`, error);
-
-    //     // Створюємо заглушку для тестування
-    //     return {
-    //       ver,
-    //       data: [
-    //         {
-    //           v: 1,
-    //           ws: [
-    //             { w: "Помилка", s: "G0001" },
-    //             { w: "завантаження", s: "G0002" },
-    //             { w: "даних", s: "G0003" },
-    //           ],
-    //         },
-    //       ],
-    //     };
-    //   }
-    // };
-
-    // В PassagePage.js, в функції loadChapter всередині Panel компонента:
-    // installHook.js:1 Failed to load LXX: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-    // const loadChapter = async (ver) => {
-    //   const lower = ver.toLowerCase();
-    //   const isOriginal = ["lxx", "thot"].includes(lower);
-    //   const base = isOriginal ? "originals" : "translations";
-
-    //   // ВИКОРИСТОВУЄМО data_compressed для скорочених файлів
-    //   const url = `/data_compressed/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-
-    //   console.log(`Loading from: ${url}`);
-
-    //   try {
-    //     const res = await fetch(url);
-    //     if (!res.ok) {
-    //       // Fallback до оригінального шляху
-    //       const fallbackUrl = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-    //       console.log(`Fallback to: ${fallbackUrl}`);
-    //       const fallbackRes = await fetch(fallbackUrl);
-    //       if (!fallbackRes.ok) throw new Error(`Both paths failed`);
-    //       const data = await fallbackRes.json();
-    //       return { ver, data };
-    //     }
-
-    //     const data = await res.json();
-    //     return { ver, data };
-    //   } catch (err) {
-    //     console.error(`Failed to load ${ver}:`, err);
-    //     return { ver, data: [] };
-    //   }
-    // };
-
-    // Замініть весь блок loadChapter на:
-    //❌ Failed to load originals/lxx/OldT/GEN/gen1_lxx.json: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-    //Failed to load LXX: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-    // const loadChapter = async (ver) => {
-    //   try {
-    //     const lower = ver.toLowerCase();
-    //     const isOriginal = ["lxx", "thot"].includes(lower);
-
-    //     let data;
-    //     if (isOriginal) {
-    //       data = await loadOriginal(book, chapter, ver);
-    //     } else {
-    //       data = await loadTranslation(book, chapter, ver);
-    //     }
-
-    //     return { ver, data };
-    //   } catch (error) {
-    //     console.error(`Failed to load ${ver}:`, error);
-    //     return { ver, data: [] };
-    //   }
-    // };
-    // ------------------^^^
     Promise.all(versions.map(loadChapter))
       .then((results) => {
         const newData = {};
         results.forEach(({ ver, data }) => {
-          newData[ver] = data;
+          // Адаптуємо дані за допомогою jsonAdapter
+          newData[ver] = jsonAdapter(data);
         });
-        console.log(`Panel ${id}: Chapter loaded successfully`);
-        console.log("Panel: 4-coreData keys:", Object.keys(coreData || {}));
+        console.log(
+          `Panel ${id}: Chapter loaded successfully, versions:`,
+          Object.keys(newData)
+        );
         setChapterData(newData);
       })
-      .catch(() => {
-        console.error(`Panel ${id}: Error loading chapter`);
-        console.log("Panel: 5-coreData keys:", Object.keys(coreData || {}));
-        setMessage("Помилка завантаження");
+      .catch((error) => {
+        console.error(`Panel ${id}: Error loading chapter`, error);
+        setMessage("Помилка завантаження: " + error.message);
       })
       .finally(() => setLoading(false));
-  }, [currentRef, versions]);
-
+  }, [currentRef, versions, id]);
+  // ---------------------------------- ^^^
   const getVerseCount = () => {
     const primaryVer = versions[0];
     if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)

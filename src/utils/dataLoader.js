@@ -52,43 +52,213 @@
 
 // ---------------------------------------------
 
-// src/utils/dataLoader.js
-import { jsonAdapter } from "./jsonAdapter";
-import { normalizeChapter, normalizeStrongEntry } from "./normalizeData";
+// // src/utils/dataLoader.js
+// import { jsonAdapter } from "./jsonAdapter";
+// import { normalizeChapter, normalizeStrongEntry } from "./normalizeData";
 
-/**
- * Знаходить файл серед можливих шляхів
- */
+// /**
+//  * Знаходить файл серед можливих шляхів
+//  */
+// // export const findFile = async (relativePath) => {
+// //   const possiblePaths = [
+// //     `/data_compressed/${relativePath}`,
+// //     `/data/${relativePath}`,
+// //     `/${relativePath}`,
+// //     `/data_compressed/${relativePath.replace(/\.json$/, "")}.json`,
+// //     `/data/${relativePath.replace(/\.json$/, "")}.json`,
+// //   ];
+
+// //   console.log(`🔍 Пошук: ${relativePath}`);
+
+// //   for (const url of possiblePaths) {
+// //     try {
+// //       console.log(`   ➡️  Спробуємо: ${url}`);
+// //       const response = await fetch(url);
+
+// //       if (response.ok) {
+// //         const data = await response.json();
+// //         console.log(`   ✅ Знайдено: ${url}`);
+// //         return { url, data };
+// //       }
+
+// //       console.log(`   ❌ Не знайдено (HTTP ${response.status})`);
+// //     } catch (error) {
+// //       console.log(`   ❌ Помилка: ${error.message}`);
+// //     }
+// //   }
+
+// //   throw new Error(`Файл не знайдено: ${relativePath}`);
+// // };
+
 // export const findFile = async (relativePath) => {
 //   const possiblePaths = [
 //     `/data_compressed/${relativePath}`,
 //     `/data/${relativePath}`,
-//     `/${relativePath}`,
-//     `/data_compressed/${relativePath.replace(/\.json$/, "")}.json`,
-//     `/data/${relativePath.replace(/\.json$/, "")}.json`,
 //   ];
-
-//   console.log(`🔍 Пошук: ${relativePath}`);
 
 //   for (const url of possiblePaths) {
 //     try {
-//       console.log(`   ➡️  Спробуємо: ${url}`);
 //       const response = await fetch(url);
-
 //       if (response.ok) {
 //         const data = await response.json();
-//         console.log(`   ✅ Знайдено: ${url}`);
 //         return { url, data };
 //       }
-
-//       console.log(`   ❌ Не знайдено (HTTP ${response.status})`);
 //     } catch (error) {
-//       console.log(`   ❌ Помилка: ${error.message}`);
+//       continue;
 //     }
 //   }
 
-//   throw new Error(`Файл не знайдено: ${relativePath}`);
+//   return null; // Не кидаємо помилку, повертаємо null
 // };
+
+// /**
+//  * Завантажує переклад
+//  */
+// // export const loadTranslation = async (book, chapter, version) => {
+// //   const verLower = version.toLowerCase();
+// //   const bookLower = book.toLowerCase();
+
+// //   // Різні можливі відносні шляхи
+// //   const possibleRelativePaths = [
+// //     `translations/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`,
+// //     `translations/${verLower}/OldT/${book}/${bookLower}${chapter}.json`,
+// //     `translations/${verLower}/${book}/${bookLower}${chapter}.json`,
+// //     `translations/${verLower}/${book}/${chapter}.json`,
+// //   ];
+
+// //   for (const relativePath of possibleRelativePaths) {
+// //     try {
+// //       const { data } = await findFile(relativePath);
+// //       const adapted = jsonAdapter(data);
+// //       return normalizeChapter(adapted);
+// //     } catch (error) {
+// //       continue; // Спробуємо наступний шлях
+// //     }
+// //   }
+
+// //   throw new Error(`Переклад ${version} ${book}:${chapter} не знайдено`);
+// // };
+
+// export const loadTranslation = async (book, chapter, version) => {
+//   const verLower = version.toLowerCase();
+//   const bookLower = book.toLowerCase();
+
+//   const relativePath = `translations/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`;
+//   const result = await findFile(relativePath);
+
+//   if (!result) {
+//     throw new Error(`Файл не знайдено: ${relativePath}`);
+//   }
+
+//   return jsonAdapter(result.data);
+// };
+
+// /**
+//  * Завантажує оригінал (LXX/THOT)
+//  */
+// // export const loadOriginal = async (book, chapter, version) => {
+// //   const verLower = version.toLowerCase();
+// //   const bookLower = book.toLowerCase();
+
+// //   const possibleRelativePaths = [
+// //     `originals/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`,
+// //     `originals/${verLower}/OldT/${book}/${bookLower}${chapter}.json`,
+// //     `originals/${verLower}/${book}/${bookLower}${chapter}.json`,
+// //     `originals/${verLower}/${book}/${chapter}.json`,
+// //   ];
+
+// //   for (const relativePath of possibleRelativePaths) {
+// //     try {
+// //       const { data } = await findFile(relativePath);
+// //       const adapted = jsonAdapter(data);
+// //       return normalizeChapter(adapted);
+// //     } catch (error) {
+// //       continue;
+// //     }
+// //   }
+
+// //   throw new Error(`Оригінал ${version} ${book}:${chapter} не знайдено`);
+// // };
+
+// export const loadOriginal = async (book, chapter, version) => {
+//   const verLower = version.toLowerCase();
+//   const bookLower = book.toLowerCase();
+
+//   const relativePath = `originals/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`;
+//   const result = await findFile(relativePath);
+
+//   if (!result) {
+//     throw new Error(`Файл не знайдено: ${relativePath}`);
+//   }
+
+//   return jsonAdapter(result.data);
+// };
+
+// /**
+//  * Завантажує словник Strong
+//  */
+// export const loadStrong = async (strongCode) => {
+//   const possibleRelativePaths = [
+//     `strongs/${strongCode}.json`,
+//     `strongs/${strongCode.toLowerCase()}.json`,
+//     `strongs/${strongCode.toUpperCase()}.json`,
+//   ];
+
+//   for (const relativePath of possibleRelativePaths) {
+//     try {
+//       const { data } = await findFile(relativePath);
+//       return normalizeStrongEntry(data);
+//     } catch (error) {
+//       continue;
+//     }
+//   }
+
+//   throw new Error(`Словник ${strongCode} не знайдено`);
+// };
+
+// /**
+//  * Сканує папку на наявність файлів
+//  */
+// export const scanDirectory = async (directory) => {
+//   try {
+//     // Це працює тільки з папками, які мають index.json або можна отримати список
+//     const response = await fetch(directory);
+
+//     if (!response.ok) {
+//       return { exists: false, files: [] };
+//     }
+
+//     // Спрощений підхід - перевіряємо конкретні файли
+//     const testFiles = [
+//       `${directory}/test.json`,
+//       `${directory}/index.json`,
+//       `${directory}/data.json`,
+//     ];
+
+//     const files = [];
+
+//     for (const testFile of testFiles) {
+//       try {
+//         const testResponse = await fetch(testFile);
+//         if (testResponse.ok) {
+//           files.push(testFile);
+//         }
+//       } catch (error) {
+//         // Ігноруємо помилки окремих файлів
+//       }
+//     }
+
+//     return { exists: true, files };
+//   } catch (error) {
+//     return { exists: false, files: [], error: error.message };
+//   }
+// };
+
+// -----------------------------------------
+
+// src/utils/dataLoader.js 23.12.25
+import { jsonAdapter, getMetadata } from "./jsonAdapter";
+import { normalizeStrongEntry } from "./normalizeData";
 
 export const findFile = async (relativePath) => {
   const possiblePaths = [
@@ -108,41 +278,14 @@ export const findFile = async (relativePath) => {
     }
   }
 
-  return null; // Не кидаємо помилку, повертаємо null
+  return null;
 };
-
-/**
- * Завантажує переклад
- */
-// export const loadTranslation = async (book, chapter, version) => {
-//   const verLower = version.toLowerCase();
-//   const bookLower = book.toLowerCase();
-
-//   // Різні можливі відносні шляхи
-//   const possibleRelativePaths = [
-//     `translations/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`,
-//     `translations/${verLower}/OldT/${book}/${bookLower}${chapter}.json`,
-//     `translations/${verLower}/${book}/${bookLower}${chapter}.json`,
-//     `translations/${verLower}/${book}/${chapter}.json`,
-//   ];
-
-//   for (const relativePath of possibleRelativePaths) {
-//     try {
-//       const { data } = await findFile(relativePath);
-//       const adapted = jsonAdapter(data);
-//       return normalizeChapter(adapted);
-//     } catch (error) {
-//       continue; // Спробуємо наступний шлях
-//     }
-//   }
-
-//   throw new Error(`Переклад ${version} ${book}:${chapter} не знайдено`);
-// };
 
 export const loadTranslation = async (book, chapter, version) => {
   const verLower = version.toLowerCase();
   const bookLower = book.toLowerCase();
 
+  // Спробуємо спочатку скорочений формат
   const relativePath = `translations/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`;
   const result = await findFile(relativePath);
 
@@ -150,35 +293,24 @@ export const loadTranslation = async (book, chapter, version) => {
     throw new Error(`Файл не знайдено: ${relativePath}`);
   }
 
-  return jsonAdapter(result.data);
+  // Адаптуємо дані
+  const adapted = jsonAdapter(result.data);
+
+  // Додаємо метадані про джерело
+  if (Array.isArray(adapted)) {
+    adapted._source = result.url;
+    adapted._type = "translation";
+    adapted._version = version;
+
+    // Зберігаємо оригінальні метадані
+    const meta = getMetadata(result.data);
+    if (meta) {
+      adapted._meta = meta;
+    }
+  }
+
+  return adapted;
 };
-
-/**
- * Завантажує оригінал (LXX/THOT)
- */
-// export const loadOriginal = async (book, chapter, version) => {
-//   const verLower = version.toLowerCase();
-//   const bookLower = book.toLowerCase();
-
-//   const possibleRelativePaths = [
-//     `originals/${verLower}/OldT/${book}/${bookLower}${chapter}_${verLower}.json`,
-//     `originals/${verLower}/OldT/${book}/${bookLower}${chapter}.json`,
-//     `originals/${verLower}/${book}/${bookLower}${chapter}.json`,
-//     `originals/${verLower}/${book}/${chapter}.json`,
-//   ];
-
-//   for (const relativePath of possibleRelativePaths) {
-//     try {
-//       const { data } = await findFile(relativePath);
-//       const adapted = jsonAdapter(data);
-//       return normalizeChapter(adapted);
-//     } catch (error) {
-//       continue;
-//     }
-//   }
-
-//   throw new Error(`Оригінал ${version} ${book}:${chapter} не знайдено`);
-// };
 
 export const loadOriginal = async (book, chapter, version) => {
   const verLower = version.toLowerCase();
@@ -191,7 +323,21 @@ export const loadOriginal = async (book, chapter, version) => {
     throw new Error(`Файл не знайдено: ${relativePath}`);
   }
 
-  return jsonAdapter(result.data);
+  const adapted = jsonAdapter(result.data);
+
+  // Додаємо метадані
+  if (Array.isArray(adapted)) {
+    adapted._source = result.url;
+    adapted._type = "original";
+    adapted._version = version;
+
+    const meta = getMetadata(result.data);
+    if (meta) {
+      adapted._meta = meta;
+    }
+  }
+
+  return adapted;
 };
 
 /**
@@ -206,8 +352,22 @@ export const loadStrong = async (strongCode) => {
 
   for (const relativePath of possibleRelativePaths) {
     try {
-      const { data } = await findFile(relativePath);
-      return normalizeStrongEntry(data);
+      const result = await findFile(relativePath);
+      if (result) {
+        const adapted = jsonAdapter(result.data);
+        const normalized = normalizeStrongEntry(adapted);
+
+        // Додаємо метадані
+        normalized._source = result.url;
+        normalized._strongCode = strongCode;
+
+        const meta = getMetadata(result.data);
+        if (meta) {
+          normalized._meta = meta;
+        }
+
+        return normalized;
+      }
     } catch (error) {
       continue;
     }
@@ -217,39 +377,14 @@ export const loadStrong = async (strongCode) => {
 };
 
 /**
- * Сканує папку на наявність файлів
+ * Завантажує метадані файлу
  */
-export const scanDirectory = async (directory) => {
-  try {
-    // Це працює тільки з папками, які мають index.json або можна отримати список
-    const response = await fetch(directory);
+export const loadFileMetadata = async (relativePath) => {
+  const result = await findFile(relativePath);
 
-    if (!response.ok) {
-      return { exists: false, files: [] };
-    }
-
-    // Спрощений підхід - перевіряємо конкретні файли
-    const testFiles = [
-      `${directory}/test.json`,
-      `${directory}/index.json`,
-      `${directory}/data.json`,
-    ];
-
-    const files = [];
-
-    for (const testFile of testFiles) {
-      try {
-        const testResponse = await fetch(testFile);
-        if (testResponse.ok) {
-          files.push(testFile);
-        }
-      } catch (error) {
-        // Ігноруємо помилки окремих файлів
-      }
-    }
-
-    return { exists: true, files };
-  } catch (error) {
-    return { exists: false, files: [], error: error.message };
+  if (!result) {
+    return null;
   }
+
+  return getMetadata(result.data);
 };

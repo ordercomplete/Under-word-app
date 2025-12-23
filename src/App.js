@@ -182,25 +182,6 @@ const App = () => {
           <i className={`bi bi-${showTester ? "eye-slash" : "eye"}`}>JSON</i>
         </button>
       )}
-      {/* кнопка конвертації */}
-      {/* {process.env.NODE_ENV === "development" && (
-        <div className="conversion-section mt-3 pt-3 border-top">
-          <h6>Конвертація файлів:</h6>
-          <button
-            className="btn btn-sm btn-warning me-2"
-            onClick={runConversion}
-            disabled={converting}
-          >
-            {converting ? "Конвертація..." : "Конвертувати файли"}
-          </button>
-
-          {conversionResult && (
-            <div className="mt-2 small">
-              <pre>{JSON.stringify(conversionResult, null, 2)}</pre>
-            </div>
-          )}
-        </div>
-      )} */}
 
       <Routes>
         <Route
