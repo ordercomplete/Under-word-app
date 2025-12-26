@@ -183,6 +183,28 @@ const PassageOptionsGroup = ({
     "Panel: 2-PassageOptionsGroup coreData keys:",
     Object.keys(coreData || {})
   );
+
+  // Додайте цю функцію всередині компонента перед return 24.12.15
+  const getBookChapters = (bookCode, version) => {
+    const verData = coreData[version?.toLowerCase()];
+    if (!verData) return 1;
+
+    // 1. Шукаємо в NewT
+    const newTBook = verData.NewT?.flatMap((g) => g.books).find(
+      (b) => b.code === bookCode
+    );
+    if (newTBook) return newTBook.chapters;
+
+    // 2. Шукаємо в OldT
+    const oldTBook = verData.OldT?.flatMap((g) => g.books).find(
+      (b) => b.code === bookCode
+    );
+    if (oldTBook) return oldTBook.chapters;
+
+    // 3. Якщо не знайдено
+    console.warn(`Book ${bookCode} not found for version ${version}`);
+    return 1;
+  };
   return (
     <>
       <div className="passage-options-group">
@@ -280,7 +302,7 @@ const PassageOptionsGroup = ({
         lang={lang}
         onSelectVersions={setVersions}
       />
-      <BookSelector
+      {/* <BookSelector
         isOpen={showBook}
         onRequestClose={() => setShowBook(false)}
         lang={lang}
@@ -294,6 +316,22 @@ const PassageOptionsGroup = ({
           ).find((b) => b.code === code);
 
           setSelectedChapters(bookData?.chapters || 1);
+          setCurrentRef(`${code}.1`);
+        }}
+      /> */}
+      <BookSelector
+        isOpen={showBook}
+        onRequestClose={() => setShowBook(false)}
+        lang={lang}
+        versions={versions}
+        coreData={coreData}
+        coreLoading={coreLoading}
+        onSelectBook={(code) => {
+          setSelectedBook(code);
+          // Визначаємо кількість розділів на основі ПЕРШОЇ вибраної версії
+          const firstVersion = versions[0];
+          const chapters = getBookChapters(code, firstVersion);
+          setSelectedChapters(chapters);
           setCurrentRef(`${code}.1`);
         }}
       />

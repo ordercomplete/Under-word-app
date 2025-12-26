@@ -15,18 +15,32 @@
       "path": "originals/lxx"
     },
     {
+      "initials": "TR",
+      "name": "Textus Receptus (Greek New Testament)",
+      "lang": "grc",
+      "features": ["originals", "N", "G", "V", "I"],
+      "path": "originals/tr"
+    },
+    {
+      "initials": "GNT",
+      "name": "Greek New Testament (Modern Critical)",
+      "lang": "grc",
+      "features": ["originals", "N", "G", "V", "I"],
+      "path": "originals/gnt"
+    },
+    {
       "initials": "UBT",
       "name": "Українська Біблія (класичний, масоретський)",
       "lang": "uk",
       "features": ["R"],
-      "path": "translations/UBT"
+      "path": "translations/ubt"
     },
     {
       "initials": "UTT",
       "name": "Український переклад з LXX",
       "lang": "uk",
       "features": ["R", "S"],
-      "path": "translations/UTT"
+      "path": "translations/utt"
     },
     {
       "initials": "Synodal",

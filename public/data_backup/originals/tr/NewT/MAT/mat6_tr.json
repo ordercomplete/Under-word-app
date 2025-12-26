@@ -1,0 +1,265 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-24T00:00:00.000Z",
+    "info": {
+      "translation": "tr",
+      "type": "original",
+      "book": "MAT",
+      "chapter": 6,
+      "testament": "NewT",
+      "language": "greek",
+      "name": "Textus Receptus (TR)",
+      "hasStrongs": true,
+      "hasMorphology": true,
+      "hasLemma": true,
+      "originalPath": "originals\\tr\\NewT\\MAT\\mat6_tr.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "words": [
+        {
+          "word": "καὶ",
+          "strong": "G2532",
+          "lemma": "καί",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "μὴ",
+          "strong": "G3361",
+          "lemma": "μή",
+          "morphology": "PART"
+        },
+        {
+          "word": "εἰσενέγκῃς",
+          "strong": "G1533",
+          "lemma": "εἰσφέρω",
+          "morphology": "V-2AAS-2S"
+        },
+        {
+          "word": "ἡμᾶς",
+          "strong": "G1473",
+          "lemma": "ἐγώ",
+          "morphology": "P-1AP"
+        },
+        {
+          "word": "εἰς",
+          "strong": "G1519",
+          "lemma": "εἰς",
+          "morphology": "PREP"
+        },
+        {
+          "word": "πειρασμόν",
+          "strong": "G3986",
+          "lemma": "πειρασμός",
+          "morphology": "N-ASM"
+        },
+        {
+          "word": "ἀλλὰ",
+          "strong": "G235",
+          "lemma": "ἀλλά",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "ῥῦσαι",
+          "strong": "G4506",
+          "lemma": "ῥύομαι",
+          "morphology": "V-ADM-2S"
+        },
+        {
+          "word": "ἡμᾶς",
+          "strong": "G1473",
+          "lemma": "ἐγώ",
+          "morphology": "P-1AP"
+        },
+        {
+          "word": "ἀπὸ",
+          "strong": "G575",
+          "lemma": "ἀπό",
+          "morphology": "PREP"
+        },
+        {
+          "word": "τοῦ",
+          "strong": "G3588",
+          "lemma": "ὁ",
+          "morphology": "T-GSM"
+        },
+        {
+          "word": "πονηροῦ",
+          "strong": "G4190",
+          "lemma": "πονηρός",
+          "morphology": "A-GSM"
+        },
+        {
+          "word": "Ὅτι",
+          "strong": "G3754",
+          "lemma": "ὅτι",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "σοῦ",
+          "strong": "G4671",
+          "lemma": "σύ",
+          "morphology": "P-2GS"
+        },
+        {
+          "word": "ἐστιν",
+          "strong": "G1510",
+          "lemma": "εἰμί",
+          "morphology": "V-PAI-3S"
+        },
+        { "word": "ἡ", "strong": "G3588", "lemma": "ὁ", "morphology": "T-NSF" },
+        {
+          "word": "βασιλεία",
+          "strong": "G932",
+          "lemma": "βασιλεία",
+          "morphology": "N-NSF"
+        },
+        {
+          "word": "καὶ",
+          "strong": "G2532",
+          "lemma": "καί",
+          "morphology": "CONJ"
+        },
+        { "word": "ἡ", "strong": "G3588", "lemma": "ὁ", "morphology": "T-NSF" },
+        {
+          "word": "δύναμις",
+          "strong": "G1411",
+          "lemma": "δύναμις",
+          "morphology": "N-NSF"
+        },
+        {
+          "word": "καὶ",
+          "strong": "G2532",
+          "lemma": "καί",
+          "morphology": "CONJ"
+        },
+        { "word": "ἡ", "strong": "G3588", "lemma": "ὁ", "morphology": "T-NSF" },
+        {
+          "word": "δόξα",
+          "strong": "G1391",
+          "lemma": "δόξα",
+          "morphology": "N-NSF"
+        },
+        {
+          "word": "εἰς",
+          "strong": "G1519",
+          "lemma": "εἰς",
+          "morphology": "PREP"
+        },
+        {
+          "word": "τοὺς",
+          "strong": "G3588",
+          "lemma": "ὁ",
+          "morphology": "T-APM"
+        },
+        {
+          "word": "αἰῶνας",
+          "strong": "G165",
+          "lemma": "αἰών",
+          "morphology": "N-APM"
+        },
+        {
+          "word": "ἀμήν",
+          "strong": "G281",
+          "lemma": "ἀμήν",
+          "morphology": "HEB"
+        }
+      ]
+    },
+    {
+      "v": 2,
+      "words": [
+        {
+          "word": "Ἐὰν",
+          "strong": "G1437",
+          "lemma": "ἐάν",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "γὰρ",
+          "strong": "G1063",
+          "lemma": "γάρ",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "ἀφῆτε",
+          "strong": "G863",
+          "lemma": "ἀφίημι",
+          "morphology": "V-2AAS-2P"
+        },
+        {
+          "word": "τοῖς",
+          "strong": "G3588",
+          "lemma": "ὁ",
+          "morphology": "T-DPM"
+        },
+        {
+          "word": "ἀνθρώποις",
+          "strong": "G444",
+          "lemma": "ἄνθρωπος",
+          "morphology": "N-DPM"
+        },
+        {
+          "word": "τὰ",
+          "strong": "G3588",
+          "lemma": "ὁ",
+          "morphology": "T-APN"
+        },
+        {
+          "word": "παραπτώματα",
+          "strong": "G3900",
+          "lemma": "παράπτωμα",
+          "morphology": "N-APN"
+        },
+        {
+          "word": "αὐτῶν",
+          "strong": "G846",
+          "lemma": "αὐτός",
+          "morphology": "P-GPM"
+        },
+        {
+          "word": "ἀφήσει",
+          "strong": "G863",
+          "lemma": "ἀφίημι",
+          "morphology": "V-FAI-3S"
+        },
+        {
+          "word": "καὶ",
+          "strong": "G2532",
+          "lemma": "καί",
+          "morphology": "CONJ"
+        },
+        {
+          "word": "ὑμῖν",
+          "strong": "G4771",
+          "lemma": "σύ",
+          "morphology": "P-2DP"
+        },
+        { "word": "ὁ", "strong": "G3588", "lemma": "ὁ", "morphology": "T-NSM" },
+        {
+          "word": "πατὴρ",
+          "strong": "G3962",
+          "lemma": "πατήр",
+          "morphology": "N-NSM"
+        },
+        {
+          "word": "ὑμῶν",
+          "strong": "G4771",
+          "lemma": "σύ",
+          "morphology": "P-2GP"
+        },
+        { "word": "ὁ", "strong": "G3588", "lemma": "ὁ", "morphology": "T-NSM" },
+        {
+          "word": "οὐράνιος",
+          "strong": "G3770",
+          "lemma": "οὐράνιος",
+          "morphology": "A-NSM"
+        }
+      ]
+    }
+  ]
+}

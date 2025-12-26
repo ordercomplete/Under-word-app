@@ -1,0 +1,135 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-24T00:00:00.000Z",
+    "info": {
+      "translation": "ubt",
+      "type": "translation",
+      "book": "MAT",
+      "chapter": 1,
+      "testament": "NewT",
+      "language": "ukrainian",
+      "name": "Українська Біблія (UBT)",
+      "hasStrongs": true,
+      "hasMorphology": false,
+      "hasLemma": false,
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      },
+      "originalPath": "translations\\ubt\\NewT\\MAT\\mat1_ubt.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "words": [
+        { "word": "Родопис", "strong": "G976" },
+        { "word": "походження", "strong": "G1078" },
+        { "word": "Ісуса", "strong": "G2424" },
+        { "word": "Христа,", "strong": "G5547" },
+        { "word": "сина", "strong": "G5207" },
+        { "word": "Давидового,", "strong": "G1138" },
+        { "word": "сина", "strong": "G5207" },
+        { "word": "Авраамового.", "strong": "G11" }
+      ]
+    },
+    {
+      "v": 2,
+      "words": [
+        { "word": "Авраам", "strong": "G11" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Ісака;", "strong": "G2464" },
+        { "word": "Ісак", "strong": "G2464" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Якова;", "strong": "G2384" },
+        { "word": "Яків", "strong": "G2384" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Юду", "strong": "G2455" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "братів", "strong": "G80" },
+        { "word": "його.", "strong": "G846" }
+      ]
+    },
+    {
+      "v": 3,
+      "words": [
+        { "word": "Юда", "strong": "G2455" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Фареса", "strong": "G5329" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "Зара", "strong": "G2196" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Фамари;", "strong": "G2283" },
+        { "word": "Фарес", "strong": "G5329" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Есрома;", "strong": "G2074" },
+        { "word": "Есром", "strong": "G2074" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Арама.", "strong": "G689" }
+      ]
+    },
+    {
+      "v": 4,
+      "words": [
+        { "word": "Арам", "strong": "G689" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Амінадава;", "strong": "G284" },
+        { "word": "Амінадав", "strong": "G284" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Наассона;", "strong": "G3476" },
+        { "word": "Наассон", "strong": "G3476" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Салмона.", "strong": "G4533" }
+      ]
+    },
+    {
+      "v": 5,
+      "words": [
+        { "word": "Салмон", "strong": "G4533" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Вооза", "strong": "G1003" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Рахави;", "strong": "G4477" },
+        { "word": "Вооз", "strong": "G1003" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Овіда", "strong": "G2497" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Руфи;", "strong": "G4503" },
+        { "word": "Овід", "strong": "G2497" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Єссея.", "strong": "G2421" }
+      ]
+    },
+    {
+      "v": 6,
+      "words": [
+        { "word": "Єссей", "strong": "G2421" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Давида", "strong": "G1138" },
+        { "word": "царя;", "strong": "G935" },
+        { "word": "Давид", "strong": "G1138" },
+        { "word": "же", "strong": "G1161" },
+        { "word": "цар", "strong": "G935" },
+        { "word": "породжує", "strong": "G1080" },
+        { "word": "Соломона", "strong": "G4672" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "тєєї", "strong": "G3588" },
+        { "word": "Урієвої.", "strong": "G3774" }
+      ]
+    }
+  ]
+}

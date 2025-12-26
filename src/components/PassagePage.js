@@ -583,20 +583,442 @@
 
 //----------------------------------------------------
 
-// PassagePage.js
+// // PassagePage.js
+// import React, { useState, useEffect, useRef } from "react";
+// import PassageOptionsGroup from "./PassageOptionsGroup";
+// import InterlinearVerse from "./InterlinearVerse";
+// import LexiconWindow from "./LexiconWindow";
+// import "../styles/LexiconWindow.css";
+// import "../styles/PassagePage.css";
+
+// // import { normalizeChapter } from "../utils/normalizeData";
+// import { loadTranslation, loadOriginal } from "../utils/dataLoader";
+
+// // ДОДАЄМО ІМПОРТИ
+// import { jsonAdapter } from "../utils/jsonAdapter";
+// import { normalizeChapter } from "../utils/normalizeData";
+
+// const Panel = ({
+//   id,
+//   onClose,
+//   disableClose,
+//   coreData,
+//   coreLoading,
+//   lang,
+//   isMaster = false,
+//   masterRef,
+//   onWordClick,
+//   onNewPanel, // Додано для передачі addPanel
+// }) => {
+//   const [currentRef, setCurrentRef] = useState("GEN.1");
+//   const [versions, setVersions] = useState(["LXX", "UTT"]);
+//   const [chapterData, setChapterData] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState(null);
+
+//   console.log(
+//     `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
+//       ", "
+//     )}`
+//   );
+//   console.log(
+//     "Panel: 1-PassagePage coreData keys:",
+//     Object.keys(coreData || {})
+//   ); // Лог ініціалізації панелі
+
+//   // useEffect(() => {
+//   //   const [book, chapterStr] = currentRef.split(".");
+//   //   const chapter = parseInt(chapterStr);
+//   //   if (!book || !chapter) return;
+
+//   //   console.log(
+//   //     `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+//   //       ", "
+//   //     )}`
+//   //   ); // Лог завантаження
+//   //   console.log("Panel: 2-coreData keys:", Object.keys(coreData || {}));
+//   //   setLoading(true);
+//   //   setMessage(null);
+
+//   //   const loadChapter = async (ver) => {
+//   //     const lower = ver.toLowerCase();
+//   //     const isOriginal = ["lxx", "thot"].includes(lower);
+//   //     const base = isOriginal ? "originals" : "translations";
+//   //     const url = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+
+//   //     try {
+//   //       console.log(`Panel ${id}: Fetching ${url}`); // Лог URL
+//   //       console.log("Panel: 3-coreData keys:", Object.keys(coreData || {}));
+//   //       const res = await fetch(url);
+//   //       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+//   //       const data = await res.json();
+//   //       return { ver, data };
+//   //       // return { ver, data: normalizeChapter(data) }; // ← нормалізуємо
+//   //     } catch (err) {
+//   //       console.error(
+//   //         `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
+//   //         err
+//   //       );
+//   //       return { ver, data: [] };
+//   //     }
+//   //   };
+
+//   //   Promise.all(versions.map(loadChapter))
+//   //     .then((results) => {
+//   //       const newData = {};
+//   //       results.forEach(({ ver, data }) => {
+//   //         newData[ver] = data;
+//   //       });
+//   //       console.log(`Panel ${id}: Chapter loaded successfully`);
+//   //       console.log("Panel: 4-coreData keys:", Object.keys(coreData || {}));
+//   //       setChapterData(newData);
+//   //     })
+//   //     .catch(() => {
+//   //       console.error(`Panel ${id}: Error loading chapter`);
+//   //       console.log("Panel: 5-coreData keys:", Object.keys(coreData || {}));
+//   //       setMessage("Помилка завантаження");
+//   //     })
+//   //     .finally(() => setLoading(false));
+//   // }, [currentRef, versions]);
+
+//   //------------------------------------------ useEffect(() =>
+//   useEffect(() => {
+//     const [book, chapterStr] = currentRef.split(".");
+//     const chapter = parseInt(chapterStr);
+//     if (!book || !chapter) return;
+
+//     console.log(
+//       `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+//         ", "
+//       )}`
+//     );
+//     setLoading(true);
+//     setMessage(null);
+
+//     const loadChapter = async (ver) => {
+//       const lower = ver.toLowerCase();
+//       const isOriginal = ["lxx", "thot", "gnt"].includes(lower);
+//       const base = isOriginal ? "originals" : "translations";
+
+//       // Спробуємо спочатку скорочений формат
+//       const compressedUrl = `/data_compressed/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+
+//       console.log(`Panel ${id}: Fetching ${compressedUrl}`);
+
+//       try {
+//         const res = await fetch(compressedUrl);
+//         if (!res.ok) {
+//           // Спробуємо оригінальний формат
+//           const originalUrl = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//           console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
+//           const fallbackRes = await fetch(originalUrl);
+
+//           if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
+
+//           const data = await fallbackRes.json();
+//           return { ver, data };
+//         }
+
+//         const data = await res.json();
+//         return { ver, data };
+//       } catch (err) {
+//         console.error(
+//           `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
+//           err
+//         );
+//         return { ver, data: [] };
+//       }
+//     };
+
+//     Promise.all(versions.map(loadChapter))
+//       .then((results) => {
+//         const newData = {};
+//         results.forEach(({ ver, data }) => {
+//           // Адаптуємо дані за допомогою jsonAdapter
+//           newData[ver] = jsonAdapter(data);
+//         });
+//         console.log(
+//           `Panel ${id}: Chapter loaded successfully, versions:`,
+//           Object.keys(newData)
+//         );
+//         setChapterData(newData);
+//       })
+//       .catch((error) => {
+//         console.error(`Panel ${id}: Error loading chapter`, error);
+//         setMessage("Помилка завантаження: " + error.message);
+//       })
+//       .finally(() => setLoading(false));
+//   }, [currentRef, versions, id]);
+//   // ---------------------------------- ^^^
+//   const getVerseCount = () => {
+//     const primaryVer = versions[0];
+//     if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)
+//       return 0;
+//     return chapterData[primaryVer].length;
+//   };
+
+//   const getPairs = () => {
+//     const pairs = [];
+//     if (versions.includes("THOT") || versions.includes("UBT")) {
+//       pairs.push({ origVer: "THOT", transVer: "UBT" });
+//     }
+//     if (versions.includes("LXX") || versions.includes("UTT")) {
+//       pairs.push({ origVer: "LXX", transVer: "UTT" });
+//     }
+//     versions.forEach((v) => {
+//       if (!["THOT", "LXX", "UBT", "UTT"].includes(v)) {
+//         pairs.push({ origVer: null, transVer: v });
+//       }
+//     });
+//     return pairs;
+//   };
+//   // В src/components/PassagePage.js додайте цей useEffect:
+//   useEffect(() => {
+//     // Дебаг-інформація про завантаження
+//     console.log("=== DEBUG: PassagePage loading ===");
+//     console.log("Current ref:", currentRef);
+//     console.log("Versions:", versions);
+//     console.log("Chapter data keys:", Object.keys(chapterData));
+
+//     // Перевіримо структуру завантажених даних
+//     Object.keys(chapterData).forEach((ver) => {
+//       const data = chapterData[ver];
+//       if (data && Array.isArray(data) && data.length > 0) {
+//         console.log(`${ver}: ${data.length} verses`);
+//         console.log(`${ver} first verse:`, data[0]);
+//         console.log(
+//           `${ver} format:`,
+//           data[0].ws ? "short" : data[0].words ? "full" : "unknown"
+//         );
+//       }
+//     });
+//   }, [chapterData]);
+
+//   const [book, chapter] = currentRef.split(".");
+
+//   return (
+//     <div className="panel">
+//       <PassageOptionsGroup
+//         lang={lang}
+//         currentRef={currentRef}
+//         setCurrentRef={setCurrentRef}
+//         versions={versions}
+//         setVersions={setVersions}
+//         onPrevChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = Math.max(1, parseInt(c) - 1);
+//           setCurrentRef(`${b}.${nc}`);
+//         }}
+//         onNextChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = parseInt(c) + 1;
+//           const chapters =
+//             coreData[versions[0]?.toLowerCase()]?.OldT.flatMap(
+//               (g) => g.books
+//             ).find((bk) => bk.code === b)?.chapters || 1;
+//           if (nc <= chapters) {
+//             setCurrentRef(`${b}.${nc}`);
+//           }
+//         }}
+//         onNewPanel={onNewPanel} // Додано передачу
+//         onClosePanel={() => onClose(id)} // Передаємо id
+//         disableClose={disableClose}
+//         coreData={coreData}
+//         coreLoading={coreLoading}
+//       />
+
+//       <div className="chapter-viewer flex-fill overflow-auto p-3">
+//         {loading ? (
+//           <p className="text-center">{lang.loading || "Завантаження..."}</p>
+//         ) : message ? (
+//           <p className="text-center text-danger">{message}</p>
+//         ) : (
+//           <>
+//             <h4 className="text-center mb-3">{currentRef}</h4>
+//             {Array.from({ length: getVerseCount() }, (_, i) => {
+//               const verseNum = i + 1;
+//               return (
+//                 <InterlinearVerse
+//                   key={verseNum}
+//                   verseNum={verseNum}
+//                   pairs={getPairs()}
+//                   chapterData={chapterData}
+//                   onWordClick={onWordClick}
+//                 />
+//               );
+//             })}
+//           </>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// const PassagePage = ({ lang }) => {
+//   const [panels, setPanels] = useState([{ id: Date.now() }]);
+//   const [lexicons, setLexicons] = useState([]);
+//   const [coreData, setCoreData] = useState({});
+//   const [coreLoading, setCoreLoading] = useState(true);
+
+//   // const [strongsCache, setStrongsCache] = useState({});
+
+//   console.log("PassagePage rendered, panels count:", panels.length); // Лог рендеру
+
+//   useEffect(() => {
+//     let isMounted = true;
+//     const loadCoreData = async () => {
+//       try {
+//         const [coreRes, strongsRes] = await Promise.all([
+//           fetch("/data/core.json"),
+//         ]);
+
+//         if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
+
+//         const core = await coreRes.json();
+
+//         setCoreData(core); // ← ТІЛЬКИ core.json
+//         // setCoreData(normalizeCore(core));
+//         if (isMounted) setCoreData(core);
+//         console.log("2-Core data loaded:", Object.keys(core)); //тут перший раз починає грузитись
+//       } catch (err) {
+//         console.error("Failed to load core data:", err);
+
+//         if (isMounted) setCoreData({});
+//       } finally {
+//         if (isMounted) setCoreLoading(false);
+//       }
+//       return () => {
+//         isMounted = false;
+//       };
+//     };
+
+//     loadCoreData();
+//   }, []);
+
+//   const addPanel = () => {
+//     const maxPanels = window.innerWidth < 992 ? 2 : 4;
+//     console.log(
+//       "Adding panel, current count:",
+//       panels.length,
+//       "max:",
+//       maxPanels
+//     ); // Лог додавання
+//     if (panels.length < maxPanels) {
+//       setPanels([...panels, { id: Date.now() }]);
+//     } else {
+//       alert(`Максимум ${maxPanels} вікон`);
+//     }
+//   };
+
+//   const closePanel = (id) => {
+//     console.log("Closing panel:", id, "current count:", panels.length); // Лог закриття
+//     if (panels.length > 1) {
+//       setPanels(panels.filter((p) => p.id !== id));
+//     }
+//   };
+
+//   const handleWordClick = (data) => {
+//     console.log("Word clicked in panel:", data); // Лог кліку
+
+//     const { word, origVer } = data; // ← ДОДАНО origVer
+//     if (!word?.strong || !origVer) {
+//       console.warn("Missing strong or origVer:", data);
+//       return;
+//     }
+
+//     const key = `${origVer}:${word.strong}`; // Унікальний ключ: LXX:G1722
+//     const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+//     console.log(`Looking for lexicon: ${key}, found: ${existingIndex !== -1}`);
+
+//     if (existingIndex !== -1) {
+//       // Оновлюємо існуюче
+//       const newLex = [...lexicons];
+//       newLex[existingIndex].data = data;
+//       setLexicons(newLex);
+//     } else if (lexicons.length < 2) {
+//       // Додаємо нове
+//       setLexicons([
+//         ...lexicons,
+//         {
+//           id: Date.now(),
+//           key,
+//           data,
+//           origVer,
+//           lang: word.strong.startsWith("H") ? "he" : "gr",
+//         },
+//       ]);
+//     } else {
+//       // Замінюємо останнє
+//       const newLex = [...lexicons];
+//       newLex[1] = {
+//         id: Date.now(),
+//         key,
+//         data,
+//         origVer,
+//         lang: word.strong.startsWith("H") ? "he" : "gr",
+//       };
+//       setLexicons(newLex);
+//     }
+//   };
+
+// const closeLexicon = (id) => {
+//   console.log("Closing lexicon:", id); // Лог закриття лексикону
+//   setLexicons(lexicons.filter((l) => l.id !== id));
+// };
+
+//   const masterRef = panels[0]?.currentRef || "GEN.1"; // Для синхрону
+
+//   return (
+//     <div className="passage-container">
+//       <div className="passage-panels">
+//         {panels.map((panel, index) => (
+//           <Panel
+//             key={panel.id}
+//             id={panel.id}
+//             onClose={closePanel}
+//             disableClose={panels.length === 1}
+//             coreData={coreData}
+//             coreLoading={coreLoading}
+//             lang={lang}
+//             isMaster={index === 0}
+//             masterRef={masterRef}
+//             onWordClick={handleWordClick}
+//             onNewPanel={addPanel} // Додано передачу
+//           />
+//         ))}
+//       </div>
+
+//       {lexicons.length > 0 && (
+//         <div className="lexicon-column  ">
+//           {lexicons.map((lex) => (
+//             <LexiconWindow
+//               key={lex.id}
+//               data={lex.data}
+//               lang={lang}
+//               onClose={() => closeLexicon(lex.id)}
+//               coreData={coreData} // ← ДОДАНО
+//               origVer={lex.origVer} // ← ДОДАНО
+//             />
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default PassagePage;
+
+// -------------------------------------------
+
+// PassagePage.js - ОНОВЛЕНА ВЕРСІЯ
 import React, { useState, useEffect, useRef } from "react";
 import PassageOptionsGroup from "./PassageOptionsGroup";
 import InterlinearVerse from "./InterlinearVerse";
 import LexiconWindow from "./LexiconWindow";
 import "../styles/LexiconWindow.css";
 import "../styles/PassagePage.css";
-
-// import { normalizeChapter } from "../utils/normalizeData";
-import { loadTranslation, loadOriginal } from "../utils/dataLoader";
-
-// ДОДАЄМО ІМПОРТИ
 import { jsonAdapter } from "../utils/jsonAdapter";
-import { normalizeChapter } from "../utils/normalizeData";
 
 const Panel = ({
   id,
@@ -608,80 +1030,119 @@ const Panel = ({
   isMaster = false,
   masterRef,
   onWordClick,
-  onNewPanel, // Додано для передачі addPanel
+  onNewPanel,
 }) => {
   const [currentRef, setCurrentRef] = useState("GEN.1");
   const [versions, setVersions] = useState(["LXX", "UTT"]);
   const [chapterData, setChapterData] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  // Panel component - додайте ці рядки після useState
+  const [translationsData, setTranslationsData] = useState(null); //26.12.25
 
   console.log(
     `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
       ", "
     )}`
   );
-  console.log(
-    "Panel: 1-PassagePage coreData keys:",
-    Object.keys(coreData || {})
-  ); // Лог ініціалізації панелі
+  // ---------------------------------------------26.12.25-start
+  // Завантаження translations.json
+  useEffect(() => {
+    const loadTranslations = async () => {
+      try {
+        const response = await fetch("/data/translations.json");
+        const data = await response.json();
+        setTranslationsData(data);
+      } catch (error) {
+        console.error("Failed to load translations.json", error);
+      }
+    };
+    loadTranslations();
+  }, []);
+  // ---------------------------------------------26.12.25-end
 
-  // useEffect(() => {
-  //   const [book, chapterStr] = currentRef.split(".");
-  //   const chapter = parseInt(chapterStr);
-  //   if (!book || !chapter) return;
+  // Функція для визначення Завіту за кодом книги
+  const getTestament = (bookCode) => {
+    const newTestamentBooks = [
+      "MAT",
+      "MRK",
+      "LUK",
+      "JHN",
+      "ACT",
+      "ROM",
+      "1CO",
+      "2CO",
+      "GAL",
+      "EPH",
+      "PHP",
+      "COL",
+      "1TH",
+      "2TH",
+      "1TI",
+      "2TI",
+      "TIT",
+      "PHM",
+      "HEB",
+      "JAS",
+      "1PE",
+      "2PE",
+      "1JN",
+      "2JN",
+      "3JN",
+      "JUD",
+      "REV",
+    ];
+    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  };
+  // ---------------------------------------------26.12.25-start
+  // Функція для отримання списку номерів віршів
+  const getVerseNumbers = () => {
+    const allVerseNumbers = new Set();
 
-  //   console.log(
-  //     `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
-  //       ", "
-  //     )}`
-  //   ); // Лог завантаження
-  //   console.log("Panel: 2-coreData keys:", Object.keys(coreData || {}));
-  //   setLoading(true);
-  //   setMessage(null);
+    // Збираємо всі номери віршів з усіх завантажених версій
+    Object.values(chapterData).forEach((data) => {
+      if (Array.isArray(data)) {
+        data.forEach((verse) => {
+          const vNum = verse.verse || verse.v;
+          if (vNum && !isNaN(vNum)) {
+            allVerseNumbers.add(parseInt(vNum));
+          }
+        });
+      }
+    });
 
-  //   const loadChapter = async (ver) => {
-  //     const lower = ver.toLowerCase();
-  //     const isOriginal = ["lxx", "thot"].includes(lower);
-  //     const base = isOriginal ? "originals" : "translations";
-  //     const url = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+    // Якщо немає даних, повертаємо пустий масив
+    if (allVerseNumbers.size === 0) {
+      return [];
+    }
 
-  //     try {
-  //       console.log(`Panel ${id}: Fetching ${url}`); // Лог URL
-  //       console.log("Panel: 3-coreData keys:", Object.keys(coreData || {}));
-  //       const res = await fetch(url);
-  //       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  //       const data = await res.json();
-  //       return { ver, data };
-  //       // return { ver, data: normalizeChapter(data) }; // ← нормалізуємо
-  //     } catch (err) {
-  //       console.error(
-  //         `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
-  //         err
-  //       );
-  //       return { ver, data: [] };
-  //     }
-  //   };
+    // Створюємо масив від мінімального до максимального номера
+    const minVerse = Math.min(...allVerseNumbers);
+    const maxVerse = Math.max(...allVerseNumbers);
+    const verseArray = [];
 
-  //   Promise.all(versions.map(loadChapter))
-  //     .then((results) => {
-  //       const newData = {};
-  //       results.forEach(({ ver, data }) => {
-  //         newData[ver] = data;
-  //       });
-  //       console.log(`Panel ${id}: Chapter loaded successfully`);
-  //       console.log("Panel: 4-coreData keys:", Object.keys(coreData || {}));
-  //       setChapterData(newData);
-  //     })
-  //     .catch(() => {
-  //       console.error(`Panel ${id}: Error loading chapter`);
-  //       console.log("Panel: 5-coreData keys:", Object.keys(coreData || {}));
-  //       setMessage("Помилка завантаження");
-  //     })
-  //     .finally(() => setLoading(false));
-  // }, [currentRef, versions]);
+    for (let i = minVerse; i <= maxVerse; i++) {
+      verseArray.push(i);
+    }
 
-  //------------------------------------------ useEffect(() =>
+    console.log(`Panel ${id}: Found verses ${minVerse}-${maxVerse}`);
+    return verseArray;
+  };
+  // ---------------------------------------------26.12.25-end
+  // Функція для визначення шляху до файлу
+  const getFilePath = (version, bookCode, chapter) => {
+    const ver = version.toLowerCase();
+    const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
+    const base = isOriginal ? "originals" : "translations";
+    const testament = getTestament(bookCode);
+
+    return {
+      compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+      original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+      testament: testament,
+    };
+  };
+
   useEffect(() => {
     const [book, chapterStr] = currentRef.split(".");
     const chapter = parseInt(chapterStr);
@@ -697,36 +1158,56 @@ const Panel = ({
 
     const loadChapter = async (ver) => {
       const lower = ver.toLowerCase();
-      const isOriginal = ["lxx", "thot", "gnt"].includes(lower);
+      const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower); // Додано "tr"
       const base = isOriginal ? "originals" : "translations";
 
-      // Спробуємо спочатку скорочений формат
-      const compressedUrl = `/data_compressed/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+      // ВИЗНАЧЕННЯ ЗАПОВІТУ: перевіряємо coreData
+      let testament = "OldT"; // Значення за замовчуванням
+      if (coreData[lower]) {
+        // Спочатку шукаємо книгу в NewT
+        const newTestamentGroup = coreData[lower]?.NewT?.find((group) =>
+          group.books.some((b) => b.code === book)
+        );
+        if (newTestamentGroup) {
+          testament = "NewT";
+        } else {
+          // Якщо не знайшли в NewT, перевіряємо OldT
+          const oldTestamentGroup = coreData[lower]?.OldT?.find((group) =>
+            group.books.some((b) => b.code === book)
+          );
+          if (oldTestamentGroup) {
+            testament = "OldT";
+          }
+          // Якщо не знайдено ні в OldT, ні в NewT, залишається "OldT" за замовчуванням
+        }
+      }
 
-      console.log(`Panel ${id}: Fetching ${compressedUrl}`);
+      // Формуємо URL з використанням визначеного testament
+      const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+      console.log(
+        `Panel ${id}: Fetching ${compressedUrl} (Testament: ${testament})`
+      );
 
       try {
         const res = await fetch(compressedUrl);
         if (!res.ok) {
           // Спробуємо оригінальний формат
-          const originalUrl = `/data/${base}/${lower}/OldT/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+          const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
           console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
           const fallbackRes = await fetch(originalUrl);
-
           if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
-
           const data = await fallbackRes.json();
           return { ver, data };
         }
-
         const data = await res.json();
         return { ver, data };
       } catch (err) {
         console.error(
-          `Panel ${id}: Failed to load ${ver} ${book}:${chapter}`,
+          `Panel ${id}: Failed to load ${ver} ${book}:${chapter} from ${testament}`,
           err
         );
-        return { ver, data: [] };
+        // Можна повернути пусті дані або об'єкт з помилкою
+        return { ver, data: { error: err.message } };
       }
     };
 
@@ -734,7 +1215,6 @@ const Panel = ({
       .then((results) => {
         const newData = {};
         results.forEach(({ ver, data }) => {
-          // Адаптуємо дані за допомогою jsonAdapter
           newData[ver] = jsonAdapter(data);
         });
         console.log(
@@ -749,7 +1229,7 @@ const Panel = ({
       })
       .finally(() => setLoading(false));
   }, [currentRef, versions, id]);
-  // ---------------------------------- ^^^
+
   const getVerseCount = () => {
     const primaryVer = versions[0];
     if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)
@@ -757,42 +1237,115 @@ const Panel = ({
     return chapterData[primaryVer].length;
   };
 
+  // const getPairs = () => {
+  //   const pairs = [];
+
+  //   // Визначаємо Завіт поточних версій
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+
+  //   if (testament === "OldT") {
+  //     if (versions.includes("THOT") || versions.includes("UBT")) {
+  //       pairs.push({ origVer: "THOT", transVer: "UBT" });
+  //     }
+  //     if (versions.includes("LXX") || versions.includes("UTT")) {
+  //       pairs.push({ origVer: "LXX", transVer: "UTT" });
+  //     }
+  //   } else if (testament === "NewT") {
+  //     // Для Нового Завіту: TR + переклад або GNT + переклад
+  //     if (
+  //       versions.includes("TR") &&
+  //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
+  //     ) {
+  //       const translation = versions.find((v) =>
+  //         ["UBT", "UTT", "KJV"].includes(v)
+  //       );
+  //       if (translation) pairs.push({ origVer: "TR", transVer: translation });
+  //     }
+  //     if (
+  //       versions.includes("GNT") &&
+  //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
+  //     ) {
+  //       const translation = versions.find((v) =>
+  //         ["UBT", "UTT", "KJV"].includes(v)
+  //       );
+  //       if (translation) pairs.push({ origVer: "GNT", transVer: translation });
+  //     }
+  //   }
+
+  //   // Додаємо окремі версії без пар
+  //   versions.forEach((v) => {
+  //     if (!["THOT", "LXX", "TR", "GNT", "UBT", "UTT"].includes(v)) {
+  //       pairs.push({ origVer: null, transVer: v });
+  //     }
+  //   });
+
+  //   return pairs;
+  // };
+  // ---------------------------------------------------------------------
+  // ОНОВЛЕНА функція getPairs для динамічного групування 26.12.2025
   const getPairs = () => {
+    const [book] = currentRef.split(".");
+    const testament = getTestament(book);
     const pairs = [];
-    if (versions.includes("THOT") || versions.includes("UBT")) {
-      pairs.push({ origVer: "THOT", transVer: "UBT" });
+
+    // Словник для зберігання інформації про переклади
+    const translationInfo = {};
+    if (translationsData?.bibles) {
+      translationsData.bibles.forEach((bible) => {
+        translationInfo[bible.initials] = bible;
+      });
     }
-    if (versions.includes("LXX") || versions.includes("UTT")) {
-      pairs.push({ origVer: "LXX", transVer: "UTT" });
-    }
-    versions.forEach((v) => {
-      if (!["THOT", "LXX", "UBT", "UTT"].includes(v)) {
-        pairs.push({ origVer: null, transVer: v });
+
+    // Групуємо версії за оригіналами
+    const groups = {};
+
+    versions.forEach((version) => {
+      const info = translationInfo[version];
+      let originalKey = version; // За замовчуванням - сама версія
+
+      // Якщо це переклад, знаходимо його оригінал
+      if (info?.basedOn) {
+        originalKey =
+          testament === "NewT"
+            ? info.basedOn.new_testament
+            : info.basedOn.old_testament;
+      }
+
+      // Визначаємо, чи це оригінал чи переклад
+      const isOriginal = ["thot", "lxx", "tr", "gnt"].includes(
+        originalKey.toLowerCase()
+      );
+
+      if (!groups[originalKey]) {
+        groups[originalKey] = {
+          original: isOriginal ? version : originalKey,
+          translations: [],
+        };
+      }
+
+      // Якщо це оригінал або переклад, що не збігається з оригіналом
+      if (isOriginal || version !== originalKey) {
+        if (version !== groups[originalKey].original) {
+          groups[originalKey].translations.push(version);
+        }
       }
     });
+
+    // Створюємо пари
+    Object.values(groups).forEach((group) => {
+      if (group.original || group.translations.length > 0) {
+        pairs.push({
+          original: group.original,
+          translations: group.translations,
+        });
+      }
+    });
+
+    console.log(`Panel ${id}: Created pairs:`, pairs);
     return pairs;
   };
-  // В src/components/PassagePage.js додайте цей useEffect:
-  useEffect(() => {
-    // Дебаг-інформація про завантаження
-    console.log("=== DEBUG: PassagePage loading ===");
-    console.log("Current ref:", currentRef);
-    console.log("Versions:", versions);
-    console.log("Chapter data keys:", Object.keys(chapterData));
-
-    // Перевіримо структуру завантажених даних
-    Object.keys(chapterData).forEach((ver) => {
-      const data = chapterData[ver];
-      if (data && Array.isArray(data) && data.length > 0) {
-        console.log(`${ver}: ${data.length} verses`);
-        console.log(`${ver} first verse:`, data[0]);
-        console.log(
-          `${ver} format:`,
-          data[0].ws ? "short" : data[0].words ? "full" : "unknown"
-        );
-      }
-    });
-  }, [chapterData]);
+  // -------------------------
 
   const [book, chapter] = currentRef.split(".");
 
@@ -812,16 +1365,25 @@ const Panel = ({
         onNextChapter={() => {
           const [b, c] = currentRef.split(".");
           const nc = parseInt(c) + 1;
-          const chapters =
-            coreData[versions[0]?.toLowerCase()]?.OldT.flatMap(
-              (g) => g.books
-            ).find((bk) => bk.code === b)?.chapters || 1;
+
+          // Визначаємо Завіт для отримання кількості глав
+          const testament = getTestament(b);
+          const versionKey = versions[0]?.toLowerCase();
+
+          let chapters = 1;
+          if (coreData[versionKey] && coreData[versionKey][testament]) {
+            coreData[versionKey][testament].forEach((group) => {
+              const bookInfo = group.books.find((bk) => bk.code === b);
+              if (bookInfo) chapters = bookInfo.chapters;
+            });
+          }
+
           if (nc <= chapters) {
             setCurrentRef(`${b}.${nc}`);
           }
         }}
-        onNewPanel={onNewPanel} // Додано передачу
-        onClosePanel={() => onClose(id)} // Передаємо id
+        onNewPanel={onNewPanel}
+        onClosePanel={() => onClose(id)}
         disableClose={disableClose}
         coreData={coreData}
         coreLoading={coreLoading}
@@ -835,7 +1397,7 @@ const Panel = ({
         ) : (
           <>
             <h4 className="text-center mb-3">{currentRef}</h4>
-            {Array.from({ length: getVerseCount() }, (_, i) => {
+            {/* {Array.from({ length: getVerseCount() }, (_, i) => {
               const verseNum = i + 1;
               return (
                 <InterlinearVerse
@@ -846,7 +1408,49 @@ const Panel = ({
                   onWordClick={onWordClick}
                 />
               );
-            })}
+            })} */}
+            {(() => {
+              const verseNumbers = getVerseNumbers();
+
+              if (verseNumbers.length === 0) {
+                return (
+                  <p className="text-center text-muted">
+                    Немає даних для відображення
+                  </p>
+                );
+              }
+
+              return verseNumbers.map((verseNum) => {
+                // Перевіряємо, чи є дані для цього вірша в будь-якій версії
+                const hasData = Object.keys(chapterData).some((version) => {
+                  const data = chapterData[version];
+                  if (!Array.isArray(data)) return false;
+                  const verse = data.find((v) => (v.verse || v.v) === verseNum);
+                  return verse && (verse.words || verse.ws)?.length > 0;
+                });
+
+                if (!hasData) {
+                  return (
+                    <div key={`missing-${verseNum}`} className="missing-verse">
+                      <div className="verse-number">{verseNum}</div>
+                      <div className="verse-content text-muted">
+                        Вірш {verseNum} поки що відсутній
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <InterlinearVerse
+                    key={verseNum}
+                    verseNum={verseNum}
+                    pairs={getPairs()}
+                    chapterData={chapterData}
+                    onWordClick={onWordClick}
+                  />
+                );
+              });
+            })()}
           </>
         )}
       </div>
@@ -860,49 +1464,34 @@ const PassagePage = ({ lang }) => {
   const [coreData, setCoreData] = useState({});
   const [coreLoading, setCoreLoading] = useState(true);
 
-  // const [strongsCache, setStrongsCache] = useState({});
-
-  console.log("PassagePage rendered, panels count:", panels.length); // Лог рендеру
-
   useEffect(() => {
     let isMounted = true;
     const loadCoreData = async () => {
       try {
-        const [coreRes, strongsRes] = await Promise.all([
-          fetch("/data/core.json"),
-        ]);
-
+        const coreRes = await fetch("/data/core.json");
         if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
-
         const core = await coreRes.json();
 
-        setCoreData(core); // ← ТІЛЬКИ core.json
-        // setCoreData(normalizeCore(core));
-        if (isMounted) setCoreData(core);
-        console.log("2-Core data loaded:", Object.keys(core)); //тут перший раз починає грузитись
+        if (isMounted) {
+          setCoreData(core);
+          console.log("Core data loaded with structure:", Object.keys(core));
+        }
       } catch (err) {
         console.error("Failed to load core data:", err);
-
         if (isMounted) setCoreData({});
       } finally {
         if (isMounted) setCoreLoading(false);
       }
-      return () => {
-        isMounted = false;
-      };
     };
 
     loadCoreData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const addPanel = () => {
     const maxPanels = window.innerWidth < 992 ? 2 : 4;
-    console.log(
-      "Adding panel, current count:",
-      panels.length,
-      "max:",
-      maxPanels
-    ); // Лог додавання
     if (panels.length < maxPanels) {
       setPanels([...panels, { id: Date.now() }]);
     } else {
@@ -911,33 +1500,27 @@ const PassagePage = ({ lang }) => {
   };
 
   const closePanel = (id) => {
-    console.log("Closing panel:", id, "current count:", panels.length); // Лог закриття
     if (panels.length > 1) {
       setPanels(panels.filter((p) => p.id !== id));
     }
   };
+  const closeLexicon = (id) => {
+    console.log("Closing lexicon:", id); // Лог закриття лексикону
+    setLexicons(lexicons.filter((l) => l.id !== id));
+  };
 
   const handleWordClick = (data) => {
-    console.log("Word clicked in panel:", data); // Лог кліку
+    const { word, origVer } = data;
+    if (!word?.strong || !origVer) return;
 
-    const { word, origVer } = data; // ← ДОДАНО origVer
-    if (!word?.strong || !origVer) {
-      console.warn("Missing strong or origVer:", data);
-      return;
-    }
-
-    const key = `${origVer}:${word.strong}`; // Унікальний ключ: LXX:G1722
+    const key = `${origVer}:${word.strong}`;
     const existingIndex = lexicons.findIndex((l) => l.key === key);
 
-    console.log(`Looking for lexicon: ${key}, found: ${existingIndex !== -1}`);
-
     if (existingIndex !== -1) {
-      // Оновлюємо існуюче
       const newLex = [...lexicons];
       newLex[existingIndex].data = data;
       setLexicons(newLex);
     } else if (lexicons.length < 2) {
-      // Додаємо нове
       setLexicons([
         ...lexicons,
         {
@@ -949,7 +1532,6 @@ const PassagePage = ({ lang }) => {
         },
       ]);
     } else {
-      // Замінюємо останнє
       const newLex = [...lexicons];
       newLex[1] = {
         id: Date.now(),
@@ -961,13 +1543,6 @@ const PassagePage = ({ lang }) => {
       setLexicons(newLex);
     }
   };
-
-  const closeLexicon = (id) => {
-    console.log("Closing lexicon:", id); // Лог закриття лексикону
-    setLexicons(lexicons.filter((l) => l.id !== id));
-  };
-
-  const masterRef = panels[0]?.currentRef || "GEN.1"; // Для синхрону
 
   return (
     <div className="passage-container">
@@ -982,23 +1557,23 @@ const PassagePage = ({ lang }) => {
             coreLoading={coreLoading}
             lang={lang}
             isMaster={index === 0}
-            masterRef={masterRef}
+            masterRef={panels[0]?.currentRef || "GEN.1"}
             onWordClick={handleWordClick}
-            onNewPanel={addPanel} // Додано передачу
+            onNewPanel={addPanel}
           />
         ))}
       </div>
 
       {lexicons.length > 0 && (
-        <div className="lexicon-column  ">
+        <div className="lexicon-column">
           {lexicons.map((lex) => (
             <LexiconWindow
               key={lex.id}
               data={lex.data}
               lang={lang}
               onClose={() => closeLexicon(lex.id)}
-              coreData={coreData} // ← ДОДАНО
-              origVer={lex.origVer} // ← ДОДАНО
+              coreData={coreData}
+              origVer={lex.origVer}
             />
           ))}
         </div>

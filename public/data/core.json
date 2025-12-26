@@ -59,49 +59,6 @@
           { "code": "ZEC", "name": "Захарія", "chapters": 14 },
           { "code": "MAL", "name": "Малахія", "chapters": 4 }
         ]
-      },
-      {
-        "group": "Gospels",
-        "books": [
-          { "code": "MAT", "name": "Матвія", "chapters": 28 },
-          { "code": "MRK", "name": "Марка", "chapters": 16 },
-          { "code": "LUK", "name": "Луки", "chapters": 24 },
-          { "code": "JHN", "name": "Івана", "chapters": 21 }
-        ]
-      },
-      {
-        "group": "Acts",
-        "books": [{ "code": "ACT", "name": "Дії Апостолів", "chapters": 28 }]
-      },
-      {
-        "group": "Epistles",
-        "books": [
-          { "code": "ROM", "name": "Римлян", "chapters": 16 },
-          { "code": "1CO", "name": "1 Коринтян", "chapters": 16 },
-          { "code": "2CO", "name": "2 Коринтян", "chapters": 13 },
-          { "code": "GAL", "name": "Галатів", "chapters": 6 },
-          { "code": "EPH", "name": "Ефесян", "chapters": 6 },
-          { "code": "PHP", "name": "Филип’ян", "chapters": 4 },
-          { "code": "COL", "name": "Колосян", "chapters": 4 },
-          { "code": "1TH", "name": "1 Солунян", "chapters": 5 },
-          { "code": "2TH", "name": "2 Солунян", "chapters": 3 },
-          { "code": "1TI", "name": "1 Тимофія", "chapters": 6 },
-          { "code": "2TI", "name": "2 Тимофія", "chapters": 4 },
-          { "code": "TIT", "name": "Тита", "chapters": 3 },
-          { "code": "PHM", "name": "Филимона", "chapters": 1 },
-          { "code": "HEB", "name": "Євреїв", "chapters": 13 },
-          { "code": "JAS", "name": "Якова", "chapters": 5 },
-          { "code": "1PE", "name": "1 Петра", "chapters": 5 },
-          { "code": "2PE", "name": "2 Петра", "chapters": 3 },
-          { "code": "1JN", "name": "1 Івана", "chapters": 5 },
-          { "code": "2JN", "name": "2 Івана", "chapters": 1 },
-          { "code": "3JN", "name": "3 Івана", "chapters": 1 },
-          { "code": "JUD", "name": "Юди", "chapters": 1 }
-        ]
-      },
-      {
-        "group": "Revelation",
-        "books": [{ "code": "REV", "name": "Одкровення", "chapters": 22 }]
       }
     ]
   },
@@ -176,7 +133,11 @@
           { "code": "ZEC", "name": "Захарія", "chapters": 14 },
           { "code": "MAL", "name": "Малахія", "chapters": 4 }
         ]
-      },
+      }
+    ]
+  },
+  "tr": {
+    "NewT": [
       {
         "group": "Gospels",
         "books": [
@@ -198,7 +159,54 @@
           { "code": "2CO", "name": "2 Коринтян", "chapters": 13 },
           { "code": "GAL", "name": "Галатів", "chapters": 6 },
           { "code": "EPH", "name": "Ефесян", "chapters": 6 },
-          { "code": "PHP", "name": "Филип’ян", "chapters": 4 },
+          { "code": "PHP", "name": "Филип'ян", "chapters": 4 },
+          { "code": "COL", "name": "Колосян", "chapters": 4 },
+          { "code": "1TH", "name": "1 Солунян", "chapters": 5 },
+          { "code": "2TH", "name": "2 Солунян", "chapters": 3 },
+          { "code": "1TI", "name": "1 Тимофія", "chapters": 6 },
+          { "code": "2TI", "name": "2 Тимофія", "chapters": 4 },
+          { "code": "TIT", "name": "Тита", "chapters": 3 },
+          { "code": "PHM", "name": "Филимона", "chapters": 1 },
+          { "code": "HEB", "name": "Євреїв", "chapters": 13 },
+          { "code": "JAS", "name": "Якова", "chapters": 5 },
+          { "code": "1PE", "name": "1 Петра", "chapters": 5 },
+          { "code": "2PE", "name": "2 Петра", "chapters": 3 },
+          { "code": "1JN", "name": "1 Івана", "chapters": 5 },
+          { "code": "2JN", "name": "2 Івана", "chapters": 1 },
+          { "code": "3JN", "name": "3 Івана", "chapters": 1 },
+          { "code": "JUD", "name": "Юди", "chapters": 1 }
+        ]
+      },
+      {
+        "group": "Revelation",
+        "books": [{ "code": "REV", "name": "Одкровення", "chapters": 22 }]
+      }
+    ]
+  },
+  "gnt": {
+    "NewT": [
+      {
+        "group": "Gospels",
+        "books": [
+          { "code": "MAT", "name": "Матвія", "chapters": 28 },
+          { "code": "MRK", "name": "Марка", "chapters": 16 },
+          { "code": "LUK", "name": "Луки", "chapters": 24 },
+          { "code": "JHN", "name": "Івана", "chapters": 21 }
+        ]
+      },
+      {
+        "group": "Acts",
+        "books": [{ "code": "ACT", "name": "Дії Апостолів", "chapters": 28 }]
+      },
+      {
+        "group": "Epistles",
+        "books": [
+          { "code": "ROM", "name": "Римлян", "chapters": 16 },
+          { "code": "1CO", "name": "1 Коринтян", "chapters": 16 },
+          { "code": "2CO", "name": "2 Коринтян", "chapters": 13 },
+          { "code": "GAL", "name": "Галатів", "chapters": 6 },
+          { "code": "EPH", "name": "Ефесян", "chapters": 6 },
+          { "code": "PHP", "name": "Филип'ян", "chapters": 4 },
           { "code": "COL", "name": "Колосян", "chapters": 4 },
           { "code": "1TH", "name": "1 Солунян", "chapters": 5 },
           { "code": "2TH", "name": "2 Солунян", "chapters": 3 },
@@ -306,7 +314,7 @@
           { "code": "2CO", "name": "2 Коринтян", "chapters": 13 },
           { "code": "GAL", "name": "Галатів", "chapters": 6 },
           { "code": "EPH", "name": "Ефесян", "chapters": 6 },
-          { "code": "PHP", "name": "Филип’ян", "chapters": 4 },
+          { "code": "PHP", "name": "Филип'ян", "chapters": 4 },
           { "code": "COL", "name": "Колосян", "chapters": 4 },
           { "code": "1TH", "name": "1 Солунян", "chapters": 5 },
           { "code": "2TH", "name": "2 Солунян", "chapters": 3 },
@@ -395,7 +403,7 @@
           { "code": "JON", "name": "Йона", "chapters": 4 },
           { "code": "MIC", "name": "Михей", "chapters": 7 },
           { "code": "NAM", "name": "Наум", "chapters": 3 },
-          { "code": "HAB", "name": "Авакум", "chapters": 3 },
+          { "code": "HAB", "name": "Авакуум", "chapters": 3 },
           { "code": "SOP", "name": "Софонія", "chapters": 3 },
           { "code": "HAG", "name": "Огій", "chapters": 2 },
           { "code": "ZEC", "name": "Захарія", "chapters": 14 },
@@ -425,7 +433,7 @@
           { "code": "2CO", "name": "2 Коринтян", "chapters": 13 },
           { "code": "GAL", "name": "Галатів", "chapters": 6 },
           { "code": "EPH", "name": "Ефесян", "chapters": 6 },
-          { "code": "PHP", "name": "Филип’ян", "chapters": 4 },
+          { "code": "PHP", "name": "Филип'ян", "chapters": 4 },
           { "code": "COL", "name": "Колосян", "chapters": 4 },
           { "code": "1TH", "name": "1 Солунян", "chapters": 5 },
           { "code": "2TH", "name": "2 Солунян", "chapters": 3 },

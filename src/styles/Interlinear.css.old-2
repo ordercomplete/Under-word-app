@@ -1,0 +1,162 @@
+/* НОВІ СТИЛІ ДЛЯ ПРАВИЛЬНОГО ВІДОБРАЖЕННЯ */
+
+/* Контейнер для всієї сторінки вірша */
+.interlinear-verse {
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+}
+
+.verse-number {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #3498db;
+}
+
+/* Контейнер для груп версій */
+.pairs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Група версій (оригінал + його переклади) */
+.version-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+/* Рядок версії */
+.version-row {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+}
+
+/* Мітка версії */
+.version-label {
+  min-width: 80px;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-align: right;
+  padding-right: 15px;
+  flex-shrink: 0;
+}
+
+.original-row .version-label {
+  color: #8b0000; /* Темно-червоний для оригіналів */
+}
+
+.translation-row .version-label {
+  color: #006400; /* Темно-зелений для перекладів */
+}
+
+/* Контейнер для слів без переносу */
+.words-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 4px;
+  padding: 4px 0;
+  flex: 1;
+  min-height: 32px;
+  align-items: center;
+}
+
+/* Окремі клітинки слів */
+.word-cell {
+  min-width: 80px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.original-word {
+  background: #fff5f5;
+  border: 1px solid #ffcccc;
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.original-word:hover {
+  background: #ffe6e6;
+  border-color: #ff9999;
+  cursor: pointer;
+}
+
+.translation-word {
+  background: #f5fff5;
+  border: 1px solid #ccffcc;
+  color: #006400;
+}
+
+.translation-word:hover {
+  background: #e6ffe6;
+  border-color: #99ff99;
+  cursor: pointer;
+}
+
+/* Відсутній вірш */
+.missing-verse {
+  padding: 15px;
+  background: #f8f9fa;
+  border-left: 4px solid #95a5a6;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.missing-verse .verse-number {
+  color: #7f8c8d;
+  border-bottom: 1px dashed #bdc3c7;
+}
+
+.missing-verse .verse-content {
+  padding-left: 20px;
+  font-style: italic;
+  color: #95a5a6;
+}
+
+/* Смуга прокрутки */
+.words-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.words-row::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.words-row::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.words-row::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .version-label {
+    min-width: 60px;
+    font-size: 0.8em;
+    padding-right: 10px;
+  }
+
+  .word-cell {
+    min-width: 70px;
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+}

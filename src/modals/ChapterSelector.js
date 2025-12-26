@@ -46,6 +46,7 @@
 
 // export default ChapterSelector;
 
+// src\modals\ChapterSelector.js
 import React, { useMemo } from "react";
 import CloseIcon from "../elements/CloseIcon";
 import "../styles/ChapterSelector.css";
