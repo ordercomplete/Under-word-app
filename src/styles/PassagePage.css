@@ -22,3 +22,95 @@
 .panel:last-child {
   border-right: none;
 }
+
+/* PassagePage.css - ДОДАЙТЕ ЦІ СТИЛІ */
+
+/* Контейнер для потокового відображення */
+.chapter-stream-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+}
+
+/* Заголовок з версіями */
+.versions-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.header-verse {
+  font-weight: bold;
+  color: #2c3e50;
+  min-width: 60px;
+  text-align: center;
+}
+
+.header-version {
+  flex: 1;
+  text-align: center;
+  font-size: 0.9em;
+  color: #7f8c8d;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.header-separator {
+  height: 1px;
+  background: #e0e0e0;
+  margin-top: 10px;
+}
+
+/* Потоковий контейнер для віршів */
+.verses-stream {
+  width: 100%;
+  line-height: 1.4;
+}
+
+/* Рядок віршів */
+.verse-row {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  min-height: 40px;
+}
+
+/* Стилі для відсутніх даних */
+.missing-verse {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px dashed #ddd;
+}
+
+.missing-verse .verse-number {
+  font-weight: bold;
+  color: #95a5a6;
+  margin-bottom: 5px;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .versions-header {
+    display: none; /* На малих екранах ховаємо заголовок */
+  }
+
+  .header-version {
+    font-size: 0.8em;
+    padding: 3px 6px;
+  }
+
+  .chapter-stream-container {
+    padding: 5px;
+  }
+}

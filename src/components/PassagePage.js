@@ -1061,39 +1061,39 @@ const Panel = ({
   }, []);
   // ---------------------------------------------26.12.25-end
 
-  // Функція для визначення Завіту за кодом книги
-  const getTestament = (bookCode) => {
-    const newTestamentBooks = [
-      "MAT",
-      "MRK",
-      "LUK",
-      "JHN",
-      "ACT",
-      "ROM",
-      "1CO",
-      "2CO",
-      "GAL",
-      "EPH",
-      "PHP",
-      "COL",
-      "1TH",
-      "2TH",
-      "1TI",
-      "2TI",
-      "TIT",
-      "PHM",
-      "HEB",
-      "JAS",
-      "1PE",
-      "2PE",
-      "1JN",
-      "2JN",
-      "3JN",
-      "JUD",
-      "REV",
-    ];
-    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
-  };
+  // // Функція для визначення Завіту за кодом книги
+  // const getTestament = (bookCode) => {
+  //   const newTestamentBooks = [
+  //     "MAT",
+  //     "MRK",
+  //     "LUK",
+  //     "JHN",
+  //     "ACT",
+  //     "ROM",
+  //     "1CO",
+  //     "2CO",
+  //     "GAL",
+  //     "EPH",
+  //     "PHP",
+  //     "COL",
+  //     "1TH",
+  //     "2TH",
+  //     "1TI",
+  //     "2TI",
+  //     "TIT",
+  //     "PHM",
+  //     "HEB",
+  //     "JAS",
+  //     "1PE",
+  //     "2PE",
+  //     "1JN",
+  //     "2JN",
+  //     "3JN",
+  //     "JUD",
+  //     "REV",
+  //   ];
+  //   return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  // };
   // ---------------------------------------------26.12.25-start
   // Функція для отримання списку номерів віршів
   const getVerseNumbers = () => {
@@ -1129,6 +1129,39 @@ const Panel = ({
     return verseArray;
   };
   // ---------------------------------------------26.12.25-end
+  // Функція для визначення Завіту за кодом книги
+  const getTestament = (bookCode) => {
+    const newTestamentBooks = [
+      "MAT",
+      "MRK",
+      "LUK",
+      "JHN",
+      "ACT",
+      "ROM",
+      "1CO",
+      "2CO",
+      "GAL",
+      "EPH",
+      "PHP",
+      "COL",
+      "1TH",
+      "2TH",
+      "1TI",
+      "2TI",
+      "TIT",
+      "PHM",
+      "HEB",
+      "JAS",
+      "1PE",
+      "2PE",
+      "1JN",
+      "2JN",
+      "3JN",
+      "JUD",
+      "REV",
+    ];
+    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  };
   // Функція для визначення шляху до файлу
   const getFilePath = (version, bookCode, chapter) => {
     const ver = version.toLowerCase();
@@ -1366,11 +1399,15 @@ const Panel = ({
 
     translationVersions.forEach((translation) => {
       // Отримуємо оригінал для цього перекладу
+      // Проблема: Змінна translationsData декларована, але використовується у getPairs() без перевірки на null.
+      // Може призвести до помилки Cannot read properties of undefined.
       const translationInfo = translationsData?.bibles?.find(
         (b) => b.initials === translation
       );
       let originalForTranslation = null;
-
+      // Проблема: Використання optional chaining, але якщо translationsData === null, все одно буде помилка.
+      // Треба перевірка:
+      // if (!translationsData) return [];
       if (translationInfo?.basedOn) {
         originalForTranslation =
           testament === "NewT"
@@ -1379,6 +1416,9 @@ const Panel = ({
       }
 
       // Якщо оригінал знайдено і він присутній у вибраних версіях
+      // Проблема: Логіка не враховує Testament (NT/OT). Для OT перекладу потрібен OT оригінал, для NT - NT оригінал.
+      // Треба групувати за тим оригіналом, який обраний.
+      // Можливо треба додати грецько-івритські відповідники Стронга, якщо оригінал грецький, а переклад івритський
       if (
         originalForTranslation &&
         versions.includes(originalForTranslation.toUpperCase())
@@ -1436,7 +1476,210 @@ const Panel = ({
   // -------------------------const getPairs end
 
   const [book, chapter] = currentRef.split(".");
+  // ----------------------
 
+  // А перед return додайте цю функцію в Panel компонент:
+
+  // Функція для рендерингу вмісту глави
+  // const renderChapterContent = () => {
+  //   const verseNumbers = getVerseNumbers();
+
+  //   if (verseNumbers.length === 0) {
+  //     return (
+  //       <p className="text-center text-muted">Немає даних для відображення</p>
+  //     );
+  //   }
+
+  //   // Отримуємо пари для заголовка
+  //   const pairs = getPairs();
+
+  //   // Збираємо всі унікальні версії
+  //   const allVersions = new Set();
+  //   pairs.forEach((pair) => {
+  //     if (pair.original) allVersions.add(pair.original);
+  //     if (pair.translations) {
+  //       pair.translations.forEach((t) => allVersions.add(t));
+  //     }
+  //   });
+
+  //   // Рендеримо заголовок з версіями
+  //   const renderVersionHeader = () => {
+  //     const versionsArray = Array.from(allVersions);
+  //     if (versionsArray.length === 0) return null;
+
+  //     // Сортуємо: спочатку оригінали, потім переклади
+  //     const sortedVersions = versionsArray.sort((a, b) => {
+  //       const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+  //         a.toUpperCase()
+  //       );
+  //       const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+  //         b.toUpperCase()
+  //       );
+
+  //       if (isAOriginal && !isBOriginal) return -1;
+  //       if (!isAOriginal && isBOriginal) return 1;
+  //       return 0;
+  //     });
+
+  //     return (
+  //       <div className="versions-header">
+  //         <div className="header-row">
+  //           <span className="header-verse">Вірш</span>
+  //           {sortedVersions.map((version) => (
+  //             <span key={version} className="header-version">
+  //               [{version}]
+  //             </span>
+  //           ))}
+  //         </div>
+  //         <div className="header-separator"></div>
+  //       </div>
+  //     );
+  //   };
+
+  //   // Визначаємо, чи є дані для вірша
+  //   const versesWithData = verseNumbers.filter((verseNum) => {
+  //     return Object.keys(chapterData).some((version) => {
+  //       const data = chapterData[version];
+  //       if (!Array.isArray(data)) return false;
+  //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
+  //       return verse && (verse.words || verse.ws)?.length > 0;
+  //     });
+  //   });
+
+  //   if (versesWithData.length === 0) {
+  //     return (
+  //       <p className="text-center text-muted">Немає даних для відображення</p>
+  //     );
+  //   }
+
+  //   // Основна функція рендерингу віршів з потоковим перенесенням
+  //   const renderStreamingVerses = () => {
+  //     let isFirstInRow = true;
+  //     let isFirstVerse = true;
+
+  //     return (
+  //       <div className="chapter-stream-container">
+  //         {/* Заголовок версій тільки один раз */}
+  //         {renderVersionHeader()}
+
+  //         <div className="verses-stream">
+  //           <div className="verse-row">
+  //             {versesWithData.map((verseNum, index) => {
+  //               const verseInfo = {
+  //                 verseNum,
+  //                 isFirstInRow: isFirstInRow,
+  //                 isFirstVerse: isFirstVerse && index === 0,
+  //               };
+
+  //               // Після кожного вірша скидаємо флаг "перший у рядку"
+  //               if (isFirstInRow) {
+  //                 isFirstInRow = false;
+  //               }
+
+  //               // Після першого вірша скидаємо флаг "перший вірш"
+  //               if (isFirstVerse && index === 0) {
+  //                 isFirstVerse = false;
+  //               }
+
+  //               return (
+  //                 <InterlinearVerse
+  //                   key={verseNum}
+  //                   verseNum={verseInfo.verseNum}
+  //                   pairs={getPairs()}
+  //                   chapterData={chapterData}
+  //                   onWordClick={onWordClick}
+  //                   isFirstInRow={verseInfo.isFirstInRow}
+  //                   isFirstVerse={verseInfo.isFirstVerse}
+  //                 />
+  //               );
+  //             })}
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   };
+
+  //   return renderStreamingVerses();
+  // };
+  // У Panel компоненті, замініть функцію renderChapterContent на:
+
+  // Непотрібний код: Ця функція renderChapterContent визначена, але ніколи не викликається. У компоненті Panel рендериться інший JSX в рядку 343+.
+
+  // const renderChapterContent = () => {
+  //   const verseNumbers = getVerseNumbers();
+
+  //   if (verseNumbers.length === 0) {
+  //     return (
+  //       <p className="text-center text-muted">Немає даних для відображення</p>
+  //     );
+  //   }
+
+  //   // Отримуємо пари для заголовка
+  //   const pairs = getPairs();
+
+  //   // Збираємо всі унікальні версії
+  //   const allVersions = new Set();
+  //   pairs.forEach((pair) => {
+  //     if (pair.original) allVersions.add(pair.original);
+  //     if (pair.translations) {
+  //       pair.translations.forEach((t) => allVersions.add(t));
+  //     }
+  //   });
+
+  //   // Визначаємо, чи є дані для вірша
+  //   const versesWithData = verseNumbers.filter((verseNum) => {
+  //     return Object.keys(chapterData).some((version) => {
+  //       const data = chapterData[version];
+  //       if (!Array.isArray(data)) return false;
+  //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
+  //       return verse && (verse.words || verse.ws)?.length > 0;
+  //     });
+  //   });
+
+  //   if (versesWithData.length === 0) {
+  //     return (
+  //       <p className="text-center text-muted">Немає даних для відображення</p>
+  //     );
+  //   }
+
+  //   return (
+  //     <div className="chapter-container">
+  //       {/* Заголовок версій один раз на початку */}
+  //       <div className="versions-header">
+  //         <div className="header-row">
+  //           <span className="header-verse">Вірш</span>
+  //           {Array.from(allVersions).map((version) => (
+  //             <span key={version} className="header-version">
+  //               [{version}]
+  //             </span>
+  //           ))}
+  //         </div>
+  //       </div>
+
+  //       {/* Потокове відображення віршів */}
+  //       <div className="verses-flow">
+  //         {versesWithData.map((verseNum, index) => {
+  //           const isFirstInRow = index === 0; // Тимчасово - кожен вірш перший у своєму рядку
+  //           const showVersionHeaders = index === 0; // Заголовки версій тільки для першого вірша
+
+  //           return (
+  //             <InterlinearVerse
+  //               key={verseNum}
+  //               verseNum={verseNum}
+  //               pairs={pairs}
+  //               chapterData={chapterData}
+  //               onWordClick={onWordClick}
+  //               isFirstInRow={isFirstInRow}
+  //               isFirstVerse={index === 0}
+  //               showVersionHeaders={showVersionHeaders}
+  //             />
+  //           );
+  //         })}
+  //       </div>
+  //     </div>
+  //   );
+  // };
+  // ----------------------
   return (
     <div className="panel">
       <PassageOptionsGroup
@@ -1485,18 +1728,7 @@ const Panel = ({
         ) : (
           <>
             <h4 className="text-center mb-3">{currentRef}</h4>
-            {/* {Array.from({ length: getVerseCount() }, (_, i) => {
-              const verseNum = i + 1;
-              return (
-                <InterlinearVerse
-                  key={verseNum}
-                  verseNum={verseNum}
-                  pairs={getPairs()}
-                  chapterData={chapterData}
-                  onWordClick={onWordClick}
-                />
-              );
-            })} */}
+
             {(() => {
               const verseNumbers = getVerseNumbers();
 
@@ -1540,6 +1772,160 @@ const Panel = ({
               });
             })()}
           </>
+          // 27.12.2025 частина для рендерингу віршів start
+          // <>
+          //   <h4 className="text-center mb-3">{currentRef}</h4>
+
+          //   {/* Заголовок з назвами версій ТІЛЬКИ один раз на початку */}
+          //   {(() => {
+          //     const verseNumbers = getVerseNumbers();
+
+          //     if (verseNumbers.length === 0) {
+          //       return (
+          //         <p className="text-center text-muted">
+          //           Немає даних для відображення
+          //         </p>
+          //       );
+          //     }
+
+          //     // Отримуємо пари для заголовка
+          //     const pairs = getPairs();
+
+          //     // Збираємо всі унікальні версії
+          //     const allVersions = new Set();
+          //     pairs.forEach((pair) => {
+          //       if (pair.original) allVersions.add(pair.original);
+          //       if (pair.translations) {
+          //         pair.translations.forEach((t) => allVersions.add(t));
+          //       }
+          //     });
+
+          //     // Рендеримо заголовок з версіями
+          //     const renderVersionHeader = () => {
+          //       const versionsArray = Array.from(allVersions);
+          //       if (versionsArray.length === 0) return null;
+
+          //       // Сортуємо: спочатку оригінали, потім переклади
+          //       const sortedVersions = versionsArray.sort((a, b) => {
+          //         const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+          //           a.toUpperCase()
+          //         );
+          //         const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+          //           b.toUpperCase()
+          //         );
+
+          //         if (isAOriginal && !isBOriginal) return -1;
+          //         if (!isAOriginal && isBOriginal) return 1;
+          //         return 0;
+          //       });
+
+          //       return (
+          //         <div className="versions-header">
+          //           <div className="header-row">
+          //             <span className="header-verse">Вірш</span>
+          //             {sortedVersions.map((version) => (
+          //               <span key={version} className="header-version">
+          //                 [{version}]
+          //               </span>
+          //             ))}
+          //           </div>
+          //           <div className="header-separator"></div>
+          //         </div>
+          //       );
+          //     };
+
+          //     // Створюємо масив віршів з відстеженням ширини
+          //     const containerRef = useRef(null);
+          //     const [containerWidth, setContainerWidth] = useState(0);
+
+          //     // Ефект для отримання ширини контейнера
+          //     useEffect(() => {
+          //       const updateWidth = () => {
+          //         if (containerRef.current) {
+          //           setContainerWidth(containerRef.current.offsetWidth);
+          //         }
+          //       };
+
+          //       updateWidth();
+          //       window.addEventListener("resize", updateWidth);
+          //       return () => window.removeEventListener("resize", updateWidth);
+          //     }, []);
+
+          //     // Визначаємо, чи є дані для вірша
+          //     const versesWithData = verseNumbers.filter((verseNum) => {
+          //       return Object.keys(chapterData).some((version) => {
+          //         const data = chapterData[version];
+          //         if (!Array.isArray(data)) return false;
+          //         const verse = data.find((v) => (v.verse || v.v) === verseNum);
+          //         return verse && (verse.words || verse.ws)?.length > 0;
+          //       });
+          //     });
+
+          //     if (versesWithData.length === 0) {
+          //       return (
+          //         <p className="text-center text-muted">
+          //           Немає даних для відображення
+          //         </p>
+          //       );
+          //     }
+
+          //     // Основна функція рендерингу віршів з потоковим перенесенням
+          //     const renderStreamingVerses = () => {
+          //       let currentRowIndex = 0;
+          //       let isFirstInRow = true;
+          //       const rows = [];
+          //       let currentRow = [];
+
+          //       // Групуємо вірші по рядках на основі їх розміру
+          //       versesWithData.forEach((verseNum, index) => {
+          //         const isFirstVerse = index === 0;
+
+          //         // Додаємо вірш до поточного рядка
+          //         currentRow.push({
+          //           verseNum,
+          //           isFirstInRow: isFirstInRow,
+          //           isFirstVerse: isFirstVerse,
+          //         });
+
+          //         // Після кожного вірша скидаємо флаг "перший у рядку"
+          //         isFirstInRow = false;
+
+          //         // Для останнього вірша або якщо це останній - додаємо рядок
+          //         if (index === versesWithData.length - 1) {
+          //           rows.push([...currentRow]);
+          //         }
+          //       });
+
+          //       return (
+          //         <div className="chapter-stream-container" ref={containerRef}>
+          //           {/* Заголовок версій тільки один раз */}
+          //           {renderVersionHeader()}
+
+          //           <div className="verses-stream">
+          //             {rows.map((row, rowIndex) => (
+          //               <div key={`row-${rowIndex}`} className="verse-row">
+          //                 {row.map((verseInfo) => (
+          //                   <InterlinearVerse
+          //                     key={verseInfo.verseNum}
+          //                     verseNum={verseInfo.verseNum}
+          //                     pairs={getPairs()}
+          //                     chapterData={chapterData}
+          //                     onWordClick={onWordClick}
+          //                     isFirstInRow={verseInfo.isFirstInRow}
+          //                     isFirstVerse={verseInfo.isFirstVerse}
+          //                   />
+          //                 ))}
+          //               </div>
+          //             ))}
+          //           </div>
+          //         </div>
+          //       );
+          //     };
+
+          //     return renderStreamingVerses();
+          //   })()}
+          // </>
+          // 27.12.2025 частина для рендерингу віршів end
         )}
       </div>
     </div>

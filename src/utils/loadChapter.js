@@ -410,7 +410,7 @@ export const loadChapter = async (
     // Спробуємо спочатку скорочений формат
     const compressedUrl = `/data_compressed/${base}/${lowerVersion}/OldT/${book}/${bookLower}${chapter}_${lowerVersion}.json`;
     console.log(`📁 Завантаження з: ${compressedUrl}`);
-
+    // Проблема: Шлях завжди використовує OldT, що неправильно для книг Нового Завіту.
     const response = await fetch(compressedUrl);
 
     if (!response.ok) {

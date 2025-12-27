@@ -3084,9 +3084,421 @@
 
 // export default InterlinearVerse;
 
-// --------------------------- 26.12.25-version-таблична версія-4 з react-table з правильним групуванням
+// --------------------------- 26.12.25-version-таблична версія-4 з react-table з правильним групуванням з горизонтальним скролом
 
-// src/components/InterlinearVerse.js - ОНОВЛЕНА ВЕРСІЯ
+// // src/components/InterlinearVerse.js - ОНОВЛЕНА ВЕРСІЯ
+// import React, { useState, useRef, useMemo, useEffect } from "react";
+// import "../styles/Interlinear.css";
+// import { jsonAdapter, getValue } from "../utils/jsonAdapter";
+
+// const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
+//   const [hoveredWord, setHoveredWord] = useState(null);
+//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+//   const [columnWidths, setColumnWidths] = useState({});
+//   const tooltipRef = useRef(null);
+//   const verseRef = useRef(null);
+//   const tableRef = useRef(null);
+
+//   // Функції для отримання значень
+//   const getWordText = (word) => {
+//     if (!word) return "—";
+//     return getValue(word, "word") || getValue(word, "w") || "—";
+//   };
+
+//   const getStrongCode = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "strong") || getValue(word, "s") || null;
+//   };
+
+//   const getLemma = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "lemma") || getValue(word, "l") || null;
+//   };
+
+//   const getMorph = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "morph") || getValue(word, "m") || null;
+//   };
+
+//   // Отримання вірша за номером
+//   const getVerseData = (version, verseNumber) => {
+//     if (!adaptedData[version]) return null;
+//     const verse = adaptedData[version].find((v) => {
+//       const vNum = v.verse || v.v;
+//       return parseInt(vNum) === parseInt(verseNumber);
+//     });
+//     return verse;
+//   };
+
+//   // Отримання слів з вірша
+//   const getWordsFromVerse = (verseData) => {
+//     if (!verseData) return [];
+//     return getValue(verseData, "words") || getValue(verseData, "ws") || [];
+//   };
+
+//   // Адаптація даних
+//   const adaptedData = useMemo(() => {
+//     const result = {};
+//     if (!chapterData) return result;
+
+//     Object.keys(chapterData).forEach((key) => {
+//       const data = chapterData[key];
+//       const adapted = jsonAdapter(data);
+
+//       if (Array.isArray(adapted)) {
+//         result[key] = adapted.filter(
+//           (item) => item && typeof item === "object"
+//         );
+//       } else {
+//         result[key] = [];
+//       }
+//     });
+
+//     return result;
+//   }, [chapterData]);
+
+//   // ФУНКЦІЯ ДЛЯ ОТРИМАННЯ ОРИГІНАЛУ ДЛЯ ВЕРСІЇ
+//   const getOriginalForVersion = (version, testament) => {
+//     // Мапінг версій до оригіналів (з translations.json)
+//     const versionToOriginal = {
+//       // Українські переклади
+//       UBT: { OT: "THOT", NT: "TR" },
+//       UTT: { OT: "LXX", NT: "TR" },
+//       OGIENKO: { OT: "THOT", NT: "TR" },
+//       KHOMENKO: { OT: "THOT", NT: "TR" },
+//       SIRYY: { OT: "THOT", NT: "TR" },
+//       // Інші переклади
+//       SYNODAL: { OT: "THOT", NT: "TR" },
+//       KJV: { OT: "THOT", NT: "TR" },
+//     };
+
+//     const mapping = versionToOriginal[version.toUpperCase()];
+//     if (!mapping) return version; // Якщо не знайдено мапінг, це вже оригінал
+
+//     return testament === "OldT" ? mapping.OT : mapping.NT;
+//   };
+
+//   // ОСНОВНА ФУНКЦІЯ: Створення табличної структури
+//   const createTableStructure = () => {
+//     if (!pairs || pairs.length === 0 || !chapterData) {
+//       return { columns: [], tableData: [] };
+//     }
+
+//     // 1. Визначаємо головний оригінал для цієї глави
+//     let mainOriginal = null;
+
+//     // Шукаємо серед пар оригінал
+//     for (const pair of pairs) {
+//       if (pair.original) {
+//         // Перевіряємо, чи це оригінал (TR, GNT, LXX, THOT)
+//         const origUpper = pair.original.toUpperCase();
+//         if (["TR", "GNT", "LXX", "THOT"].includes(origUpper)) {
+//           mainOriginal = pair.original;
+//           break;
+//         }
+//       }
+//     }
+
+//     // Якщо оригіналу не знайдено, беремо перший доступний
+//     if (!mainOriginal) {
+//       for (const pair of pairs) {
+//         if (pair.original) {
+//           mainOriginal = pair.original;
+//           break;
+//         }
+//       }
+//     }
+
+//     if (!mainOriginal) {
+//       console.warn("No main original found for verse", verseNum);
+//       return { columns: [], tableData: [] };
+//     }
+
+//     // 2. Отримуємо дані головного оригіналу
+//     const mainVerse = getVerseData(mainOriginal, verseNum);
+//     if (!mainVerse) {
+//       console.warn(
+//         `No data for main original ${mainOriginal} in verse ${verseNum}`
+//       );
+//       return { columns: [], tableData: [] };
+//     }
+
+//     const mainWords = getWordsFromVerse(mainVerse);
+
+//     // 3. Створюємо колонки на основі головного оригіналу
+//     const columns = [];
+//     mainWords.forEach((word, index) => {
+//       const strong = getStrongCode(word);
+//       if (strong) {
+//         columns.push({
+//           id: strong,
+//           index: index,
+//           strong: strong,
+//           mainWord: word,
+//         });
+//       } else {
+//         // Якщо немає Strong коду, використовуємо індекс
+//         columns.push({
+//           id: `index-${index}`,
+//           index: index,
+//           strong: null,
+//           mainWord: word,
+//         });
+//       }
+//     });
+
+//     // 4. Створюємо табличні дані
+//     const tableData = [];
+
+//     // Для кожної групи (пари) створюємо рядки
+//     pairs.forEach((pair, pairIndex) => {
+//       const groupData = {
+//         pairIndex: pairIndex,
+//         original: pair.original,
+//         translations: pair.translations || [],
+//         rows: [],
+//       };
+
+//       // Додаємо оригінал першим
+//       if (pair.original) {
+//         const verse = getVerseData(pair.original, verseNum);
+//         if (verse) {
+//           const words = getWordsFromVerse(verse);
+//           const row = createRow(pair.original, words, columns, true);
+//           groupData.rows.push(row);
+//         }
+//       }
+
+//       // Додаємо переклади
+//       if (pair.translations) {
+//         pair.translations.forEach((translation) => {
+//           const verse = getVerseData(translation, verseNum);
+//           if (verse) {
+//             const words = getWordsFromVerse(verse);
+//             const row = createRow(translation, words, columns, false);
+//             groupData.rows.push(row);
+//           }
+//         });
+//       }
+
+//       if (groupData.rows.length > 0) {
+//         tableData.push(groupData);
+//       }
+//     });
+
+//     return { columns, tableData };
+//   };
+
+//   // Функція для створення рядка
+//   const createRow = (version, words, columns, isOriginal) => {
+//     const row = {
+//       version: version,
+//       isOriginal: isOriginal,
+//       cells: [],
+//     };
+
+//     // Створюємо мапу Strong -> слово для цієї версії
+//     const wordMap = new Map();
+//     words.forEach((word) => {
+//       const strong = getStrongCode(word);
+//       if (strong) {
+//         wordMap.set(strong, word);
+//       }
+//     });
+
+//     // Заповнюємо клітинки відповідно до колонок
+//     columns.forEach((column) => {
+//       let word = null;
+//       let text = "—";
+//       let strong = null;
+
+//       if (column.strong && wordMap.has(column.strong)) {
+//         // Знайшли за Strong кодом
+//         word = wordMap.get(column.strong);
+//         text = getWordText(word);
+//         strong = column.strong;
+//       } else if (words[column.index]) {
+//         // Знайшли за індексом
+//         word = words[column.index];
+//         text = getWordText(word);
+//         strong = getStrongCode(word);
+//       }
+
+//       row.cells.push({
+//         word: word,
+//         text: text,
+//         strong: strong,
+//         columnIndex: column.index,
+//         columnStrong: column.strong,
+//       });
+//     });
+
+//     return row;
+//   };
+
+//   // РОЗРАХУНОК ШИРИНИ КОЛОНОК
+//   const calculateColumnWidths = useMemo(() => {
+//     const widths = {};
+
+//     // Отримуємо табличну структуру
+//     const { columns, tableData } = createTableStructure();
+
+//     // Ініціалізуємо ширини для кожної колонки
+//     columns.forEach((col, colIndex) => {
+//       widths[colIndex] = 80; // Мінімальна ширина
+//     });
+
+//     // Знаходимо максимальну ширину для кожної колонки
+//     tableData.forEach((group) => {
+//       group.rows.forEach((row) => {
+//         row.cells.forEach((cell, colIndex) => {
+//           if (cell.text && cell.text !== "—") {
+//             // Розраховуємо ширину на основі довжини тексту
+//             const textLength = cell.text.length;
+//             const charWidth = cell.text.match(/[a-zA-Z]/) ? 7 : 8; // Латиниця вужча
+//             const textWidth = textLength * charWidth + 20; // + padding
+
+//             const cellWidth = Math.min(Math.max(textWidth, 80), 250);
+
+//             if (cellWidth > widths[colIndex]) {
+//               widths[colIndex] = cellWidth;
+//             }
+//           }
+//         });
+//       });
+//     });
+
+//     return widths;
+//   }, [pairs, verseNum, chapterData]);
+
+//   useEffect(() => {
+//     setColumnWidths(calculateColumnWidths);
+//   }, [calculateColumnWidths]);
+
+//   const handleMouseMove = (e) => {
+//     setMousePos({ x: e.pageX, y: e.pageY });
+//   };
+
+//   if (!pairs || pairs.length === 0 || !chapterData) {
+//     return (
+//       <div className="interlinear-verse">
+//         <div className="verse-number">{verseNum}</div>
+//         <div className="words-grid text-muted">Дані для вірша відсутні</div>
+//       </div>
+//     );
+//   }
+
+//   const { columns, tableData } = createTableStructure();
+
+//   // Якщо немає даних для відображення
+//   if (tableData.length === 0 || columns.length === 0) {
+//     return (
+//       <div className="interlinear-verse">
+//         <div className="verse-number">{verseNum}</div>
+//         <div className="text-muted">Немає даних для відображення</div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div
+//       className="interlinear-verse"
+//       ref={verseRef}
+//       onMouseMove={handleMouseMove}
+//     >
+//       <div className="verse-number">{verseNum}</div>
+
+//       <div className="table-group">
+//         <div className="table-container">
+//           <table ref={tableRef} className="interlinear-table">
+//             <tbody>
+//               {tableData.map((group, groupIndex) => (
+//                 <React.Fragment key={`group-${groupIndex}`}>
+//                   {group.rows.map((row, rowIndex) => (
+//                     <tr
+//                       key={`row-${rowIndex}`}
+//                       className={`table-row ${
+//                         row.isOriginal ? "original-row" : "translation-row"
+//                       }`}
+//                     >
+//                       <td className="version-cell">
+//                         <span className="version-label">[{row.version}]</span>
+//                       </td>
+//                       {row.cells.map((cell, cellIndex) => (
+//                         <td
+//                           key={`cell-${cellIndex}`}
+//                           className={`word-cell ${
+//                             row.isOriginal
+//                               ? "original-word"
+//                               : "translation-word"
+//                           }`}
+//                           style={{
+//                             width: `${columnWidths[cellIndex] || 80}px`,
+//                             minWidth: `${columnWidths[cellIndex] || 80}px`,
+//                             maxWidth: "250px",
+//                           }}
+//                           onClick={() => {
+//                             if (cell.word && cell.strong) {
+//                               onWordClick({
+//                                 word: {
+//                                   word: cell.text,
+//                                   strong: cell.strong,
+//                                   lemma: getLemma(cell.word),
+//                                   morph: getMorph(cell.word),
+//                                 },
+//                                 origVer: row.version,
+//                                 lang: cell.strong.startsWith("H") ? "he" : "gr",
+//                               });
+//                             }
+//                           }}
+//                           onMouseEnter={() => cell.word && setHoveredWord(cell)}
+//                           onMouseLeave={() => setHoveredWord(null)}
+//                           title={cell.strong ? `Strong: ${cell.strong}` : ""}
+//                         >
+//                           {cell.text}
+//                         </td>
+//                       ))}
+//                     </tr>
+//                   ))}
+//                 </React.Fragment>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+
+//       {/* Tooltip */}
+//       {hoveredWord && (
+//         <div
+//           ref={tooltipRef}
+//           className="hover-tooltip"
+//           style={{
+//             left: `${mousePos.x + 15}px`,
+//             top: `${mousePos.y - 80}px`,
+//           }}
+//         >
+//           <div className="tooltip-content">
+//             {hoveredWord.strong && (
+//               <div>
+//                 <strong>{hoveredWord.strong}</strong>: {hoveredWord.text}
+//                 {getLemma(hoveredWord.word) &&
+//                   ` (${getLemma(hoveredWord.word)})`}
+//                 {getMorph(hoveredWord.word) &&
+//                   ` [${getMorph(hoveredWord.word)}]`}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default InterlinearVerse;
+
+// --------------------------- 27.12.25-version-Флекс-версія замість таблиці
+
+// src/components/InterlinearVerse.js - НОВА ФЛЕКС ВЕРСІЯ
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import "../styles/Interlinear.css";
 import { jsonAdapter, getValue } from "../utils/jsonAdapter";
@@ -3094,15 +3506,16 @@ import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
   const [hoveredWord, setHoveredWord] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [columnWidths, setColumnWidths] = useState({});
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [isAboveCursor, setIsAboveCursor] = useState(false);
   const tooltipRef = useRef(null);
-  const verseRef = useRef(null);
-  const tableRef = useRef(null);
+  const containerRef = useRef(null);
+  const verseBlockRef = useRef(null);
 
   // Функції для отримання значень
   const getWordText = (word) => {
-    if (!word) return "—";
-    return getValue(word, "word") || getValue(word, "w") || "—";
+    if (!word) return null;
+    return getValue(word, "word") || getValue(word, "w") || null;
   };
 
   const getStrongCode = (word) => {
@@ -3157,226 +3570,189 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     return result;
   }, [chapterData]);
 
-  // ФУНКЦІЯ ДЛЯ ОТРИМАННЯ ОРИГІНАЛУ ДЛЯ ВЕРСІЇ
-  const getOriginalForVersion = (version, testament) => {
-    // Мапінг версій до оригіналів (з translations.json)
-    const versionToOriginal = {
-      // Українські переклади
-      UBT: { OT: "THOT", NT: "TR" },
-      UTT: { OT: "LXX", NT: "TR" },
-      OGIENKO: { OT: "THOT", NT: "TR" },
-      KHOMENKO: { OT: "THOT", NT: "TR" },
-      SIRYY: { OT: "THOT", NT: "TR" },
-      // Інші переклади
-      SYNODAL: { OT: "THOT", NT: "TR" },
-      KJV: { OT: "THOT", NT: "TR" },
+  // Оновлення ширини контейнера
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
     };
 
-    const mapping = versionToOriginal[version.toUpperCase()];
-    if (!mapping) return version; // Якщо не знайдено мапінг, це вже оригінал
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
-    return testament === "OldT" ? mapping.OT : mapping.NT;
-  };
-
-  // ОСНОВНА ФУНКЦІЯ: Створення табличної структури
-  const createTableStructure = () => {
-    if (!pairs || pairs.length === 0 || !chapterData) {
-      return { columns: [], tableData: [] };
-    }
-
-    // 1. Визначаємо головний оригінал для цієї глави
-    let mainOriginal = null;
-
+  // Визначення головного оригіналу
+  // Проблема: Ця логіка не враховує який оригінал є основним для поточної книги (NT/OT).
+  // Наприклад, для OT потрібен THOT або LXX, але логіка може повернути TR якщо він є в pairs. Треба доопрацювати логіку!
+  const mainOriginal = useMemo(() => {
     // Шукаємо серед пар оригінал
     for (const pair of pairs) {
       if (pair.original) {
-        // Перевіряємо, чи це оригінал (TR, GNT, LXX, THOT)
         const origUpper = pair.original.toUpperCase();
         if (["TR", "GNT", "LXX", "THOT"].includes(origUpper)) {
-          mainOriginal = pair.original;
-          break;
+          return pair.original;
         }
       }
     }
+    return pairs[0]?.original || null;
+  }, [pairs]);
 
-    // Якщо оригіналу не знайдено, беремо перший доступний
-    if (!mainOriginal) {
-      for (const pair of pairs) {
-        if (pair.original) {
-          mainOriginal = pair.original;
-          break;
-        }
-      }
+  // Створення блоків слів для кожного вірша
+  const createVerseBlocks = useMemo(() => {
+    if (!pairs || pairs.length === 0 || !chapterData || !mainOriginal) {
+      return [];
     }
 
-    if (!mainOriginal) {
-      console.warn("No main original found for verse", verseNum);
-      return { columns: [], tableData: [] };
-    }
+    const blocks = [];
+    let currentVerse = null;
+    let currentPosition = 0;
 
-    // 2. Отримуємо дані головного оригіналу
+    // Для кожного вірша в головному оригіналі
+    // Проблема: Якщо обрано тільки переклади (наприклад, UBT без TR), то mainOriginal буде null і поверне порожній масив.
     const mainVerse = getVerseData(mainOriginal, verseNum);
-    if (!mainVerse) {
-      console.warn(
-        `No data for main original ${mainOriginal} in verse ${verseNum}`
-      );
-      return { columns: [], tableData: [] };
-    }
+    if (!mainVerse) return [];
 
     const mainWords = getWordsFromVerse(mainVerse);
 
-    // 3. Створюємо колонки на основі головного оригіналу
-    const columns = [];
-    mainWords.forEach((word, index) => {
-      const strong = getStrongCode(word);
-      if (strong) {
-        columns.push({
-          id: strong,
-          index: index,
-          strong: strong,
-          mainWord: word,
-        });
-      } else {
-        // Якщо немає Strong коду, використовуємо індекс
-        columns.push({
-          id: `index-${index}`,
-          index: index,
-          strong: null,
-          mainWord: word,
-        });
-      }
-    });
+    // Створюємо блоки для кожного слова
+    mainWords.forEach((mainWord, wordIndex) => {
+      const mainStrong = getStrongCode(mainWord);
 
-    // 4. Створюємо табличні дані
-    const tableData = [];
-
-    // Для кожної групи (пари) створюємо рядки
-    pairs.forEach((pair, pairIndex) => {
-      const groupData = {
-        pairIndex: pairIndex,
-        original: pair.original,
-        translations: pair.translations || [],
-        rows: [],
+      // Блок для цього слова
+      const wordBlock = {
+        id: `${verseNum}-${wordIndex}`,
+        strong: mainStrong,
+        position: currentPosition,
+        versions: {},
       };
 
-      // Додаємо оригінал першим
-      if (pair.original) {
-        const verse = getVerseData(pair.original, verseNum);
-        if (verse) {
-          const words = getWordsFromVerse(verse);
-          const row = createRow(pair.original, words, columns, true);
-          groupData.rows.push(row);
-        }
-      }
+      // Додаємо головний оригінал
+      wordBlock.versions[mainOriginal] = {
+        text: getWordText(mainWord),
+        word: mainWord,
+        isOriginal: true,
+      };
 
-      // Додаємо переклади
-      if (pair.translations) {
-        pair.translations.forEach((translation) => {
-          const verse = getVerseData(translation, verseNum);
+      // Додаємо інші версії
+      pairs.forEach((pair) => {
+        // Оригінали цієї групи
+        if (pair.original && pair.original !== mainOriginal) {
+          const verse = getVerseData(pair.original, verseNum);
           if (verse) {
             const words = getWordsFromVerse(verse);
-            const row = createRow(translation, words, columns, false);
-            groupData.rows.push(row);
-          }
-        });
-      }
-
-      if (groupData.rows.length > 0) {
-        tableData.push(groupData);
-      }
-    });
-
-    return { columns, tableData };
-  };
-
-  // Функція для створення рядка
-  const createRow = (version, words, columns, isOriginal) => {
-    const row = {
-      version: version,
-      isOriginal: isOriginal,
-      cells: [],
-    };
-
-    // Створюємо мапу Strong -> слово для цієї версії
-    const wordMap = new Map();
-    words.forEach((word) => {
-      const strong = getStrongCode(word);
-      if (strong) {
-        wordMap.set(strong, word);
-      }
-    });
-
-    // Заповнюємо клітинки відповідно до колонок
-    columns.forEach((column) => {
-      let word = null;
-      let text = "—";
-      let strong = null;
-
-      if (column.strong && wordMap.has(column.strong)) {
-        // Знайшли за Strong кодом
-        word = wordMap.get(column.strong);
-        text = getWordText(word);
-        strong = column.strong;
-      } else if (words[column.index]) {
-        // Знайшли за індексом
-        word = words[column.index];
-        text = getWordText(word);
-        strong = getStrongCode(word);
-      }
-
-      row.cells.push({
-        word: word,
-        text: text,
-        strong: strong,
-        columnIndex: column.index,
-        columnStrong: column.strong,
-      });
-    });
-
-    return row;
-  };
-
-  // РОЗРАХУНОК ШИРИНИ КОЛОНОК
-  const calculateColumnWidths = useMemo(() => {
-    const widths = {};
-
-    // Отримуємо табличну структуру
-    const { columns, tableData } = createTableStructure();
-
-    // Ініціалізуємо ширини для кожної колонки
-    columns.forEach((col, colIndex) => {
-      widths[colIndex] = 80; // Мінімальна ширина
-    });
-
-    // Знаходимо максимальну ширину для кожної колонки
-    tableData.forEach((group) => {
-      group.rows.forEach((row) => {
-        row.cells.forEach((cell, colIndex) => {
-          if (cell.text && cell.text !== "—") {
-            // Розраховуємо ширину на основі довжини тексту
-            const textLength = cell.text.length;
-            const charWidth = cell.text.match(/[a-zA-Z]/) ? 7 : 8; // Латиниця вужча
-            const textWidth = textLength * charWidth + 20; // + padding
-
-            const cellWidth = Math.min(Math.max(textWidth, 80), 250);
-
-            if (cellWidth > widths[colIndex]) {
-              widths[colIndex] = cellWidth;
+            // Шукаємо слово за Strong кодом або індексом
+            // Проблема: Цей підхід не враховує що переклади можуть мати іншу кількість слів або іншу структуру.
+            // Співставлення тільки за Strong кодом або індексом недостатньо.
+            let word = null;
+            if (mainStrong) {
+              word = words.find((w) => getStrongCode(w) === mainStrong);
+            }
+            if (!word && words[wordIndex]) {
+              word = words[wordIndex];
+            }
+            if (word) {
+              wordBlock.versions[pair.original] = {
+                text: getWordText(word),
+                word: word,
+                isOriginal: true,
+              };
             }
           }
-        });
+        }
+
+        // Переклади
+        if (pair.translations) {
+          pair.translations.forEach((translation) => {
+            const verse = getVerseData(translation, verseNum);
+            if (verse) {
+              const words = getWordsFromVerse(verse);
+              // Шукаємо слово за Strong кодом або індексом
+              // Проблема: Цей підхід не враховує що переклади можуть мати іншу кількість слів або іншу структуру.
+              // Співставлення тільки за Strong кодом або індексом недостатньо.
+              let word = null;
+              if (mainStrong) {
+                word = words.find((w) => getStrongCode(w) === mainStrong);
+              }
+              if (!word && words[wordIndex]) {
+                word = words[wordIndex];
+              }
+              if (word) {
+                wordBlock.versions[translation] = {
+                  text: getWordText(word),
+                  word: word,
+                  isOriginal: false,
+                };
+              }
+            }
+          });
+        }
       });
+
+      blocks.push(wordBlock);
+      currentPosition++;
     });
 
-    return widths;
-  }, [pairs, verseNum, chapterData]);
+    return blocks;
+  }, [pairs, verseNum, chapterData, mainOriginal, adaptedData]);
 
-  useEffect(() => {
-    setColumnWidths(calculateColumnWidths);
-  }, [calculateColumnWidths]);
-
+  // Подія для курсора
   const handleMouseMove = (e) => {
-    setMousePos({ x: e.pageX, y: e.pageY });
+    setMousePos({ x: e.clientX, y: e.clientY });
+    // Визначаємо, чи курсор у верхній половині екрану
+    setIsAboveCursor(e.clientY < window.innerHeight / 2);
+  };
+
+  // Клік на слово
+  const handleWordClick = (word, version, strong, isOriginal) => {
+    if (word && strong && onWordClick) {
+      onWordClick({
+        word: {
+          word: getWordText(word),
+          strong: strong,
+          lemma: getLemma(word),
+          morph: getMorph(word),
+        },
+        origVer: version,
+        lang: strong.startsWith("H") ? "he" : "gr",
+      });
+    }
+  };
+
+  // Відображення слова з інтервалом
+  const renderWord = (wordData, version, strong, isOriginal) => {
+    if (!wordData || !wordData.text) {
+      return (
+        <span
+          key={`empty-${version}`}
+          className="empty-word"
+          title="Відсутній відповідник"
+        >
+          —
+        </span>
+      );
+    }
+
+    return (
+      <span
+        key={`word-${version}`}
+        className={`word ${isOriginal ? "original-word" : "translation-word"} ${
+          wordData.word ? "clickable" : ""
+        }`}
+        onClick={() =>
+          handleWordClick(wordData.word, version, strong, isOriginal)
+        }
+        onMouseEnter={() =>
+          wordData.word &&
+          setHoveredWord({ ...wordData, strong, version, isOriginal })
+        }
+        onMouseLeave={() => setHoveredWord(null)}
+        title={strong ? `Strong: ${strong}` : ""}
+      >
+        {wordData.text}
+      </span>
+    );
   };
 
   if (!pairs || pairs.length === 0 || !chapterData) {
@@ -3388,105 +3764,82 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     );
   }
 
-  const { columns, tableData } = createTableStructure();
-
-  // Якщо немає даних для відображення
-  if (tableData.length === 0 || columns.length === 0) {
-    return (
-      <div className="interlinear-verse">
-        <div className="verse-number">{verseNum}</div>
-        <div className="text-muted">Немає даних для відображення</div>
-      </div>
-    );
-  }
-
   return (
     <div
-      className="interlinear-verse"
-      ref={verseRef}
+      className="interlinear-verse flex-layout"
+      ref={containerRef}
       onMouseMove={handleMouseMove}
+      // data-verse={verseNum}
     >
-      <div className="verse-number">{verseNum}</div>
+      {/* <div className="verse-number">{verseNum}</div> */}
 
-      <div className="table-group">
-        <div className="table-container">
-          <table ref={tableRef} className="interlinear-table">
-            <tbody>
-              {tableData.map((group, groupIndex) => (
-                <React.Fragment key={`group-${groupIndex}`}>
-                  {group.rows.map((row, rowIndex) => (
-                    <tr
-                      key={`row-${rowIndex}`}
-                      className={`table-row ${
-                        row.isOriginal ? "original-row" : "translation-row"
-                      }`}
-                    >
-                      <td className="version-cell">
-                        <span className="version-label">[{row.version}]</span>
-                      </td>
-                      {row.cells.map((cell, cellIndex) => (
-                        <td
-                          key={`cell-${cellIndex}`}
-                          className={`word-cell ${
-                            row.isOriginal
-                              ? "original-word"
-                              : "translation-word"
-                          }`}
-                          style={{
-                            width: `${columnWidths[cellIndex] || 80}px`,
-                            minWidth: `${columnWidths[cellIndex] || 80}px`,
-                            maxWidth: "250px",
-                          }}
-                          onClick={() => {
-                            if (cell.word && cell.strong) {
-                              onWordClick({
-                                word: {
-                                  word: cell.text,
-                                  strong: cell.strong,
-                                  lemma: getLemma(cell.word),
-                                  morph: getMorph(cell.word),
-                                },
-                                origVer: row.version,
-                                lang: cell.strong.startsWith("H") ? "he" : "gr",
-                              });
-                            }
-                          }}
-                          onMouseEnter={() => cell.word && setHoveredWord(cell)}
-                          onMouseLeave={() => setHoveredWord(null)}
-                          title={cell.strong ? `Strong: ${cell.strong}` : ""}
-                        >
-                          {cell.text}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </React.Fragment>
+      <div className="verse-content" ref={verseBlockRef} data-verse={verseNum}>
+        <div className="verse-number">{verseNum}</div>
+        {createVerseBlocks.map((block, blockIndex) => (
+          <div
+            key={block.id}
+            className="word-block"
+            data-strong={block.strong}
+            data-position={block.position}
+          >
+            {/* Рядок з версіями для цього слова */}
+            <div className="version-row">
+              {/* Версії відображаються вертикально під словом */}
+              {Object.entries(block.versions).map(([version, wordData]) => (
+                <div
+                  key={`${block.id}-${version}`}
+                  className={`word-version ${
+                    wordData.isOriginal
+                      ? "original-version"
+                      : "translation-version"
+                  }`}
+                >
+                  {/* <span className="version-label">[{version}]</span> */}
+                  {renderWord(
+                    wordData,
+                    version,
+                    block.strong,
+                    wordData.isOriginal
+                  )}
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Tooltip */}
-      {hoveredWord && (
+      {/* Плаваюча підказка */}
+      {hoveredWord && hoveredWord.word && (
         <div
           ref={tooltipRef}
-          className="hover-tooltip"
+          className="floating-tooltip"
           style={{
-            left: `${mousePos.x + 15}px`,
-            top: `${mousePos.y - 80}px`,
+            left: `${mousePos.x + 10}px`,
+            top: isAboveCursor
+              ? `${mousePos.y + 20}px`
+              : `${mousePos.y - 120}px`,
+            transform: "translateX(-50%)",
           }}
         >
-          <div className="tooltip-content">
-            {hoveredWord.strong && (
-              <div>
-                <strong>{hoveredWord.strong}</strong>: {hoveredWord.text}
-                {getLemma(hoveredWord.word) &&
-                  ` (${getLemma(hoveredWord.word)})`}
-                {getMorph(hoveredWord.word) &&
-                  ` [${getMorph(hoveredWord.word)}]`}
+          <div className="tooltip-header">
+            <strong className="strong-code">{hoveredWord.strong}</strong>
+            <span className="version-badge">[{hoveredWord.version}]</span>
+          </div>
+          <div className="tooltip-body">
+            <div className="word-text">{hoveredWord.text}</div>
+            {getLemma(hoveredWord.word) && (
+              <div className="word-lemma">
+                Лема: {getLemma(hoveredWord.word)}
               </div>
             )}
+            {getMorph(hoveredWord.word) && (
+              <div className="word-morph">
+                Морф: {getMorph(hoveredWord.word)}
+              </div>
+            )}
+          </div>
+          <div className="tooltip-footer">
+            <small>Клік для відкриття словника</small>
           </div>
         </div>
       )}
@@ -3495,3 +3848,5 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
 };
 
 export default InterlinearVerse;
+
+// --------------------------- 27.12.25-version - потокова версія замість Флекс-версія

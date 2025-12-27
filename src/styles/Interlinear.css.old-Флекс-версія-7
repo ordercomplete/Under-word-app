@@ -1,90 +1,97 @@
-/* src/styles/Interlinear.css - ФЛЕКС ВЕРСІЯ */
-.interlinear-verse {
-  margin-bottom: 20px;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+/* src/styles/Interlinear.css - ПОТОКОВА ВЕРСІЯ */
+/* Контейнер для всіх віршів глави */
+.chapter-container {
   width: 100%;
+  max-width: 100%;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+/* Вбудований вірш */
+.inline-verse {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin-right: 8px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+/* Номер вірша (inline) */
+.verse-number-inline {
+  display: inline-block;
+  font-weight: bold;
+  color: #2c3e50;
+  background: #ecf0f1;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 8px;
+  font-size: 0.9em;
+  vertical-align: top;
+  margin-top: 4px;
+}
+
+/* Контейнер для слів вірша */
+.verse-words {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Контейнер для одного слова */
+.word-container {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 4px;
   position: relative;
 }
 
-/* Номер вірша */
-.verse-number {
-  font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #3498db;
-  font-size: 1.1em;
-}
-
-/* Основний контейнер з вмістом вірша */
-.verse-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 100%;
-  overflow: visible;
-}
-
-/* Блок для кожного слова */
-.word-block {
+/* Стек слів для різних версій */
+.word-stack {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 5px 10px 0;
-  min-width: 80px;
-  max-width: 200px;
-  vertical-align: top;
-  position: relative;
+  min-width: 50px;
+  max-width: 150px;
 }
 
-/* Рядок версій для одного слова */
-.version-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-}
-
-/* Версія слова */
-.word-version {
+/* Лінія для однієї версії слова */
+.word-line {
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  min-height: 24px;
   width: 100%;
-  min-height: 28px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 2px 4px;
+  margin-bottom: 2px;
+  border-radius: 3px;
   transition: background-color 0.2s;
 }
 
 /* Мітка версії */
-.version-label {
-  font-size: 0.8em;
+.version-tag {
+  font-size: 0.7em;
   color: #7f8c8d;
-  min-width: 45px;
+  margin-right: 4px;
+  min-width: 40px;
   text-align: right;
+  font-weight: bold;
 }
 
 /* Саме слово */
 .word {
   flex: 1;
-  min-width: 40px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  min-width: 30px;
+  padding: 3px 6px;
+  border-radius: 3px;
   text-align: center;
-  font-size: 0.95em;
+  font-size: 0.9em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s;
   cursor: default;
   user-select: none;
+  border: 1px solid transparent;
 }
 
 /* Клікабельне слово */
@@ -98,16 +105,15 @@
 }
 
 /* Оригінальні слова */
-.original-version {
+.original-line {
   background: #fff5f5;
-  border-left: 3px solid #ff6b6b;
 }
 
 .original-word {
   background: #ffebee;
   color: #8b0000;
   font-weight: bold;
-  border: 1px solid #ffcdd2;
+  border-color: #ffcdd2;
 }
 
 .original-word.clickable:hover {
@@ -116,15 +122,14 @@
 }
 
 /* Слова перекладу */
-.translation-version {
+.translation-line {
   background: #f5fff5;
-  border-left: 3px solid #4caf50;
 }
 
 .translation-word {
   background: #e8f5e8;
   color: #006400;
-  border: 1px solid #c8e6c9;
+  border-color: #c8e6c9;
 }
 
 .translation-word.clickable:hover {
@@ -132,19 +137,19 @@
   border-color: #4caf50;
 }
 
-/* Пусте слово (відсутній відповідник) */
+/* Пусте слово */
 .empty-word {
   color: #95a5a6;
   font-style: italic;
-  padding: 4px 8px;
-  min-width: 40px;
+  min-width: 20px;
   text-align: center;
   font-size: 0.9em;
+  opacity: 0.7;
 }
 
 /* ПЛАВАЮЧА ПІДКАЗКА */
 .floating-tooltip {
-  position: fixed;
+  position: absolute;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -219,64 +224,75 @@
 
 /* АДАПТИВНІСТЬ */
 @media (max-width: 1200px) {
-  .word-block {
-    min-width: 70px;
-    max-width: 180px;
-  }
-
-  .word {
-    font-size: 0.9em;
-    padding: 3px 6px;
-  }
-
-  .version-label {
-    min-width: 40px;
-    font-size: 0.75em;
-  }
-}
-
-@media (max-width: 992px) {
-  .word-block {
-    min-width: 65px;
-    max-width: 160px;
-    margin: 0 4px 8px 0;
+  .word-stack {
+    min-width: 45px;
+    max-width: 130px;
   }
 
   .word {
     font-size: 0.85em;
     padding: 2px 5px;
+    min-width: 25px;
+  }
+
+  .version-tag {
+    min-width: 35px;
+    font-size: 0.65em;
   }
 }
 
-@media (max-width: 768px) {
-  .interlinear-verse {
-    padding: 12px;
+@media (max-width: 992px) {
+  .inline-verse {
+    margin-right: 6px;
+    margin-bottom: 8px;
   }
 
-  .verse-content {
-    gap: 10px;
-  }
-
-  .word-block {
-    min-width: 60px;
-    max-width: 140px;
-    margin: 0 3px 6px 0;
-  }
-
-  .word-version {
-    padding: 3px 6px;
-    min-height: 24px;
-  }
-
-  .version-label {
-    min-width: 35px;
-    font-size: 0.7em;
+  .word-stack {
+    min-width: 40px;
+    max-width: 110px;
   }
 
   .word {
     font-size: 0.8em;
     padding: 2px 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .chapter-container {
+    font-size: 13px;
+  }
+
+  .inline-verse {
+    margin-right: 4px;
+    margin-bottom: 6px;
+  }
+
+  .verse-number-inline {
+    padding: 1px 4px;
+    margin-right: 6px;
+    font-size: 0.8em;
+  }
+
+  .word-stack {
     min-width: 35px;
+    max-width: 90px;
+  }
+
+  .word-line {
+    min-height: 22px;
+    padding: 1px 3px;
+  }
+
+  .version-tag {
+    min-width: 30px;
+    font-size: 0.6em;
+  }
+
+  .word {
+    font-size: 0.75em;
+    padding: 1px 3px;
+    min-width: 20px;
   }
 
   .floating-tooltip {
@@ -287,37 +303,37 @@
 }
 
 @media (max-width: 576px) {
-  .word-block {
-    min-width: 55px;
-    max-width: 120px;
+  .word-stack {
+    min-width: 30px;
+    max-width: 80px;
   }
 
-  .version-label {
-    min-width: 30px;
-    font-size: 0.65em;
+  .version-tag {
+    min-width: 25px;
+    font-size: 0.55em;
   }
 
   .word {
-    font-size: 0.75em;
-    min-width: 30px;
+    font-size: 0.7em;
+    min-width: 18px;
   }
 }
 
-/* Плавне перенесення блоків */
-.word-block {
+/* Плавне перенесення */
+.word-container {
   break-inside: avoid;
   page-break-inside: avoid;
 }
 
-/* Стилі для зв'язку версій */
-.word-block:hover .word-version {
-  opacity: 0.9;
+/* Ховер ефекти для стеку */
+.word-stack:hover .word-line {
+  opacity: 0.95;
 }
 
-.word-block:hover .original-version {
+.word-stack:hover .original-line {
   background: #ffebee;
 }
 
-.word-block:hover .translation-version {
+.word-stack:hover .translation-line {
   background: #e8f5e8;
 }
