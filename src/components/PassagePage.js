@@ -1284,68 +1284,156 @@ const Panel = ({
   // };
   // ---------------------------------------------------------------------
   // ОНОВЛЕНА функція getPairs для динамічного групування 26.12.2025
+  // const getPairs = () => {
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+  //   const pairs = [];
+
+  //   // Словник для зберігання інформації про переклади
+  //   const translationInfo = {};
+  //   if (translationsData?.bibles) {
+  //     translationsData.bibles.forEach((bible) => {
+  //       translationInfo[bible.initials] = bible;
+  //     });
+  //   }
+
+  //   // Групуємо версії за оригіналами
+  //   const groups = {};
+
+  //   versions.forEach((version) => {
+  //     const info = translationInfo[version];
+  //     let originalKey = version; // За замовчуванням - сама версія
+
+  //     // Якщо це переклад, знаходимо його оригінал
+  //     if (info?.basedOn) {
+  //       originalKey =
+  //         testament === "NewT"
+  //           ? info.basedOn.new_testament
+  //           : info.basedOn.old_testament;
+  //     }
+
+  //     // Визначаємо, чи це оригінал чи переклад
+  //     const isOriginal = ["thot", "lxx", "tr", "gnt"].includes(
+  //       originalKey.toLowerCase()
+  //     );
+
+  //     if (!groups[originalKey]) {
+  //       groups[originalKey] = {
+  //         original: isOriginal ? version : originalKey,
+  //         translations: [],
+  //       };
+  //     }
+
+  //     // Якщо це оригінал або переклад, що не збігається з оригіналом
+  //     if (isOriginal || version !== originalKey) {
+  //       if (version !== groups[originalKey].original) {
+  //         groups[originalKey].translations.push(version);
+  //       }
+  //     }
+  //   });
+
+  //   // Створюємо пари
+  //   Object.values(groups).forEach((group) => {
+  //     if (group.original || group.translations.length > 0) {
+  //       pairs.push({
+  //         original: group.original,
+  //         translations: group.translations,
+  //       });
+  //     }
+  //   });
+
+  //   console.log(`Panel ${id}: Created pairs:`, pairs);
+  //   return pairs;
+  // };
+  // PassagePage.js - ОНОВЛЕНА ЧАСТИНА для getPairs
   const getPairs = () => {
     const [book] = currentRef.split(".");
     const testament = getTestament(book);
     const pairs = [];
 
-    // Словник для зберігання інформації про переклади
-    const translationInfo = {};
-    if (translationsData?.bibles) {
-      translationsData.bibles.forEach((bible) => {
-        translationInfo[bible.initials] = bible;
-      });
-    }
+    // Визначаємо, які версії є оригіналами
+    const originalVersions = versions.filter((v) =>
+      ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+    );
 
-    // Групуємо версії за оригіналами
-    const groups = {};
+    // Визначаємо переклади
+    const translationVersions = versions.filter(
+      (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+    );
 
-    versions.forEach((version) => {
-      const info = translationInfo[version];
-      let originalKey = version; // За замовчуванням - сама версія
+    // Групуємо переклади за їх оригіналами
+    const translationsByOriginal = {};
 
-      // Якщо це переклад, знаходимо його оригінал
-      if (info?.basedOn) {
-        originalKey =
-          testament === "NewT"
-            ? info.basedOn.new_testament
-            : info.basedOn.old_testament;
-      }
-
-      // Визначаємо, чи це оригінал чи переклад
-      const isOriginal = ["thot", "lxx", "tr", "gnt"].includes(
-        originalKey.toLowerCase()
+    translationVersions.forEach((translation) => {
+      // Отримуємо оригінал для цього перекладу
+      const translationInfo = translationsData?.bibles?.find(
+        (b) => b.initials === translation
       );
+      let originalForTranslation = null;
 
-      if (!groups[originalKey]) {
-        groups[originalKey] = {
-          original: isOriginal ? version : originalKey,
-          translations: [],
-        };
+      if (translationInfo?.basedOn) {
+        originalForTranslation =
+          testament === "NewT"
+            ? translationInfo.basedOn.new_testament
+            : translationInfo.basedOn.old_testament;
       }
 
-      // Якщо це оригінал або переклад, що не збігається з оригіналом
-      if (isOriginal || version !== originalKey) {
-        if (version !== groups[originalKey].original) {
-          groups[originalKey].translations.push(version);
+      // Якщо оригінал знайдено і він присутній у вибраних версіях
+      if (
+        originalForTranslation &&
+        versions.includes(originalForTranslation.toUpperCase())
+      ) {
+        if (!translationsByOriginal[originalForTranslation]) {
+          translationsByOriginal[originalForTranslation] = [];
         }
+        translationsByOriginal[originalForTranslation].push(translation);
+      } else {
+        // Якщо оригінал не знайдено, групуємо з основним оригіналом
+        const mainOriginal = originalVersions[0] || "TR";
+        if (!translationsByOriginal[mainOriginal]) {
+          translationsByOriginal[mainOriginal] = [];
+        }
+        translationsByOriginal[mainOriginal].push(translation);
       }
     });
 
-    // Створюємо пари
-    Object.values(groups).forEach((group) => {
-      if (group.original || group.translations.length > 0) {
+    // Створюємо пари для оригіналів
+    originalVersions.forEach((original) => {
+      pairs.push({
+        original: original,
+        translations: translationsByOriginal[original] || [],
+      });
+    });
+
+    // Якщо є переклади без оригіналу, додаємо їх окремо
+    Object.keys(translationsByOriginal).forEach((original) => {
+      if (!originalVersions.includes(original)) {
         pairs.push({
-          original: group.original,
-          translations: group.translations,
+          original: original,
+          translations: translationsByOriginal[original],
         });
       }
+    });
+
+    // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
+    pairs.sort((a, b) => {
+      const priority = {
+        TR: 1,
+        GNT: 2,
+        LXX: 3,
+        THOT: 4,
+      };
+
+      const aPriority = priority[a.original.toUpperCase()] || 100;
+      const bPriority = priority[b.original.toUpperCase()] || 100;
+
+      return aPriority - bPriority;
     });
 
     console.log(`Panel ${id}: Created pairs:`, pairs);
     return pairs;
   };
-  // -------------------------
+  // -------------------------const getPairs end
 
   const [book, chapter] = currentRef.split(".");
 
