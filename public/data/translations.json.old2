@@ -1,0 +1,110 @@
+{
+  "bibles": [
+    {
+      "initials": "THOT",
+      "name": "Translators Hebrew Old Testament",
+      "lang": "he",
+      "features": ["originals", "N", "G", "V", "I"],
+      "path": "originals/thot"
+    },
+    {
+      "initials": "LXX",
+      "name": "Septuagint",
+      "lang": "grc",
+      "features": ["originals", "N", "G", "V", "S"],
+      "path": "originals/lxx"
+    },
+    {
+      "initials": "TR",
+      "name": "Textus Receptus (Greek New Testament)",
+      "lang": "grc",
+      "features": ["originals", "N", "G", "V", "I"],
+      "path": "originals/tr"
+    },
+    {
+      "initials": "GNT",
+      "name": "Greek New Testament (Modern Critical)",
+      "lang": "grc",
+      "features": ["originals", "N", "G", "V", "I"],
+      "path": "originals/gnt"
+    },
+    {
+      "initials": "UBT",
+      "name": "Українська Біблія (класичний, масоретський)",
+      "lang": "uk",
+      "features": ["R"],
+      "path": "translations/ubt",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "UTT",
+      "name": "Український переклад з LXX",
+      "lang": "uk",
+      "features": ["R", "S"],
+      "path": "translations/utt",
+      "basedOn": {
+        "old_testament": "lxx",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "Synodal",
+      "name": "Синодальный перевод",
+      "lang": "ru",
+      "features": ["R"],
+      "path": "translations/Synodal",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "KJV",
+      "name": "King James Version (1611)",
+      "lang": "en",
+      "features": ["R", "N"],
+      "path": "translations/KJV",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "OGIENKO",
+      "name": "Переклад Огієнка (масоретський)",
+      "lang": "uk",
+      "features": ["R"],
+      "path": "translations/OGIENKO",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "KHOMENKO",
+      "name": "Переклад Хоменка (масоретський)",
+      "lang": "uk",
+      "features": ["R"],
+      "path": "translations/KHOMENKO",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    },
+    {
+      "initials": "SIRYY",
+      "name": "Переклад Юрія Сірого (масоретський)",
+      "lang": "uk",
+      "features": ["R"],
+      "path": "translations/SIRYY",
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      }
+    }
+  ],
+  "commentaries": []
+}

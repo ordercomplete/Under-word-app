@@ -77,12 +77,12 @@
 }
 
 /* Рядок віршів */
-.verse-row {
+/* .verse-row {
   display: block;
   margin-bottom: 10px;
   width: 100%;
   min-height: 40px;
-}
+} */
 
 /* Стилі для відсутніх даних */
 .missing-verse {

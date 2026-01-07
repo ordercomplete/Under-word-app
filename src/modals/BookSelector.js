@@ -372,7 +372,7 @@ const BookSelector = ({
   const groupedBooks = useMemo(() => {
     const result = {};
     const seen = new Set();
-
+    // Проблема: return в середині forEach не припиняє весь цикл - він припиняє тільки поточну ітерацію. Якщо перша версія не знайдена, це не має блокувати показ книг для інших версій. Також: Логіка console.log/console.warn зайва в продакшені.
     versions.forEach((v) => {
       const key = v.toLowerCase();
       const data = coreData[key];

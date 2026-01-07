@@ -1,17 +1,36 @@
-[
-  {
-    "v": 1,
-    "ws": [
-      { "w": "In", "s": "H9003" },
-      { "w": "the", "s": "H9009" },
-      { "w": "beginning", "s": "H7225" },
-      { "w": "God", "s": "H0430" },
-      { "w": "created", "s": "H1254" },
-      { "w": "the", "s": "H0853" },
-      { "w": "heaven", "s": "H8064" },
-      { "w": "and", "s": "H9002" },
-      { "w": "the", "s": "H0853" },
-      { "w": "earth", "s": "H0776" }
-    ]
-  }
-]
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-09T20:33:45.545Z",
+    "info": {
+      "tr": "KJV",
+      "type": "translation",
+      "book": "GEN",
+      "chapter": "1",
+      "language": "en",
+      "name": "King James Version (1611)",
+      "hasStrongs": true,
+      "hasMorphology": null,
+      "hasLemma": null,
+      "originalPath": "translations\\kjv\\OldT\\GEN\\gen1_kjv.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "In", "s": "H9003" },
+        { "w": "the", "s": "H9009" },
+        { "w": "beginning", "s": "H7225" },
+        { "w": "God", "s": "H0430" },
+        { "w": "created", "s": "H1254" },
+        { "w": "the", "s": "H0853" },
+        { "w": "heaven", "s": "H8064" },
+        { "w": "and", "s": "H9002" },
+        { "w": "the", "s": "H0853" },
+        { "w": "earth", "s": "H0776" }
+      ]
+    }
+  ]
+}

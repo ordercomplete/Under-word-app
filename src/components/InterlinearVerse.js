@@ -3498,12 +3498,27 @@
 
 // --------------------------- 27.12.25-version-Флекс-версія замість таблиці
 
-// src/components/InterlinearVerse.js - НОВА ФЛЕКС ВЕРСІЯ
-import React, { useState, useRef, useMemo, useEffect } from "react";
+// src/components/InterlinearVerse.js - НОВА ФЛЕКС ВЕРСІЯ 07.01.2026
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
 import "../styles/Interlinear.css";
 import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 
-const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
+const InterlinearVerse = ({
+  verseNum,
+  pairs,
+  chapterData,
+  onWordClick,
+  isFirstInChapter = false,
+}) => {
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(`[InterlinearVerse ${verseNum}] Дані:`, Object.keys(chapterData));
+
   const [hoveredWord, setHoveredWord] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [containerWidth, setContainerWidth] = useState(0);
@@ -3513,25 +3528,42 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
   const verseBlockRef = useRef(null);
 
   // Функції для отримання значень
-  const getWordText = (word) => {
+  // const getWordText = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "word") || getValue(word, "w") || null;
+  // };
+  // Або всередині з useCallback
+  const getWordText = useCallback((word) => {
     if (!word) return null;
     return getValue(word, "word") || getValue(word, "w") || null;
-  };
+  }, []);
 
-  const getStrongCode = (word) => {
+  // const getStrongCode = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "strong") || getValue(word, "s") || null;
+  // };
+  const getStrongCode = useCallback((word) => {
     if (!word) return null;
     return getValue(word, "strong") || getValue(word, "s") || null;
-  };
+  }, []);
 
-  const getLemma = (word) => {
+  // const getLemma = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "lemma") || getValue(word, "l") || null;
+  // };
+  const getLemma = useCallback((word) => {
     if (!word) return null;
     return getValue(word, "lemma") || getValue(word, "l") || null;
-  };
+  }, []);
 
-  const getMorph = (word) => {
+  // const getMorph = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "morph") || getValue(word, "m") || null;
+  // };
+  const getMorph = useCallback((word) => {
     if (!word) return null;
     return getValue(word, "morph") || getValue(word, "m") || null;
-  };
+  }, []);
 
   // Отримання вірша за номером
   const getVerseData = (version, verseNumber) => {
@@ -3542,12 +3574,27 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     });
     return verse;
   };
+  // const getVerseData = useCallback(
+  //   (version, verseNumber) => {
+  //     if (!adaptedData[version]) return null;
+  //     const verse = adaptedData[version].find((v) => {
+  //       const vNum = v.verse || v.v;
+  //       return parseInt(vNum) === parseInt(verseNumber);
+  //     });
+  //     return verse;
+  //   },
+  //   [adaptedData]
+  // );
 
   // Отримання слів з вірша
-  const getWordsFromVerse = (verseData) => {
+  // const getWordsFromVerse = (verseData) => {
+  //   if (!verseData) return [];
+  //   return getValue(verseData, "words") || getValue(verseData, "ws") || [];
+  // };
+  const getWordsFromVerse = useCallback((verseData) => {
     if (!verseData) return [];
     return getValue(verseData, "words") || getValue(verseData, "ws") || [];
-  };
+  }, []);
 
   // Адаптація даних
   const adaptedData = useMemo(() => {
@@ -3583,9 +3630,6 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  // Визначення головного оригіналу
-  // Проблема: Ця логіка не враховує який оригінал є основним для поточної книги (NT/OT).
-  // Наприклад, для OT потрібен THOT або LXX, але логіка може повернути TR якщо він є в pairs. Треба доопрацювати логіку!
   const mainOriginal = useMemo(() => {
     // Шукаємо серед пар оригінал
     for (const pair of pairs) {
@@ -3609,8 +3653,6 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     let currentVerse = null;
     let currentPosition = 0;
 
-    // Для кожного вірша в головному оригіналі
-    // Проблема: Якщо обрано тільки переклади (наприклад, UBT без TR), то mainOriginal буде null і поверне порожній масив.
     const mainVerse = getVerseData(mainOriginal, verseNum);
     if (!mainVerse) return [];
 
@@ -3642,9 +3684,7 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
           const verse = getVerseData(pair.original, verseNum);
           if (verse) {
             const words = getWordsFromVerse(verse);
-            // Шукаємо слово за Strong кодом або індексом
-            // Проблема: Цей підхід не враховує що переклади можуть мати іншу кількість слів або іншу структуру.
-            // Співставлення тільки за Strong кодом або індексом недостатньо.
+
             let word = null;
             if (mainStrong) {
               word = words.find((w) => getStrongCode(w) === mainStrong);
@@ -3669,8 +3709,7 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
             if (verse) {
               const words = getWordsFromVerse(verse);
               // Шукаємо слово за Strong кодом або індексом
-              // Проблема: Цей підхід не враховує що переклади можуть мати іншу кількість слів або іншу структуру.
-              // Співставлення тільки за Strong кодом або індексом недостатньо.
+
               let word = null;
               if (mainStrong) {
                 word = words.find((w) => getStrongCode(w) === mainStrong);
@@ -3724,13 +3763,15 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
   const renderWord = (wordData, version, strong, isOriginal) => {
     if (!wordData || !wordData.text) {
       return (
-        <span
-          key={`empty-${version}`}
-          className="empty-word"
-          title="Відсутній відповідник"
-        >
-          —
-        </span>
+        <div className="empty-word">
+          <span
+            key={`empty-${version}`}
+            className="empty-word"
+            title="Відсутній відповідник"
+          >
+            —
+          </span>
+        </div>
       );
     }
 
@@ -3767,42 +3808,55 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
   return (
     <div
       className="interlinear-verse flex-layout"
-      ref={containerRef}
       onMouseMove={handleMouseMove}
-      // data-verse={verseNum}
     >
-      {/* <div className="verse-number">{verseNum}</div> */}
-
-      <div className="verse-content" ref={verseBlockRef} data-verse={verseNum}>
+      <div className="verse-content" data-verse={verseNum}>
         <div className="verse-number">{verseNum}</div>
+
+        {/* ЗАГОЛОВКИ ТІЛЬКИ ДЛЯ ПЕРШОГО ВІРША РОЗДІЛУ */}
+        {isFirstInChapter && (
+          <div className="verse-headers verse-row">
+            {/* Проходимо по всіх версіях в порядку відображення */}
+            {getDisplayVersions(pairs).map((version, index) => (
+              <div
+                key={`header-${version}-${index}`}
+                className={`verse-header ${
+                  isOriginalVersion(version)
+                    ? "original-header"
+                    : "translation-header"
+                }`}
+              >
+                <span className=" word">[{version}]</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* БЛОКИ СЛІВ */}
         {createVerseBlocks.map((block, blockIndex) => (
-          <div
-            key={block.id}
-            className="word-block"
-            data-strong={block.strong}
-            data-position={block.position}
-          >
-            {/* Рядок з версіями для цього слова */}
+          <div key={block.id} className="word-block">
             <div className="version-row">
-              {/* Версії відображаються вертикально під словом */}
-              {Object.entries(block.versions).map(([version, wordData]) => (
-                <div
-                  key={`${block.id}-${version}`}
-                  className={`word-version ${
-                    wordData.isOriginal
-                      ? "original-version"
-                      : "translation-version"
-                  }`}
-                >
-                  {/* <span className="version-label">[{version}]</span> */}
-                  {renderWord(
-                    wordData,
-                    version,
-                    block.strong,
-                    wordData.isOriginal
-                  )}
-                </div>
-              ))}
+              {getDisplayVersions(pairs).map((version, versionIndex) => {
+                const wordData = block.versions[version];
+
+                return (
+                  <div
+                    key={`${block.id}-${version}-${versionIndex}`}
+                    className={`word-version ${
+                      isOriginalVersion(version)
+                        ? "original-version"
+                        : "translation-version"
+                    }`}
+                  >
+                    {renderWord(
+                      wordData,
+                      version,
+                      block.strong,
+                      isOriginalVersion(version)
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -3846,7 +3900,26 @@ const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
     </div>
   );
 };
+// ДОПОМІЖНІ ФУНКЦІЇ
+const getDisplayVersions = (pairs) => {
+  const versions = [];
 
+  pairs.forEach((pair) => {
+    // Додаємо оригінал
+    if (pair.original) {
+      versions.push(pair.original);
+    }
+
+    // Додаємо переклади
+    if (pair.translations && pair.translations.length > 0) {
+      versions.push(...pair.translations);
+    }
+  });
+
+  return versions;
+};
+
+const isOriginalVersion = (version) => {
+  return ["LXX", "THOT", "TR", "GNT"].includes(version.toUpperCase());
+};
 export default InterlinearVerse;
-
-// --------------------------- 27.12.25-version - потокова версія замість Флекс-версія

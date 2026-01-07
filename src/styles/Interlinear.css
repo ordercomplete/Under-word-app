@@ -100,7 +100,7 @@
 /* Оригінальні слова */
 .original-version {
   background: #fff5f5;
-  border-left: 3px solid #ff6b6b;
+  /* border-left: 3px solid #ff6b6b; */
 }
 
 .original-word {
@@ -118,7 +118,7 @@
 /* Слова перекладу */
 .translation-version {
   background: #f5fff5;
-  border-left: 3px solid #4caf50;
+  /* border-left: 3px solid #4caf50; */
 }
 
 .translation-word {
@@ -134,12 +134,24 @@
 
 /* Пусте слово (відсутній відповідник) */
 .empty-word {
-  color: #95a5a6;
+  /* color: #95a5a6;
   font-style: italic;
   padding: 4px 8px;
   min-width: 40px;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 0.9em; */
+  flex: 1;
+  min-width: 40px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  /* font-size: 1.017em; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  /* cursor: default; */
+  /* user-select: none; */
 }
 
 /* ПЛАВАЮЧА ПІДКАЗКА */
@@ -320,4 +332,118 @@
 
 .word-block:hover .translation-version {
   background: #e8f5e8;
+}
+/* ---------------- */
+/* Додаємо в Interlinear.css */
+.verse-headers {
+  /* display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px 10px 0;
+  min-width: 80px;
+  max-width: 200px;
+  vertical-align: top;
+  position: relative; */
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  border-left: 4px solid #3498db; */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px 10px 0;
+  /* min-width: 80px; */
+  max-width: 200px;
+  vertical-align: top;
+  position: relative;
+  padding: 4px 8px;
+}
+
+.verse-header {
+  /* padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.9em;
+  min-width: 50px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+  min-width: 40px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.95em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  cursor: default;
+  user-select: none;
+}
+
+.original-header {
+  background: linear-gradient(135deg, #f3e5f5, #ebccf0);
+  color: #4a148c;
+  border: 1px solid #ce93d8;
+}
+
+.translation-header {
+  background: linear-gradient(135deg, #e3f2fd, #c0e8c2);
+  color: #4caf50;
+
+  border: 1px solid #90caf9;
+}
+.verse-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.71em;
+  /* width: 100%; */
+}
+.header-label {
+  display: inline-block;
+  min-width: 40px;
+}
+
+/* АДАПТИВНІСТЬ */
+@media (max-width: 992px) {
+  .verse-headers {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .verse-header {
+    padding: 5px 10px;
+    font-size: 0.85em;
+    min-width: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .verse-headers {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .verse-header {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    min-width: 40px;
+  }
+
+  .header-label {
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  .verse-header {
+    padding: 3px 6px;
+    font-size: 0.75em;
+    min-width: 35px;
+  }
 }

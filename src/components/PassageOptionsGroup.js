@@ -301,6 +301,8 @@ const PassageOptionsGroup = ({
         onRequestClose={() => setShowTranslationModal(false)}
         lang={lang}
         onSelectVersions={setVersions}
+        initialVersions={versions} // ← ПЕРЕДАЄМО поточні версії
+        currentBook={book} // ← ПЕРЕДАЄМО поточну книгу
       />
       {/* <BookSelector
         isOpen={showBook}

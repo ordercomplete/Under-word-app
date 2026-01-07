@@ -1011,14 +1011,1770 @@
 
 // -------------------------------------------
 
-// PassagePage.js - ОНОВЛЕНА ВЕРСІЯ
-import React, { useState, useEffect, useRef } from "react";
+// // PassagePage.js - 29.12.25
+// import React, { useState, useEffect, useRef } from "react";
+// import PassageOptionsGroup from "./PassageOptionsGroup";
+// import InterlinearVerse from "./InterlinearVerse";
+// import LexiconWindow from "./LexiconWindow";
+// import "../styles/LexiconWindow.css";
+// import "../styles/PassagePage.css";
+// import { jsonAdapter } from "../utils/jsonAdapter";
+
+// const Panel = ({
+//   id,
+//   onClose,
+//   disableClose,
+//   coreData,
+//   coreLoading,
+//   lang,
+//   isMaster = false,
+//   masterRef,
+//   onWordClick,
+//   onNewPanel,
+// }) => {
+//   const [currentRef, setCurrentRef] = useState("GEN.1");
+//   const [versions, setVersions] = useState(["LXX", "UTT"]);
+//   const [chapterData, setChapterData] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState(null);
+//   // Panel component - додайте ці рядки після useState
+//   const [translationsData, setTranslationsData] = useState(null); //26.12.25
+
+//   console.log(
+//     `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
+//       ", "
+//     )}`
+//   );
+//   // ---------------------------------------------26.12.25-start
+//   // Завантаження translations.json
+//   useEffect(() => {
+//     const loadTranslations = async () => {
+//       try {
+//         const response = await fetch("/data/translations.json");
+//         const data = await response.json();
+//         setTranslationsData(data);
+//       } catch (error) {
+//         console.error("Failed to load translations.json", error);
+//       }
+//     };
+//     loadTranslations();
+//   }, []);
+//   // ---------------------------------------------26.12.25-end
+
+//   // // Функція для визначення Завіту за кодом книги
+//   // const getTestament = (bookCode) => {
+//   //   const newTestamentBooks = [
+//   //     "MAT",
+//   //     "MRK",
+//   //     "LUK",
+//   //     "JHN",
+//   //     "ACT",
+//   //     "ROM",
+//   //     "1CO",
+//   //     "2CO",
+//   //     "GAL",
+//   //     "EPH",
+//   //     "PHP",
+//   //     "COL",
+//   //     "1TH",
+//   //     "2TH",
+//   //     "1TI",
+//   //     "2TI",
+//   //     "TIT",
+//   //     "PHM",
+//   //     "HEB",
+//   //     "JAS",
+//   //     "1PE",
+//   //     "2PE",
+//   //     "1JN",
+//   //     "2JN",
+//   //     "3JN",
+//   //     "JUD",
+//   //     "REV",
+//   //   ];
+//   //   return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+//   // };
+//   // ---------------------------------------------26.12.25-start
+//   // Функція для отримання списку номерів віршів
+//   const getVerseNumbers = () => {
+//     const allVerseNumbers = new Set();
+
+//     // Збираємо всі номери віршів з усіх завантажених версій
+//     Object.values(chapterData).forEach((data) => {
+//       if (Array.isArray(data)) {
+//         data.forEach((verse) => {
+//           const vNum = verse.verse || verse.v;
+//           if (vNum && !isNaN(vNum)) {
+//             allVerseNumbers.add(parseInt(vNum));
+//           }
+//         });
+//       }
+//     });
+
+//     // Якщо немає даних, повертаємо пустий масив
+//     if (allVerseNumbers.size === 0) {
+//       return [];
+//     }
+
+//     // Створюємо масив від мінімального до максимального номера
+//     const minVerse = Math.min(...allVerseNumbers);
+//     const maxVerse = Math.max(...allVerseNumbers);
+//     const verseArray = [];
+
+//     for (let i = minVerse; i <= maxVerse; i++) {
+//       verseArray.push(i);
+//     }
+
+//     console.log(`Panel ${id}: Found verses ${minVerse}-${maxVerse}`);
+//     return verseArray;
+//   };
+//   // ---------------------------------------------26.12.25-end
+//   // Функція для визначення Завіту за кодом книги
+//   const getTestament = (bookCode) => {
+//     const newTestamentBooks = [
+//       "MAT",
+//       "MRK",
+//       "LUK",
+//       "JHN",
+//       "ACT",
+//       "ROM",
+//       "1CO",
+//       "2CO",
+//       "GAL",
+//       "EPH",
+//       "PHP",
+//       "COL",
+//       "1TH",
+//       "2TH",
+//       "1TI",
+//       "2TI",
+//       "TIT",
+//       "PHM",
+//       "HEB",
+//       "JAS",
+//       "1PE",
+//       "2PE",
+//       "1JN",
+//       "2JN",
+//       "3JN",
+//       "JUD",
+//       "REV",
+//     ];
+//     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+//   };
+//   // Функція для визначення шляху до файлу
+//   const getFilePath = (version, bookCode, chapter) => {
+//     const ver = version.toLowerCase();
+//     const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
+//     const base = isOriginal ? "originals" : "translations";
+//     const testament = getTestament(bookCode);
+
+//     return {
+//       compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+//       original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+//       testament: testament,
+//     };
+//   };
+
+//   useEffect(() => {
+//     const [book, chapterStr] = currentRef.split(".");
+//     const chapter = parseInt(chapterStr);
+//     if (!book || !chapter) return;
+
+//     console.log(
+//       `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+//         ", "
+//       )}`
+//     );
+//     setLoading(true);
+//     setMessage(null);
+
+//     const loadChapter = async (ver) => {
+//       const lower = ver.toLowerCase();
+//       const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower); // Додано "tr"
+//       const base = isOriginal ? "originals" : "translations";
+
+//       // ВИЗНАЧЕННЯ ЗАПОВІТУ: перевіряємо coreData
+//       let testament = "OldT"; // Значення за замовчуванням
+//       if (coreData[lower]) {
+//         // Спочатку шукаємо книгу в NewT
+//         const newTestamentGroup = coreData[lower]?.NewT?.find((group) =>
+//           group.books.some((b) => b.code === book)
+//         );
+//         if (newTestamentGroup) {
+//           testament = "NewT";
+//         } else {
+//           // Якщо не знайшли в NewT, перевіряємо OldT
+//           const oldTestamentGroup = coreData[lower]?.OldT?.find((group) =>
+//             group.books.some((b) => b.code === book)
+//           );
+//           if (oldTestamentGroup) {
+//             testament = "OldT";
+//           }
+//           // Якщо не знайдено ні в OldT, ні в NewT, залишається "OldT" за замовчуванням
+//         }
+//       }
+
+//       // Формуємо URL з використанням визначеного testament
+//       const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//       console.log(
+//         `Panel ${id}: Fetching ${compressedUrl} (Testament: ${testament})`
+//       );
+
+//       try {
+//         const res = await fetch(compressedUrl);
+//         if (!res.ok) {
+//           // Спробуємо оригінальний формат
+//           const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//           console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
+//           const fallbackRes = await fetch(originalUrl);
+//           if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
+//           const data = await fallbackRes.json();
+//           return { ver, data };
+//         }
+//         const data = await res.json();
+//         return { ver, data };
+//       } catch (err) {
+//         console.error(
+//           `Panel ${id}: Failed to load ${ver} ${book}:${chapter} from ${testament}`,
+//           err
+//         );
+//         // Можна повернути пусті дані або об'єкт з помилкою
+//         return { ver, data: { error: err.message } };
+//       }
+//     };
+
+//     Promise.all(versions.map(loadChapter))
+//       .then((results) => {
+//         const newData = {};
+//         results.forEach(({ ver, data }) => {
+//           newData[ver] = jsonAdapter(data);
+//         });
+//         console.log(
+//           `Panel ${id}: Chapter loaded successfully, versions:`,
+//           Object.keys(newData)
+//         );
+//         setChapterData(newData);
+//       })
+//       .catch((error) => {
+//         console.error(`Panel ${id}: Error loading chapter`, error);
+//         setMessage("Помилка завантаження: " + error.message);
+//       })
+//       .finally(() => setLoading(false));
+//   }, [currentRef, versions, id]);
+
+//   const getVerseCount = () => {
+//     const primaryVer = versions[0];
+//     if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)
+//       return 0;
+//     return chapterData[primaryVer].length;
+//   };
+
+//   // const getPairs = () => {
+//   //   const pairs = [];
+
+//   //   // Визначаємо Завіт поточних версій
+//   //   const [book] = currentRef.split(".");
+//   //   const testament = getTestament(book);
+
+//   //   if (testament === "OldT") {
+//   //     if (versions.includes("THOT") || versions.includes("UBT")) {
+//   //       pairs.push({ origVer: "THOT", transVer: "UBT" });
+//   //     }
+//   //     if (versions.includes("LXX") || versions.includes("UTT")) {
+//   //       pairs.push({ origVer: "LXX", transVer: "UTT" });
+//   //     }
+//   //   } else if (testament === "NewT") {
+//   //     // Для Нового Завіту: TR + переклад або GNT + переклад
+//   //     if (
+//   //       versions.includes("TR") &&
+//   //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
+//   //     ) {
+//   //       const translation = versions.find((v) =>
+//   //         ["UBT", "UTT", "KJV"].includes(v)
+//   //       );
+//   //       if (translation) pairs.push({ origVer: "TR", transVer: translation });
+//   //     }
+//   //     if (
+//   //       versions.includes("GNT") &&
+//   //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
+//   //     ) {
+//   //       const translation = versions.find((v) =>
+//   //         ["UBT", "UTT", "KJV"].includes(v)
+//   //       );
+//   //       if (translation) pairs.push({ origVer: "GNT", transVer: translation });
+//   //     }
+//   //   }
+
+//   //   // Додаємо окремі версії без пар
+//   //   versions.forEach((v) => {
+//   //     if (!["THOT", "LXX", "TR", "GNT", "UBT", "UTT"].includes(v)) {
+//   //       pairs.push({ origVer: null, transVer: v });
+//   //     }
+//   //   });
+
+//   //   return pairs;
+//   // };
+//   // ---------------------------------------------------------------------
+//   // ОНОВЛЕНА функція getPairs для динамічного групування 26.12.2025
+//   // const getPairs = () => {
+//   //   const [book] = currentRef.split(".");
+//   //   const testament = getTestament(book);
+//   //   const pairs = [];
+
+//   //   // Словник для зберігання інформації про переклади
+//   //   const translationInfo = {};
+//   //   if (translationsData?.bibles) {
+//   //     translationsData.bibles.forEach((bible) => {
+//   //       translationInfo[bible.initials] = bible;
+//   //     });
+//   //   }
+
+//   //   // Групуємо версії за оригіналами
+//   //   const groups = {};
+
+//   //   versions.forEach((version) => {
+//   //     const info = translationInfo[version];
+//   //     let originalKey = version; // За замовчуванням - сама версія
+
+//   //     // Якщо це переклад, знаходимо його оригінал
+//   //     if (info?.basedOn) {
+//   //       originalKey =
+//   //         testament === "NewT"
+//   //           ? info.basedOn.new_testament
+//   //           : info.basedOn.old_testament;
+//   //     }
+
+//   //     // Визначаємо, чи це оригінал чи переклад
+//   //     const isOriginal = ["thot", "lxx", "tr", "gnt"].includes(
+//   //       originalKey.toLowerCase()
+//   //     );
+
+//   //     if (!groups[originalKey]) {
+//   //       groups[originalKey] = {
+//   //         original: isOriginal ? version : originalKey,
+//   //         translations: [],
+//   //       };
+//   //     }
+
+//   //     // Якщо це оригінал або переклад, що не збігається з оригіналом
+//   //     if (isOriginal || version !== originalKey) {
+//   //       if (version !== groups[originalKey].original) {
+//   //         groups[originalKey].translations.push(version);
+//   //       }
+//   //     }
+//   //   });
+
+//   //   // Створюємо пари
+//   //   Object.values(groups).forEach((group) => {
+//   //     if (group.original || group.translations.length > 0) {
+//   //       pairs.push({
+//   //         original: group.original,
+//   //         translations: group.translations,
+//   //       });
+//   //     }
+//   //   });
+
+//   //   console.log(`Panel ${id}: Created pairs:`, pairs);
+//   //   return pairs;
+//   // };
+//   // PassagePage.js - ОНОВЛЕНА ЧАСТИНА для getPairs
+//   const getPairs = () => {
+//     const [book] = currentRef.split(".");
+//     const testament = getTestament(book);
+//     const pairs = [];
+
+//     // Визначаємо, які версії є оригіналами
+//     const originalVersions = versions.filter((v) =>
+//       ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+//     );
+
+//     // Визначаємо переклади
+//     const translationVersions = versions.filter(
+//       (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+//     );
+
+//     // Групуємо переклади за їх оригіналами
+//     const translationsByOriginal = {};
+
+//     translationVersions.forEach((translation) => {
+//       // Отримуємо оригінал для цього перекладу
+//       // Проблема: Змінна translationsData декларована, але використовується у getPairs() без перевірки на null.
+//       // Може призвести до помилки Cannot read properties of undefined.
+//       const translationInfo = translationsData?.bibles?.find(
+//         (b) => b.initials === translation
+//       );
+//       let originalForTranslation = null;
+//       // Проблема: Використання optional chaining, але якщо translationsData === null, все одно буде помилка.
+//       // Треба перевірка:
+//       // if (!translationsData) return [];
+//       if (translationInfo?.basedOn) {
+//         originalForTranslation =
+//           testament === "NewT"
+//             ? translationInfo.basedOn.new_testament
+//             : translationInfo.basedOn.old_testament;
+//       }
+
+//       // Якщо оригінал знайдено і він присутній у вибраних версіях
+//       // Проблема: Логіка не враховує Testament (NT/OT). Для OT перекладу потрібен OT оригінал, для NT - NT оригінал.
+//       // Треба групувати за тим оригіналом, який обраний.
+//       // Можливо треба додати грецько-івритські відповідники Стронга, якщо оригінал грецький, а переклад івритський
+//       if (
+//         originalForTranslation &&
+//         versions.includes(originalForTranslation.toUpperCase())
+//       ) {
+//         if (!translationsByOriginal[originalForTranslation]) {
+//           translationsByOriginal[originalForTranslation] = [];
+//         }
+//         translationsByOriginal[originalForTranslation].push(translation);
+//       } else {
+//         // Якщо оригінал не знайдено, групуємо з основним оригіналом
+//         const mainOriginal = originalVersions[0] || "TR";
+//         if (!translationsByOriginal[mainOriginal]) {
+//           translationsByOriginal[mainOriginal] = [];
+//         }
+//         translationsByOriginal[mainOriginal].push(translation);
+//       }
+//     });
+
+//     // Створюємо пари для оригіналів
+//     originalVersions.forEach((original) => {
+//       pairs.push({
+//         original: original,
+//         translations: translationsByOriginal[original] || [],
+//       });
+//     });
+
+//     // Якщо є переклади без оригіналу, додаємо їх окремо
+//     Object.keys(translationsByOriginal).forEach((original) => {
+//       if (!originalVersions.includes(original)) {
+//         pairs.push({
+//           original: original,
+//           translations: translationsByOriginal[original],
+//         });
+//       }
+//     });
+
+//     // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
+//     pairs.sort((a, b) => {
+//       const priority = {
+//         TR: 1,
+//         GNT: 2,
+//         LXX: 3,
+//         THOT: 4,
+//       };
+
+//       const aPriority = priority[a.original.toUpperCase()] || 100;
+//       const bPriority = priority[b.original.toUpperCase()] || 100;
+
+//       return aPriority - bPriority;
+//     });
+
+//     console.log(`Panel ${id}: Created pairs:`, pairs);
+//     return pairs;
+//   };
+//   // -------------------------const getPairs end
+
+//   const [book, chapter] = currentRef.split(".");
+//   // ----------------------
+
+//   // А перед return додайте цю функцію в Panel компонент:
+
+//   // Функція для рендерингу вмісту глави
+//   // const renderChapterContent = () => {
+//   //   const verseNumbers = getVerseNumbers();
+
+//   //   if (verseNumbers.length === 0) {
+//   //     return (
+//   //       <p className="text-center text-muted">Немає даних для відображення</p>
+//   //     );
+//   //   }
+
+//   //   // Отримуємо пари для заголовка
+//   //   const pairs = getPairs();
+
+//   //   // Збираємо всі унікальні версії
+//   //   const allVersions = new Set();
+//   //   pairs.forEach((pair) => {
+//   //     if (pair.original) allVersions.add(pair.original);
+//   //     if (pair.translations) {
+//   //       pair.translations.forEach((t) => allVersions.add(t));
+//   //     }
+//   //   });
+
+//   //   // Рендеримо заголовок з версіями
+//   //   const renderVersionHeader = () => {
+//   //     const versionsArray = Array.from(allVersions);
+//   //     if (versionsArray.length === 0) return null;
+
+//   //     // Сортуємо: спочатку оригінали, потім переклади
+//   //     const sortedVersions = versionsArray.sort((a, b) => {
+//   //       const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+//   //         a.toUpperCase()
+//   //       );
+//   //       const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+//   //         b.toUpperCase()
+//   //       );
+
+//   //       if (isAOriginal && !isBOriginal) return -1;
+//   //       if (!isAOriginal && isBOriginal) return 1;
+//   //       return 0;
+//   //     });
+
+//   //     return (
+//   //       <div className="versions-header">
+//   //         <div className="header-row">
+//   //           <span className="header-verse">Вірш</span>
+//   //           {sortedVersions.map((version) => (
+//   //             <span key={version} className="header-version">
+//   //               [{version}]
+//   //             </span>
+//   //           ))}
+//   //         </div>
+//   //         <div className="header-separator"></div>
+//   //       </div>
+//   //     );
+//   //   };
+
+//   //   // Визначаємо, чи є дані для вірша
+//   //   const versesWithData = verseNumbers.filter((verseNum) => {
+//   //     return Object.keys(chapterData).some((version) => {
+//   //       const data = chapterData[version];
+//   //       if (!Array.isArray(data)) return false;
+//   //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
+//   //       return verse && (verse.words || verse.ws)?.length > 0;
+//   //     });
+//   //   });
+
+//   //   if (versesWithData.length === 0) {
+//   //     return (
+//   //       <p className="text-center text-muted">Немає даних для відображення</p>
+//   //     );
+//   //   }
+
+//   //   // Основна функція рендерингу віршів з потоковим перенесенням
+//   //   const renderStreamingVerses = () => {
+//   //     let isFirstInRow = true;
+//   //     let isFirstVerse = true;
+
+//   //     return (
+//   //       <div className="chapter-stream-container">
+//   //         {/* Заголовок версій тільки один раз */}
+//   //         {renderVersionHeader()}
+
+//   //         <div className="verses-stream">
+//   //           <div className="verse-row">
+//   //             {versesWithData.map((verseNum, index) => {
+//   //               const verseInfo = {
+//   //                 verseNum,
+//   //                 isFirstInRow: isFirstInRow,
+//   //                 isFirstVerse: isFirstVerse && index === 0,
+//   //               };
+
+//   //               // Після кожного вірша скидаємо флаг "перший у рядку"
+//   //               if (isFirstInRow) {
+//   //                 isFirstInRow = false;
+//   //               }
+
+//   //               // Після першого вірша скидаємо флаг "перший вірш"
+//   //               if (isFirstVerse && index === 0) {
+//   //                 isFirstVerse = false;
+//   //               }
+
+//   //               return (
+//   //                 <InterlinearVerse
+//   //                   key={verseNum}
+//   //                   verseNum={verseInfo.verseNum}
+//   //                   pairs={getPairs()}
+//   //                   chapterData={chapterData}
+//   //                   onWordClick={onWordClick}
+//   //                   isFirstInRow={verseInfo.isFirstInRow}
+//   //                   isFirstVerse={verseInfo.isFirstVerse}
+//   //                 />
+//   //               );
+//   //             })}
+//   //           </div>
+//   //         </div>
+//   //       </div>
+//   //     );
+//   //   };
+
+//   //   return renderStreamingVerses();
+//   // };
+//   // У Panel компоненті, замініть функцію renderChapterContent на:
+
+//   // Непотрібний код: Ця функція renderChapterContent визначена, але ніколи не викликається. У компоненті Panel рендериться інший JSX в рядку 343+.
+
+//   // const renderChapterContent = () => {
+//   //   const verseNumbers = getVerseNumbers();
+
+//   //   if (verseNumbers.length === 0) {
+//   //     return (
+//   //       <p className="text-center text-muted">Немає даних для відображення</p>
+//   //     );
+//   //   }
+
+//   //   // Отримуємо пари для заголовка
+//   //   const pairs = getPairs();
+
+//   //   // Збираємо всі унікальні версії
+//   //   const allVersions = new Set();
+//   //   pairs.forEach((pair) => {
+//   //     if (pair.original) allVersions.add(pair.original);
+//   //     if (pair.translations) {
+//   //       pair.translations.forEach((t) => allVersions.add(t));
+//   //     }
+//   //   });
+
+//   //   // Визначаємо, чи є дані для вірша
+//   //   const versesWithData = verseNumbers.filter((verseNum) => {
+//   //     return Object.keys(chapterData).some((version) => {
+//   //       const data = chapterData[version];
+//   //       if (!Array.isArray(data)) return false;
+//   //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
+//   //       return verse && (verse.words || verse.ws)?.length > 0;
+//   //     });
+//   //   });
+
+//   //   if (versesWithData.length === 0) {
+//   //     return (
+//   //       <p className="text-center text-muted">Немає даних для відображення</p>
+//   //     );
+//   //   }
+
+//   //   return (
+//   //     <div className="chapter-container">
+//   //       {/* Заголовок версій один раз на початку */}
+//   //       <div className="versions-header">
+//   //         <div className="header-row">
+//   //           <span className="header-verse">Вірш</span>
+//   //           {Array.from(allVersions).map((version) => (
+//   //             <span key={version} className="header-version">
+//   //               [{version}]
+//   //             </span>
+//   //           ))}
+//   //         </div>
+//   //       </div>
+
+//   //       {/* Потокове відображення віршів */}
+//   //       <div className="verses-flow">
+//   //         {versesWithData.map((verseNum, index) => {
+//   //           const isFirstInRow = index === 0; // Тимчасово - кожен вірш перший у своєму рядку
+//   //           const showVersionHeaders = index === 0; // Заголовки версій тільки для першого вірша
+
+//   //           return (
+//   //             <InterlinearVerse
+//   //               key={verseNum}
+//   //               verseNum={verseNum}
+//   //               pairs={pairs}
+//   //               chapterData={chapterData}
+//   //               onWordClick={onWordClick}
+//   //               isFirstInRow={isFirstInRow}
+//   //               isFirstVerse={index === 0}
+//   //               showVersionHeaders={showVersionHeaders}
+//   //             />
+//   //           );
+//   //         })}
+//   //       </div>
+//   //     </div>
+//   //   );
+//   // };
+//   // ----------------------
+//   return (
+//     <div className="panel">
+//       <PassageOptionsGroup
+//         lang={lang}
+//         currentRef={currentRef}
+//         setCurrentRef={setCurrentRef}
+//         versions={versions}
+//         setVersions={setVersions}
+//         onPrevChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = Math.max(1, parseInt(c) - 1);
+//           setCurrentRef(`${b}.${nc}`);
+//         }}
+//         onNextChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = parseInt(c) + 1;
+
+//           // Визначаємо Завіт для отримання кількості глав
+//           const testament = getTestament(b);
+//           const versionKey = versions[0]?.toLowerCase();
+
+//           let chapters = 1;
+//           if (coreData[versionKey] && coreData[versionKey][testament]) {
+//             coreData[versionKey][testament].forEach((group) => {
+//               const bookInfo = group.books.find((bk) => bk.code === b);
+//               if (bookInfo) chapters = bookInfo.chapters;
+//             });
+//           }
+
+//           if (nc <= chapters) {
+//             setCurrentRef(`${b}.${nc}`);
+//           }
+//         }}
+//         onNewPanel={onNewPanel}
+//         onClosePanel={() => onClose(id)}
+//         disableClose={disableClose}
+//         coreData={coreData}
+//         coreLoading={coreLoading}
+//       />
+
+//       <div className="chapter-viewer flex-fill overflow-auto p-3">
+//         {loading ? (
+//           <p className="text-center">{lang.loading || "Завантаження..."}</p>
+//         ) : message ? (
+//           <p className="text-center text-danger">{message}</p>
+//         ) : (
+//           <>
+//             <h4 className="text-center mb-3">{currentRef}</h4>
+
+//             {(() => {
+//               const verseNumbers = getVerseNumbers();
+
+//               if (verseNumbers.length === 0) {
+//                 return (
+//                   <p className="text-center text-muted">
+//                     Немає даних для відображення
+//                   </p>
+//                 );
+//               }
+
+//               return verseNumbers.map((verseNum) => {
+//                 // Перевіряємо, чи є дані для цього вірша в будь-якій версії
+//                 const hasData = Object.keys(chapterData).some((version) => {
+//                   const data = chapterData[version];
+//                   if (!Array.isArray(data)) return false;
+//                   const verse = data.find((v) => (v.verse || v.v) === verseNum);
+//                   return verse && (verse.words || verse.ws)?.length > 0;
+//                 });
+
+//                 if (!hasData) {
+//                   return (
+//                     <div key={`missing-${verseNum}`} className="missing-verse">
+//                       <div className="verse-number">{verseNum}</div>
+//                       <div className="verse-content text-muted">
+//                         Вірш {verseNum} поки що відсутній
+//                       </div>
+//                     </div>
+//                   );
+//                 }
+
+//                 return (
+//                   <InterlinearVerse
+//                     key={verseNum}
+//                     verseNum={verseNum}
+//                     pairs={getPairs()}
+//                     chapterData={chapterData}
+//                     onWordClick={onWordClick}
+//                   />
+//                 );
+//               });
+//             })()}
+//           </>
+//           // 27.12.2025 частина для рендерингу віршів start
+//           // <>
+//           //   <h4 className="text-center mb-3">{currentRef}</h4>
+
+//           //   {/* Заголовок з назвами версій ТІЛЬКИ один раз на початку */}
+//           //   {(() => {
+//           //     const verseNumbers = getVerseNumbers();
+
+//           //     if (verseNumbers.length === 0) {
+//           //       return (
+//           //         <p className="text-center text-muted">
+//           //           Немає даних для відображення
+//           //         </p>
+//           //       );
+//           //     }
+
+//           //     // Отримуємо пари для заголовка
+//           //     const pairs = getPairs();
+
+//           //     // Збираємо всі унікальні версії
+//           //     const allVersions = new Set();
+//           //     pairs.forEach((pair) => {
+//           //       if (pair.original) allVersions.add(pair.original);
+//           //       if (pair.translations) {
+//           //         pair.translations.forEach((t) => allVersions.add(t));
+//           //       }
+//           //     });
+
+//           //     // Рендеримо заголовок з версіями
+//           //     const renderVersionHeader = () => {
+//           //       const versionsArray = Array.from(allVersions);
+//           //       if (versionsArray.length === 0) return null;
+
+//           //       // Сортуємо: спочатку оригінали, потім переклади
+//           //       const sortedVersions = versionsArray.sort((a, b) => {
+//           //         const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+//           //           a.toUpperCase()
+//           //         );
+//           //         const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
+//           //           b.toUpperCase()
+//           //         );
+
+//           //         if (isAOriginal && !isBOriginal) return -1;
+//           //         if (!isAOriginal && isBOriginal) return 1;
+//           //         return 0;
+//           //       });
+
+//           //       return (
+//           //         <div className="versions-header">
+//           //           <div className="header-row">
+//           //             <span className="header-verse">Вірш</span>
+//           //             {sortedVersions.map((version) => (
+//           //               <span key={version} className="header-version">
+//           //                 [{version}]
+//           //               </span>
+//           //             ))}
+//           //           </div>
+//           //           <div className="header-separator"></div>
+//           //         </div>
+//           //       );
+//           //     };
+
+//           //     // Створюємо масив віршів з відстеженням ширини
+//           //     const containerRef = useRef(null);
+//           //     const [containerWidth, setContainerWidth] = useState(0);
+
+//           //     // Ефект для отримання ширини контейнера
+//           //     useEffect(() => {
+//           //       const updateWidth = () => {
+//           //         if (containerRef.current) {
+//           //           setContainerWidth(containerRef.current.offsetWidth);
+//           //         }
+//           //       };
+
+//           //       updateWidth();
+//           //       window.addEventListener("resize", updateWidth);
+//           //       return () => window.removeEventListener("resize", updateWidth);
+//           //     }, []);
+
+//           //     // Визначаємо, чи є дані для вірша
+//           //     const versesWithData = verseNumbers.filter((verseNum) => {
+//           //       return Object.keys(chapterData).some((version) => {
+//           //         const data = chapterData[version];
+//           //         if (!Array.isArray(data)) return false;
+//           //         const verse = data.find((v) => (v.verse || v.v) === verseNum);
+//           //         return verse && (verse.words || verse.ws)?.length > 0;
+//           //       });
+//           //     });
+
+//           //     if (versesWithData.length === 0) {
+//           //       return (
+//           //         <p className="text-center text-muted">
+//           //           Немає даних для відображення
+//           //         </p>
+//           //       );
+//           //     }
+
+//           //     // Основна функція рендерингу віршів з потоковим перенесенням
+//           //     const renderStreamingVerses = () => {
+//           //       let currentRowIndex = 0;
+//           //       let isFirstInRow = true;
+//           //       const rows = [];
+//           //       let currentRow = [];
+
+//           //       // Групуємо вірші по рядках на основі їх розміру
+//           //       versesWithData.forEach((verseNum, index) => {
+//           //         const isFirstVerse = index === 0;
+
+//           //         // Додаємо вірш до поточного рядка
+//           //         currentRow.push({
+//           //           verseNum,
+//           //           isFirstInRow: isFirstInRow,
+//           //           isFirstVerse: isFirstVerse,
+//           //         });
+
+//           //         // Після кожного вірша скидаємо флаг "перший у рядку"
+//           //         isFirstInRow = false;
+
+//           //         // Для останнього вірша або якщо це останній - додаємо рядок
+//           //         if (index === versesWithData.length - 1) {
+//           //           rows.push([...currentRow]);
+//           //         }
+//           //       });
+
+//           //       return (
+//           //         <div className="chapter-stream-container" ref={containerRef}>
+//           //           {/* Заголовок версій тільки один раз */}
+//           //           {renderVersionHeader()}
+
+//           //           <div className="verses-stream">
+//           //             {rows.map((row, rowIndex) => (
+//           //               <div key={`row-${rowIndex}`} className="verse-row">
+//           //                 {row.map((verseInfo) => (
+//           //                   <InterlinearVerse
+//           //                     key={verseInfo.verseNum}
+//           //                     verseNum={verseInfo.verseNum}
+//           //                     pairs={getPairs()}
+//           //                     chapterData={chapterData}
+//           //                     onWordClick={onWordClick}
+//           //                     isFirstInRow={verseInfo.isFirstInRow}
+//           //                     isFirstVerse={verseInfo.isFirstVerse}
+//           //                   />
+//           //                 ))}
+//           //               </div>
+//           //             ))}
+//           //           </div>
+//           //         </div>
+//           //       );
+//           //     };
+
+//           //     return renderStreamingVerses();
+//           //   })()}
+//           // </>
+//           // 27.12.2025 частина для рендерингу віршів end
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// const PassagePage = ({ lang }) => {
+//   const [panels, setPanels] = useState([{ id: Date.now() }]);
+//   const [lexicons, setLexicons] = useState([]);
+//   const [coreData, setCoreData] = useState({});
+//   const [coreLoading, setCoreLoading] = useState(true);
+
+//   useEffect(() => {
+//     let isMounted = true;
+//     const loadCoreData = async () => {
+//       try {
+//         const coreRes = await fetch("/data/core.json");
+//         if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
+//         const core = await coreRes.json();
+
+//         if (isMounted) {
+//           setCoreData(core);
+//           console.log("Core data loaded with structure:", Object.keys(core));
+//         }
+//       } catch (err) {
+//         console.error("Failed to load core data:", err);
+//         if (isMounted) setCoreData({});
+//       } finally {
+//         if (isMounted) setCoreLoading(false);
+//       }
+//     };
+
+//     loadCoreData();
+//     return () => {
+//       isMounted = false;
+//     };
+//   }, []);
+
+//   const addPanel = () => {
+//     const maxPanels = window.innerWidth < 992 ? 2 : 4;
+//     if (panels.length < maxPanels) {
+//       setPanels([...panels, { id: Date.now() }]);
+//     } else {
+//       alert(`Максимум ${maxPanels} вікон`);
+//     }
+//   };
+
+//   const closePanel = (id) => {
+//     if (panels.length > 1) {
+//       setPanels(panels.filter((p) => p.id !== id));
+//     }
+//   };
+//   const closeLexicon = (id) => {
+//     console.log("Closing lexicon:", id); // Лог закриття лексикону
+//     setLexicons(lexicons.filter((l) => l.id !== id));
+//   };
+
+//   const handleWordClick = (data) => {
+//     const { word, origVer } = data;
+//     if (!word?.strong || !origVer) return;
+
+//     const key = `${origVer}:${word.strong}`;
+//     const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+//     if (existingIndex !== -1) {
+//       const newLex = [...lexicons];
+//       newLex[existingIndex].data = data;
+//       setLexicons(newLex);
+//     } else if (lexicons.length < 2) {
+//       setLexicons([
+//         ...lexicons,
+//         {
+//           id: Date.now(),
+//           key,
+//           data,
+//           origVer,
+//           lang: word.strong.startsWith("H") ? "he" : "gr",
+//         },
+//       ]);
+//     } else {
+//       const newLex = [...lexicons];
+//       newLex[1] = {
+//         id: Date.now(),
+//         key,
+//         data,
+//         origVer,
+//         lang: word.strong.startsWith("H") ? "he" : "gr",
+//       };
+//       setLexicons(newLex);
+//     }
+//   };
+
+//   return (
+//     <div className="passage-container">
+//       <div className="passage-panels">
+//         {panels.map((panel, index) => (
+//           <Panel
+//             key={panel.id}
+//             id={panel.id}
+//             onClose={closePanel}
+//             disableClose={panels.length === 1}
+//             coreData={coreData}
+//             coreLoading={coreLoading}
+//             lang={lang}
+//             isMaster={index === 0}
+//             masterRef={panels[0]?.currentRef || "GEN.1"}
+//             onWordClick={handleWordClick}
+//             onNewPanel={addPanel}
+//           />
+//         ))}
+//       </div>
+
+//       {lexicons.length > 0 && (
+//         <div className="lexicon-column">
+//           {lexicons.map((lex) => (
+//             <LexiconWindow
+//               key={lex.id}
+//               data={lex.data}
+//               lang={lang}
+//               onClose={() => closeLexicon(lex.id)}
+//               coreData={coreData}
+//               origVer={lex.origVer}
+//             />
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default PassagePage;
+
+// ---- версія 30.12.25
+
+// // PassagePage.js 30.12.25-1
+// import React, { useState, useEffect, useRef, useCallback } from "react";
+// import PassageOptionsGroup from "./PassageOptionsGroup";
+// import InterlinearVerse from "./InterlinearVerse";
+// import LexiconWindow from "./LexiconWindow";
+// import "../styles/LexiconWindow.css";
+// import "../styles/PassagePage.css";
+// import { jsonAdapter } from "../utils/jsonAdapter";
+
+// const Panel = ({
+//   id,
+//   onClose,
+//   disableClose,
+//   coreData,
+//   coreLoading,
+//   lang,
+//   isMaster = false,
+//   masterRef,
+//   onWordClick,
+//   onNewPanel,
+// }) => {
+//   const [currentRef, setCurrentRef] = useState("GEN.1");
+//   const [versions, setVersions] = useState(["LXX", "UTT"]);
+//   const [chapterData, setChapterData] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState(null);
+//   // Panel component - додайте ці рядки після useState
+//   const [translationsData, setTranslationsData] = useState(null); //26.12.25
+
+//   console.log(
+//     `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
+//       ", "
+//     )}`
+//   );
+//   // ---------------------------------------------26.12.25-start
+//   // Завантаження translations.json
+//   useEffect(() => {
+//     const loadTranslations = async () => {
+//       try {
+//         const response = await fetch("/data/translations.json");
+//         const data = await response.json();
+//         setTranslationsData(data);
+//       } catch (error) {
+//         console.error("Failed to load translations.json", error);
+//       }
+//     };
+//     loadTranslations();
+//   }, []);
+//   // ---------------------------------------------26.12.25-end
+
+//   // ---------------------------------------------26.12.25-start
+//   // Функція для отримання списку номерів віршів
+//   const getVerseNumbers = () => {
+//     const allVerseNumbers = new Set();
+
+//     // Збираємо всі номери віршів з усіх завантажених версій
+//     Object.values(chapterData).forEach((data) => {
+//       if (Array.isArray(data)) {
+//         data.forEach((verse) => {
+//           const vNum = verse.verse || verse.v;
+//           if (vNum && !isNaN(vNum)) {
+//             allVerseNumbers.add(parseInt(vNum));
+//           }
+//         });
+//       }
+//     });
+
+//     // Якщо немає даних, повертаємо пустий масив
+//     if (allVerseNumbers.size === 0) {
+//       return [];
+//     }
+
+//     // Створюємо масив від мінімального до максимального номера
+//     const minVerse = Math.min(...allVerseNumbers);
+//     const maxVerse = Math.max(...allVerseNumbers);
+//     const verseArray = [];
+
+//     for (let i = minVerse; i <= maxVerse; i++) {
+//       verseArray.push(i);
+//     }
+
+//     console.log(`Panel ${id}: Found verses ${minVerse}-${maxVerse}`);
+//     return verseArray;
+//   };
+//   // ---------------------------------------------26.12.25-end
+//   // Функція для визначення Завіту за кодом книги
+//   const getTestament = (bookCode) => {
+//     const newTestamentBooks = [
+//       "MAT",
+//       "MRK",
+//       "LUK",
+//       "JHN",
+//       "ACT",
+//       "ROM",
+//       "1CO",
+//       "2CO",
+//       "GAL",
+//       "EPH",
+//       "PHP",
+//       "COL",
+//       "1TH",
+//       "2TH",
+//       "1TI",
+//       "2TI",
+//       "TIT",
+//       "PHM",
+//       "HEB",
+//       "JAS",
+//       "1PE",
+//       "2PE",
+//       "1JN",
+//       "2JN",
+//       "3JN",
+//       "JUD",
+//       "REV",
+//     ];
+//     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+//   };
+//   // Функція для визначення шляху до файлу
+//   const getFilePath = (version, bookCode, chapter) => {
+//     const ver = version.toLowerCase();
+//     const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
+//     const base = isOriginal ? "originals" : "translations";
+//     const testament = getTestament(bookCode);
+
+//     return {
+//       compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+//       original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+//       testament: testament,
+//     };
+//   };
+
+//   useEffect(() => {
+//     const [book, chapterStr] = currentRef.split(".");
+//     const chapter = parseInt(chapterStr);
+//     if (!book || !chapter) return;
+
+//     console.log(
+//       `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+//         ", "
+//       )}`
+//     );
+//     setLoading(true);
+//     setMessage(null);
+
+//     const loadChapter = async (ver) => {
+//       const lower = ver.toLowerCase();
+//       const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower); // Додано "tr"
+//       const base = isOriginal ? "originals" : "translations";
+
+//       // ВИЗНАЧЕННЯ ЗАПОВІТУ: перевіряємо coreData
+//       let testament = "OldT"; // Значення за замовчуванням
+//       if (coreData[lower]) {
+//         // Спочатку шукаємо книгу в NewT
+//         const newTestamentGroup = coreData[lower]?.NewT?.find((group) =>
+//           group.books.some((b) => b.code === book)
+//         );
+//         if (newTestamentGroup) {
+//           testament = "NewT";
+//         } else {
+//           // Якщо не знайшли в NewT, перевіряємо OldT
+//           const oldTestamentGroup = coreData[lower]?.OldT?.find((group) =>
+//             group.books.some((b) => b.code === book)
+//           );
+//           if (oldTestamentGroup) {
+//             testament = "OldT";
+//           }
+//           // Якщо не знайдено ні в OldT, ні в NewT, залишається "OldT" за замовчуванням
+//         }
+//       }
+
+//       // Формуємо URL з використанням визначеного testament
+//       const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//       console.log(
+//         `Panel ${id}: Fetching ${compressedUrl} (Testament: ${testament})`
+//       );
+
+//       try {
+//         const res = await fetch(compressedUrl);
+//         if (!res.ok) {
+//           // Спробуємо оригінальний формат
+//           const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+//           console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
+//           const fallbackRes = await fetch(originalUrl);
+//           if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
+//           const data = await fallbackRes.json();
+//           return { ver, data };
+//         }
+//         const data = await res.json();
+//         return { ver, data };
+//       } catch (err) {
+//         console.error(
+//           `Panel ${id}: Failed to load ${ver} ${book}:${chapter} from ${testament}`,
+//           err
+//         );
+//         // Можна повернути пусті дані або об'єкт з помилкою
+//         return { ver, data: { error: err.message } };
+//       }
+//     };
+
+//     Promise.all(versions.map(loadChapter))
+//       .then((results) => {
+//         const newData = {};
+//         results.forEach(({ ver, data }) => {
+//           newData[ver] = jsonAdapter(data);
+//         });
+//         console.log(
+//           `Panel ${id}: Chapter loaded successfully, versions:`,
+//           Object.keys(newData)
+//         );
+//         setChapterData(newData);
+//       })
+//       .catch((error) => {
+//         console.error(`Panel ${id}: Error loading chapter`, error);
+//         setMessage("Помилка завантаження: " + error.message);
+//       })
+//       .finally(() => setLoading(false));
+//   }, [currentRef, versions, id]);
+
+//   const getVerseCount = () => {
+//     const primaryVer = versions[0];
+//     if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)
+//       return 0;
+//     return chapterData[primaryVer].length;
+//   };
+
+//   // PassagePage.js - ОНОВЛЕНА ЧАСТИНА для getPairs
+//   const getPairs = () => {
+//     const [book] = currentRef.split(".");
+//     const testament = getTestament(book);
+//     const pairs = [];
+
+//     // Визначаємо, які версії є оригіналами
+//     const originalVersions = versions.filter((v) =>
+//       ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+//     );
+
+//     // Визначаємо переклади
+//     const translationVersions = versions.filter(
+//       (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+//     );
+
+//     // Групуємо переклади за їх оригіналами
+//     const translationsByOriginal = {};
+
+//     translationVersions.forEach((translation) => {
+//       // Отримуємо оригінал для цього перекладу
+//       // Проблема: Змінна translationsData декларована, але використовується у getPairs() без перевірки на null.
+//       // Може призвести до помилки Cannot read properties of undefined.
+//       const translationInfo = translationsData?.bibles?.find(
+//         (b) => b.initials === translation
+//       );
+//       let originalForTranslation = null;
+//       // Проблема: Використання optional chaining, але якщо translationsData === null, все одно буде помилка.
+//       // Треба перевірка:
+//       // if (!translationsData) return [];
+//       if (translationInfo?.basedOn) {
+//         originalForTranslation =
+//           testament === "NewT"
+//             ? translationInfo.basedOn.new_testament
+//             : translationInfo.basedOn.old_testament;
+//       }
+
+//       // Якщо оригінал знайдено і він присутній у вибраних версіях
+//       // Проблема: Логіка не враховує Testament (NT/OT). Для OT перекладу потрібен OT оригінал, для NT - NT оригінал.
+//       // Треба групувати за тим оригіналом, який обраний.
+//       // Можливо треба додати грецько-івритські відповідники Стронга, якщо оригінал грецький, а переклад івритський
+//       if (
+//         originalForTranslation &&
+//         versions.includes(originalForTranslation.toUpperCase())
+//       ) {
+//         if (!translationsByOriginal[originalForTranslation]) {
+//           translationsByOriginal[originalForTranslation] = [];
+//         }
+//         translationsByOriginal[originalForTranslation].push(translation);
+//       } else {
+//         // Якщо оригінал не знайдено, групуємо з основним оригіналом
+//         const mainOriginal = originalVersions[0] || "TR";
+//         if (!translationsByOriginal[mainOriginal]) {
+//           translationsByOriginal[mainOriginal] = [];
+//         }
+//         translationsByOriginal[mainOriginal].push(translation);
+//       }
+//     });
+
+//     // Створюємо пари для оригіналів
+//     originalVersions.forEach((original) => {
+//       pairs.push({
+//         original: original,
+//         translations: translationsByOriginal[original] || [],
+//       });
+//     });
+
+//     // Якщо є переклади без оригіналу, додаємо їх окремо
+//     Object.keys(translationsByOriginal).forEach((original) => {
+//       if (!originalVersions.includes(original)) {
+//         pairs.push({
+//           original: original,
+//           translations: translationsByOriginal[original],
+//         });
+//       }
+//     });
+
+//     // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
+//     pairs.sort((a, b) => {
+//       const priority = {
+//         TR: 1,
+//         GNT: 2,
+//         LXX: 3,
+//         THOT: 4,
+//       };
+
+//       const aPriority = priority[a.original.toUpperCase()] || 100;
+//       const bPriority = priority[b.original.toUpperCase()] || 100;
+
+//       return aPriority - bPriority;
+//     });
+
+//     console.log(`Panel ${id}: Created pairs:`, pairs);
+//     return pairs;
+//   };
+
+//   const [book, chapter] = currentRef.split(".");
+
+//   return (
+//     <div className="panel">
+//       <PassageOptionsGroup
+//         lang={lang}
+//         currentRef={currentRef}
+//         setCurrentRef={setCurrentRef}
+//         versions={versions}
+//         setVersions={setVersions}
+//         onPrevChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = Math.max(1, parseInt(c) - 1);
+//           setCurrentRef(`${b}.${nc}`);
+//         }}
+//         onNextChapter={() => {
+//           const [b, c] = currentRef.split(".");
+//           const nc = parseInt(c) + 1;
+
+//           // Визначаємо Завіт для отримання кількості глав
+//           const testament = getTestament(b);
+//           const versionKey = versions[0]?.toLowerCase();
+
+//           let chapters = 1;
+//           if (coreData[versionKey] && coreData[versionKey][testament]) {
+//             coreData[versionKey][testament].forEach((group) => {
+//               const bookInfo = group.books.find((bk) => bk.code === b);
+//               if (bookInfo) chapters = bookInfo.chapters;
+//             });
+//           }
+
+//           if (nc <= chapters) {
+//             setCurrentRef(`${b}.${nc}`);
+//           }
+//         }}
+//         onNewPanel={onNewPanel}
+//         onClosePanel={() => onClose(id)}
+//         disableClose={disableClose}
+//         coreData={coreData}
+//         coreLoading={coreLoading}
+//       />
+
+//       <div className="chapter-viewer flex-fill overflow-auto p-3">
+//         {loading ? (
+//           <p className="text-center">{lang.loading || "Завантаження..."}</p>
+//         ) : message ? (
+//           <p className="text-center text-danger">{message}</p>
+//         ) : (
+//           <>
+//             <h4 className="text-center mb-3">{currentRef}</h4>
+
+//             {(() => {
+//               const verseNumbers = getVerseNumbers();
+
+//               if (verseNumbers.length === 0) {
+//                 return (
+//                   <p className="text-center text-muted">
+//                     Немає даних для відображення
+//                   </p>
+//                 );
+//               }
+
+//               return verseNumbers.map((verseNum) => {
+//                 // Перевіряємо, чи є дані для цього вірша в будь-якій версії
+//                 const hasData = Object.keys(chapterData).some((version) => {
+//                   const data = chapterData[version];
+//                   if (!Array.isArray(data)) return false;
+//                   const verse = data.find((v) => (v.verse || v.v) === verseNum);
+//                   return verse && (verse.words || verse.ws)?.length > 0;
+//                 });
+
+//                 if (!hasData) {
+//                   return (
+//                     <div key={`missing-${verseNum}`} className="missing-verse">
+//                       <div className="verse-number">{verseNum}</div>
+//                       <div className="verse-content text-muted">
+//                         Вірш {verseNum} поки що відсутній
+//                       </div>
+//                     </div>
+//                   );
+//                 }
+
+//                 return (
+//                   <InterlinearVerse
+//                     key={verseNum}
+//                     verseNum={verseNum}
+//                     pairs={getPairs()}
+//                     chapterData={chapterData}
+//                     onWordClick={onWordClick}
+//                   />
+//                 );
+//               });
+//             })()}
+//           </>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// // const PassagePage = ({ lang }) => {
+// //   const [panels, setPanels] = useState([{ id: Date.now() }]);
+// //   const [lexicons, setLexicons] = useState([]);
+// //   const [coreData, setCoreData] = useState({});
+// //   const [coreLoading, setCoreLoading] = useState(true);
+
+// //   useEffect(() => {
+// //     let isMounted = true;
+// //     const loadCoreData = async () => {
+// //       try {
+// //         const coreRes = await fetch("/data/core.json");
+// //         if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
+// //         const core = await coreRes.json();
+
+// //         if (isMounted) {
+// //           setCoreData(core);
+// //           console.log("Core data loaded with structure:", Object.keys(core));
+// //         }
+// //       } catch (err) {
+// //         console.error("Failed to load core data:", err);
+// //         if (isMounted) setCoreData({});
+// //       } finally {
+// //         if (isMounted) setCoreLoading(false);
+// //       }
+// //     };
+
+// //     loadCoreData();
+// //     return () => {
+// //       isMounted = false;
+// //     };
+// //   }, []);
+
+// //   const addPanel = () => {
+// //     const maxPanels = window.innerWidth < 992 ? 2 : 4;
+// //     if (panels.length < maxPanels) {
+// //       setPanels([...panels, { id: Date.now() }]);
+// //     } else {
+// //       alert(`Максимум ${maxPanels} вікон`);
+// //     }
+// //   };
+
+// //   const closePanel = (id) => {
+// //     if (panels.length > 1) {
+// //       setPanels(panels.filter((p) => p.id !== id));
+// //     }
+// //   };
+// //   const closeLexicon = (id) => {
+// //     console.log("Closing lexicon:", id); // Лог закриття лексикону
+// //     setLexicons(lexicons.filter((l) => l.id !== id));
+// //   };
+
+// //   const handleWordClick = (data) => {
+// //     const { word, origVer } = data;
+// //     if (!word?.strong || !origVer) return;
+
+// //     const key = `${origVer}:${word.strong}`;
+// //     const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+// //     if (existingIndex !== -1) {
+// //       const newLex = [...lexicons];
+// //       newLex[existingIndex].data = data;
+// //       setLexicons(newLex);
+// //     } else if (lexicons.length < 2) {
+// //       setLexicons([
+// //         ...lexicons,
+// //         {
+// //           id: Date.now(),
+// //           key,
+// //           data,
+// //           origVer,
+// //           lang: word.strong.startsWith("H") ? "he" : "gr",
+// //         },
+// //       ]);
+// //     } else {
+// //       const newLex = [...lexicons];
+// //       newLex[1] = {
+// //         id: Date.now(),
+// //         key,
+// //         data,
+// //         origVer,
+// //         lang: word.strong.startsWith("H") ? "he" : "gr",
+// //       };
+// //       setLexicons(newLex);
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="passage-container">
+// //       <div className="passage-panels">
+// //         {panels.map((panel, index) => (
+// //           <Panel
+// //             key={panel.id}
+// //             id={panel.id}
+// //             onClose={closePanel}
+// //             disableClose={panels.length === 1}
+// //             coreData={coreData}
+// //             coreLoading={coreLoading}
+// //             lang={lang}
+// //             isMaster={index === 0}
+// //             masterRef={panels[0]?.currentRef || "GEN.1"}
+// //             onWordClick={handleWordClick}
+// //             onNewPanel={addPanel}
+// //           />
+// //         ))}
+// //       </div>
+
+// //       {lexicons.length > 0 && (
+// //         <div className="lexicon-column">
+// //           {lexicons.map((lex) => (
+// //             <LexiconWindow
+// //               key={lex.id}
+// //               data={lex.data}
+// //               lang={lang}
+// //               onClose={() => closeLexicon(lex.id)}
+// //               coreData={coreData}
+// //               origVer={lex.origVer}
+// //             />
+// //           ))}
+// //         </div>
+// //       )}
+// //     </div>
+// //   );
+// // };
+
+// // export default PassagePage;
+
+// // ------------
+
+// // src/components/PassagePage.js (фрагмент - додавання логів)
+
+// console.log("📦 PassagePage.js: початок завантаження модуля");
+
+// const PassagePage = ({ lang }) => {
+//   console.log(
+//     "🔄 PassagePage: компонент ініціалізовано з lang:",
+//     lang?.code || "uk"
+//   );
+
+//   const [panels, setPanels] = useState([{ id: Date.now() }]);
+//   const [lexicons, setLexicons] = useState([]);
+//   const [coreData, setCoreData] = useState({});
+//   const [coreLoading, setCoreLoading] = useState(true);
+//   const [translationsData, setTranslationsData] = useState(null);
+
+//   // ==================== ЗАВАНТАЖЕННЯ ДАНИХ ====================
+
+//   useEffect(() => {
+//     console.log("📥 PassagePage: початок завантаження core.json");
+//     let isMounted = true;
+
+//     const loadCoreData = async () => {
+//       try {
+//         const startTime = performance.now();
+//         const coreRes = await fetch("/data/core.json");
+
+//         if (!coreRes.ok) {
+//           throw new Error(`HTTP ${coreRes.status}: ${res.statusText}`);
+//         }
+
+//         const core = await coreRes.json();
+//         const loadTime = performance.now() - startTime;
+
+//         console.log(
+//           `✅ PassagePage: core.json завантажено за ${loadTime.toFixed(0)}мс`,
+//           {
+//             versions: Object.keys(core),
+//             structure: Object.keys(core).map((v) => ({
+//               version: v,
+//               hasOldT: !!core[v].OldT,
+//               hasNewT: !!core[v].NewT,
+//             })),
+//           }
+//         );
+
+//         if (isMounted) {
+//           setCoreData(core);
+//         }
+//       } catch (err) {
+//         console.error("❌ PassagePage: помилка завантаження core.json", {
+//           error: err.message,
+//           stack: err.stack,
+//         });
+
+//         if (isMounted) {
+//           setCoreData({});
+//         }
+//       } finally {
+//         if (isMounted) {
+//           setCoreLoading(false);
+//         }
+//       }
+//     };
+
+//     loadCoreData();
+//     return () => {
+//       isMounted = false;
+//       console.log("🧹 PassagePage: cleanup при розмонтуванні");
+//     };
+//   }, []);
+
+//   useEffect(() => {
+//     console.log("📥 PassagePage: початок завантаження translations.json");
+
+//     const loadTranslations = async () => {
+//       try {
+//         const response = await fetch("/data/translations.json");
+//         if (!response.ok) {
+//           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+//         }
+
+//         const data = await response.json();
+//         console.log("✅ PassagePage: translations.json завантажено", {
+//           biblesCount: data.bibles?.length || 0,
+//           version: data.version || "unknown",
+//         });
+
+//         setTranslationsData(data);
+//       } catch (error) {
+//         console.error(
+//           "❌ PassagePage: помилка завантаження translations.json",
+//           {
+//             error: error.message,
+//             stack: error.stack,
+//           }
+//         );
+//       }
+//     };
+
+//     loadTranslations();
+//   }, []);
+
+//   // ==================== ФУНКЦІЯ ДЛЯ ОТРИМАННЯ ПАР ====================
+
+//   /**
+//    * ФОРМУВАННЯ ПАР ПЕРЕКЛАДІВ ДЛЯ ПОТОЧНОГО ЗАПОВІТУ
+//    * Аналізує translationsData та формує групи оригіналів + перекладів
+//    */
+//   const getPairs = useCallback(() => {
+//     console.log("🔍 PassagePage.getPairs: початок формування пар", {
+//       translationsData: !!translationsData,
+//       coreData: !!coreData,
+//     });
+
+//     if (!translationsData || !coreData) {
+//       console.warn("⚠️ PassagePage.getPairs: дані не завантажені");
+//       return [];
+//     }
+
+//     const [book] = currentRef.split(".");
+//     const testament = getTestament(book);
+
+//     console.log("📖 PassagePage.getPairs: параметри", {
+//       book,
+//       testament,
+//       currentRef,
+//     });
+
+//     // ... інша логіка формування пар
+
+//     console.log("✅ PassagePage.getPairs: сформовано пар", pairs.length);
+//     return pairs;
+//   }, [currentRef, translationsData, coreData]);
+
+//   // ... решта коду з логами
+
+//   return (
+//     <div className="passage-container">
+//       {console.log("🎨 PassagePage: початок рендерингу", {
+//         panelsCount: panels.length,
+//         lexiconsCount: lexicons.length,
+//         coreLoading,
+//       })}
+
+//       {/* Рендеринг панелей */}
+//     </div>
+//   );
+// };
+
+// console.log("📦 PassagePage.js: модуль завантажено та експортовано");
+// export default PassagePage;
+
+// ------30.12.25-2
+
+// src/components/PassagePage.js - ПОВНИЙ КОД З ВСІМА ІМПОРТАМИ
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import PassageOptionsGroup from "./PassageOptionsGroup";
 import InterlinearVerse from "./InterlinearVerse";
 import LexiconWindow from "./LexiconWindow";
 import "../styles/LexiconWindow.css";
 import "../styles/PassagePage.css";
 import { jsonAdapter } from "../utils/jsonAdapter";
+
+console.log("📦 PassagePage.js: початок завантаження модуля");
 
 const Panel = ({
   id,
@@ -1032,21 +2788,77 @@ const Panel = ({
   onWordClick,
   onNewPanel,
 }) => {
-  const [currentRef, setCurrentRef] = useState("GEN.1");
-  const [versions, setVersions] = useState(["LXX", "UTT"]);
+  console.log(`🎬 Panel ${id}: ініціалізація`);
+
+  const [currentRef, setCurrentRef] = useState(masterRef || "GEN.1");
+  // const [versions, setVersions] = useState(["LXX", "UTT"]);
+  const [versions, setVersions] = useState([]); // ← ПУСТИЙ МАСИВ, не ["LXX", "UTT"]
   const [chapterData, setChapterData] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  // Panel component - додайте ці рядки після useState
-  const [translationsData, setTranslationsData] = useState(null); //26.12.25
+  const [translationsData, setTranslationsData] = useState(null);
 
-  console.log(
-    `Panel ${id} initialized with currentRef: ${currentRef}, versions: ${versions.join(
-      ", "
-    )}`
-  );
-  // ---------------------------------------------26.12.25-start
-  // Завантаження translations.json
+  // Додаємо useEffect для встановлення дефолту на основі книги ЧАСТИНА 1.1: ІНТЕЛЕКТУАЛЬНИЙ ДЕФОЛТ
+  // useEffect(() => {
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+
+  //   // Визначаємо дефолтні версії
+  //   // let defaultVersions;
+  //   // if (testament === "NewT") {
+  //   //   // NT: TR + UTT (оскільки UTT має NT)
+  //   //   defaultVersions = ["TR", "UTT"];
+  //   // } else {
+  //   //   // OT: LXX + UTT (без TR, бо TR тільки NT)
+  //   //   defaultVersions = ["LXX", "UTT"];
+  //   // }
+
+  //   // Встановлюємо тільки якщо ще не встановлено
+  //   // if (
+  //   //   versions.length === 0 ||
+  //   //   JSON.stringify(versions.sort()) !== JSON.stringify(defaultVersions.sort())
+  //   // ) {
+  //   //   setVersions(defaultVersions);
+  //   // }
+  //   if (testament === "NewT" && versions.includes("LXX")) {
+  //     // Замінити LXX на TR
+  //     const newVersions = versions.map((v) => (v === "LXX" ? "TR" : v));
+  //     setVersions(newVersions);
+  //   }
+  // }, [currentRef]);
+  // В Panel компоненті (PassagePage.js) додаємо useEffect: Додаємо автоматичну зміну версій при зміні книги в Panel:
+  // Альтернативний підхід - простий інтелектуальний дефолт
+  // useEffect(() => {
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+
+  //   // Дефолтні версії для кожного заповіту
+  //   const getDefaultVersions = () => {
+  //     if (testament === "NewT") {
+  //       return ["TR", "UTT"]; // NT дефолт
+  //     }
+  //     return ["LXX", "UTT"]; // OT дефолт
+  //   };
+
+  //   const defaultVersions = getDefaultVersions();
+
+  //   // Оновлюємо тільки якщо:
+  //   // 1. Ще немає версій
+  //   // 2. Поточні версії не відповідають заповіту
+  //   const hasInvalidVersions = versions.some((v) => {
+  //     const bibleInfo = translationsData?.bibles?.find((b) => b.initials === v);
+  //     return bibleInfo && !bibleInfo.testaments?.includes(testament);
+  //   });
+
+  //   if (versions.length === 0 || hasInvalidVersions) {
+  //     console.log(
+  //       `🔄 Panel ${id}: встановлюю дефолт для ${testament}`,
+  //       defaultVersions
+  //     );
+  //     setVersions(defaultVersions);
+  //   }
+  // }, [currentRef, translationsData]);
+  // Ефект для завантаження translationsData
   useEffect(() => {
     const loadTranslations = async () => {
       try {
@@ -1054,83 +2866,85 @@ const Panel = ({
         const data = await response.json();
         setTranslationsData(data);
       } catch (error) {
-        console.error("Failed to load translations.json", error);
+        console.error(
+          `❌ Panel ${id}: помилка завантаження translations.json`,
+          error
+        );
       }
     };
     loadTranslations();
-  }, []);
-  // ---------------------------------------------26.12.25-end
+  }, [id]);
 
-  // // Функція для визначення Завіту за кодом книги
-  // const getTestament = (bookCode) => {
-  //   const newTestamentBooks = [
-  //     "MAT",
-  //     "MRK",
-  //     "LUK",
-  //     "JHN",
-  //     "ACT",
-  //     "ROM",
-  //     "1CO",
-  //     "2CO",
-  //     "GAL",
-  //     "EPH",
-  //     "PHP",
-  //     "COL",
-  //     "1TH",
-  //     "2TH",
-  //     "1TI",
-  //     "2TI",
-  //     "TIT",
-  //     "PHM",
-  //     "HEB",
-  //     "JAS",
-  //     "1PE",
-  //     "2PE",
-  //     "1JN",
-  //     "2JN",
-  //     "3JN",
-  //     "JUD",
-  //     "REV",
-  //   ];
-  //   return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
-  // };
-  // ---------------------------------------------26.12.25-start
-  // Функція для отримання списку номерів віршів
-  const getVerseNumbers = () => {
-    const allVerseNumbers = new Set();
+  // Ефект для інтелектуального дефолту версій
+  useEffect(() => {
+    if (!translationsData) return;
 
-    // Збираємо всі номери віршів з усіх завантажених версій
-    Object.values(chapterData).forEach((data) => {
-      if (Array.isArray(data)) {
-        data.forEach((verse) => {
-          const vNum = verse.verse || verse.v;
-          if (vNum && !isNaN(vNum)) {
-            allVerseNumbers.add(parseInt(vNum));
+    const [book] = currentRef.split(".");
+    const testament = getTestament(book);
+
+    // Якщо версій ще немає - встановити дефолт
+    if (versions.length === 0) {
+      const defaultVersions =
+        testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
+      console.log(
+        `⚙️ Panel ${id}: встановлюю дефолт для ${testament}`,
+        defaultVersions
+      );
+      setVersions(defaultVersions);
+    }
+    // Якщо є невідповідні версії - виправити
+    else {
+      const invalidVersions = versions.filter((v) => {
+        const bibleInfo = translationsData?.bibles?.find(
+          (b) => b.initials === v
+        );
+        return bibleInfo && !bibleInfo.testaments?.includes(testament);
+      });
+
+      if (invalidVersions.length > 0) {
+        console.log(
+          `🔄 Panel ${id}: виправляю невідповідні версії`,
+          invalidVersions
+        );
+
+        let correctedVersions = [...versions];
+
+        // Замінити невідповідні версії
+        invalidVersions.forEach((invalid) => {
+          if (invalid === "LXX" && testament === "NewT") {
+            correctedVersions = correctedVersions.map((v) =>
+              v === "LXX" ? "TR" : v
+            );
+          } else if (invalid === "TR" && testament === "OldT") {
+            correctedVersions = correctedVersions.map((v) =>
+              v === "TR" ? "LXX" : v
+            );
+          } else {
+            // Видалити інші невідповідні
+            correctedVersions = correctedVersions.filter((v) => v !== invalid);
           }
         });
+
+        // Видалити дублікати
+        correctedVersions = [...new Set(correctedVersions)];
+
+        // Якщо після корекції порожньо - додати дефолт
+        if (correctedVersions.length === 0) {
+          correctedVersions =
+            testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
+        }
+
+        setVersions(correctedVersions);
       }
-    });
-
-    // Якщо немає даних, повертаємо пустий масив
-    if (allVerseNumbers.size === 0) {
-      return [];
     }
+  }, [currentRef, translationsData, versions.length, id]);
+  // ==================== ФУНКЦІЇ ДОПОМОГИ ====================
 
-    // Створюємо масив від мінімального до максимального номера
-    const minVerse = Math.min(...allVerseNumbers);
-    const maxVerse = Math.max(...allVerseNumbers);
-    const verseArray = [];
-
-    for (let i = minVerse; i <= maxVerse; i++) {
-      verseArray.push(i);
-    }
-
-    console.log(`Panel ${id}: Found verses ${minVerse}-${maxVerse}`);
-    return verseArray;
-  };
-  // ---------------------------------------------26.12.25-end
-  // Функція для визначення Завіту за кодом книги
-  const getTestament = (bookCode) => {
+  /**
+   * ВИЗНАЧИТИ ЗАПОВІТ ЗА КОДОМ КНИГИ
+   * Використовує список книг Нового Заповіту
+   */
+  const getTestament = useCallback((bookCode) => {
     const newTestamentBooks = [
       "MAT",
       "MRK",
@@ -1161,525 +2975,726 @@ const Panel = ({
       "REV",
     ];
     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
-  };
-  // Функція для визначення шляху до файлу
-  const getFilePath = (version, bookCode, chapter) => {
-    const ver = version.toLowerCase();
-    const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
-    const base = isOriginal ? "originals" : "translations";
-    const testament = getTestament(bookCode);
+  }, []);
 
-    return {
-      compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
-      original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
-      testament: testament,
+  /**
+   * ОТРИМАТИ СПИСОК НОМЕРІВ ВІРШІВ
+   * Аналізує всі завантажені версії та повертає унікальні номери
+   */
+  const getVerseNumbers = useCallback(() => {
+    console.log(`🔍 Panel ${id}: отримання номерів віршів`);
+
+    const allVerseNumbers = new Set();
+
+    // Збираємо всі номери віршів з усіх завантажених версій
+    Object.values(chapterData).forEach((data) => {
+      if (Array.isArray(data)) {
+        data.forEach((verse) => {
+          const vNum = verse.verse || verse.v;
+          if (vNum && !isNaN(vNum)) {
+            allVerseNumbers.add(parseInt(vNum));
+          }
+        });
+      }
+    });
+
+    // Якщо немає даних, повертаємо пустий масив
+    if (allVerseNumbers.size === 0) {
+      console.log(`📭 Panel ${id}: не знайдено віршів`);
+      return [];
+    }
+
+    // Створюємо масив від мінімального до максимального номера
+    const minVerse = Math.min(...allVerseNumbers);
+    const maxVerse = Math.max(...allVerseNumbers);
+    const verseArray = [];
+
+    for (let i = minVerse; i <= maxVerse; i++) {
+      verseArray.push(i);
+    }
+
+    console.log(
+      `✅ Panel ${id}: знайдено вірші ${minVerse}-${maxVerse} (${verseArray.length} шт.)`
+    );
+    return verseArray;
+  }, [chapterData, id]);
+
+  /**
+   * ВИЗНАЧИТИ ШЛЯХ ДО ФАЙЛУ
+   * Формує URL для завантаження даних
+   */
+  const getFilePath = useCallback(
+    (version, bookCode, chapter) => {
+      const ver = version.toLowerCase();
+      const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
+      const base = isOriginal ? "originals" : "translations";
+      const testament = getTestament(bookCode);
+
+      return {
+        compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+        original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+        testament: testament,
+      };
+    },
+    [getTestament]
+  );
+
+  // ==================== ЕФЕКТИ ====================
+
+  /**
+   * ЗАВАНТАЖИТИ ДАНІ ПРО ПЕРЕКЛАДИ
+   * Використовує translations.json для отримання інформації про переклади
+   */
+  useEffect(() => {
+    console.log(`📥 Panel ${id}: завантаження translations.json`);
+
+    const loadTranslations = async () => {
+      try {
+        const response = await fetch("/data/translations.json");
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log(`✅ Panel ${id}: translations.json завантажено`, {
+          biblesCount: data.bibles?.length || 0,
+          version: data.version || "unknown",
+        });
+
+        setTranslationsData(data);
+      } catch (error) {
+        console.error(
+          `❌ Panel ${id}: помилка завантаження translations.json`,
+          {
+            error: error.message,
+            stack: error.stack,
+          }
+        );
+      }
     };
-  };
 
+    loadTranslations();
+  }, [id]);
+
+  /**
+   * ЗАВАНТАЖИТИ ГЛАВУ З УСІХ ВИБРАНИХ ВЕРСІЙ
+   * Використовує jsonAdapter для обробки різних форматів даних
+   */
   useEffect(() => {
     const [book, chapterStr] = currentRef.split(".");
     const chapter = parseInt(chapterStr);
-    if (!book || !chapter) return;
+
+    if (!book || !chapter) {
+      console.warn(`⚠️ Panel ${id}: некоректна посилання ${currentRef}`);
+      return;
+    }
 
     console.log(
-      `Panel ${id}: Loading chapter for ${currentRef}, versions: ${versions.join(
+      `📥 Panel ${id}: завантаження глави ${currentRef}, версії: ${versions.join(
         ", "
       )}`
     );
+
     setLoading(true);
     setMessage(null);
 
+    // const loadChapter = async (ver) => {
+    //   const lower = ver.toLowerCase();
+    //   const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower);
+    //   const base = isOriginal ? "originals" : "translations";
+
+    //   // ВИЗНАЧЕННЯ ЗАПОВІТУ
+    //   const testament = getTestament(book);
+
+    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ TR/GNT В OT
+    //   if ((ver === "TR" || ver === "GNT") && testament === "OldT") {
+    //     // Перевіряємо, чи це частина активної пари
+    //     const isTRInPair =
+    //       ver === "TR" && versions.includes("LXX") && versions.includes("UTT");
+    //     const isGNTInPair =
+    //       ver === "GNT" && versions.includes("LXX") && versions.includes("UTT");
+
+    //     if (!isTRInPair && !isGNTInPair) {
+    //       // Якщо TR/GNT не в парі для OT - повертаємо пусті дані
+    //       console.log(`⏭️ Пропускаємо ${ver} для ${book} (не в парі для OT)`);
+    //       return { ver, data: [] };
+    //     }
+
+    //     // Якщо TR/GNT в парі, шукаємо їх в NewT теж (для consistency)
+    //     // Але для OT книги вони не існують, тому все одно пропускаємо
+    //     console.log(`⚠️ ${ver} запитується для OT, але файлу немає`);
+    //     return { ver, data: [] };
+    //   }
+    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ THOT В NT
+    //   if (ver === "THOT" && testament === "NewT") {
+    //     // THOT не має NT
+    //     console.log(`⏭️ Пропускаємо ${ver} для ${book} (THOT тільки для OT)`);
+    //     return { ver, data: [] };
+    //   }
+
+    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ LXX В NT
+    //   if (ver === "LXX" && testament === "NewT") {
+    //     // LXX має NT через TR в парі, але якщо вибраний окремо - повертаємо порожні дані
+    //     if (!versions.includes("TR") || !versions.includes("UTT")) {
+    //       console.log(`⏭️ LXX для NT потребує пари з TR`);
+    //       return { ver, data: [] };
+    //     }
+    //   }
+
+    //   // СПОЧАТКУ ШУКАЄМО В data_compressed
+    //   const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+    //   console.log(`🌐 Panel ${id}: запит ${compressedUrl}`);
+
+    //   try {
+    //     const res = await fetch(compressedUrl);
+
+    //     if (res.ok) {
+    //       const data = await res.json();
+    //       console.log(`✅ Panel ${id}: успішно завантажено ${compressedUrl}`);
+    //       return { ver, data };
+    //     }
+
+    //     // ЯКЩО ФАЙЛ НЕ ЗНАЙДЕНО В data_compressed
+    //     console.log(
+    //       `🔄 Panel ${id}: файл не знайдено в data_compressed, шукаємо в data`
+    //     );
+
+    //     // ШУКАЄМО В data
+    //     const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
+    //     const fallbackRes = await fetch(originalUrl);
+
+    //     if (fallbackRes.ok) {
+    //       const data = await fallbackRes.json();
+    //       console.log(
+    //         `✅ Panel ${id}: успішно завантажено з fallback ${originalUrl}`
+    //       );
+    //       return { ver, data };
+    //     }
+
+    //     // ЯКЩО ФАЙЛ НЕ ЗНАЙДЕНО НІДЕ
+    //     console.warn(
+    //       `⚠️ Panel ${id}: файл не знайдено для ${ver} ${book}.${chapter}`
+    //     );
+    //     return { ver, data: [] };
+    //   } catch (err) {
+    //     console.error(`❌ Panel ${id}: помилка завантаження ${ver}:`, err);
+    //     return { ver, data: { error: err.message } };
+    //   }
+    // };
+    // ЧАСТИНА 1.4: ВИПРАВЛЕННЯ loadChapter ТА ШЛЯХІВ
     const loadChapter = async (ver) => {
-      const lower = ver.toLowerCase();
-      const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower); // Додано "tr"
-      const base = isOriginal ? "originals" : "translations";
+      const [book, chapterStr] = currentRef.split(".");
+      const chapter = parseInt(chapterStr);
+      const testament = getTestament(book);
 
-      // ВИЗНАЧЕННЯ ЗАПОВІТУ: перевіряємо coreData
-      let testament = "OldT"; // Значення за замовчуванням
-      if (coreData[lower]) {
-        // Спочатку шукаємо книгу в NewT
-        const newTestamentGroup = coreData[lower]?.NewT?.find((group) =>
-          group.books.some((b) => b.code === book)
-        );
-        if (newTestamentGroup) {
-          testament = "NewT";
-        } else {
-          // Якщо не знайшли в NewT, перевіряємо OldT
-          const oldTestamentGroup = coreData[lower]?.OldT?.find((group) =>
-            group.books.some((b) => b.code === book)
-          );
-          if (oldTestamentGroup) {
-            testament = "OldT";
-          }
-          // Якщо не знайдено ні в OldT, ні в NewT, залишається "OldT" за замовчуванням
-        }
-      }
-
-      // Формуємо URL з використанням визначеного testament
-      const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-      console.log(
-        `Panel ${id}: Fetching ${compressedUrl} (Testament: ${testament})`
+      // ПЕРЕВІРКА: чи може ця версія завантажувати цей заповіт
+      const bibleInfo = translationsData?.bibles?.find(
+        (b) => b.initials === ver
       );
 
+      // Якщо версія не має цього заповіту → повертаємо пусті дані
+      if (bibleInfo?.testaments && !bibleInfo.testaments.includes(testament)) {
+        console.log(`⏭️ Пропускаємо ${ver} для ${book} (не має ${testament})`);
+        return { ver, data: [] };
+      }
+
+      // Спеціальні випадки:
+      // 1. LXX тільки для OT
+      if (ver === "LXX" && testament === "NewT") {
+        console.log(`⏭️ LXX не має NewT`);
+        return { ver, data: [] };
+      }
+
+      // 2. THOT тільки для OT
+      if (ver === "THOT" && testament === "NewT") {
+        console.log(`⏭️ THOT не має NewT`);
+        return { ver, data: [] };
+      }
+
+      // 3. TR тільки для NT (згідно нових вимог)
+      if (ver === "TR" && testament === "OldT") {
+        console.log(`⏭️ TR тільки для NT`);
+        return { ver, data: [] };
+      }
+
+      // Формуємо шлях
+      const verLower = ver.toLowerCase();
+      const bookLower = book.toLowerCase();
+      const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(verLower);
+      const base = isOriginal ? "originals" : "translations";
+
+      // СПОЧАТКУ /data/ (повний формат)
+      const originalUrl = `/data/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
+
       try {
-        const res = await fetch(compressedUrl);
-        if (!res.ok) {
-          // Спробуємо оригінальний формат
-          const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-          console.log(`Panel ${id}: Trying fallback ${originalUrl}`);
-          const fallbackRes = await fetch(originalUrl);
-          if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
-          const data = await fallbackRes.json();
+        const res1 = await fetch(originalUrl);
+        if (res1.ok) {
+          const data = await res1.json();
           return { ver, data };
         }
-        const data = await res.json();
-        return { ver, data };
+
+        // ЯКЩО НЕ ЗНАЙДЕНО → /data_compressed/ (скорочений формат)
+        const compressedUrl = `/data_compressed/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
+        const res2 = await fetch(compressedUrl);
+
+        if (res2.ok) {
+          const data = await res2.json();
+          return { ver, data };
+        }
+
+        // Якщо обидва не знайдено
+        console.warn(`⚠️ Файл не знайдено для ${ver} ${book}.${chapter}`);
+        return { ver, data: [] };
       } catch (err) {
-        console.error(
-          `Panel ${id}: Failed to load ${ver} ${book}:${chapter} from ${testament}`,
-          err
-        );
-        // Можна повернути пусті дані або об'єкт з помилкою
+        console.error(`❌ Помилка завантаження ${ver}:`, err);
         return { ver, data: { error: err.message } };
       }
     };
-
     Promise.all(versions.map(loadChapter))
       .then((results) => {
         const newData = {};
         results.forEach(({ ver, data }) => {
           newData[ver] = jsonAdapter(data);
         });
-        console.log(
-          `Panel ${id}: Chapter loaded successfully, versions:`,
-          Object.keys(newData)
-        );
+
+        console.log(`✅ Panel ${id}: глава завантажена успішно`, {
+          версії: Object.keys(newData),
+          віршів: newData[versions[0]]?.length || 0,
+        });
+
         setChapterData(newData);
       })
       .catch((error) => {
-        console.error(`Panel ${id}: Error loading chapter`, error);
+        console.error(`❌ Panel ${id}: помилка завантаження глави`, {
+          error: error.message,
+          stack: error.stack,
+        });
+
         setMessage("Помилка завантаження: " + error.message);
       })
-      .finally(() => setLoading(false));
-  }, [currentRef, versions, id]);
+      .finally(() => {
+        setLoading(false);
+        console.log(`⏱️ Panel ${id}: завантаження завершено`);
+      });
+  }, [currentRef, versions, id, coreData]);
 
-  const getVerseCount = () => {
-    const primaryVer = versions[0];
-    if (!chapterData[primaryVer] || chapterData[primaryVer].length === 0)
-      return 0;
-    return chapterData[primaryVer].length;
-  };
+  /**
+   * ФОРМУВАННЯ ПАР ПЕРЕКЛАДІВ
+   * Групує оригінали з відповідними перекладами
+   */
+  // const getPairs = useCallback(() => {
+  //   // console.log(`🔍 Panel ${id}: формування пар перекладів`);
 
-  // const getPairs = () => {
-  //   const pairs = [];
-
-  //   // Визначаємо Завіт поточних версій
-  //   const [book] = currentRef.split(".");
-  //   const testament = getTestament(book);
-
-  //   if (testament === "OldT") {
-  //     if (versions.includes("THOT") || versions.includes("UBT")) {
-  //       pairs.push({ origVer: "THOT", transVer: "UBT" });
-  //     }
-  //     if (versions.includes("LXX") || versions.includes("UTT")) {
-  //       pairs.push({ origVer: "LXX", transVer: "UTT" });
-  //     }
-  //   } else if (testament === "NewT") {
-  //     // Для Нового Завіту: TR + переклад або GNT + переклад
-  //     if (
-  //       versions.includes("TR") &&
-  //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
-  //     ) {
-  //       const translation = versions.find((v) =>
-  //         ["UBT", "UTT", "KJV"].includes(v)
-  //       );
-  //       if (translation) pairs.push({ origVer: "TR", transVer: translation });
-  //     }
-  //     if (
-  //       versions.includes("GNT") &&
-  //       versions.some((v) => ["UBT", "UTT", "KJV"].includes(v))
-  //     ) {
-  //       const translation = versions.find((v) =>
-  //         ["UBT", "UTT", "KJV"].includes(v)
-  //       );
-  //       if (translation) pairs.push({ origVer: "GNT", transVer: translation });
-  //     }
+  //   if (!translationsData) {
+  //     console.warn(`⚠️ Panel ${id}: translationsData не завантажено`);
+  //     return [];
   //   }
 
-  //   // Додаємо окремі версії без пар
-  //   versions.forEach((v) => {
-  //     if (!["THOT", "LXX", "TR", "GNT", "UBT", "UTT"].includes(v)) {
-  //       pairs.push({ origVer: null, transVer: v });
-  //     }
-  //   });
-
-  //   return pairs;
-  // };
-  // ---------------------------------------------------------------------
-  // ОНОВЛЕНА функція getPairs для динамічного групування 26.12.2025
-  // const getPairs = () => {
   //   const [book] = currentRef.split(".");
   //   const testament = getTestament(book);
   //   const pairs = [];
 
-  //   // Словник для зберігання інформації про переклади
-  //   const translationInfo = {};
-  //   if (translationsData?.bibles) {
-  //     translationsData.bibles.forEach((bible) => {
-  //       translationInfo[bible.initials] = bible;
-  //     });
-  //   }
+  //   // Визначаємо, які версії є оригіналами
+  //   const originalVersions = versions.filter((v) =>
+  //     ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+  //   );
 
-  //   // Групуємо версії за оригіналами
-  //   const groups = {};
+  //   // Визначаємо переклади
+  //   const translationVersions = versions.filter(
+  //     (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
+  //   );
 
-  //   versions.forEach((version) => {
-  //     const info = translationInfo[version];
-  //     let originalKey = version; // За замовчуванням - сама версія
+  //   // Групуємо переклади за їх оригіналами
+  //   const translationsByOriginal = {};
 
-  //     // Якщо це переклад, знаходимо його оригінал
-  //     if (info?.basedOn) {
-  //       originalKey =
-  //         testament === "NewT"
-  //           ? info.basedOn.new_testament
-  //           : info.basedOn.old_testament;
-  //     }
-
-  //     // Визначаємо, чи це оригінал чи переклад
-  //     const isOriginal = ["thot", "lxx", "tr", "gnt"].includes(
-  //       originalKey.toLowerCase()
+  //   translationVersions.forEach((translation) => {
+  //     // Отримуємо оригінал для цього перекладу
+  //     const translationInfo = translationsData?.bibles?.find(
+  //       (b) => b.initials === translation
   //     );
+  //     let originalForTranslation = null;
 
-  //     if (!groups[originalKey]) {
-  //       groups[originalKey] = {
-  //         original: isOriginal ? version : originalKey,
-  //         translations: [],
-  //       };
+  //     if (translationInfo?.basedOn) {
+  //       originalForTranslation =
+  //         testament === "NewT"
+  //           ? translationInfo.basedOn.new_testament
+  //           : translationInfo.basedOn.old_testament;
   //     }
 
-  //     // Якщо це оригінал або переклад, що не збігається з оригіналом
-  //     if (isOriginal || version !== originalKey) {
-  //       if (version !== groups[originalKey].original) {
-  //         groups[originalKey].translations.push(version);
+  //     // Якщо оригінал знайдено і він присутній у вибраних версіях
+  //     if (
+  //       originalForTranslation &&
+  //       versions.includes(originalForTranslation.toUpperCase())
+  //     ) {
+  //       if (!translationsByOriginal[originalForTranslation]) {
+  //         translationsByOriginal[originalForTranslation] = [];
   //       }
+  //       translationsByOriginal[originalForTranslation].push(translation);
+  //     } else {
+  //       // Якщо оригінал не знайдено, групуємо з основним оригіналом
+  //       const mainOriginal = originalVersions[0] || "TR";
+  //       if (!translationsByOriginal[mainOriginal]) {
+  //         translationsByOriginal[mainOriginal] = [];
+  //       }
+  //       translationsByOriginal[mainOriginal].push(translation);
   //     }
   //   });
 
-  //   // Створюємо пари
-  //   Object.values(groups).forEach((group) => {
-  //     if (group.original || group.translations.length > 0) {
+  //   // Створюємо пари для оригіналів
+  //   originalVersions.forEach((original) => {
+  //     pairs.push({
+  //       original: original,
+  //       translations: translationsByOriginal[original] || [],
+  //     });
+  //   });
+
+  //   // Якщо є переклади без оригіналу, додаємо їх окремо
+  //   Object.keys(translationsByOriginal).forEach((original) => {
+  //     if (!originalVersions.includes(original)) {
   //       pairs.push({
-  //         original: group.original,
-  //         translations: group.translations,
+  //         original: original,
+  //         translations: translationsByOriginal[original],
   //       });
   //     }
   //   });
 
-  //   console.log(`Panel ${id}: Created pairs:`, pairs);
+  //   // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
+  //   pairs.sort((a, b) => {
+  //     const priority = {
+  //       TR: 1,
+  //       GNT: 2,
+  //       LXX: 3,
+  //       THOT: 4,
+  //     };
+
+  //     const aPriority = priority[a.original.toUpperCase()] || 100;
+  //     const bPriority = priority[b.original.toUpperCase()] || 100;
+
+  //     return aPriority - bPriority;
+  //   });
+
+  //   // console.log(`✅ Panel ${id}: створено пар`, {
+  //   //   pairsCount: pairs.length,
+  //   //   pairs: pairs.map((p) => ({
+  //   //     original: p.original,
+  //   //     translationsCount: p.translations.length,
+  //   //   })),
+  //   // });
+
   //   return pairs;
-  // };
-  // PassagePage.js - ОНОВЛЕНА ЧАСТИНА для getPairs
-  const getPairs = () => {
+  // }, [currentRef, versions, translationsData, getTestament, id]);
+
+  // const getPairs = useCallback(() => {
+  //   console.log(`🔍 Panel ${id}: формування пар перекладів`, {
+  //     versions,
+  //     currentRef,
+  //   });
+
+  //   if (!translationsData || !versions || versions.length === 0) {
+  //     return [];
+  //   }
+
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+  //   const pairs = [];
+
+  //   // 1. Спочатку шукаємо повні пари з translations.json
+  //   const mainPairsFromData = [];
+
+  //   versions.forEach((version) => {
+  //     const bibleInfo = translationsData.bibles?.find(
+  //       (b) => b.initials === version
+  //     );
+  //     if (bibleInfo?.pair) {
+  //       // Це частина пари (наприклад, LXX або UTT)
+  //       const pairKey = Array.isArray(bibleInfo.pair)
+  //         ? bibleInfo.pair[0]
+  //         : bibleInfo.pair;
+
+  //       // Перевіряємо, чи всі елементи пари є в вибраних версіях
+  //       if (pairKey === "LXX+TR") {
+  //         const hasLXX = versions.includes("LXX");
+  //         const hasTR = versions.includes("TR");
+  //         const hasUTT = versions.includes("UTT");
+
+  //         if (hasLXX && hasTR && hasUTT) {
+  //           // Додаємо тільки якщо пара ще не додана
+  //           if (!mainPairsFromData.some((p) => p.key === "lxx-tr-utt")) {
+  //             mainPairsFromData.push({
+  //               key: "lxx-tr-utt",
+  //               originals: ["LXX", "TR"],
+  //               translations: ["UTT"],
+  //               name: "LXX + TR + UTT",
+  //             });
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   // 2. Додаємо знайдені основні пари
+  //   mainPairsFromData.forEach((pair) => {
+  //     pairs.push({
+  //       original: pair.originals[0], // Головний оригінал (LXX або THOT)
+  //       translations: pair.translations,
+  //       isMainPair: true,
+  //     });
+  //   });
+
+  //   // 3. Додаємо інші версії, що не входять в основні пари
+  //   const usedVersions = new Set();
+  //   pairs.forEach((pair) => {
+  //     usedVersions.add(pair.original);
+  //     pair.translations.forEach((t) => usedVersions.add(t));
+  //   });
+
+  //   const remainingVersions = versions.filter((v) => !usedVersions.has(v));
+
+  //   // Для NT: TR як окрема версія (якщо не в парі)
+  //   if (
+  //     testament === "NewT" &&
+  //     remainingVersions.includes("TR") &&
+  //     !versions.includes("LXX")
+  //   ) {
+  //     pairs.push({
+  //       original: "TR",
+  //       translations: [],
+  //       isMainPair: false,
+  //     });
+  //     usedVersions.add("TR");
+  //   }
+
+  //   // Оновлюємо список версій, що залишились
+  //   const finalRemaining = versions.filter((v) => !usedVersions.has(v));
+
+  //   // Додаємо решту як окремі версії
+  //   finalRemaining.forEach((version) => {
+  //     const bibleInfo = translationsData.bibles?.find(
+  //       (b) => b.initials === version
+  //     );
+  //     const isOriginal = bibleInfo?.features?.includes("originals");
+
+  //     pairs.push({
+  //       original: isOriginal ? version : null,
+  //       translations: isOriginal ? [] : [version],
+  //       isMainPair: false,
+  //     });
+  //   });
+
+  //   console.log(`✅ Panel ${id}: створено пар`, {
+  //     pairsCount: pairs.length,
+  //     pairs: pairs.map((p) => ({
+  //       original: p.original,
+  //       translations: p.translations,
+  //       isMainPair: p.isMainPair,
+  //     })),
+  //   });
+
+  //   return pairs;
+  // }, [currentRef, versions, translationsData, getTestament, id]);
+
+  // Оновлена функція getPairs з врахуванням заповітів ЧАСТИНА 1.2: ОНОВЛЕНА getPairs() ДЛЯ ВРАХУВАННЯ ЗАПОВІТІВ
+  const getPairs = useCallback(() => {
     const [book] = currentRef.split(".");
     const testament = getTestament(book);
     const pairs = [];
 
-    // Визначаємо, які версії є оригіналами
+    // Групуємо версії за типами
     const originalVersions = versions.filter((v) =>
       ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
     );
 
-    // Визначаємо переклади
     const translationVersions = versions.filter(
       (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
     );
 
-    // Групуємо переклади за їх оригіналами
-    const translationsByOriginal = {};
-
-    translationVersions.forEach((translation) => {
-      // Отримуємо оригінал для цього перекладу
-      // Проблема: Змінна translationsData декларована, але використовується у getPairs() без перевірки на null.
-      // Може призвести до помилки Cannot read properties of undefined.
-      const translationInfo = translationsData?.bibles?.find(
-        (b) => b.initials === translation
+    // Для OT: тільки LXX/THOT
+    if (testament === "OldT") {
+      const otOriginals = originalVersions.filter((v) =>
+        ["LXX", "THOT"].includes(v.toUpperCase())
       );
-      let originalForTranslation = null;
-      // Проблема: Використання optional chaining, але якщо translationsData === null, все одно буде помилка.
-      // Треба перевірка:
-      // if (!translationsData) return [];
-      if (translationInfo?.basedOn) {
-        originalForTranslation =
-          testament === "NewT"
-            ? translationInfo.basedOn.new_testament
-            : translationInfo.basedOn.old_testament;
-      }
 
-      // Якщо оригінал знайдено і він присутній у вибраних версіях
-      // Проблема: Логіка не враховує Testament (NT/OT). Для OT перекладу потрібен OT оригінал, для NT - NT оригінал.
-      // Треба групувати за тим оригіналом, який обраний.
-      // Можливо треба додати грецько-івритські відповідники Стронга, якщо оригінал грецький, а переклад івритський
-      if (
-        originalForTranslation &&
-        versions.includes(originalForTranslation.toUpperCase())
-      ) {
-        if (!translationsByOriginal[originalForTranslation]) {
-          translationsByOriginal[originalForTranslation] = [];
-        }
-        translationsByOriginal[originalForTranslation].push(translation);
-      } else {
-        // Якщо оригінал не знайдено, групуємо з основним оригіналом
-        const mainOriginal = originalVersions[0] || "TR";
-        if (!translationsByOriginal[mainOriginal]) {
-          translationsByOriginal[mainOriginal] = [];
-        }
-        translationsByOriginal[mainOriginal].push(translation);
-      }
-    });
+      otOriginals.forEach((original) => {
+        // Знаходимо переклади для цього оригіналу
+        const translationsForOriginal = translationVersions.filter((trans) => {
+          // Отримуємо інфо про переклад
+          const transInfo = translationsData?.bibles?.find(
+            (b) => b.initials === trans
+          );
 
-    // Створюємо пари для оригіналів
-    originalVersions.forEach((original) => {
-      pairs.push({
-        original: original,
-        translations: translationsByOriginal[original] || [],
-      });
-    });
+          if (!transInfo?.basedOn) return false;
 
-    // Якщо є переклади без оригіналу, додаємо їх окремо
-    Object.keys(translationsByOriginal).forEach((original) => {
-      if (!originalVersions.includes(original)) {
+          // Перевіряємо, чи переклад базується на цьому оригіналі для OT
+          return transInfo.basedOn.old_testament === original.toLowerCase();
+        });
+
         pairs.push({
           original: original,
-          translations: translationsByOriginal[original],
+          translations: translationsForOriginal,
+          testament: "OldT",
+          isGNT: false,
         });
-      }
-    });
+      });
+    }
 
-    // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
+    // Для NT: тільки TR/GNT
+    if (testament === "NewT") {
+      const ntOriginals = originalVersions.filter((v) =>
+        ["TR", "GNT"].includes(v.toUpperCase())
+      );
+
+      ntOriginals.forEach((original) => {
+        // Для NT використовуємо всі переклади, які базуються на TR
+        // (оскільки GNT використовує ті самі переклади)
+        const translationsForOriginal = translationVersions.filter((trans) => {
+          const transInfo = translationsData?.bibles?.find(
+            (b) => b.initials === trans
+          );
+
+          if (!transInfo?.basedOn) return false;
+
+          // Для NT: перевіряємо new_testament основу
+          return transInfo.basedOn.new_testament === "tr";
+        });
+
+        pairs.push({
+          original: original,
+          translations: translationsForOriginal,
+          testament: "NewT",
+          isGNT: original.toUpperCase() === "GNT",
+        });
+      });
+    }
+
+    // Сортуємо: спочатку основні оригінали
     pairs.sort((a, b) => {
-      const priority = {
-        TR: 1,
-        GNT: 2,
-        LXX: 3,
-        THOT: 4,
-      };
-
-      const aPriority = priority[a.original.toUpperCase()] || 100;
-      const bPriority = priority[b.original.toUpperCase()] || 100;
-
-      return aPriority - bPriority;
+      const order = ["LXX", "THOT", "TR", "GNT"];
+      const aIndex = order.indexOf(a.original.toUpperCase());
+      const bIndex = order.indexOf(b.original.toUpperCase());
+      return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
     });
 
-    console.log(`Panel ${id}: Created pairs:`, pairs);
     return pairs;
-  };
-  // -------------------------const getPairs end
+  }, [currentRef, versions, translationsData, getTestament]);
+
+  // ==================== РЕНДЕРИНГ ====================
 
   const [book, chapter] = currentRef.split(".");
-  // ----------------------
 
-  // А перед return додайте цю функцію в Panel компонент:
+  const renderChapterContent = () => {
+    const verseNumbers = getVerseNumbers();
 
-  // Функція для рендерингу вмісту глави
+    if (verseNumbers.length === 0) {
+      return (
+        <p className="text-center text-muted">Немає даних для відображення</p>
+      );
+    }
+
+    return verseNumbers.map((verseNum, index) => {
+      const isFirstInChapter = index === 0; // Перший вірш розділу
+      // Перевіряємо, чи є дані для цього вірша в будь-якій версії
+      const hasData = Object.keys(chapterData).some((version) => {
+        const data = chapterData[version];
+        if (!Array.isArray(data)) return false;
+        const verse = data.find((v) => (v.verse || v.v) === verseNum);
+        return verse && (verse.words || verse.ws)?.length > 0;
+      });
+
+      if (!hasData) {
+        return (
+          <div key={`missing-${verseNum}`} className="missing-verse">
+            <div className="verse-number">{verseNum}</div>
+            <div className="verse-content text-muted">
+              Вірш {verseNum} поки що відсутній
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <InterlinearVerse
+          key={verseNum}
+          verseNum={verseNum}
+          pairs={getPairs()}
+          chapterData={chapterData}
+          onWordClick={onWordClick}
+          isFirstInChapter={isFirstInChapter} // Передаємо проп
+        />
+      );
+    });
+  };
+
+  // // В renderChapterContent додаємо перевірку на перший вірш
+  // // ЧАСТИНА 1.5: ОНОВЛЕННЯ RENDER ЛОГІКИ В INTERLINEARVERSE - не працює!!!
   // const renderChapterContent = () => {
   //   const verseNumbers = getVerseNumbers();
 
-  //   if (verseNumbers.length === 0) {
-  //     return (
-  //       <p className="text-center text-muted">Немає даних для відображення</p>
-  //     );
-  //   }
+  //   return verseNumbers.map((verseNum, index) => {
+  //     const isFirstVerse = index === 0;
 
-  //   // Отримуємо пари для заголовка
-  //   const pairs = getPairs();
-
-  //   // Збираємо всі унікальні версії
-  //   const allVersions = new Set();
-  //   pairs.forEach((pair) => {
-  //     if (pair.original) allVersions.add(pair.original);
-  //     if (pair.translations) {
-  //       pair.translations.forEach((t) => allVersions.add(t));
-  //     }
-  //   });
-
-  //   // Рендеримо заголовок з версіями
-  //   const renderVersionHeader = () => {
-  //     const versionsArray = Array.from(allVersions);
-  //     if (versionsArray.length === 0) return null;
-
-  //     // Сортуємо: спочатку оригінали, потім переклади
-  //     const sortedVersions = versionsArray.sort((a, b) => {
-  //       const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
-  //         a.toUpperCase()
-  //       );
-  //       const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
-  //         b.toUpperCase()
-  //       );
-
-  //       if (isAOriginal && !isBOriginal) return -1;
-  //       if (!isAOriginal && isBOriginal) return 1;
-  //       return 0;
-  //     });
-
-  //     return (
-  //       <div className="versions-header">
-  //         <div className="header-row">
-  //           <span className="header-verse">Вірш</span>
-  //           {sortedVersions.map((version) => (
-  //             <span key={version} className="header-version">
-  //               [{version}]
-  //             </span>
-  //           ))}
-  //         </div>
-  //         <div className="header-separator"></div>
-  //       </div>
-  //     );
-  //   };
-
-  //   // Визначаємо, чи є дані для вірша
-  //   const versesWithData = verseNumbers.filter((verseNum) => {
-  //     return Object.keys(chapterData).some((version) => {
+  //     // Перевіряємо, чи є дані для цього вірша
+  //     const hasData = Object.keys(chapterData).some((version) => {
   //       const data = chapterData[version];
   //       if (!Array.isArray(data)) return false;
   //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
   //       return verse && (verse.words || verse.ws)?.length > 0;
   //     });
-  //   });
 
-  //   if (versesWithData.length === 0) {
-  //     return (
-  //       <p className="text-center text-muted">Немає даних для відображення</p>
-  //     );
-  //   }
-
-  //   // Основна функція рендерингу віршів з потоковим перенесенням
-  //   const renderStreamingVerses = () => {
-  //     let isFirstInRow = true;
-  //     let isFirstVerse = true;
-
-  //     return (
-  //       <div className="chapter-stream-container">
-  //         {/* Заголовок версій тільки один раз */}
-  //         {renderVersionHeader()}
-
-  //         <div className="verses-stream">
-  //           <div className="verse-row">
-  //             {versesWithData.map((verseNum, index) => {
-  //               const verseInfo = {
-  //                 verseNum,
-  //                 isFirstInRow: isFirstInRow,
-  //                 isFirstVerse: isFirstVerse && index === 0,
-  //               };
-
-  //               // Після кожного вірша скидаємо флаг "перший у рядку"
-  //               if (isFirstInRow) {
-  //                 isFirstInRow = false;
-  //               }
-
-  //               // Після першого вірша скидаємо флаг "перший вірш"
-  //               if (isFirstVerse && index === 0) {
-  //                 isFirstVerse = false;
-  //               }
-
-  //               return (
-  //                 <InterlinearVerse
-  //                   key={verseNum}
-  //                   verseNum={verseInfo.verseNum}
-  //                   pairs={getPairs()}
-  //                   chapterData={chapterData}
-  //                   onWordClick={onWordClick}
-  //                   isFirstInRow={verseInfo.isFirstInRow}
-  //                   isFirstVerse={verseInfo.isFirstVerse}
-  //                 />
-  //               );
-  //             })}
+  //     if (!hasData) {
+  //       return (
+  //         <div key={`missing-${verseNum}`} className="missing-verse">
+  //           <div className="verse-number">{verseNum}</div>
+  //           <div className="verse-content text-muted">
+  //             Текст на стадії перекладу
   //           </div>
   //         </div>
-  //       </div>
-  //     );
-  //   };
-
-  //   return renderStreamingVerses();
-  // };
-  // У Panel компоненті, замініть функцію renderChapterContent на:
-
-  // Непотрібний код: Ця функція renderChapterContent визначена, але ніколи не викликається. У компоненті Panel рендериться інший JSX в рядку 343+.
-
-  // const renderChapterContent = () => {
-  //   const verseNumbers = getVerseNumbers();
-
-  //   if (verseNumbers.length === 0) {
-  //     return (
-  //       <p className="text-center text-muted">Немає даних для відображення</p>
-  //     );
-  //   }
-
-  //   // Отримуємо пари для заголовка
-  //   const pairs = getPairs();
-
-  //   // Збираємо всі унікальні версії
-  //   const allVersions = new Set();
-  //   pairs.forEach((pair) => {
-  //     if (pair.original) allVersions.add(pair.original);
-  //     if (pair.translations) {
-  //       pair.translations.forEach((t) => allVersions.add(t));
+  //       );
   //     }
-  //   });
 
-  //   // Визначаємо, чи є дані для вірша
-  //   const versesWithData = verseNumbers.filter((verseNum) => {
-  //     return Object.keys(chapterData).some((version) => {
-  //       const data = chapterData[version];
-  //       if (!Array.isArray(data)) return false;
-  //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
-  //       return verse && (verse.words || verse.ws)?.length > 0;
-  //     });
-  //   });
-
-  //   if (versesWithData.length === 0) {
   //     return (
-  //       <p className="text-center text-muted">Немає даних для відображення</p>
-  //     );
-  //   }
+  //       <div key={verseNum} className="verse-container">
+  //         <div className="verse-number">{verseNum}</div>
 
-  //   return (
-  //     <div className="chapter-container">
-  //       {/* Заголовок версій один раз на початку */}
-  //       <div className="versions-header">
-  //         <div className="header-row">
-  //           <span className="header-verse">Вірш</span>
-  //           {Array.from(allVersions).map((version) => (
-  //             <span key={version} className="header-version">
-  //               [{version}]
-  //             </span>
+  //         {/* Заголовки тільки для першого вірша */}
+  //         {isFirstVerse &&
+  //           pairs.map((pair, pairIndex) => (
+  //             <div key={`header-${pair.original}`} className="pair-header">
+  //               <div className="original-header">
+  //                 <span className="version-label">[{pair.original}]</span>
+  //               </div>
+  //               {pair.translations.map((trans) => (
+  //                 <div
+  //                   key={`trans-header-${trans}`}
+  //                   className="translation-header"
+  //                 >
+  //                   <span className="version-label">[{trans}]</span>
+  //                 </div>
+  //               ))}
+  //             </div>
   //           ))}
-  //         </div>
-  //       </div>
 
-  //       {/* Потокове відображення віршів */}
-  //       <div className="verses-flow">
-  //         {versesWithData.map((verseNum, index) => {
-  //           const isFirstInRow = index === 0; // Тимчасово - кожен вірш перший у своєму рядку
-  //           const showVersionHeaders = index === 0; // Заголовки версій тільки для першого вірша
+  //         <InterlinearVerseContent
+  //           verseNum={verseNum}
+  //           pairs={pairs}
+  //           chapterData={chapterData}
+  //           onWordClick={onWordClick}
+  //           showHeaders={isFirstVerse}
+  //         />
 
-  //           return (
-  //             <InterlinearVerse
-  //               key={verseNum}
-  //               verseNum={verseNum}
-  //               pairs={pairs}
-  //               chapterData={chapterData}
-  //               onWordClick={onWordClick}
-  //               isFirstInRow={isFirstInRow}
-  //               isFirstVerse={index === 0}
-  //               showVersionHeaders={showVersionHeaders}
-  //             />
-  //           );
-  //         })}
+  //         {/* Роздільна лінія між парами (крім останньої) */}
+  //         {pairIndex < pairs.length - 1 && <div className="pair-divider"></div>}
   //       </div>
-  //     </div>
-  //   );
+  //     );
+  //   });
   // };
-  // ----------------------
+
+  console.log(`🎨 Panel ${id}: початок рендерингу`, {
+    currentRef,
+    versionsCount: versions.length,
+    chapterDataKeys: Object.keys(chapterData),
+    loading,
+  });
+
   return (
     <div className="panel">
       <PassageOptionsGroup
@@ -1697,7 +3712,7 @@ const Panel = ({
           const [b, c] = currentRef.split(".");
           const nc = parseInt(c) + 1;
 
-          // Визначаємо Завіт для отримання кількості глав
+          // Визначаємо Заповіт для отримання кількості глав
           const testament = getTestament(b);
           const versionKey = versions[0]?.toLowerCase();
 
@@ -1722,210 +3737,19 @@ const Panel = ({
 
       <div className="chapter-viewer flex-fill overflow-auto p-3">
         {loading ? (
-          <p className="text-center">{lang.loading || "Завантаження..."}</p>
+          <div className="text-center">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Завантаження...</span>
+            </div>
+            <p className="mt-2">{lang.loading || "Завантаження глави..."}</p>
+          </div>
         ) : message ? (
           <p className="text-center text-danger">{message}</p>
         ) : (
           <>
             <h4 className="text-center mb-3">{currentRef}</h4>
-
-            {(() => {
-              const verseNumbers = getVerseNumbers();
-
-              if (verseNumbers.length === 0) {
-                return (
-                  <p className="text-center text-muted">
-                    Немає даних для відображення
-                  </p>
-                );
-              }
-
-              return verseNumbers.map((verseNum) => {
-                // Перевіряємо, чи є дані для цього вірша в будь-якій версії
-                const hasData = Object.keys(chapterData).some((version) => {
-                  const data = chapterData[version];
-                  if (!Array.isArray(data)) return false;
-                  const verse = data.find((v) => (v.verse || v.v) === verseNum);
-                  return verse && (verse.words || verse.ws)?.length > 0;
-                });
-
-                if (!hasData) {
-                  return (
-                    <div key={`missing-${verseNum}`} className="missing-verse">
-                      <div className="verse-number">{verseNum}</div>
-                      <div className="verse-content text-muted">
-                        Вірш {verseNum} поки що відсутній
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <InterlinearVerse
-                    key={verseNum}
-                    verseNum={verseNum}
-                    pairs={getPairs()}
-                    chapterData={chapterData}
-                    onWordClick={onWordClick}
-                  />
-                );
-              });
-            })()}
+            {renderChapterContent()}
           </>
-          // 27.12.2025 частина для рендерингу віршів start
-          // <>
-          //   <h4 className="text-center mb-3">{currentRef}</h4>
-
-          //   {/* Заголовок з назвами версій ТІЛЬКИ один раз на початку */}
-          //   {(() => {
-          //     const verseNumbers = getVerseNumbers();
-
-          //     if (verseNumbers.length === 0) {
-          //       return (
-          //         <p className="text-center text-muted">
-          //           Немає даних для відображення
-          //         </p>
-          //       );
-          //     }
-
-          //     // Отримуємо пари для заголовка
-          //     const pairs = getPairs();
-
-          //     // Збираємо всі унікальні версії
-          //     const allVersions = new Set();
-          //     pairs.forEach((pair) => {
-          //       if (pair.original) allVersions.add(pair.original);
-          //       if (pair.translations) {
-          //         pair.translations.forEach((t) => allVersions.add(t));
-          //       }
-          //     });
-
-          //     // Рендеримо заголовок з версіями
-          //     const renderVersionHeader = () => {
-          //       const versionsArray = Array.from(allVersions);
-          //       if (versionsArray.length === 0) return null;
-
-          //       // Сортуємо: спочатку оригінали, потім переклади
-          //       const sortedVersions = versionsArray.sort((a, b) => {
-          //         const isAOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
-          //           a.toUpperCase()
-          //         );
-          //         const isBOriginal = ["TR", "GNT", "LXX", "THOT"].includes(
-          //           b.toUpperCase()
-          //         );
-
-          //         if (isAOriginal && !isBOriginal) return -1;
-          //         if (!isAOriginal && isBOriginal) return 1;
-          //         return 0;
-          //       });
-
-          //       return (
-          //         <div className="versions-header">
-          //           <div className="header-row">
-          //             <span className="header-verse">Вірш</span>
-          //             {sortedVersions.map((version) => (
-          //               <span key={version} className="header-version">
-          //                 [{version}]
-          //               </span>
-          //             ))}
-          //           </div>
-          //           <div className="header-separator"></div>
-          //         </div>
-          //       );
-          //     };
-
-          //     // Створюємо масив віршів з відстеженням ширини
-          //     const containerRef = useRef(null);
-          //     const [containerWidth, setContainerWidth] = useState(0);
-
-          //     // Ефект для отримання ширини контейнера
-          //     useEffect(() => {
-          //       const updateWidth = () => {
-          //         if (containerRef.current) {
-          //           setContainerWidth(containerRef.current.offsetWidth);
-          //         }
-          //       };
-
-          //       updateWidth();
-          //       window.addEventListener("resize", updateWidth);
-          //       return () => window.removeEventListener("resize", updateWidth);
-          //     }, []);
-
-          //     // Визначаємо, чи є дані для вірша
-          //     const versesWithData = verseNumbers.filter((verseNum) => {
-          //       return Object.keys(chapterData).some((version) => {
-          //         const data = chapterData[version];
-          //         if (!Array.isArray(data)) return false;
-          //         const verse = data.find((v) => (v.verse || v.v) === verseNum);
-          //         return verse && (verse.words || verse.ws)?.length > 0;
-          //       });
-          //     });
-
-          //     if (versesWithData.length === 0) {
-          //       return (
-          //         <p className="text-center text-muted">
-          //           Немає даних для відображення
-          //         </p>
-          //       );
-          //     }
-
-          //     // Основна функція рендерингу віршів з потоковим перенесенням
-          //     const renderStreamingVerses = () => {
-          //       let currentRowIndex = 0;
-          //       let isFirstInRow = true;
-          //       const rows = [];
-          //       let currentRow = [];
-
-          //       // Групуємо вірші по рядках на основі їх розміру
-          //       versesWithData.forEach((verseNum, index) => {
-          //         const isFirstVerse = index === 0;
-
-          //         // Додаємо вірш до поточного рядка
-          //         currentRow.push({
-          //           verseNum,
-          //           isFirstInRow: isFirstInRow,
-          //           isFirstVerse: isFirstVerse,
-          //         });
-
-          //         // Після кожного вірша скидаємо флаг "перший у рядку"
-          //         isFirstInRow = false;
-
-          //         // Для останнього вірша або якщо це останній - додаємо рядок
-          //         if (index === versesWithData.length - 1) {
-          //           rows.push([...currentRow]);
-          //         }
-          //       });
-
-          //       return (
-          //         <div className="chapter-stream-container" ref={containerRef}>
-          //           {/* Заголовок версій тільки один раз */}
-          //           {renderVersionHeader()}
-
-          //           <div className="verses-stream">
-          //             {rows.map((row, rowIndex) => (
-          //               <div key={`row-${rowIndex}`} className="verse-row">
-          //                 {row.map((verseInfo) => (
-          //                   <InterlinearVerse
-          //                     key={verseInfo.verseNum}
-          //                     verseNum={verseInfo.verseNum}
-          //                     pairs={getPairs()}
-          //                     chapterData={chapterData}
-          //                     onWordClick={onWordClick}
-          //                     isFirstInRow={verseInfo.isFirstInRow}
-          //                     isFirstVerse={verseInfo.isFirstVerse}
-          //                   />
-          //                 ))}
-          //               </div>
-          //             ))}
-          //           </div>
-          //         </div>
-          //       );
-          //     };
-
-          //     return renderStreamingVerses();
-          //   })()}
-          // </>
-          // 27.12.2025 частина для рендерингу віршів end
         )}
       </div>
     </div>
@@ -1933,90 +3757,185 @@ const Panel = ({
 };
 
 const PassagePage = ({ lang }) => {
+  console.log(
+    "🔄 PassagePage: компонент ініціалізовано з lang:",
+    lang?.code || "uk"
+  );
+
   const [panels, setPanels] = useState([{ id: Date.now() }]);
   const [lexicons, setLexicons] = useState([]);
   const [coreData, setCoreData] = useState({});
   const [coreLoading, setCoreLoading] = useState(true);
 
+  // ==================== ЕФЕКТИ ====================
+
+  /**
+   * ЗАВАНТАЖИТИ CORE ДАНІ
+   * Використовує core.json для інформації про книги та глави
+   */
   useEffect(() => {
+    // console.log("📥 PassagePage: початок завантаження core.json");
+
     let isMounted = true;
+
     const loadCoreData = async () => {
       try {
+        const startTime = performance.now();
         const coreRes = await fetch("/data/core.json");
-        if (!coreRes.ok) throw new Error(`HTTP ${coreRes.status}`);
+
+        if (!coreRes.ok) {
+          throw new Error(`HTTP ${coreRes.status}: ${coreRes.statusText}`);
+        }
+
         const core = await coreRes.json();
+        const loadTime = performance.now() - startTime;
+
+        console.log(
+          `✅ PassagePage: core.json завантажено за ${loadTime.toFixed(0)}мс`,
+          {
+            версії: Object.keys(core),
+            структура: Object.keys(core).map((v) => ({
+              версія: v,
+              маєСТ: !!core[v].OldT,
+              маєНЗ: !!core[v].NewT,
+            })),
+          }
+        );
 
         if (isMounted) {
           setCoreData(core);
-          console.log("Core data loaded with structure:", Object.keys(core));
         }
       } catch (err) {
-        console.error("Failed to load core data:", err);
-        if (isMounted) setCoreData({});
+        console.error("❌ PassagePage: помилка завантаження core.json", {
+          помилка: err.message,
+          стек: err.stack,
+        });
+
+        if (isMounted) {
+          setCoreData({});
+        }
       } finally {
-        if (isMounted) setCoreLoading(false);
+        if (isMounted) {
+          setCoreLoading(false);
+        }
       }
     };
 
     loadCoreData();
+
     return () => {
       isMounted = false;
+      // console.log("🧹 PassagePage: cleanup при розмонтуванні");
     };
   }, []);
 
-  const addPanel = () => {
+  /**
+   * ДОДАТИ НОВУ ПАНЕЛЬ
+   * Обмежує кількість панелей залежно від ширини екрану
+   */
+  const addPanel = useCallback(() => {
     const maxPanels = window.innerWidth < 992 ? 2 : 4;
+
     if (panels.length < maxPanels) {
-      setPanels([...panels, { id: Date.now() }]);
+      const newPanelId = Date.now();
+      // console.log("➕ PassagePage: додавання нової панелі", { newPanelId });
+      setPanels([...panels, { id: newPanelId }]);
     } else {
+      console.warn("⚠️ PassagePage: досягнуто максимум панелей", { maxPanels });
       alert(`Максимум ${maxPanels} вікон`);
     }
-  };
+  }, [panels]);
 
-  const closePanel = (id) => {
-    if (panels.length > 1) {
-      setPanels(panels.filter((p) => p.id !== id));
-    }
-  };
-  const closeLexicon = (id) => {
-    console.log("Closing lexicon:", id); // Лог закриття лексикону
-    setLexicons(lexicons.filter((l) => l.id !== id));
-  };
+  /**
+   * ЗАКРИТИ ПАНЕЛЬ
+   * Не дозволяє закрити останню панель
+   */
+  const closePanel = useCallback(
+    (id) => {
+      // console.log("❌ PassagePage: закриття панелі", { id });
 
-  const handleWordClick = (data) => {
-    const { word, origVer } = data;
-    if (!word?.strong || !origVer) return;
+      if (panels.length > 1) {
+        setPanels(panels.filter((p) => p.id !== id));
+      }
+    },
+    [panels]
+  );
 
-    const key = `${origVer}:${word.strong}`;
-    const existingIndex = lexicons.findIndex((l) => l.key === key);
+  /**
+   * ЗАКРИТИ ЛЕКСИКОН
+   */
+  const closeLexicon = useCallback(
+    (id) => {
+      // console.log("❌ PassagePage: закриття лексикону", { id });
+      setLexicons(lexicons.filter((l) => l.id !== id));
+    },
+    [lexicons]
+  );
 
-    if (existingIndex !== -1) {
-      const newLex = [...lexicons];
-      newLex[existingIndex].data = data;
-      setLexicons(newLex);
-    } else if (lexicons.length < 2) {
-      setLexicons([
-        ...lexicons,
-        {
+  /**
+   * ОБРОБКА КЛІКУ НА СЛОВО
+   * Відкриває лексикон для вибраного слова
+   */
+  const handleWordClick = useCallback(
+    (data) => {
+      // console.log("🖱️ PassagePage: клік на слово", {
+      //   слово: data.word?.word,
+      //   strong: data.word?.strong,
+      //   оригінал: data.origVer,
+      // });
+
+      const { word, origVer } = data;
+      if (!word?.strong || !origVer) {
+        console.warn("⚠️ PassagePage: некоректні дані слова");
+        return;
+      }
+
+      const key = `${origVer}:${word.strong}`;
+      const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+      if (existingIndex !== -1) {
+        // Оновити існуючий лексикон
+        // console.log("🔄 PassagePage: оновлення існуючого лексикону", { key });
+        const newLex = [...lexicons];
+        newLex[existingIndex].data = data;
+        setLexicons(newLex);
+      } else if (lexicons.length < 2) {
+        // Додати новий лексикон
+        const newLexicon = {
           id: Date.now(),
           key,
           data,
           origVer,
           lang: word.strong.startsWith("H") ? "he" : "gr",
-        },
-      ]);
-    } else {
-      const newLex = [...lexicons];
-      newLex[1] = {
-        id: Date.now(),
-        key,
-        data,
-        origVer,
-        lang: word.strong.startsWith("H") ? "he" : "gr",
-      };
-      setLexicons(newLex);
-    }
-  };
+        };
+
+        // console.log("➕ PassagePage: додавання нового лексикону", newLexicon);
+        setLexicons([...lexicons, newLexicon]);
+      } else {
+        // Замінити останній лексикон
+        // console.log("🔄 PassagePage: заміна останнього лексикону");
+        const newLex = [...lexicons];
+        newLex[1] = {
+          id: Date.now(),
+          key,
+          data,
+          origVer,
+          lang: word.strong.startsWith("H") ? "he" : "gr",
+        };
+        setLexicons(newLex);
+      }
+    },
+    [lexicons]
+  );
+
+  // ==================== РЕНДЕРИНГ ====================
+
+  // console.log("🎨 PassagePage: початок рендерингу", {
+  //   panelsCount: panels.length,
+  //   lexiconsCount: lexicons.length,
+  //   coreLoading,
+  //   coreDataKeys: Object.keys(coreData),
+  // });
 
   return (
     <div className="passage-container">
@@ -2057,3 +3976,5 @@ const PassagePage = ({ lang }) => {
 };
 
 export default PassagePage;
+
+console.log("📦 PassagePage.js: модуль завантажено та експортовано");

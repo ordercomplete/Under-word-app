@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-24T00:00:00.000Z",
+    "info": {
+      "tr": "ubt",
+      "type": "translation",
+      "book": "MAT",
+      "chapter": 1,
+      "testament": "NewT",
+      "language": "ukrainian",
+      "name": "Українська Біблія (UBT)",
+      "hasStrongs": true,
+      "hasMorphology": false,
+      "hasLemma": false,
+      "basedOn": { "old_testament": "thot", "new_testament": "tr" },
+      "originalPath": "translations\\ubt\\NewT\\MAT\\mat1_ubt.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "Родопис", "s": "G976" },
+        { "w": "походження", "s": "G1078" },
+        { "w": "Ісуса", "s": "G2424" },
+        { "w": "Христа,", "s": "G5547" },
+        { "w": "сина", "s": "G5207" },
+        { "w": "Давидового,", "s": "G1138" },
+        { "w": "сина", "s": "G5207" },
+        { "w": "Авраамового.", "s": "G11" }
+      ]
+    }
+  ]
+}

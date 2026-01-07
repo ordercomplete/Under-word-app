@@ -2590,7 +2590,7 @@ const CONFIG = {
   ],
 
   // Які оригінали конвертувати
-  originalsToConvert: ["lxx", "thot", "gnt"],
+  originalsToConvert: ["lxx", "thot", "gnt", "tr"],
 
   // Шляхи
   sourceDir: "public/data",
