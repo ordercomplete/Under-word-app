@@ -3566,25 +3566,14 @@ const InterlinearVerse = ({
   }, []);
 
   // Отримання вірша за номером
-  const getVerseData = (version, verseNumber) => {
-    if (!adaptedData[version]) return null;
-    const verse = adaptedData[version].find((v) => {
-      const vNum = v.verse || v.v;
-      return parseInt(vNum) === parseInt(verseNumber);
-    });
-    return verse;
-  };
-  // const getVerseData = useCallback(
-  //   (version, verseNumber) => {
-  //     if (!adaptedData[version]) return null;
-  //     const verse = adaptedData[version].find((v) => {
-  //       const vNum = v.verse || v.v;
-  //       return parseInt(vNum) === parseInt(verseNumber);
-  //     });
-  //     return verse;
-  //   },
-  //   [adaptedData]
-  // );
+  // const getVerseData = (version, verseNumber) => {
+  //   if (!adaptedData[version]) return null;
+  //   const verse = adaptedData[version].find((v) => {
+  //     const vNum = v.verse || v.v;
+  //     return parseInt(vNum) === parseInt(verseNumber);
+  //   });
+  //   return verse;
+  // };
 
   // Отримання слів з вірша
   // const getWordsFromVerse = (verseData) => {
@@ -3616,6 +3605,17 @@ const InterlinearVerse = ({
 
     return result;
   }, [chapterData]);
+  const getVerseData = useCallback(
+    (version, verseNumber) => {
+      if (!adaptedData[version]) return null;
+      const verse = adaptedData[version].find((v) => {
+        const vNum = v.verse || v.v;
+        return parseInt(vNum) === parseInt(verseNumber);
+      });
+      return verse;
+    },
+    [adaptedData]
+  );
 
   // Оновлення ширини контейнера
   useEffect(() => {
@@ -3734,67 +3734,101 @@ const InterlinearVerse = ({
     });
 
     return blocks;
-  }, [pairs, verseNum, chapterData, mainOriginal, adaptedData]);
+  }, [
+    pairs,
+    verseNum,
+    chapterData,
+    mainOriginal,
+    adaptedData,
+    getVerseData,
+    getWordsFromVerse,
+    getStrongCode,
+    getWordText,
+  ]);
 
   // Подія для курсора
-  const handleMouseMove = (e) => {
+  // const handleMouseMove = (e) => {
+  //   setMousePos({ x: e.clientX, y: e.clientY });
+  //   // Визначаємо, чи курсор у верхній половині екрану
+  //   setIsAboveCursor(e.clientY < window.innerHeight / 2);
+  // };
+  const handleMouseMove = useCallback((e) => {
     setMousePos({ x: e.clientX, y: e.clientY });
-    // Визначаємо, чи курсор у верхній половині екрану
     setIsAboveCursor(e.clientY < window.innerHeight / 2);
-  };
+  }, []);
 
   // Клік на слово
-  const handleWordClick = (word, version, strong, isOriginal) => {
-    if (word && strong && onWordClick) {
-      onWordClick({
-        word: {
-          word: getWordText(word),
-          strong: strong,
-          lemma: getLemma(word),
-          morph: getMorph(word),
-        },
-        origVer: version,
-        lang: strong.startsWith("H") ? "he" : "gr",
-      });
-    }
-  };
+  // const handleWordClick = (word, version, strong, isOriginal) => {
+  //   if (word && strong && onWordClick) {
+  //     onWordClick({
+  //       word: {
+  //         word: getWordText(word),
+  //         strong: strong,
+  //         lemma: getLemma(word),
+  //         morph: getMorph(word),
+  //       },
+  //       origVer: version,
+  //       lang: strong.startsWith("H") ? "he" : "gr",
+  //     });
+  //   }
+  // };
+  const handleWordClick = useCallback(
+    (word, version, strong, isOriginal) => {
+      if (word && strong && onWordClick) {
+        onWordClick({
+          word: {
+            word: getWordText(word),
+            strong: strong,
+            lemma: getLemma(word),
+            morph: getMorph(word),
+          },
+          origVer: version,
+          lang: strong.startsWith("H") ? "he" : "gr",
+        });
+      }
+    },
+    [onWordClick, getWordText, getLemma, getMorph]
+  );
 
   // Відображення слова з інтервалом
-  const renderWord = (wordData, version, strong, isOriginal) => {
-    if (!wordData || !wordData.text) {
-      return (
-        <div className="empty-word">
-          <span
-            key={`empty-${version}`}
-            className="empty-word"
-            title="Відсутній відповідник"
-          >
-            —
-          </span>
-        </div>
-      );
-    }
+  const renderWord = useCallback(
+    (wordData, version, strong, isOriginal) => {
+      if (!wordData || !wordData.text) {
+        return (
+          <div className="empty-word">
+            <span
+              key={`empty-${version}`}
+              className="empty-word"
+              title="Відсутній відповідник"
+            >
+              —
+            </span>
+          </div>
+        );
+      }
 
-    return (
-      <span
-        key={`word-${version}`}
-        className={`word ${isOriginal ? "original-word" : "translation-word"} ${
-          wordData.word ? "clickable" : ""
-        }`}
-        onClick={() =>
-          handleWordClick(wordData.word, version, strong, isOriginal)
-        }
-        onMouseEnter={() =>
-          wordData.word &&
-          setHoveredWord({ ...wordData, strong, version, isOriginal })
-        }
-        onMouseLeave={() => setHoveredWord(null)}
-        title={strong ? `Strong: ${strong}` : ""}
-      >
-        {wordData.text}
-      </span>
-    );
-  };
+      return (
+        <span
+          key={`word-${version}`}
+          className={`word ${
+            isOriginal ? "original-word" : "translation-word"
+          } ${wordData.word ? "clickable" : ""}`}
+          onClick={() =>
+            handleWordClick(wordData.word, version, strong, isOriginal)
+          }
+          onMouseEnter={() =>
+            wordData.word &&
+            setHoveredWord({ ...wordData, strong, version, isOriginal })
+          }
+          onMouseLeave={() => setHoveredWord(null)}
+          title={strong ? `Strong: ${strong}` : ""}
+        >
+          {wordData.text}
+        </span>
+      );
+    },
+    [handleWordClick]
+  ); // handleWordClick тепер з useCallback
 
   if (!pairs || pairs.length === 0 || !chapterData) {
     return (
