@@ -2765,7 +2765,7 @@
 
 // ------30.12.25-2
 
-// src/components/PassagePage.js - ПОВНИЙ КОД З ВСІМА ІМПОРТАМИ
+// src/components/PassagePage.js - ПОВНИЙ КОД З ВСІМА ІМПОРТАМИ 07.01.2026
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import PassageOptionsGroup from "./PassageOptionsGroup";
 import InterlinearVerse from "./InterlinearVerse";
@@ -2792,158 +2792,18 @@ const Panel = ({
 
   const [currentRef, setCurrentRef] = useState(masterRef || "GEN.1");
   // const [versions, setVersions] = useState(["LXX", "UTT"]);
-  const [versions, setVersions] = useState([]); // ← ПУСТИЙ МАСИВ, не ["LXX", "UTT"]
+  // const [versions, setVersions] = useState([]); // ← ПУСТИЙ МАСИВ, не ["LXX", "UTT"]
+  // const [versions, setVersions] = useState(() => {
+  //   // Ініціалізація на основі книги
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+  //   return testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
+  // });
   const [chapterData, setChapterData] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [translationsData, setTranslationsData] = useState(null);
 
-  // Додаємо useEffect для встановлення дефолту на основі книги ЧАСТИНА 1.1: ІНТЕЛЕКТУАЛЬНИЙ ДЕФОЛТ
-  // useEffect(() => {
-  //   const [book] = currentRef.split(".");
-  //   const testament = getTestament(book);
-
-  //   // Визначаємо дефолтні версії
-  //   // let defaultVersions;
-  //   // if (testament === "NewT") {
-  //   //   // NT: TR + UTT (оскільки UTT має NT)
-  //   //   defaultVersions = ["TR", "UTT"];
-  //   // } else {
-  //   //   // OT: LXX + UTT (без TR, бо TR тільки NT)
-  //   //   defaultVersions = ["LXX", "UTT"];
-  //   // }
-
-  //   // Встановлюємо тільки якщо ще не встановлено
-  //   // if (
-  //   //   versions.length === 0 ||
-  //   //   JSON.stringify(versions.sort()) !== JSON.stringify(defaultVersions.sort())
-  //   // ) {
-  //   //   setVersions(defaultVersions);
-  //   // }
-  //   if (testament === "NewT" && versions.includes("LXX")) {
-  //     // Замінити LXX на TR
-  //     const newVersions = versions.map((v) => (v === "LXX" ? "TR" : v));
-  //     setVersions(newVersions);
-  //   }
-  // }, [currentRef]);
-  // В Panel компоненті (PassagePage.js) додаємо useEffect: Додаємо автоматичну зміну версій при зміні книги в Panel:
-  // Альтернативний підхід - простий інтелектуальний дефолт
-  // useEffect(() => {
-  //   const [book] = currentRef.split(".");
-  //   const testament = getTestament(book);
-
-  //   // Дефолтні версії для кожного заповіту
-  //   const getDefaultVersions = () => {
-  //     if (testament === "NewT") {
-  //       return ["TR", "UTT"]; // NT дефолт
-  //     }
-  //     return ["LXX", "UTT"]; // OT дефолт
-  //   };
-
-  //   const defaultVersions = getDefaultVersions();
-
-  //   // Оновлюємо тільки якщо:
-  //   // 1. Ще немає версій
-  //   // 2. Поточні версії не відповідають заповіту
-  //   const hasInvalidVersions = versions.some((v) => {
-  //     const bibleInfo = translationsData?.bibles?.find((b) => b.initials === v);
-  //     return bibleInfo && !bibleInfo.testaments?.includes(testament);
-  //   });
-
-  //   if (versions.length === 0 || hasInvalidVersions) {
-  //     console.log(
-  //       `🔄 Panel ${id}: встановлюю дефолт для ${testament}`,
-  //       defaultVersions
-  //     );
-  //     setVersions(defaultVersions);
-  //   }
-  // }, [currentRef, translationsData]);
-  // Ефект для завантаження translationsData
-  useEffect(() => {
-    const loadTranslations = async () => {
-      try {
-        const response = await fetch("/data/translations.json");
-        const data = await response.json();
-        setTranslationsData(data);
-      } catch (error) {
-        console.error(
-          `❌ Panel ${id}: помилка завантаження translations.json`,
-          error
-        );
-      }
-    };
-    loadTranslations();
-  }, [id]);
-
-  // Ефект для інтелектуального дефолту версій
-  useEffect(() => {
-    if (!translationsData) return;
-
-    const [book] = currentRef.split(".");
-    const testament = getTestament(book);
-
-    // Якщо версій ще немає - встановити дефолт
-    if (versions.length === 0) {
-      const defaultVersions =
-        testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
-      console.log(
-        `⚙️ Panel ${id}: встановлюю дефолт для ${testament}`,
-        defaultVersions
-      );
-      setVersions(defaultVersions);
-    }
-    // Якщо є невідповідні версії - виправити
-    else {
-      const invalidVersions = versions.filter((v) => {
-        const bibleInfo = translationsData?.bibles?.find(
-          (b) => b.initials === v
-        );
-        return bibleInfo && !bibleInfo.testaments?.includes(testament);
-      });
-
-      if (invalidVersions.length > 0) {
-        console.log(
-          `🔄 Panel ${id}: виправляю невідповідні версії`,
-          invalidVersions
-        );
-
-        let correctedVersions = [...versions];
-
-        // Замінити невідповідні версії
-        invalidVersions.forEach((invalid) => {
-          if (invalid === "LXX" && testament === "NewT") {
-            correctedVersions = correctedVersions.map((v) =>
-              v === "LXX" ? "TR" : v
-            );
-          } else if (invalid === "TR" && testament === "OldT") {
-            correctedVersions = correctedVersions.map((v) =>
-              v === "TR" ? "LXX" : v
-            );
-          } else {
-            // Видалити інші невідповідні
-            correctedVersions = correctedVersions.filter((v) => v !== invalid);
-          }
-        });
-
-        // Видалити дублікати
-        correctedVersions = [...new Set(correctedVersions)];
-
-        // Якщо після корекції порожньо - додати дефолт
-        if (correctedVersions.length === 0) {
-          correctedVersions =
-            testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
-        }
-
-        setVersions(correctedVersions);
-      }
-    }
-  }, [currentRef, translationsData, versions.length, id]);
-  // ==================== ФУНКЦІЇ ДОПОМОГИ ====================
-
-  /**
-   * ВИЗНАЧИТИ ЗАПОВІТ ЗА КОДОМ КНИГИ
-   * Використовує список книг Нового Заповіту
-   */
   const getTestament = useCallback((bookCode) => {
     const newTestamentBooks = [
       "MAT",
@@ -2976,6 +2836,168 @@ const Panel = ({
     ];
     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
   }, []);
+
+  const [versions, setVersions] = useState(() => {
+    // Ініціалізація на основі книги
+    const [book] = currentRef.split(".");
+    const testament = getTestament(book);
+    return testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT", "THOT", "UBT"];
+  });
+  // Ефект для завантаження translationsData
+  useEffect(() => {
+    const loadTranslations = async () => {
+      try {
+        const response = await fetch("/data/translations.json");
+        const data = await response.json();
+        setTranslationsData(data);
+      } catch (error) {
+        console.error(
+          `❌ Panel ${id}: помилка завантаження translations.json`,
+          error
+        );
+      }
+    };
+    loadTranslations();
+  }, [id]);
+
+  // Ефект для інтелектуального дефолту версій
+  // useEffect(() => {
+  //   if (!translationsData) return;
+
+  //   const [book] = currentRef.split(".");
+  //   const testament = getTestament(book);
+
+  //   // Якщо версій ще немає - встановити дефолт
+  //   if (versions.length === 0) {
+  //     const defaultVersions =
+  //       testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
+  //     console.log(
+  //       `⚙️ Panel ${id}: встановлюю дефолт для ${testament}`,
+  //       defaultVersions
+  //     );
+  //     setVersions(defaultVersions); // ← Викликає зміну versions, Проблема: Зміна versions тригерить цей же ефект → можливе зациклення. Відсутність обробки пустого versions при завантаженні:Початковий стан versions = [] призводить до помилок у getPairs() та рендерингу.
+  //   }
+  //   // Якщо є невідповідні версії - виправити
+  //   else {
+  //     const invalidVersions = versions.filter((v) => {
+  //       const bibleInfo = translationsData?.bibles?.find(
+  //         (b) => b.initials === v
+  //       );
+  //       return bibleInfo && !bibleInfo.testaments?.includes(testament);
+  //     });
+
+  //     if (invalidVersions.length > 0) {
+  //       console.log(
+  //         `🔄 Panel ${id}: виправляю невідповідні версії`,
+  //         invalidVersions
+  //       );
+
+  //       let correctedVersions = [...versions];
+
+  //       // Замінити невідповідні версії
+  //       invalidVersions.forEach((invalid) => {
+  //         if (invalid === "LXX" && testament === "NewT") {
+  //           correctedVersions = correctedVersions.map((v) =>
+  //             v === "LXX" ? "TR" : v
+  //           );
+  //         } else if (invalid === "TR" && testament === "OldT") {
+  //           correctedVersions = correctedVersions.map((v) =>
+  //             v === "TR" ? "LXX" : v
+  //           );
+  //         } else {
+  //           // Видалити інші невідповідні
+  //           correctedVersions = correctedVersions.filter((v) => v !== invalid);
+  //         }
+  //       });
+
+  //       // Видалити дублікати
+  //       correctedVersions = [...new Set(correctedVersions)];
+
+  //       // Якщо після корекції порожньо - додати дефолт
+  //       if (correctedVersions.length === 0) {
+  //         correctedVersions =
+  //           testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
+  //       }
+
+  //       setVersions(correctedVersions);
+  //     }
+  //   }
+  // }, [currentRef, translationsData, versions.length, id]);
+  // ТА ОНОВИТИ useEffect:
+  // ОНОВИТИ useEffect для версій (ВИДАЛИТИ зациклення):
+  useEffect(() => {
+    if (!translationsData) return;
+
+    const [book] = currentRef.split(".");
+    const testament = getTestament(book);
+
+    // Перевіряємо чи всі версії валідні для цього заповіту
+    const invalidVersions = versions.filter((v) => {
+      const bible = translationsData.bibles.find((b) => b.initials === v);
+      return bible && bible.testaments && !bible.testaments.includes(testament);
+    });
+
+    if (invalidVersions.length > 0) {
+      console.log(
+        `🔄 Panel ${id}: виправляю невідповідні версії`,
+        invalidVersions
+      );
+
+      let corrected = versions.filter((v) => !invalidVersions.includes(v));
+
+      // Додаємо дефолтні замість невідповідних
+      invalidVersions.forEach((invalid) => {
+        if (invalid === "LXX" && testament === "NewT") {
+          corrected.push("TR");
+        } else if (invalid === "TR" && testament === "OldT") {
+          corrected.push("LXX");
+        }
+        // Для перекладів (UTT, UBT) залишаємо - вони мають обидва заповіти
+      });
+
+      // Видаляємо дублікати
+      corrected = [...new Set(corrected)];
+      setVersions(corrected);
+    }
+  }, [currentRef, translationsData, getTestament]); // ВИДАЛИТИ versions
+  // ==================== ФУНКЦІЇ ДОПОМОГИ ====================
+
+  /**
+   * ВИЗНАЧИТИ ЗАПОВІТ ЗА КОДОМ КНИГИ
+   * Використовує список книг Нового Заповіту
+   */
+  // const getTestament = useCallback((bookCode) => {
+  //   const newTestamentBooks = [
+  //     "MAT",
+  //     "MRK",
+  //     "LUK",
+  //     "JHN",
+  //     "ACT",
+  //     "ROM",
+  //     "1CO",
+  //     "2CO",
+  //     "GAL",
+  //     "EPH",
+  //     "PHP",
+  //     "COL",
+  //     "1TH",
+  //     "2TH",
+  //     "1TI",
+  //     "2TI",
+  //     "TIT",
+  //     "PHM",
+  //     "HEB",
+  //     "JAS",
+  //     "1PE",
+  //     "2PE",
+  //     "1JN",
+  //     "2JN",
+  //     "3JN",
+  //     "JUD",
+  //     "REV",
+  //   ];
+  //   return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  // }, []);
 
   /**
    * ОТРИМАТИ СПИСОК НОМЕРІВ ВІРШІВ
@@ -3031,8 +3053,8 @@ const Panel = ({
       const testament = getTestament(bookCode);
 
       return {
-        compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
         original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
+        compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
         testament: testament,
       };
     },
@@ -3098,89 +3120,6 @@ const Panel = ({
     setLoading(true);
     setMessage(null);
 
-    // const loadChapter = async (ver) => {
-    //   const lower = ver.toLowerCase();
-    //   const isOriginal = ["lxx", "thot", "gnt", "tr"].includes(lower);
-    //   const base = isOriginal ? "originals" : "translations";
-
-    //   // ВИЗНАЧЕННЯ ЗАПОВІТУ
-    //   const testament = getTestament(book);
-
-    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ TR/GNT В OT
-    //   if ((ver === "TR" || ver === "GNT") && testament === "OldT") {
-    //     // Перевіряємо, чи це частина активної пари
-    //     const isTRInPair =
-    //       ver === "TR" && versions.includes("LXX") && versions.includes("UTT");
-    //     const isGNTInPair =
-    //       ver === "GNT" && versions.includes("LXX") && versions.includes("UTT");
-
-    //     if (!isTRInPair && !isGNTInPair) {
-    //       // Якщо TR/GNT не в парі для OT - повертаємо пусті дані
-    //       console.log(`⏭️ Пропускаємо ${ver} для ${book} (не в парі для OT)`);
-    //       return { ver, data: [] };
-    //     }
-
-    //     // Якщо TR/GNT в парі, шукаємо їх в NewT теж (для consistency)
-    //     // Але для OT книги вони не існують, тому все одно пропускаємо
-    //     console.log(`⚠️ ${ver} запитується для OT, але файлу немає`);
-    //     return { ver, data: [] };
-    //   }
-    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ THOT В NT
-    //   if (ver === "THOT" && testament === "NewT") {
-    //     // THOT не має NT
-    //     console.log(`⏭️ Пропускаємо ${ver} для ${book} (THOT тільки для OT)`);
-    //     return { ver, data: [] };
-    //   }
-
-    //   // СПЕЦІАЛЬНА ОБРОБКА ДЛЯ LXX В NT
-    //   if (ver === "LXX" && testament === "NewT") {
-    //     // LXX має NT через TR в парі, але якщо вибраний окремо - повертаємо порожні дані
-    //     if (!versions.includes("TR") || !versions.includes("UTT")) {
-    //       console.log(`⏭️ LXX для NT потребує пари з TR`);
-    //       return { ver, data: [] };
-    //     }
-    //   }
-
-    //   // СПОЧАТКУ ШУКАЄМО В data_compressed
-    //   const compressedUrl = `/data_compressed/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-    //   console.log(`🌐 Panel ${id}: запит ${compressedUrl}`);
-
-    //   try {
-    //     const res = await fetch(compressedUrl);
-
-    //     if (res.ok) {
-    //       const data = await res.json();
-    //       console.log(`✅ Panel ${id}: успішно завантажено ${compressedUrl}`);
-    //       return { ver, data };
-    //     }
-
-    //     // ЯКЩО ФАЙЛ НЕ ЗНАЙДЕНО В data_compressed
-    //     console.log(
-    //       `🔄 Panel ${id}: файл не знайдено в data_compressed, шукаємо в data`
-    //     );
-
-    //     // ШУКАЄМО В data
-    //     const originalUrl = `/data/${base}/${lower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${lower}.json`;
-    //     const fallbackRes = await fetch(originalUrl);
-
-    //     if (fallbackRes.ok) {
-    //       const data = await fallbackRes.json();
-    //       console.log(
-    //         `✅ Panel ${id}: успішно завантажено з fallback ${originalUrl}`
-    //       );
-    //       return { ver, data };
-    //     }
-
-    //     // ЯКЩО ФАЙЛ НЕ ЗНАЙДЕНО НІДЕ
-    //     console.warn(
-    //       `⚠️ Panel ${id}: файл не знайдено для ${ver} ${book}.${chapter}`
-    //     );
-    //     return { ver, data: [] };
-    //   } catch (err) {
-    //     console.error(`❌ Panel ${id}: помилка завантаження ${ver}:`, err);
-    //     return { ver, data: { error: err.message } };
-    //   }
-    // };
     // ЧАСТИНА 1.4: ВИПРАВЛЕННЯ loadChapter ТА ШЛЯХІВ
     const loadChapter = async (ver) => {
       const [book, chapterStr] = currentRef.split(".");
@@ -3263,6 +3202,7 @@ const Panel = ({
         });
 
         setChapterData(newData);
+        console.log("chapterData:", chapterData);
       })
       .catch((error) => {
         console.error(`❌ Panel ${id}: помилка завантаження глави`, {
@@ -3282,216 +3222,6 @@ const Panel = ({
    * ФОРМУВАННЯ ПАР ПЕРЕКЛАДІВ
    * Групує оригінали з відповідними перекладами
    */
-  // const getPairs = useCallback(() => {
-  //   // console.log(`🔍 Panel ${id}: формування пар перекладів`);
-
-  //   if (!translationsData) {
-  //     console.warn(`⚠️ Panel ${id}: translationsData не завантажено`);
-  //     return [];
-  //   }
-
-  //   const [book] = currentRef.split(".");
-  //   const testament = getTestament(book);
-  //   const pairs = [];
-
-  //   // Визначаємо, які версії є оригіналами
-  //   const originalVersions = versions.filter((v) =>
-  //     ["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
-  //   );
-
-  //   // Визначаємо переклади
-  //   const translationVersions = versions.filter(
-  //     (v) => !["TR", "GNT", "LXX", "THOT"].includes(v.toUpperCase())
-  //   );
-
-  //   // Групуємо переклади за їх оригіналами
-  //   const translationsByOriginal = {};
-
-  //   translationVersions.forEach((translation) => {
-  //     // Отримуємо оригінал для цього перекладу
-  //     const translationInfo = translationsData?.bibles?.find(
-  //       (b) => b.initials === translation
-  //     );
-  //     let originalForTranslation = null;
-
-  //     if (translationInfo?.basedOn) {
-  //       originalForTranslation =
-  //         testament === "NewT"
-  //           ? translationInfo.basedOn.new_testament
-  //           : translationInfo.basedOn.old_testament;
-  //     }
-
-  //     // Якщо оригінал знайдено і він присутній у вибраних версіях
-  //     if (
-  //       originalForTranslation &&
-  //       versions.includes(originalForTranslation.toUpperCase())
-  //     ) {
-  //       if (!translationsByOriginal[originalForTranslation]) {
-  //         translationsByOriginal[originalForTranslation] = [];
-  //       }
-  //       translationsByOriginal[originalForTranslation].push(translation);
-  //     } else {
-  //       // Якщо оригінал не знайдено, групуємо з основним оригіналом
-  //       const mainOriginal = originalVersions[0] || "TR";
-  //       if (!translationsByOriginal[mainOriginal]) {
-  //         translationsByOriginal[mainOriginal] = [];
-  //       }
-  //       translationsByOriginal[mainOriginal].push(translation);
-  //     }
-  //   });
-
-  //   // Створюємо пари для оригіналів
-  //   originalVersions.forEach((original) => {
-  //     pairs.push({
-  //       original: original,
-  //       translations: translationsByOriginal[original] || [],
-  //     });
-  //   });
-
-  //   // Якщо є переклади без оригіналу, додаємо їх окремо
-  //   Object.keys(translationsByOriginal).forEach((original) => {
-  //     if (!originalVersions.includes(original)) {
-  //       pairs.push({
-  //         original: original,
-  //         translations: translationsByOriginal[original],
-  //       });
-  //     }
-  //   });
-
-  //   // Сортуємо пари: TR/GNT перші для NT, LXX/THOT перші для OT
-  //   pairs.sort((a, b) => {
-  //     const priority = {
-  //       TR: 1,
-  //       GNT: 2,
-  //       LXX: 3,
-  //       THOT: 4,
-  //     };
-
-  //     const aPriority = priority[a.original.toUpperCase()] || 100;
-  //     const bPriority = priority[b.original.toUpperCase()] || 100;
-
-  //     return aPriority - bPriority;
-  //   });
-
-  //   // console.log(`✅ Panel ${id}: створено пар`, {
-  //   //   pairsCount: pairs.length,
-  //   //   pairs: pairs.map((p) => ({
-  //   //     original: p.original,
-  //   //     translationsCount: p.translations.length,
-  //   //   })),
-  //   // });
-
-  //   return pairs;
-  // }, [currentRef, versions, translationsData, getTestament, id]);
-
-  // const getPairs = useCallback(() => {
-  //   console.log(`🔍 Panel ${id}: формування пар перекладів`, {
-  //     versions,
-  //     currentRef,
-  //   });
-
-  //   if (!translationsData || !versions || versions.length === 0) {
-  //     return [];
-  //   }
-
-  //   const [book] = currentRef.split(".");
-  //   const testament = getTestament(book);
-  //   const pairs = [];
-
-  //   // 1. Спочатку шукаємо повні пари з translations.json
-  //   const mainPairsFromData = [];
-
-  //   versions.forEach((version) => {
-  //     const bibleInfo = translationsData.bibles?.find(
-  //       (b) => b.initials === version
-  //     );
-  //     if (bibleInfo?.pair) {
-  //       // Це частина пари (наприклад, LXX або UTT)
-  //       const pairKey = Array.isArray(bibleInfo.pair)
-  //         ? bibleInfo.pair[0]
-  //         : bibleInfo.pair;
-
-  //       // Перевіряємо, чи всі елементи пари є в вибраних версіях
-  //       if (pairKey === "LXX+TR") {
-  //         const hasLXX = versions.includes("LXX");
-  //         const hasTR = versions.includes("TR");
-  //         const hasUTT = versions.includes("UTT");
-
-  //         if (hasLXX && hasTR && hasUTT) {
-  //           // Додаємо тільки якщо пара ще не додана
-  //           if (!mainPairsFromData.some((p) => p.key === "lxx-tr-utt")) {
-  //             mainPairsFromData.push({
-  //               key: "lxx-tr-utt",
-  //               originals: ["LXX", "TR"],
-  //               translations: ["UTT"],
-  //               name: "LXX + TR + UTT",
-  //             });
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   // 2. Додаємо знайдені основні пари
-  //   mainPairsFromData.forEach((pair) => {
-  //     pairs.push({
-  //       original: pair.originals[0], // Головний оригінал (LXX або THOT)
-  //       translations: pair.translations,
-  //       isMainPair: true,
-  //     });
-  //   });
-
-  //   // 3. Додаємо інші версії, що не входять в основні пари
-  //   const usedVersions = new Set();
-  //   pairs.forEach((pair) => {
-  //     usedVersions.add(pair.original);
-  //     pair.translations.forEach((t) => usedVersions.add(t));
-  //   });
-
-  //   const remainingVersions = versions.filter((v) => !usedVersions.has(v));
-
-  //   // Для NT: TR як окрема версія (якщо не в парі)
-  //   if (
-  //     testament === "NewT" &&
-  //     remainingVersions.includes("TR") &&
-  //     !versions.includes("LXX")
-  //   ) {
-  //     pairs.push({
-  //       original: "TR",
-  //       translations: [],
-  //       isMainPair: false,
-  //     });
-  //     usedVersions.add("TR");
-  //   }
-
-  //   // Оновлюємо список версій, що залишились
-  //   const finalRemaining = versions.filter((v) => !usedVersions.has(v));
-
-  //   // Додаємо решту як окремі версії
-  //   finalRemaining.forEach((version) => {
-  //     const bibleInfo = translationsData.bibles?.find(
-  //       (b) => b.initials === version
-  //     );
-  //     const isOriginal = bibleInfo?.features?.includes("originals");
-
-  //     pairs.push({
-  //       original: isOriginal ? version : null,
-  //       translations: isOriginal ? [] : [version],
-  //       isMainPair: false,
-  //     });
-  //   });
-
-  //   console.log(`✅ Panel ${id}: створено пар`, {
-  //     pairsCount: pairs.length,
-  //     pairs: pairs.map((p) => ({
-  //       original: p.original,
-  //       translations: p.translations,
-  //       isMainPair: p.isMainPair,
-  //     })),
-  //   });
-
-  //   return pairs;
-  // }, [currentRef, versions, translationsData, getTestament, id]);
 
   // Оновлена функція getPairs з врахуванням заповітів ЧАСТИНА 1.2: ОНОВЛЕНА getPairs() ДЛЯ ВРАХУВАННЯ ЗАПОВІТІВ
   const getPairs = useCallback(() => {
@@ -3526,6 +3256,7 @@ const Panel = ({
 
           // Перевіряємо, чи переклад базується на цьому оригіналі для OT
           return transInfo.basedOn.old_testament === original.toLowerCase();
+          // Проблема: Не враховує, що UTT має basedOn: { old_testament: "lxx", new_testament: "tr" }.
         });
 
         pairs.push({
@@ -3582,6 +3313,24 @@ const Panel = ({
   const [book, chapter] = currentRef.split(".");
 
   const renderChapterContent = () => {
+    // const verseNumbers = getVerseNumbers();
+
+    // if (verseNumbers.length === 0) {
+    //   return (
+    //     <p className="text-center text-muted">Немає даних для відображення</p>
+    //   );
+    // }
+
+    // Перевірити чи є дані
+    const hasChapterData = Object.keys(chapterData).some((key) => {
+      const data = chapterData[key];
+      return Array.isArray(data) && data.length > 0;
+    });
+
+    if (!hasChapterData) {
+      return <p className="text-center text-muted">Завантаження даних...</p>;
+    }
+
     const verseNumbers = getVerseNumbers();
 
     if (verseNumbers.length === 0) {
@@ -3589,7 +3338,6 @@ const Panel = ({
         <p className="text-center text-muted">Немає даних для відображення</p>
       );
     }
-
     return verseNumbers.map((verseNum, index) => {
       const isFirstInChapter = index === 0; // Перший вірш розділу
       // Перевіряємо, чи є дані для цього вірша в будь-якій версії
@@ -3623,70 +3371,6 @@ const Panel = ({
       );
     });
   };
-
-  // // В renderChapterContent додаємо перевірку на перший вірш
-  // // ЧАСТИНА 1.5: ОНОВЛЕННЯ RENDER ЛОГІКИ В INTERLINEARVERSE - не працює!!!
-  // const renderChapterContent = () => {
-  //   const verseNumbers = getVerseNumbers();
-
-  //   return verseNumbers.map((verseNum, index) => {
-  //     const isFirstVerse = index === 0;
-
-  //     // Перевіряємо, чи є дані для цього вірша
-  //     const hasData = Object.keys(chapterData).some((version) => {
-  //       const data = chapterData[version];
-  //       if (!Array.isArray(data)) return false;
-  //       const verse = data.find((v) => (v.verse || v.v) === verseNum);
-  //       return verse && (verse.words || verse.ws)?.length > 0;
-  //     });
-
-  //     if (!hasData) {
-  //       return (
-  //         <div key={`missing-${verseNum}`} className="missing-verse">
-  //           <div className="verse-number">{verseNum}</div>
-  //           <div className="verse-content text-muted">
-  //             Текст на стадії перекладу
-  //           </div>
-  //         </div>
-  //       );
-  //     }
-
-  //     return (
-  //       <div key={verseNum} className="verse-container">
-  //         <div className="verse-number">{verseNum}</div>
-
-  //         {/* Заголовки тільки для першого вірша */}
-  //         {isFirstVerse &&
-  //           pairs.map((pair, pairIndex) => (
-  //             <div key={`header-${pair.original}`} className="pair-header">
-  //               <div className="original-header">
-  //                 <span className="version-label">[{pair.original}]</span>
-  //               </div>
-  //               {pair.translations.map((trans) => (
-  //                 <div
-  //                   key={`trans-header-${trans}`}
-  //                   className="translation-header"
-  //                 >
-  //                   <span className="version-label">[{trans}]</span>
-  //                 </div>
-  //               ))}
-  //             </div>
-  //           ))}
-
-  //         <InterlinearVerseContent
-  //           verseNum={verseNum}
-  //           pairs={pairs}
-  //           chapterData={chapterData}
-  //           onWordClick={onWordClick}
-  //           showHeaders={isFirstVerse}
-  //         />
-
-  //         {/* Роздільна лінія між парами (крім останньої) */}
-  //         {pairIndex < pairs.length - 1 && <div className="pair-divider"></div>}
-  //       </div>
-  //     );
-  //   });
-  // };
 
   console.log(`🎨 Panel ${id}: початок рендерингу`, {
     currentRef,

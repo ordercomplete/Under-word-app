@@ -145,7 +145,7 @@
   /* Повна висота */
   overflow-y: auto;
   font-size: 0.95rem;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 }
 .lexicon-window:last-child {

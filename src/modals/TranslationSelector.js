@@ -1676,79 +1676,7 @@ const TranslationSelector = ({
   /**
    * ЗАВАНТАЖЕННЯ ДАНИХ ПРО ПЕРЕКЛАДИ
    */
-  // useEffect(() => {
-  //   let isMounted = true;
 
-  //   const loadTranslations = async () => {
-  //     console.log("📥 TranslationSelector: завантаження translations.json");
-
-  //     try {
-  //       setIsLoading(true);
-  //       setError(null);
-
-  //       const startTime = performance.now();
-  //       const res = await fetch("/data/translations.json");
-
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-  //       }
-
-  //       const data = await res.json();
-  //       const loadTime = performance.now() - startTime;
-
-  //       console.log(
-  //         `✅ TranslationSelector: дані завантажено за ${loadTime.toFixed(
-  //           0
-  //         )}мс`,
-  //         {
-  //           biblesCount: data.bibles?.length || 0,
-  //           version: data.version || "unknown",
-  //         }
-  //       );
-
-  //       if (!isMounted) {
-  //         console.log(
-  //           "⚠️ TranslationSelector: компонент розмонтовано, ігноруємо дані"
-  //         );
-  //         return;
-  //       }
-
-  //       setTranslations(data);
-
-  //       // ВСТАНОВЛЕННЯ ДЕФОЛТНОГО ВИБОРУ
-  //       // const defaultSelection = ["LXX", "TR", "UTT"];
-  //       // console.log(
-  //       //   "⚙️ TranslationSelector: встановлюю дефолтний вибір",
-  //       //   defaultSelection
-  //       // );
-
-  //       // setSelectedVersions(defaultSelection);
-  //       // onSelectVersions(defaultSelection);
-  //     } catch (err) {
-  //       console.error("❌ TranslationSelector: помилка завантаження", {
-  //         error: err.message,
-  //         stack: err.stack,
-  //       });
-
-  //       if (isMounted) {
-  //         setError(err.message);
-  //       }
-  //     } finally {
-  //       if (isMounted) {
-  //         setIsLoading(false);
-  //       }
-  //     }
-  //   };
-
-  //   if (isOpen) {
-  //     loadTranslations();
-  //   }
-
-  //   return () => {
-  //     isMounted = false;
-  //     console.log("🧹 TranslationSelector: cleanup при розмонтуванні");
-  //   };
-  // }, [isOpen, onSelectVersions]);
   useEffect(() => {
     let isMounted = true;
 
@@ -2065,23 +1993,6 @@ const TranslationSelector = ({
   const validateSelection = () => {
     console.log("🔍 TranslationSelector: перевірка валідності вибору");
 
-    // // 1. Перевірка основних пар
-    // for (const pair of MAIN_PAIRS) {
-    //   const hasSomeOriginals = pair.originals.some((o) =>
-    //     selectedVersions.includes(o)
-    //   );
-    //   const hasAllOriginals = pair.originals.every((o) =>
-    //     selectedVersions.includes(o)
-    //   );
-
-    //   if (hasSomeOriginals && !hasAllOriginals && pair.requiredTogether) {
-    //     console.error("❌ TranslationSelector: неповна пара", pair.key);
-    //     return {
-    //       valid: false,
-    //       message: `Пара ${pair.name} повинна бути обрана повністю`,
-    //     };
-    //   }
-    // }
     // Перевіряємо тільки ті пари, які користувач ЧАСТКОВО обрав
     for (const pair of MAIN_PAIRS) {
       // Якщо хоч один елемент пари вибраний

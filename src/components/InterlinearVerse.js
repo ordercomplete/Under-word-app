@@ -3519,6 +3519,42 @@ const InterlinearVerse = ({
   // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
   // console.log(`[InterlinearVerse ${verseNum}] Дані:`, Object.keys(chapterData));
 
+  // Додати логування:
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Дані глави:`,
+  //   Object.keys(chapterData)
+  // );
+  // В InterlinearVerse.js додати на початку рендерингу:
+  if (!pairs || pairs.length === 0) {
+    console.log(`[InterlinearVerse ${verseNum}] Немає пар для відображення`);
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Очікування даних...</div>
+      </div>
+    );
+  }
+
+  // Перевірити чи є дані в chapterData
+  const hasData = Object.keys(chapterData).some((key) => {
+    const data = chapterData[key];
+    return Array.isArray(data) && data.length > 0;
+  });
+
+  if (!hasData) {
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Завантаження даних...</div>
+      </div>
+    );
+  }
+
   const [hoveredWord, setHoveredWord] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [containerWidth, setContainerWidth] = useState(0);
@@ -3642,7 +3678,10 @@ const InterlinearVerse = ({
     }
     return pairs[0]?.original || null;
   }, [pairs]);
-
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
   // Створення блоків слів для кожного вірша
   const createVerseBlocks = useMemo(() => {
     if (!pairs || pairs.length === 0 || !chapterData || !mainOriginal) {
@@ -3838,7 +3877,15 @@ const InterlinearVerse = ({
       </div>
     );
   }
-
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Дані глави:`,
+  //   Object.keys(chapterData)
+  // );
   return (
     <div
       className="interlinear-verse flex-layout"
