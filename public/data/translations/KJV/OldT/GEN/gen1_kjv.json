@@ -13,6 +13,10 @@
       "hasStrongs": true,
       "hasMorphology": null,
       "hasLemma": null,
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      },
       "originalPath": "translations\\kjv\\OldT\\GEN\\gen1_kjv.json"
     }
   },
@@ -20,16 +24,58 @@
     {
       "v": 1,
       "ws": [
-        { "w": "In", "s": "H9003" },
-        { "w": "the", "s": "H9009" },
-        { "w": "beginning", "s": "H7225" },
-        { "w": "God", "s": "H0430" },
-        { "w": "created", "s": "H1254" },
-        { "w": "the", "s": "H0853" },
-        { "w": "heaven", "s": "H8064" },
-        { "w": "and", "s": "H9002" },
-        { "w": "the", "s": "H0853" },
-        { "w": "earth", "s": "H0776" }
+        {
+          "w": "In",
+          "s": "H9003",
+          "l": "בְּ",
+          "m": "PREP",
+          "dict": "H9003_en"
+        },
+        { "w": "the", "s": "H9003", "l": "", "m": "", "dict": "H9003_en" },
+        {
+          "w": "beginning",
+          "s": "H7225",
+          "l": "רֵאשִׁית",
+          "m": "N-cfs",
+          "dict": "H7225_en"
+        },
+        {
+          "w": "God",
+          "s": "H0430",
+          "l": "אֱלֹהִים",
+          "m": "N-mp",
+          "dict": "H0430_en"
+        },
+        {
+          "w": "created",
+          "s": "H1254",
+          "l": "בָּרָא",
+          "m": "V-qal-Perf-3ms",
+          "dict": "H1254_en"
+        },
+        { "w": "the", "s": "H9009", "l": "הַ", "m": "ART", "dict": "H9009_en" },
+        {
+          "w": "heaven",
+          "s": "H8064",
+          "l": "שָׁמַיִם",
+          "m": "N-mp",
+          "dict": "H8064_en"
+        },
+        {
+          "w": "and",
+          "s": "H9002",
+          "l": "וְ",
+          "m": "CONJ",
+          "dict": "H9002_en"
+        },
+        { "w": "the", "s": "H9009", "l": "הָ", "m": "ART", "dict": "H9009_en" },
+        {
+          "w": "earth.",
+          "s": "H0776",
+          "l": "אֶרֶץ",
+          "m": "N-fs",
+          "dict": "H0776_en"
+        }
       ]
     }
   ]

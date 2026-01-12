@@ -4,13 +4,13 @@
     "version": 2,
     "converted": "2025-12-24T00:00:00.000Z",
     "info": {
-      "translation": "ogienko",
+      "translation": "synodal",
       "type": "translation",
       "book": "GEN",
       "chapter": 1,
       "testament": "OldT",
-      "language": "ukrainian",
-      "name": "Переклад Івана Огієнка",
+      "language": "russian",
+      "name": "Синодальный перевод",
       "hasStrongs": true,
       "hasMorphology": true,
       "hasLemma": true,
@@ -18,19 +18,19 @@
         "old_testament": "thot",
         "new_testament": "tr"
       },
-      "originalPath": "translations\\ogienko\\OldT\\GEN\\gen1_ogienko.json"
+      "originalPath": "translations\\synodal\\OldT\\GEN\\gen1_synodal.json"
     }
   },
   "verses": [
     {
       "v": 1,
       "ws": [
-        { "w": "На", "s": "H9003", "l": "בְּ", "m": "PREP" },
-        { "w": "початку", "s": "H7225", "l": "רֵאשִׁית", "m": "N-cfs" },
-        { "w": "створив", "s": "H1254", "l": "בָּרָא", "m": "V-qal-Perf-3ms" },
+        { "w": "В", "s": "H9003", "l": "בְּ", "m": "PREP" },
+        { "w": "начале", "s": "H7225", "l": "רֵאשִׁית", "m": "N-cfs" },
+        { "w": "сотворил", "s": "H1254", "l": "בָּרָא", "m": "V-qal-Perf-3ms" },
         { "w": "Бог", "s": "H0430", "l": "אֱלֹהִים", "m": "N-mp" },
         { "w": "небо", "s": "H8064", "l": "הַשָּׁמַיִם", "m": "N-mp | ART" },
-        { "w": "і", "s": "H9002", "l": "וְ", "m": "CONJ" },
+        { "w": "и", "s": "H9002", "l": "וְ", "m": "CONJ" },
         { "w": "землю.", "s": "H0776", "l": "הָאָרֶץ", "m": "N-fs | ART" }
       ]
     }

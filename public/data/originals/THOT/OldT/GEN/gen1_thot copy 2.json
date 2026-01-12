@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-09T20:33:45.545Z",
+    "info": {
+      "translation": "thot",
+      "type": "original",
+      "book": "GEN",
+      "chapter": 1,
+      "language": "he",
+      "name": "Translators Hebrew Old Testament",
+      "hasStrongs": true,
+      "hasMorphology": true,
+      "hasLemma": true,
+      "originalPath": "originals\\thot\\OldT\\GEN\\gen1_thot.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "בְּ", "s": "H9003" },
+        { "w": "רֵאשִׁ֖ית", "s": "H7225" },
+        { "w": "בָּרָ֣א", "s": "H1254" },
+        { "w": "אֱלֹהִ֑ים", "s": "H0430" },
+        { "w": "אֵ֥ת", "s": "H0853" },
+        { "w": "הַשָּׁמַ֖יִם", "s": "H8064" },
+        { "w": "וְ", "s": "H9002" },
+        { "w": "אֵ֥ת", "s": "H0853" },
+        { "w": "הָ", "s": "H9009" },
+        { "w": "אָֽרֶץ", "s": "H0776" }
+      ]
+    }
+  ]
+}

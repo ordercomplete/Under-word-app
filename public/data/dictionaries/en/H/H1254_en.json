@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "dictionary": "english_biblical",
+    "version": 1,
+    "language": "en",
+    "source": "Strong + English dictionaries",
+    "created": "2025-12-24T00:00:00.000Z"
+  },
+  "H1254": {
+    "s": "H1254",
+    "w": "בָּרָא",
+    "t": "bārā",
+    "tr": "to create / to make / to form",
+    "m": "Verb Qal Perfect 3rd person masculine singular",
+    "uc": 54,
+    "mn": [
+      "to create, to make, to form (exclusively of divine creation)",
+      "of God: creating the universe, heaven and earth, Gen. 1:1",
+      "to bring into existence something new, unique, not previously existing",
+      "of creating man: Gen. 1:27; 5:1-2",
+      "to create a clean heart, Ps. 51:10",
+      "to create Israel, Isa. 43:1",
+      "used only with God as subject in Qal stem",
+      "distinct from יָצַר (to form) and עָשָׂה (to make, do)"
+    ],
+    "strong_original": "בָּרָא bârâʼ, baw-raw'; a primitive root; (absolutely) to create; (qualified) to cut down (a wood), select, feed (as formative processes):—choose, create (creator), cut down, dispatch, do, make (fat).",
+    "definitions": {
+      "english": {
+        "primary": "to create, to bring into existence (in divine sense)",
+        "derivatives": ["creation", "creature", "creativity"],
+        "synonyms": ["form", "make", "produce"],
+        "antonyms": ["destroy", "annihilate"],
+        "grammar": "verb, transitive, binyan Qal"
+      },
+      "etymology": "Proto-Semitic root *brʔ, related to the idea of bringing forth, unique creation",
+      "usage": {
+        "biblical": [
+          "Genesis 1:1 - 'In the beginning God created the heaven and the earth'",
+          "Genesis 1:27 - 'So God created man in his own image'",
+          "Psalm 51:10 - 'Create in me a clean heart, O God'",
+          "Isaiah 43:1 - 'I have created you, O Israel'"
+        ],
+        "modern": [
+          "theological: divine creation",
+          "general: innovation, original production"
+        ]
+      },
+      "examples": [
+        "God created the world ex nihilo (out of nothing).",
+        "An artist creates a painting, but only God creates life.",
+        "Human creativity reflects divine creation."
+      ],
+      "related": [
+        "H1254 - בָּרָא (to create)",
+        "H3335 - יָצַר (to form, fashion)",
+        "H6213 - עָשָׂה (to do, make)",
+        "H1129 - בָּנָה (to build)"
+      ],
+      "references": {
+        "biblical": "Gen. 1-2, Ps. 148:5, Isa. 40:26, 45:12",
+        "theological": "Doctrine of creation, theology of nature",
+        "lexical": "BDB, HALOT, DCH, TWOT"
+      }
+    }
+  }
+}

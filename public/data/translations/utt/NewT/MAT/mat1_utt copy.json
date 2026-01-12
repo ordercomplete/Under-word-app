@@ -1,0 +1,123 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-24T00:00:00.000Z",
+    "info": {
+      "translation": "utt",
+      "type": "translation",
+      "book": "MAT",
+      "chapter": 1,
+      "testament": "NewT",
+      "language": "ukrainian",
+      "name": "Український сучасний переклад (utt)",
+      "hasStrongs": true,
+      "hasMorphology": false,
+      "hasLemma": false,
+      "basedOn": {
+        "old_testament": "lxx",
+        "new_testament": "tr"
+      },
+      "originalPath": "translations\\utt\\NewT\\MAT\\mat1_utt.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "words": [
+        { "word": "Книга", "strong": "G976" },
+        { "word": "родоводу", "strong": "G976" },
+        { "word": "Ісуса", "strong": "G2424" },
+        { "word": "Христа,", "strong": "G5547" },
+        { "word": "Си́на", "strong": "G5207" },
+        { "word": "Давидового,", "strong": "G1138" },
+        { "word": "Си́на", "strong": "G5207" },
+        { "word": "Авраамового.", "strong": "G11" }
+      ]
+    },
+    {
+      "v": 2,
+      "words": [
+        { "word": "Авраам", "strong": "G11" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Ісаака.", "strong": "G2464" },
+        { "word": "Ісаак", "strong": "G2464" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Якова.", "strong": "G2384" },
+        { "word": "Яків", "strong": "G2384" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Юду", "strong": "G2455" },
+        { "word": "та", "strong": "G2532" },
+        { "word": "братів", "strong": "G80" },
+        { "word": "його.", "strong": "G846" }
+      ]
+    },
+    {
+      "v": 3,
+      "words": [
+        { "word": "Юда", "strong": "G2455" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Фареса", "strong": "G5329" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "Зару", "strong": "G2196" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Тамари;", "strong": "G2283" },
+        { "word": "Фарес", "strong": "G5329" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Есрома.", "strong": "G2074" },
+        { "word": "Есром", "strong": "G2074" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Арама.", "strong": "G689" }
+      ]
+    },
+    {
+      "v": 4,
+      "words": [
+        { "word": "Арам", "strong": "G689" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Амінадава.", "strong": "G284" },
+        { "word": "Амінадав", "strong": "G284" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Наассона.", "strong": "G3476" },
+        { "word": "Наассон", "strong": "G3476" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Салмона.", "strong": "G4533" }
+      ]
+    },
+    {
+      "v": 5,
+      "words": [
+        { "word": "Салмон", "strong": "G4533" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Вооза", "strong": "G1003" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Рахави;", "strong": "G4477" },
+        { "word": "Вооз", "strong": "G1003" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Овида", "strong": "G2497" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "Рути;", "strong": "G4503" },
+        { "word": "Овид", "strong": "G2497" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Єссея.", "strong": "G2421" }
+      ]
+    },
+    {
+      "v": 6,
+      "words": [
+        { "word": "Єссей", "strong": "G2421" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "царя", "strong": "G935" },
+        { "word": "Давида.", "strong": "G1138" },
+        { "word": "А", "strong": "G1161" },
+        { "word": "[цар]", "strong": "G935" },
+        { "word": "Давид", "strong": "G1138" },
+        { "word": "породив", "strong": "G1080" },
+        { "word": "Соломона", "strong": "G4672" },
+        { "word": "від", "strong": "G1537" },
+        { "word": "дружини", "strong": "G3588" },
+        { "word": "Урія.", "strong": "G3774" }
+      ]
+    }
+  ]
+}

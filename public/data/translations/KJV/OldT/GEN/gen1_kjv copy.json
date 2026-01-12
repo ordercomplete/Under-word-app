@@ -1,0 +1,40 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-09T20:33:45.545Z",
+    "info": {
+      "tr": "KJV",
+      "type": "translation",
+      "book": "GEN",
+      "chapter": "1",
+      "language": "en",
+      "name": "King James Version (1611)",
+      "hasStrongs": true,
+      "hasMorphology": null,
+      "hasLemma": null,
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      },
+      "originalPath": "translations\\kjv\\OldT\\GEN\\gen1_kjv.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "In", "s": "H9003", "l": "בְּ", "m": "PREP" },
+        { "w": "the", "s": "H9003", "l": "", "m": "" },
+        { "w": "beginning", "s": "H7225", "l": "רֵאשִׁית", "m": "N-cfs" },
+        { "w": "God", "s": "H0430", "l": "אֱלֹהִים", "m": "N-mp" },
+        { "w": "created", "s": "H1254", "l": "בָּרָא", "m": "V-qal-Perf-3ms" },
+        { "w": "the", "s": "H9009", "l": "הַ", "m": "ART" },
+        { "w": "heaven", "s": "H8064", "l": "שָׁמַיִם", "m": "N-mp" },
+        { "w": "and", "s": "H9002", "l": "וְ", "m": "CONJ" },
+        { "w": "the", "s": "H9009", "l": "הָ", "m": "ART" },
+        { "w": "earth.", "s": "H0776", "l": "אֶרֶץ", "m": "N-fs" }
+      ]
+    }
+  ]
+}
