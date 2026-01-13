@@ -2050,12 +2050,12 @@ const TranslationSelector = ({
     return null;
   }
 
-  console.log("🎨 TranslationSelector: початок рендерингу", {
-    isLoading,
-    error,
-    selectedCount: selectedVersions.length,
-    readingMode,
-  });
+  // console.log("🎨 TranslationSelector: початок рендерингу", {
+  //   isLoading,
+  //   error,
+  //   selectedCount: selectedVersions.length,
+  //   readingMode,
+  // });
 
   if (isLoading) {
     return (

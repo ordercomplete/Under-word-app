@@ -1,6 +1,4 @@
-/* src/styles/Interlinear.css - ОНОВЛЕНА ВЕРСІЯ 08.01.2026 */
-
-/* ==================== ОСНОВНІ СТИЛІ ==================== */
+/* src/styles/Interlinear.css - ФЛЕКС ВЕРСІЯ */
 .interlinear-verse {
   margin-bottom: 20px;
   padding: 15px;
@@ -32,7 +30,7 @@
   overflow: visible;
 }
 
-/* ==================== БЛОКИ СЛІВ ==================== */
+/* Блок для кожного слова */
 .word-block {
   display: inline-flex;
   flex-direction: column;
@@ -65,6 +63,14 @@
   transition: background-color 0.2s;
 }
 
+/* Мітка версії */
+.version-label {
+  font-size: 0.8em;
+  color: #7f8c8d;
+  min-width: 45px;
+  text-align: right;
+}
+
 /* Саме слово */
 .word {
   flex: 1;
@@ -91,9 +97,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* ==================== СТИЛІ ДЛЯ ОРИГІНАЛІВ ==================== */
+/* Оригінальні слова */
 .original-version {
   background: #fff5f5;
+  /* border-left: 3px solid #ff6b6b; */
 }
 
 .original-word {
@@ -108,9 +115,10 @@
   border-color: #ff6b6b;
 }
 
-/* ==================== СТИЛІ ДЛЯ ПЕРЕКЛАДІВ ==================== */
+/* Слова перекладу */
 .translation-version {
   background: #f5fff5;
+  /* border-left: 3px solid #4caf50; */
 }
 
 .translation-word {
@@ -124,68 +132,29 @@
   border-color: #4caf50;
 }
 
-/* ==================== ПУСТЕ СЛОВО ==================== */
+/* Пусте слово (відсутній відповідник) */
 .empty-word {
-  flex: 1;
-  min-width: 40px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.2s;
-  color: #95a5a6;
+  /* color: #95a5a6;
   font-style: italic;
-}
-
-/* ==================== ЗАГОЛОВКИ ВЕРСІЙ ==================== */
-.verse-headers {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 5px 10px 0;
-  max-width: 200px;
-  vertical-align: top;
-  position: relative;
   padding: 4px 8px;
-}
-
-.verse-header {
+  min-width: 40px;
+  text-align: center;
+  font-size: 0.9em; */
   flex: 1;
   min-width: 40px;
   padding: 4px 8px;
   border-radius: 4px;
   text-align: center;
-  font-size: 0.95em;
+  /* font-size: 1.017em; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s;
-  cursor: default;
-  user-select: none;
+  /* cursor: default; */
+  /* user-select: none; */
 }
 
-.original-header {
-  background: linear-gradient(135deg, #f3e5f5, #ebccf0);
-  color: #4a148c;
-  border: 1px solid #ce93d8;
-}
-
-.translation-header {
-  background: linear-gradient(135deg, #e3f2fd, #c0e8c2);
-  color: #4caf50;
-  border: 1px solid #90caf9;
-}
-
-.verse-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.71em;
-}
-
-/* ==================== ПЛАВАЮЧА ПІДКАЗКА ==================== */
+/* ПЛАВАЮЧА ПІДКАЗКА */
 .floating-tooltip {
   position: fixed;
   background: white;
@@ -260,32 +229,7 @@
   border-top: 1px solid #eee;
 }
 
-/* ==================== СТИЛІ ДЛЯ ТИПУ СПІВСТАВЛЕННЯ ==================== */
-.word[data-aligned-by="strong"] {
-  border-left: 2px solid #3498db;
-}
-
-.word[data-aligned-by="index"] {
-  border-left: 2px solid #95a5a6;
-}
-
-.word[data-aligned-by="none"] {
-  border-left: 2px dashed #e74c3c;
-}
-
-/* ==================== СТИЛІ ДЛЯ ІВРИТУ ==================== */
-.hebrew-text {
-  direction: rtl;
-  unicode-bidi: embed;
-  font-family: "SBL Hebrew", "Ezra SIL", "Times New Roman", serif;
-}
-
-.greek-text {
-  font-family: "SBL Greek", "Times New Roman", serif;
-  font-style: italic;
-}
-
-/* ==================== АДАПТИВНІСТЬ ==================== */
+/* АДАПТИВНІСТЬ */
 @media (max-width: 1200px) {
   .word-block {
     min-width: 70px;
@@ -297,8 +241,9 @@
     padding: 3px 6px;
   }
 
-  .verse-header {
-    min-width: 35px;
+  .version-label {
+    min-width: 40px;
+    font-size: 0.75em;
   }
 }
 
@@ -312,17 +257,6 @@
   .word {
     font-size: 0.85em;
     padding: 2px 5px;
-  }
-
-  .verse-headers {
-    gap: 6px;
-    padding: 8px;
-  }
-
-  .verse-header {
-    padding: 5px 10px;
-    font-size: 0.85em;
-    min-width: 45px;
   }
 }
 
@@ -346,6 +280,11 @@
     min-height: 24px;
   }
 
+  .version-label {
+    min-width: 35px;
+    font-size: 0.7em;
+  }
+
   .word {
     font-size: 0.8em;
     padding: 2px 4px;
@@ -357,17 +296,6 @@
     padding: 10px;
     font-size: 0.9em;
   }
-
-  .verse-headers {
-    gap: 4px;
-    padding: 6px;
-  }
-
-  .verse-header {
-    padding: 4px 8px;
-    font-size: 0.8em;
-    min-width: 40px;
-  }
 }
 
 @media (max-width: 576px) {
@@ -376,19 +304,18 @@
     max-width: 120px;
   }
 
+  .version-label {
+    min-width: 30px;
+    font-size: 0.65em;
+  }
+
   .word {
     font-size: 0.75em;
     min-width: 30px;
   }
-
-  .verse-header {
-    padding: 3px 6px;
-    font-size: 0.75em;
-    min-width: 35px;
-  }
 }
 
-/* ==================== ДОДАТКОВІ СТИЛІ ==================== */
+/* Плавне перенесення блоків */
 .word-block {
   break-inside: avoid;
   page-break-inside: avoid;
@@ -406,34 +333,117 @@
 .word-block:hover .translation-version {
   background: #e8f5e8;
 }
-
-/* Відокремлення блоків */
-.word-block:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: -8px;
-  top: 0;
-  height: 100%;
-  width: 1px;
-  background: #eee;
+/* ---------------- */
+/* Додаємо в Interlinear.css */
+.verse-headers {
+  /* display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px 10px 0;
+  min-width: 80px;
+  max-width: 200px;
+  vertical-align: top;
+  position: relative; */
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  border-left: 4px solid #3498db; */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px 10px 0;
+  /* min-width: 80px; */
+  max-width: 200px;
+  vertical-align: top;
+  position: relative;
+  padding: 4px 8px;
 }
 
-/* Анімації */
-.word.clickable {
-  transition: all 0.2s ease;
+.verse-header {
+  /* padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.9em;
+  min-width: 50px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+  min-width: 40px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.95em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+  cursor: default;
+  user-select: none;
 }
 
-.word.clickable:active {
-  transform: scale(0.98);
+.original-header {
+  background: linear-gradient(135deg, #f3e5f5, #ebccf0);
+  color: #4a148c;
+  border: 1px solid #ce93d8;
 }
 
-/* Стилі для відладки */
-.word[data-debug="true"] {
-  outline: 1px dashed #f39c12;
+.translation-header {
+  background: linear-gradient(135deg, #e3f2fd, #c0e8c2);
+  color: #4caf50;
+
+  border: 1px solid #90caf9;
+}
+.verse-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.71em;
+  /* width: 100%; */
+}
+.header-label {
+  display: inline-block;
+  min-width: 40px;
 }
 
-/* .empty-word::before {
-  content: "—";
-  color: #95a5a6;
-  font-style: italic;
-} */
+/* АДАПТИВНІСТЬ */
+@media (max-width: 992px) {
+  .verse-headers {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .verse-header {
+    padding: 5px 10px;
+    font-size: 0.85em;
+    min-width: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .verse-headers {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .verse-header {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    min-width: 40px;
+  }
+
+  .header-label {
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  .verse-header {
+    padding: 3px 6px;
+    font-size: 0.75em;
+    min-width: 35px;
+  }
+}

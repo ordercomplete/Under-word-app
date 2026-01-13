@@ -280,9 +280,9 @@
 // ----------------
 
 // src/utils/logger.js - СПРОЩЕНА ВЕРСІЯ (або взагалі видалити)
-export const log = {
-  error: (msg, data) => console.error(`❌ ${msg}`, data),
-  warn: (msg, data) => console.warn(`⚠️ ${msg}`, data),
-  info: (msg, data) => console.info(`ℹ️ ${msg}`, data),
-  // debug: () => {} // ВИМКНЕНО в продакшені
-};
+// export const log = {
+//   error: (msg, data) => console.error(`❌ ${msg}`, data),
+//   warn: (msg, data) => console.warn(`⚠️ ${msg}`, data),
+//   info: (msg, data) => console.info(`ℹ️ ${msg}`, data),
+//   // debug: () => {} // ВИМКНЕНО в продакшені
+// };

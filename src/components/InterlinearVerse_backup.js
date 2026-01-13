@@ -1731,300 +1731,300 @@
 
 // export default InterlinearVerse;
 
-// ----------------------------------------------------26.12.25
-// src/components/InterlinearVerse.js
-import React, { useState, useRef, useMemo } from "react";
-import "../styles/Interlinear.css";
-import { jsonAdapter, getValue } from "../utils/jsonAdapter";
+// ----------------------------------------------------26.12.25 - працююча правильно синхронізація тільки без форматування
+// // src/components/InterlinearVerse.js
+// import React, { useState, useRef, useMemo } from "react";
+// import "../styles/Interlinear.css";
+// import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 
-const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
-  const [hoveredWord, setHoveredWord] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const tooltipRef = useRef(null);
-  const verseRef = useRef(null);
+// const InterlinearVerse = ({ verseNum, pairs, chapterData, onWordClick }) => {
+//   const [hoveredWord, setHoveredWord] = useState(null);
+//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+//   const tooltipRef = useRef(null);
+//   const verseRef = useRef(null);
 
-  // Функції для отримання значень
-  const getWordText = (word) => {
-    if (!word) return "—";
-    return getValue(word, "word") || getValue(word, "w") || "—";
-  };
+//   // Функції для отримання значень
+//   const getWordText = (word) => {
+//     if (!word) return "—";
+//     return getValue(word, "word") || getValue(word, "w") || "—";
+//   };
 
-  const getStrongCode = (word) => {
-    if (!word) return null;
-    return getValue(word, "strong") || getValue(word, "s") || null;
-  };
+//   const getStrongCode = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "strong") || getValue(word, "s") || null;
+//   };
 
-  const getLemma = (word) => {
-    if (!word) return null;
-    return getValue(word, "lemma") || getValue(word, "l") || null;
-  };
+//   const getLemma = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "lemma") || getValue(word, "l") || null;
+//   };
 
-  const getMorph = (word) => {
-    if (!word) return null;
-    return getValue(word, "morph") || getValue(word, "m") || null;
-  };
+//   const getMorph = (word) => {
+//     if (!word) return null;
+//     return getValue(word, "morph") || getValue(word, "m") || null;
+//   };
 
-  // Отримання вірша за номером
-  const getVerseData = (version, verseNumber) => {
-    if (!adaptedData[version]) return null;
-    return adaptedData[version].find((v) => {
-      const vNum = v.verse || v.v;
-      return vNum === verseNumber;
-    });
-  };
+//   // Отримання вірша за номером
+//   const getVerseData = (version, verseNumber) => {
+//     if (!adaptedData[version]) return null;
+//     return adaptedData[version].find((v) => {
+//       const vNum = v.verse || v.v;
+//       return vNum === verseNumber;
+//     });
+//   };
 
-  // Отримання слів з вірша
-  const getWordsFromVerse = (verseData) => {
-    if (!verseData) return [];
-    return getValue(verseData, "words") || getValue(verseData, "ws") || [];
-  };
+//   // Отримання слів з вірша
+//   const getWordsFromVerse = (verseData) => {
+//     if (!verseData) return [];
+//     return getValue(verseData, "words") || getValue(verseData, "ws") || [];
+//   };
 
-  // Адаптація даних
-  const adaptedData = useMemo(() => {
-    const result = {};
-    if (!chapterData) return result;
+//   // Адаптація даних
+//   const adaptedData = useMemo(() => {
+//     const result = {};
+//     if (!chapterData) return result;
 
-    Object.keys(chapterData).forEach((key) => {
-      const data = chapterData[key];
-      const adapted = jsonAdapter(data);
+//     Object.keys(chapterData).forEach((key) => {
+//       const data = chapterData[key];
+//       const adapted = jsonAdapter(data);
 
-      if (Array.isArray(adapted)) {
-        result[key] = adapted.filter(
-          (item) => item && typeof item === "object"
-        );
-      } else {
-        result[key] = [];
-      }
-    });
+//       if (Array.isArray(adapted)) {
+//         result[key] = adapted.filter(
+//           (item) => item && typeof item === "object"
+//         );
+//       } else {
+//         result[key] = [];
+//       }
+//     });
 
-    return result;
-  }, [chapterData]);
+//     return result;
+//   }, [chapterData]);
 
-  // Вирівнювання слів за Strong кодами для групи версій
-  const alignWordsForGroup = (originalVersion, translationVersions) => {
-    const originalVerse = getVerseData(originalVersion, verseNum);
-    const originalWords = getWordsFromVerse(originalVerse);
+//   // Вирівнювання слів за Strong кодами для групи версій
+//   const alignWordsForGroup = (originalVersion, translationVersions) => {
+//     const originalVerse = getVerseData(originalVersion, verseNum);
+//     const originalWords = getWordsFromVerse(originalVerse);
 
-    // Створюємо масив для вирівняних слів
-    const alignedWords = [];
+//     // Створюємо масив для вирівняних слів
+//     const alignedWords = [];
 
-    // Для кожного слова оригіналу створюємо об'єкт
-    originalWords.forEach((origWord, index) => {
-      const wordObj = {
-        id: `word-${index}`,
-        original: {
-          version: originalVersion,
-          word: origWord,
-          text: getWordText(origWord),
-          strong: getStrongCode(origWord),
-        },
-        translations: {},
-      };
+//     // Для кожного слова оригіналу створюємо об'єкт
+//     originalWords.forEach((origWord, index) => {
+//       const wordObj = {
+//         id: `word-${index}`,
+//         original: {
+//           version: originalVersion,
+//           word: origWord,
+//           text: getWordText(origWord),
+//           strong: getStrongCode(origWord),
+//         },
+//         translations: {},
+//       };
 
-      // Додаємо переклади для цього слова
-      translationVersions.forEach((transVersion) => {
-        const transVerse = getVerseData(transVersion, verseNum);
-        const transWords = getWordsFromVerse(transVerse);
+//       // Додаємо переклади для цього слова
+//       translationVersions.forEach((transVersion) => {
+//         const transVerse = getVerseData(transVersion, verseNum);
+//         const transWords = getWordsFromVerse(transVerse);
 
-        // Шукаємо відповідне слово за Strong кодом
-        if (wordObj.original.strong) {
-          const matchingWord = transWords.find(
-            (w) => getStrongCode(w) === wordObj.original.strong
-          );
-          wordObj.translations[transVersion] = matchingWord || null;
-        } else {
-          // Якщо немає Strong коду, спробуємо за індексом
-          wordObj.translations[transVersion] = transWords[index] || null;
-        }
-      });
+//         // Шукаємо відповідне слово за Strong кодом
+//         if (wordObj.original.strong) {
+//           const matchingWord = transWords.find(
+//             (w) => getStrongCode(w) === wordObj.original.strong
+//           );
+//           wordObj.translations[transVersion] = matchingWord || null;
+//         } else {
+//           // Якщо немає Strong коду, спробуємо за індексом
+//           wordObj.translations[transVersion] = transWords[index] || null;
+//         }
+//       });
 
-      alignedWords.push(wordObj);
-    });
+//       alignedWords.push(wordObj);
+//     });
 
-    return alignedWords;
-  };
+//     return alignedWords;
+//   };
 
-  const handleMouseMove = (e) => {
-    setMousePos({ x: e.pageX, y: e.pageY });
-  };
+//   const handleMouseMove = (e) => {
+//     setMousePos({ x: e.pageX, y: e.pageY });
+//   };
 
-  if (!pairs || pairs.length === 0 || !chapterData) {
-    return (
-      <div className="interlinear-verse">
-        <div className="verse-number">{verseNum}</div>
-        <div className="words-grid text-muted">Дані для вірша відсутні</div>
-      </div>
-    );
-  }
+//   if (!pairs || pairs.length === 0 || !chapterData) {
+//     return (
+//       <div className="interlinear-verse">
+//         <div className="verse-number">{verseNum}</div>
+//         <div className="words-grid text-muted">Дані для вірша відсутні</div>
+//       </div>
+//     );
+//   }
 
-  return (
-    <div
-      className="interlinear-verse"
-      ref={verseRef}
-      onMouseMove={handleMouseMove}
-    >
-      <div className="verse-number">{verseNum}</div>
+//   return (
+//     <div
+//       className="interlinear-verse"
+//       ref={verseRef}
+//       onMouseMove={handleMouseMove}
+//     >
+//       <div className="verse-number">{verseNum}</div>
 
-      <div className="pairs-container">
-        {pairs.map((pair, pairIndex) => {
-          // Якщо немає оригіналу і немає перекладів - пропускаємо
-          if (
-            !pair.original &&
-            (!pair.translations || pair.translations.length === 0)
-          ) {
-            return null;
-          }
+//       <div className="pairs-container">
+//         {pairs.map((pair, pairIndex) => {
+//           // Якщо немає оригіналу і немає перекладів - пропускаємо
+//           if (
+//             !pair.original &&
+//             (!pair.translations || pair.translations.length === 0)
+//           ) {
+//             return null;
+//           }
 
-          // Якщо є тільки оригінал без перекладів
-          if (
-            pair.original &&
-            (!pair.translations || pair.translations.length === 0)
-          ) {
-            const verse = getVerseData(pair.original, verseNum);
-            const words = getWordsFromVerse(verse);
+//           // Якщо є тільки оригінал без перекладів
+//           if (
+//             pair.original &&
+//             (!pair.translations || pair.translations.length === 0)
+//           ) {
+//             const verse = getVerseData(pair.original, verseNum);
+//             const words = getWordsFromVerse(verse);
 
-            if (words.length === 0) return null;
+//             if (words.length === 0) return null;
 
-            return (
-              <div key={`pair-${pairIndex}`} className="version-group">
-                <div className="version-row original-row">
-                  <span className="version-label">[{pair.original}]</span>
-                  <div className="words-row">
-                    {words.map((word, i) => (
-                      <span
-                        key={`word-${i}`}
-                        className="word-cell original-word"
-                        onClick={() => {
-                          const strong = getStrongCode(word);
-                          if (strong) {
-                            onWordClick({
-                              word: {
-                                word: getWordText(word),
-                                strong: strong,
-                                lemma: getLemma(word),
-                                morph: getMorph(word),
-                              },
-                              origVer: pair.original,
-                              lang: strong.startsWith("H") ? "he" : "gr",
-                            });
-                          }
-                        }}
-                      >
-                        {getWordText(word)}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          }
+//             return (
+//               <div key={`pair-${pairIndex}`} className="version-group">
+//                 <div className="version-row original-row">
+//                   <span className="version-label">[{pair.original}]</span>
+//                   <div className="words-row">
+//                     {words.map((word, i) => (
+//                       <span
+//                         key={`word-${i}`}
+//                         className="word-cell original-word"
+//                         onClick={() => {
+//                           const strong = getStrongCode(word);
+//                           if (strong) {
+//                             onWordClick({
+//                               word: {
+//                                 word: getWordText(word),
+//                                 strong: strong,
+//                                 lemma: getLemma(word),
+//                                 morph: getMorph(word),
+//                               },
+//                               origVer: pair.original,
+//                               lang: strong.startsWith("H") ? "he" : "gr",
+//                             });
+//                           }
+//                         }}
+//                       >
+//                         {getWordText(word)}
+//                       </span>
+//                     ))}
+//                   </div>
+//                 </div>
+//               </div>
+//             );
+//           }
 
-          // Якщо є оригінал і переклади
-          if (
-            pair.original &&
-            pair.translations &&
-            pair.translations.length > 0
-          ) {
-            const alignedWords = alignWordsForGroup(
-              pair.original,
-              pair.translations
-            );
+//           // Якщо є оригінал і переклади
+//           if (
+//             pair.original &&
+//             pair.translations &&
+//             pair.translations.length > 0
+//           ) {
+//             const alignedWords = alignWordsForGroup(
+//               pair.original,
+//               pair.translations
+//             );
 
-            return (
-              <div key={`pair-${pairIndex}`} className="version-group">
-                {/* Рядок оригіналу */}
-                <div className="version-row original-row">
-                  <span className="version-label">[{pair.original}]</span>
-                  <div className="words-row">
-                    {alignedWords.map((wordObj, i) => (
-                      <span
-                        key={`orig-${i}`}
-                        className="word-cell original-word"
-                        onClick={() => {
-                          if (wordObj.original.strong) {
-                            onWordClick({
-                              word: {
-                                word: wordObj.original.text,
-                                strong: wordObj.original.strong,
-                                lemma: getLemma(wordObj.original.word),
-                                morph: getMorph(wordObj.original.word),
-                              },
-                              origVer: pair.original,
-                              lang: wordObj.original.strong.startsWith("H")
-                                ? "he"
-                                : "gr",
-                            });
-                          }
-                        }}
-                      >
-                        {wordObj.original.text}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+//             return (
+//               <div key={`pair-${pairIndex}`} className="version-group">
+//                 {/* Рядок оригіналу */}
+//                 <div className="version-row original-row">
+//                   <span className="version-label">[{pair.original}]</span>
+//                   <div className="words-row">
+//                     {alignedWords.map((wordObj, i) => (
+//                       <span
+//                         key={`orig-${i}`}
+//                         className="word-cell original-word"
+//                         onClick={() => {
+//                           if (wordObj.original.strong) {
+//                             onWordClick({
+//                               word: {
+//                                 word: wordObj.original.text,
+//                                 strong: wordObj.original.strong,
+//                                 lemma: getLemma(wordObj.original.word),
+//                                 morph: getMorph(wordObj.original.word),
+//                               },
+//                               origVer: pair.original,
+//                               lang: wordObj.original.strong.startsWith("H")
+//                                 ? "he"
+//                                 : "gr",
+//                             });
+//                           }
+//                         }}
+//                       >
+//                         {wordObj.original.text}
+//                       </span>
+//                     ))}
+//                   </div>
+//                 </div>
 
-                {/* Рядки перекладів */}
-                {pair.translations.map((translation, transIndex) => (
-                  <div
-                    key={`trans-${transIndex}`}
-                    className="version-row translation-row"
-                  >
-                    <span className="version-label">[{translation}]</span>
-                    <div className="words-row">
-                      {alignedWords.map((wordObj, i) => {
-                        const transWord = wordObj.translations[translation];
-                        return (
-                          <span
-                            key={`trans-${i}`}
-                            className="word-cell translation-word"
-                            onClick={() => {
-                              const strong = getStrongCode(transWord);
-                              if (strong) {
-                                onWordClick({
-                                  word: {
-                                    word: getWordText(transWord),
-                                    strong: strong,
-                                    lemma: getLemma(transWord),
-                                  },
-                                  origVer: pair.original,
-                                  lang: "uk",
-                                });
-                              }
-                            }}
-                          >
-                            {transWord ? getWordText(transWord) : "—"}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            );
-          }
+//                 {/* Рядки перекладів */}
+//                 {pair.translations.map((translation, transIndex) => (
+//                   <div
+//                     key={`trans-${transIndex}`}
+//                     className="version-row translation-row"
+//                   >
+//                     <span className="version-label">[{translation}]</span>
+//                     <div className="words-row">
+//                       {alignedWords.map((wordObj, i) => {
+//                         const transWord = wordObj.translations[translation];
+//                         return (
+//                           <span
+//                             key={`trans-${i}`}
+//                             className="word-cell translation-word"
+//                             onClick={() => {
+//                               const strong = getStrongCode(transWord);
+//                               if (strong) {
+//                                 onWordClick({
+//                                   word: {
+//                                     word: getWordText(transWord),
+//                                     strong: strong,
+//                                     lemma: getLemma(transWord),
+//                                   },
+//                                   origVer: pair.original,
+//                                   lang: "uk",
+//                                 });
+//                               }
+//                             }}
+//                           >
+//                             {transWord ? getWordText(transWord) : "—"}
+//                           </span>
+//                         );
+//                       })}
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             );
+//           }
 
-          return null;
-        })}
-      </div>
+//           return null;
+//         })}
+//       </div>
 
-      {/* Tooltip */}
-      {hoveredWord && (
-        <div
-          ref={tooltipRef}
-          className="hover-tooltip"
-          style={{
-            left: `${mousePos.x + 15}px`,
-            top: `${mousePos.y - 80}px`,
-          }}
-        >
-          {/* ... існуючий код tooltip ... */}
-        </div>
-      )}
-    </div>
-  );
-};
+//       {/* Tooltip */}
+//       {hoveredWord && (
+//         <div
+//           ref={tooltipRef}
+//           className="hover-tooltip"
+//           style={{
+//             left: `${mousePos.x + 15}px`,
+//             top: `${mousePos.y - 80}px`,
+//           }}
+//         >
+//           {/* ... існуючий код tooltip ... */}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default InterlinearVerse;
+// export default InterlinearVerse;
 
 // --------------------------- 26.12.25-version-2
 
@@ -3498,509 +3498,509 @@ export default InterlinearVerse;
 
 // --------------------------- 27.12.25-version-Флекс-версія замість таблиці
 
-// // src/components/InterlinearVerse.js - НОВА ФЛЕКС ВЕРСІЯ 07.01.2026
-// import React, {
-//   useState,
-//   useRef,
-//   useMemo,
-//   useEffect,
-//   useCallback,
-// } from "react";
-// import "../styles/Interlinear.css";
-// import { jsonAdapter, getValue } from "../utils/jsonAdapter";
+// src/components/InterlinearVerse.js - НОВА ФЛЕКС ВЕРСІЯ 07.01.2026
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
+import "../styles/Interlinear.css";
+import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 
-// const InterlinearVerse = ({
-//   verseNum,
-//   pairs,
-//   chapterData,
-//   onWordClick,
-//   isFirstInChapter = false,
-// }) => {
-//   // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
-//   // console.log(`[InterlinearVerse ${verseNum}] Дані:`, Object.keys(chapterData));
+const InterlinearVerse = ({
+  verseNum,
+  pairs,
+  chapterData,
+  onWordClick,
+  isFirstInChapter = false,
+}) => {
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(`[InterlinearVerse ${verseNum}] Дані:`, Object.keys(chapterData));
 
-//   // Додати логування:
-//   // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
-//   // console.log(
-//   //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
-//   //   mainOriginal
-//   // );
-//   // console.log(
-//   //   `[InterlinearVerse ${verseNum}] Дані глави:`,
-//   //   Object.keys(chapterData)
-//   // );
-//   // В InterlinearVerse.js додати на початку рендерингу:
-//   if (!pairs || pairs.length === 0) {
-//     console.log(`[InterlinearVerse ${verseNum}] Немає пар для відображення`);
-//     return (
-//       <div className="interlinear-verse">
-//         <div className="verse-number">{verseNum}</div>
-//         <div className="words-grid text-muted">Очікування даних...</div>
-//       </div>
-//     );
-//   }
+  // Додати логування:
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Дані глави:`,
+  //   Object.keys(chapterData)
+  // );
+  // В InterlinearVerse.js додати на початку рендерингу:
+  if (!pairs || pairs.length === 0) {
+    console.log(`[InterlinearVerse ${verseNum}] Немає пар для відображення`);
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Очікування даних...</div>
+      </div>
+    );
+  }
 
-//   // Перевірити чи є дані в chapterData
-//   const hasData = Object.keys(chapterData).some((key) => {
-//     const data = chapterData[key];
-//     return Array.isArray(data) && data.length > 0;
-//   });
+  // Перевірити чи є дані в chapterData
+  const hasData = Object.keys(chapterData).some((key) => {
+    const data = chapterData[key];
+    return Array.isArray(data) && data.length > 0;
+  });
 
-//   if (!hasData) {
-//     return (
-//       <div className="interlinear-verse">
-//         <div className="verse-number">{verseNum}</div>
-//         <div className="words-grid text-muted">Завантаження даних...</div>
-//       </div>
-//     );
-//   }
+  if (!hasData) {
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Завантаження даних...</div>
+      </div>
+    );
+  }
 
-//   const [hoveredWord, setHoveredWord] = useState(null);
-//   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-//   const [containerWidth, setContainerWidth] = useState(0);
-//   const [isAboveCursor, setIsAboveCursor] = useState(false);
-//   const tooltipRef = useRef(null);
-//   const containerRef = useRef(null);
-//   const verseBlockRef = useRef(null);
+  const [hoveredWord, setHoveredWord] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [isAboveCursor, setIsAboveCursor] = useState(false);
+  const tooltipRef = useRef(null);
+  const containerRef = useRef(null);
+  const verseBlockRef = useRef(null);
 
-//   // Функції для отримання значень
-//   // const getWordText = (word) => {
-//   //   if (!word) return null;
-//   //   return getValue(word, "word") || getValue(word, "w") || null;
-//   // };
-//   // Або всередині з useCallback
-//   const getWordText = useCallback((word) => {
-//     if (!word) return null;
-//     return getValue(word, "word") || getValue(word, "w") || null;
-//   }, []);
+  // Функції для отримання значень
+  // const getWordText = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "word") || getValue(word, "w") || null;
+  // };
+  // Або всередині з useCallback
+  const getWordText = useCallback((word) => {
+    if (!word) return null;
+    return getValue(word, "word") || getValue(word, "w") || null;
+  }, []);
 
-//   // const getStrongCode = (word) => {
-//   //   if (!word) return null;
-//   //   return getValue(word, "strong") || getValue(word, "s") || null;
-//   // };
-//   const getStrongCode = useCallback((word) => {
-//     if (!word) return null;
-//     return getValue(word, "strong") || getValue(word, "s") || null;
-//   }, []);
+  // const getStrongCode = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "strong") || getValue(word, "s") || null;
+  // };
+  const getStrongCode = useCallback((word) => {
+    if (!word) return null;
+    return getValue(word, "strong") || getValue(word, "s") || null;
+  }, []);
 
-//   // const getLemma = (word) => {
-//   //   if (!word) return null;
-//   //   return getValue(word, "lemma") || getValue(word, "l") || null;
-//   // };
-//   const getLemma = useCallback((word) => {
-//     if (!word) return null;
-//     return getValue(word, "lemma") || getValue(word, "l") || null;
-//   }, []);
+  // const getLemma = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "lemma") || getValue(word, "l") || null;
+  // };
+  const getLemma = useCallback((word) => {
+    if (!word) return null;
+    return getValue(word, "lemma") || getValue(word, "l") || null;
+  }, []);
 
-//   // const getMorph = (word) => {
-//   //   if (!word) return null;
-//   //   return getValue(word, "morph") || getValue(word, "m") || null;
-//   // };
-//   const getMorph = useCallback((word) => {
-//     if (!word) return null;
-//     return getValue(word, "morph") || getValue(word, "m") || null;
-//   }, []);
+  // const getMorph = (word) => {
+  //   if (!word) return null;
+  //   return getValue(word, "morph") || getValue(word, "m") || null;
+  // };
+  const getMorph = useCallback((word) => {
+    if (!word) return null;
+    return getValue(word, "morph") || getValue(word, "m") || null;
+  }, []);
 
-//   // Отримання вірша за номером
-//   // const getVerseData = (version, verseNumber) => {
-//   //   if (!adaptedData[version]) return null;
-//   //   const verse = adaptedData[version].find((v) => {
-//   //     const vNum = v.verse || v.v;
-//   //     return parseInt(vNum) === parseInt(verseNumber);
-//   //   });
-//   //   return verse;
-//   // };
+  // Отримання вірша за номером
+  // const getVerseData = (version, verseNumber) => {
+  //   if (!adaptedData[version]) return null;
+  //   const verse = adaptedData[version].find((v) => {
+  //     const vNum = v.verse || v.v;
+  //     return parseInt(vNum) === parseInt(verseNumber);
+  //   });
+  //   return verse;
+  // };
 
-//   // Отримання слів з вірша
-//   // const getWordsFromVerse = (verseData) => {
-//   //   if (!verseData) return [];
-//   //   return getValue(verseData, "words") || getValue(verseData, "ws") || [];
-//   // };
-//   const getWordsFromVerse = useCallback((verseData) => {
-//     if (!verseData) return [];
-//     return getValue(verseData, "words") || getValue(verseData, "ws") || [];
-//   }, []);
+  // Отримання слів з вірша
+  // const getWordsFromVerse = (verseData) => {
+  //   if (!verseData) return [];
+  //   return getValue(verseData, "words") || getValue(verseData, "ws") || [];
+  // };
+  const getWordsFromVerse = useCallback((verseData) => {
+    if (!verseData) return [];
+    return getValue(verseData, "words") || getValue(verseData, "ws") || [];
+  }, []);
 
-//   // Адаптація даних
-//   const adaptedData = useMemo(() => {
-//     const result = {};
-//     if (!chapterData) return result;
+  // Адаптація даних
+  const adaptedData = useMemo(() => {
+    const result = {};
+    if (!chapterData) return result;
 
-//     Object.keys(chapterData).forEach((key) => {
-//       const data = chapterData[key];
-//       const adapted = jsonAdapter(data);
+    Object.keys(chapterData).forEach((key) => {
+      const data = chapterData[key];
+      const adapted = jsonAdapter(data);
 
-//       if (Array.isArray(adapted)) {
-//         result[key] = adapted.filter(
-//           (item) => item && typeof item === "object"
-//         );
-//       } else {
-//         result[key] = [];
-//       }
-//     });
+      if (Array.isArray(adapted)) {
+        result[key] = adapted.filter(
+          (item) => item && typeof item === "object"
+        );
+      } else {
+        result[key] = [];
+      }
+    });
 
-//     return result;
-//   }, [chapterData]);
-//   const getVerseData = useCallback(
-//     (version, verseNumber) => {
-//       if (!adaptedData[version]) return null;
-//       const verse = adaptedData[version].find((v) => {
-//         const vNum = v.verse || v.v;
-//         return parseInt(vNum) === parseInt(verseNumber);
-//       });
-//       return verse;
-//     },
-//     [adaptedData]
-//   );
+    return result;
+  }, [chapterData]);
+  const getVerseData = useCallback(
+    (version, verseNumber) => {
+      if (!adaptedData[version]) return null;
+      const verse = adaptedData[version].find((v) => {
+        const vNum = v.verse || v.v;
+        return parseInt(vNum) === parseInt(verseNumber);
+      });
+      return verse;
+    },
+    [adaptedData]
+  );
 
-//   // Оновлення ширини контейнера
-//   useEffect(() => {
-//     const updateWidth = () => {
-//       if (containerRef.current) {
-//         setContainerWidth(containerRef.current.offsetWidth);
-//       }
-//     };
+  // Оновлення ширини контейнера
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
 
-//     updateWidth();
-//     window.addEventListener("resize", updateWidth);
-//     return () => window.removeEventListener("resize", updateWidth);
-//   }, []);
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
-//   const mainOriginal = useMemo(() => {
-//     // Шукаємо серед пар оригінал
-//     for (const pair of pairs) {
-//       if (pair.original) {
-//         const origUpper = pair.original.toUpperCase();
-//         if (["TR", "GNT", "LXX", "THOT"].includes(origUpper)) {
-//           return pair.original;
-//         }
-//       }
-//     }
-//     return pairs[0]?.original || null;
-//   }, [pairs]);
-//   // console.log(
-//   //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
-//   //   mainOriginal
-//   // );
-//   // Створення блоків слів для кожного вірша
-//   const createVerseBlocks = useMemo(() => {
-//     if (!pairs || pairs.length === 0 || !chapterData || !mainOriginal) {
-//       return [];
-//     }
+  const mainOriginal = useMemo(() => {
+    // Шукаємо серед пар оригінал
+    for (const pair of pairs) {
+      if (pair.original) {
+        const origUpper = pair.original.toUpperCase();
+        if (["TR", "GNT", "LXX", "THOT"].includes(origUpper)) {
+          return pair.original;
+        }
+      }
+    }
+    return pairs[0]?.original || null;
+  }, [pairs]);
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
+  // Створення блоків слів для кожного вірша
+  const createVerseBlocks = useMemo(() => {
+    if (!pairs || pairs.length === 0 || !chapterData || !mainOriginal) {
+      return [];
+    }
 
-//     const blocks = [];
-//     let currentVerse = null;
-//     let currentPosition = 0;
+    const blocks = [];
+    let currentVerse = null;
+    let currentPosition = 0;
 
-//     const mainVerse = getVerseData(mainOriginal, verseNum);
-//     if (!mainVerse) return [];
+    const mainVerse = getVerseData(mainOriginal, verseNum);
+    if (!mainVerse) return [];
 
-//     const mainWords = getWordsFromVerse(mainVerse);
+    const mainWords = getWordsFromVerse(mainVerse);
 
-//     // Створюємо блоки для кожного слова
-//     mainWords.forEach((mainWord, wordIndex) => {
-//       const mainStrong = getStrongCode(mainWord);
+    // Створюємо блоки для кожного слова
+    mainWords.forEach((mainWord, wordIndex) => {
+      const mainStrong = getStrongCode(mainWord);
 
-//       // Блок для цього слова
-//       const wordBlock = {
-//         id: `${verseNum}-${wordIndex}`,
-//         strong: mainStrong,
-//         position: currentPosition,
-//         versions: {},
-//       };
+      // Блок для цього слова
+      const wordBlock = {
+        id: `${verseNum}-${wordIndex}`,
+        strong: mainStrong,
+        position: currentPosition,
+        versions: {},
+      };
 
-//       // Додаємо головний оригінал
-//       wordBlock.versions[mainOriginal] = {
-//         text: getWordText(mainWord),
-//         word: mainWord,
-//         isOriginal: true,
-//       };
+      // Додаємо головний оригінал
+      wordBlock.versions[mainOriginal] = {
+        text: getWordText(mainWord),
+        word: mainWord,
+        isOriginal: true,
+      };
 
-//       // Додаємо інші версії
-//       pairs.forEach((pair) => {
-//         // Оригінали цієї групи
-//         if (pair.original && pair.original !== mainOriginal) {
-//           const verse = getVerseData(pair.original, verseNum);
-//           if (verse) {
-//             const words = getWordsFromVerse(verse);
+      // Додаємо інші версії
+      pairs.forEach((pair) => {
+        // Оригінали цієї групи
+        if (pair.original && pair.original !== mainOriginal) {
+          const verse = getVerseData(pair.original, verseNum);
+          if (verse) {
+            const words = getWordsFromVerse(verse);
 
-//             let word = null;
-//             if (mainStrong) {
-//               word = words.find((w) => getStrongCode(w) === mainStrong);
-//             }
-//             if (!word && words[wordIndex]) {
-//               word = words[wordIndex];
-//             }
-//             if (word) {
-//               wordBlock.versions[pair.original] = {
-//                 text: getWordText(word),
-//                 word: word,
-//                 isOriginal: true,
-//               };
-//             }
-//           }
-//         }
+            let word = null;
+            if (mainStrong) {
+              word = words.find((w) => getStrongCode(w) === mainStrong);
+            }
+            if (!word && words[wordIndex]) {
+              word = words[wordIndex];
+            }
+            if (word) {
+              wordBlock.versions[pair.original] = {
+                text: getWordText(word),
+                word: word,
+                isOriginal: true,
+              };
+            }
+          }
+        }
 
-//         // Переклади
-//         if (pair.translations) {
-//           pair.translations.forEach((translation) => {
-//             const verse = getVerseData(translation, verseNum);
-//             if (verse) {
-//               const words = getWordsFromVerse(verse);
-//               // Шукаємо слово за Strong кодом або індексом
+        // Переклади
+        if (pair.translations) {
+          pair.translations.forEach((translation) => {
+            const verse = getVerseData(translation, verseNum);
+            if (verse) {
+              const words = getWordsFromVerse(verse);
+              // Шукаємо слово за Strong кодом або індексом
 
-//               let word = null;
-//               if (mainStrong) {
-//                 word = words.find((w) => getStrongCode(w) === mainStrong);
-//               }
-//               if (!word && words[wordIndex]) {
-//                 word = words[wordIndex];
-//               }
-//               if (word) {
-//                 wordBlock.versions[translation] = {
-//                   text: getWordText(word),
-//                   word: word,
-//                   isOriginal: false,
-//                 };
-//               }
-//             }
-//           });
-//         }
-//       });
+              let word = null;
+              if (mainStrong) {
+                word = words.find((w) => getStrongCode(w) === mainStrong);
+              }
+              if (!word && words[wordIndex]) {
+                word = words[wordIndex];
+              }
+              if (word) {
+                wordBlock.versions[translation] = {
+                  text: getWordText(word),
+                  word: word,
+                  isOriginal: false,
+                };
+              }
+            }
+          });
+        }
+      });
 
-//       blocks.push(wordBlock);
-//       currentPosition++;
-//     });
+      blocks.push(wordBlock);
+      currentPosition++;
+    });
 
-//     return blocks;
-//   }, [
-//     pairs,
-//     verseNum,
-//     chapterData,
-//     mainOriginal,
-//     adaptedData,
-//     getVerseData,
-//     getWordsFromVerse,
-//     getStrongCode,
-//     getWordText,
-//   ]);
+    return blocks;
+  }, [
+    pairs,
+    verseNum,
+    chapterData,
+    mainOriginal,
+    adaptedData,
+    getVerseData,
+    getWordsFromVerse,
+    getStrongCode,
+    getWordText,
+  ]);
 
-//   // Подія для курсора
-//   // const handleMouseMove = (e) => {
-//   //   setMousePos({ x: e.clientX, y: e.clientY });
-//   //   // Визначаємо, чи курсор у верхній половині екрану
-//   //   setIsAboveCursor(e.clientY < window.innerHeight / 2);
-//   // };
-//   const handleMouseMove = useCallback((e) => {
-//     setMousePos({ x: e.clientX, y: e.clientY });
-//     setIsAboveCursor(e.clientY < window.innerHeight / 2);
-//   }, []);
+  // Подія для курсора
+  // const handleMouseMove = (e) => {
+  //   setMousePos({ x: e.clientX, y: e.clientY });
+  //   // Визначаємо, чи курсор у верхній половині екрану
+  //   setIsAboveCursor(e.clientY < window.innerHeight / 2);
+  // };
+  const handleMouseMove = useCallback((e) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+    setIsAboveCursor(e.clientY < window.innerHeight / 2);
+  }, []);
 
-//   // Клік на слово
-//   // const handleWordClick = (word, version, strong, isOriginal) => {
-//   //   if (word && strong && onWordClick) {
-//   //     onWordClick({
-//   //       word: {
-//   //         word: getWordText(word),
-//   //         strong: strong,
-//   //         lemma: getLemma(word),
-//   //         morph: getMorph(word),
-//   //       },
-//   //       origVer: version,
-//   //       lang: strong.startsWith("H") ? "he" : "gr",
-//   //     });
-//   //   }
-//   // };
-//   const handleWordClick = useCallback(
-//     (word, version, strong, isOriginal) => {
-//       if (word && strong && onWordClick) {
-//         onWordClick({
-//           word: {
-//             word: getWordText(word),
-//             strong: strong,
-//             lemma: getLemma(word),
-//             morph: getMorph(word),
-//           },
-//           origVer: version,
-//           lang: strong.startsWith("H") ? "he" : "gr",
-//         });
-//       }
-//     },
-//     [onWordClick, getWordText, getLemma, getMorph]
-//   );
+  // Клік на слово
+  // const handleWordClick = (word, version, strong, isOriginal) => {
+  //   if (word && strong && onWordClick) {
+  //     onWordClick({
+  //       word: {
+  //         word: getWordText(word),
+  //         strong: strong,
+  //         lemma: getLemma(word),
+  //         morph: getMorph(word),
+  //       },
+  //       origVer: version,
+  //       lang: strong.startsWith("H") ? "he" : "gr",
+  //     });
+  //   }
+  // };
+  const handleWordClick = useCallback(
+    (word, version, strong, isOriginal) => {
+      if (word && strong && onWordClick) {
+        onWordClick({
+          word: {
+            word: getWordText(word),
+            strong: strong,
+            lemma: getLemma(word),
+            morph: getMorph(word),
+          },
+          origVer: version,
+          lang: strong.startsWith("H") ? "he" : "gr",
+        });
+      }
+    },
+    [onWordClick, getWordText, getLemma, getMorph]
+  );
 
-//   // Відображення слова з інтервалом
-//   const renderWord = useCallback(
-//     (wordData, version, strong, isOriginal) => {
-//       if (!wordData || !wordData.text) {
-//         return (
-//           <div className="empty-word">
-//             <span
-//               key={`empty-${version}`}
-//               className="empty-word"
-//               title="Відсутній відповідник"
-//             >
-//               —
-//             </span>
-//           </div>
-//         );
-//       }
+  // Відображення слова з інтервалом
+  const renderWord = useCallback(
+    (wordData, version, strong, isOriginal) => {
+      if (!wordData || !wordData.text) {
+        return (
+          <div className="empty-word">
+            <span
+              key={`empty-${version}`}
+              className="empty-word"
+              title="Відсутній відповідник"
+            >
+              —
+            </span>
+          </div>
+        );
+      }
 
-//       return (
-//         <span
-//           key={`word-${version}`}
-//           className={`word ${
-//             isOriginal ? "original-word" : "translation-word"
-//           } ${wordData.word ? "clickable" : ""}`}
-//           onClick={() =>
-//             handleWordClick(wordData.word, version, strong, isOriginal)
-//           }
-//           onMouseEnter={() =>
-//             wordData.word &&
-//             setHoveredWord({ ...wordData, strong, version, isOriginal })
-//           }
-//           onMouseLeave={() => setHoveredWord(null)}
-//           title={strong ? `Strong: ${strong}` : ""}
-//         >
-//           {wordData.text}
-//         </span>
-//       );
-//     },
-//     [handleWordClick]
-//   ); // handleWordClick тепер з useCallback
+      return (
+        <span
+          key={`word-${version}`}
+          className={`word ${
+            isOriginal ? "original-word" : "translation-word"
+          } ${wordData.word ? "clickable" : ""}`}
+          onClick={() =>
+            handleWordClick(wordData.word, version, strong, isOriginal)
+          }
+          onMouseEnter={() =>
+            wordData.word &&
+            setHoveredWord({ ...wordData, strong, version, isOriginal })
+          }
+          onMouseLeave={() => setHoveredWord(null)}
+          title={strong ? `Strong: ${strong}` : ""}
+        >
+          {wordData.text}
+        </span>
+      );
+    },
+    [handleWordClick]
+  ); // handleWordClick тепер з useCallback
 
-//   if (!pairs || pairs.length === 0 || !chapterData) {
-//     return (
-//       <div className="interlinear-verse">
-//         <div className="verse-number">{verseNum}</div>
-//         <div className="words-grid text-muted">Дані для вірша відсутні</div>
-//       </div>
-//     );
-//   }
-//   // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
-//   // console.log(
-//   //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
-//   //   mainOriginal
-//   // );
-//   // console.log(
-//   //   `[InterlinearVerse ${verseNum}] Дані глави:`,
-//   //   Object.keys(chapterData)
-//   // );
-//   return (
-//     <div
-//       className="interlinear-verse flex-layout"
-//       onMouseMove={handleMouseMove}
-//     >
-//       <div className="verse-content" data-verse={verseNum}>
-//         <div className="verse-number">{verseNum}</div>
+  if (!pairs || pairs.length === 0 || !chapterData) {
+    return (
+      <div className="interlinear-verse">
+        <div className="verse-number">{verseNum}</div>
+        <div className="words-grid text-muted">Дані для вірша відсутні</div>
+      </div>
+    );
+  }
+  // console.log(`[InterlinearVerse ${verseNum}] Пари:`, pairs);
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Головний оригінал:`,
+  //   mainOriginal
+  // );
+  // console.log(
+  //   `[InterlinearVerse ${verseNum}] Дані глави:`,
+  //   Object.keys(chapterData)
+  // );
+  return (
+    <div
+      className="interlinear-verse flex-layout"
+      onMouseMove={handleMouseMove}
+    >
+      <div className="verse-content" data-verse={verseNum}>
+        <div className="verse-number">{verseNum}</div>
 
-//         {/* ЗАГОЛОВКИ ТІЛЬКИ ДЛЯ ПЕРШОГО ВІРША РОЗДІЛУ */}
-//         {isFirstInChapter && (
-//           <div className="verse-headers verse-row">
-//             {/* Проходимо по всіх версіях в порядку відображення */}
-//             {getDisplayVersions(pairs).map((version, index) => (
-//               <div
-//                 key={`header-${version}-${index}`}
-//                 className={`verse-header ${
-//                   isOriginalVersion(version)
-//                     ? "original-header"
-//                     : "translation-header"
-//                 }`}
-//               >
-//                 <span className=" word">[{version}]</span>
-//               </div>
-//             ))}
-//           </div>
-//         )}
+        {/* ЗАГОЛОВКИ ТІЛЬКИ ДЛЯ ПЕРШОГО ВІРША РОЗДІЛУ */}
+        {isFirstInChapter && (
+          <div className="verse-headers verse-row">
+            {/* Проходимо по всіх версіях в порядку відображення */}
+            {getDisplayVersions(pairs).map((version, index) => (
+              <div
+                key={`header-${version}-${index}`}
+                className={`verse-header ${
+                  isOriginalVersion(version)
+                    ? "original-header"
+                    : "translation-header"
+                }`}
+              >
+                <span className=" word">[{version}]</span>
+              </div>
+            ))}
+          </div>
+        )}
 
-//         {/* БЛОКИ СЛІВ */}
-//         {createVerseBlocks.map((block, blockIndex) => (
-//           <div key={block.id} className="word-block">
-//             <div className="version-row">
-//               {getDisplayVersions(pairs).map((version, versionIndex) => {
-//                 const wordData = block.versions[version];
+        {/* БЛОКИ СЛІВ */}
+        {createVerseBlocks.map((block, blockIndex) => (
+          <div key={block.id} className="word-block">
+            <div className="version-row">
+              {getDisplayVersions(pairs).map((version, versionIndex) => {
+                const wordData = block.versions[version];
 
-//                 return (
-//                   <div
-//                     key={`${block.id}-${version}-${versionIndex}`}
-//                     className={`word-version ${
-//                       isOriginalVersion(version)
-//                         ? "original-version"
-//                         : "translation-version"
-//                     }`}
-//                   >
-//                     {renderWord(
-//                       wordData,
-//                       version,
-//                       block.strong,
-//                       isOriginalVersion(version)
-//                     )}
-//                   </div>
-//                 );
-//               })}
-//             </div>
-//           </div>
-//         ))}
-//       </div>
+                return (
+                  <div
+                    key={`${block.id}-${version}-${versionIndex}`}
+                    className={`word-version ${
+                      isOriginalVersion(version)
+                        ? "original-version"
+                        : "translation-version"
+                    }`}
+                  >
+                    {renderWord(
+                      wordData,
+                      version,
+                      block.strong,
+                      isOriginalVersion(version)
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
 
-//       {/* Плаваюча підказка */}
-//       {hoveredWord && hoveredWord.word && (
-//         <div
-//           ref={tooltipRef}
-//           className="floating-tooltip"
-//           style={{
-//             left: `${mousePos.x + 10}px`,
-//             top: isAboveCursor
-//               ? `${mousePos.y + 20}px`
-//               : `${mousePos.y - 120}px`,
-//             transform: "translateX(-50%)",
-//           }}
-//         >
-//           <div className="tooltip-header">
-//             <strong className="strong-code">{hoveredWord.strong}</strong>
-//             <span className="version-badge">[{hoveredWord.version}]</span>
-//           </div>
-//           <div className="tooltip-body">
-//             <div className="word-text">{hoveredWord.text}</div>
-//             {getLemma(hoveredWord.word) && (
-//               <div className="word-lemma">
-//                 Лема: {getLemma(hoveredWord.word)}
-//               </div>
-//             )}
-//             {getMorph(hoveredWord.word) && (
-//               <div className="word-morph">
-//                 Морф: {getMorph(hoveredWord.word)}
-//               </div>
-//             )}
-//           </div>
-//           <div className="tooltip-footer">
-//             <small>Клік для відкриття словника</small>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-// // ДОПОМІЖНІ ФУНКЦІЇ
-// const getDisplayVersions = (pairs) => {
-//   const versions = [];
+      {/* Плаваюча підказка */}
+      {hoveredWord && hoveredWord.word && (
+        <div
+          ref={tooltipRef}
+          className="floating-tooltip"
+          style={{
+            left: `${mousePos.x + 10}px`,
+            top: isAboveCursor
+              ? `${mousePos.y + 20}px`
+              : `${mousePos.y - 120}px`,
+            transform: "translateX(-50%)",
+          }}
+        >
+          <div className="tooltip-header">
+            <strong className="strong-code">{hoveredWord.strong}</strong>
+            <span className="version-badge">[{hoveredWord.version}]</span>
+          </div>
+          <div className="tooltip-body">
+            <div className="word-text">{hoveredWord.text}</div>
+            {getLemma(hoveredWord.word) && (
+              <div className="word-lemma">
+                Лема: {getLemma(hoveredWord.word)}
+              </div>
+            )}
+            {getMorph(hoveredWord.word) && (
+              <div className="word-morph">
+                Морф: {getMorph(hoveredWord.word)}
+              </div>
+            )}
+          </div>
+          <div className="tooltip-footer">
+            <small>Клік для відкриття словника</small>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+// ДОПОМІЖНІ ФУНКЦІЇ
+const getDisplayVersions = (pairs) => {
+  const versions = [];
 
-//   pairs.forEach((pair) => {
-//     // Додаємо оригінал
-//     if (pair.original) {
-//       versions.push(pair.original);
-//     }
+  pairs.forEach((pair) => {
+    // Додаємо оригінал
+    if (pair.original) {
+      versions.push(pair.original);
+    }
 
-//     // Додаємо переклади
-//     if (pair.translations && pair.translations.length > 0) {
-//       versions.push(...pair.translations);
-//     }
-//   });
+    // Додаємо переклади
+    if (pair.translations && pair.translations.length > 0) {
+      versions.push(...pair.translations);
+    }
+  });
 
-//   return versions;
-// };
+  return versions;
+};
 
-// const isOriginalVersion = (version) => {
-//   return ["LXX", "THOT", "TR", "GNT"].includes(version.toUpperCase());
-// };
-// export default InterlinearVerse;
+const isOriginalVersion = (version) => {
+  return ["LXX", "THOT", "TR", "GNT"].includes(version.toUpperCase());
+};
+export default InterlinearVerse;
