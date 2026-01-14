@@ -51,21 +51,68 @@
   </head>
   <body>
     <div id="root">
+      <!-- Додайте перед закриваючим </body> -->
       <script>
+        // Реєстрація Service Worker
         if ("serviceWorker" in navigator) {
           window.addEventListener("load", () => {
             navigator.serviceWorker
-              .register("/sw.js")
+              .register("/sw.js", {
+                scope: "/",
+                updateViaCache: "none", // Завжди оновлювати з мережі
+              })
               .then((registration) => {
                 console.log(
-                  "Service Worker зареєстровано:",
+                  "✅ Service Worker зареєстровано:",
                   registration.scope
                 );
+
+                // Перевіряємо оновлення
+                registration.addEventListener("updatefound", () => {
+                  const newWorker = registration.installing;
+                  console.log("🔄 Оновлення Service Worker");
+
+                  newWorker.addEventListener("statechange", () => {
+                    if (
+                      newWorker.state === "installed" &&
+                      navigator.serviceWorker.controller
+                    ) {
+                      // Нова версія доступна
+                      if (confirm("Доступна нова версія додатка. Оновити?")) {
+                        window.location.reload();
+                      }
+                    }
+                  });
+                });
               })
               .catch((error) => {
-                console.log("Помилка реєстрації Service Worker:", error);
+                console.log("❌ Помилка реєстрації Service Worker:", error);
               });
+
+            // Перевіряємо оновлення кожну годину
+            setInterval(() => {
+              if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                  type: "CHECK_UPDATE",
+                });
+              }
+            }, 60 * 60 * 1000);
           });
+        }
+
+        // Очистка кешу (для розробки)
+        if (process.env.NODE_ENV === "development") {
+          window.clearAppCache = () => {
+            if (
+              "serviceWorker" in navigator &&
+              navigator.serviceWorker.controller
+            ) {
+              navigator.serviceWorker.controller.postMessage({
+                type: "CLEAR_CACHE",
+              });
+              console.log("🧹 Запит на очистку кешу відправлено");
+            }
+          };
         }
       </script>
     </div>

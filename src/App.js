@@ -237,12 +237,33 @@ const App = () => {
             top: "10px",
             left: "200px",
             zIndex: 9998,
+            fontSize: "0.8em",
             opacity: 0.8,
           }}
           onClick={toggleTester}
           title="Перемикач тесту формату"
         >
           <i className={`bi bi-${showTester ? "eye-slash" : "eye"}`}>JSON</i>
+        </button>
+      )}
+      {process.env.NODE_ENV === "development" && (
+        <button
+          onClick={() => {
+            if (window.clearAppCache) window.clearAppCache();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.reload();
+          }}
+          className="btn btn-sm btn-danger d-flex justify-content-center align-items-center"
+          style={{
+            position: "fixed",
+            top: "10px",
+            left: "250px",
+            zIndex: 9999,
+            fontSize: "0.6em",
+          }}
+        >
+          CLEAR CACHE
         </button>
       )}
 
