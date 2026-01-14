@@ -23,10 +23,10 @@ const PassageOptionsGroup = ({
   coreLoading,
   disableClose,
 }) => {
-  console.log(
-    "Panel: 1-PassageOptionsGroup coreData keys:",
-    Object.keys(coreData || {})
-  );
+  // console.log(
+  //   "Panel: 1-PassageOptionsGroup coreData keys:",
+  //   Object.keys(coreData || {})
+  // );
   const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showBook, setShowBook] = useState(false);
   const [showChapter, setShowChapter] = useState(false);
@@ -37,11 +37,23 @@ const PassageOptionsGroup = ({
 
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
-  console.log(
-    "Panel: 2-PassageOptionsGroup coreData keys:",
-    Object.keys(coreData || {})
-  );
+  // console.log(
+  //   "Panel: 2-PassageOptionsGroup coreData keys:",
+  //   Object.keys(coreData || {})
+  // );
+  // Додайте в PassageOptionsGroup.js
+  const prefetchChapter = (book, chapter, versions) => {
+    versions.forEach((version) => {
+      const testament = getTestament(book);
+      const verLower = version.toLowerCase();
+      const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(verLower);
+      const base = isOriginal ? "originals" : "translations";
+      const url = `/data/${base}/${verLower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${verLower}.json`;
 
+      // Пресетч без блокування
+      fetch(url, { priority: "low", mode: "no-cors" }).catch(() => {});
+    });
+  };
   // Додайте цю функцію всередині компонента перед return 24.12.15
   const getBookChapters = (bookCode, version) => {
     const verData = coreData[version?.toLowerCase()];
@@ -63,6 +75,29 @@ const PassageOptionsGroup = ({
     console.warn(`Book ${bookCode} not found for version ${version}`);
     return 1;
   };
+  // const getBookChapters = (bookCode, version) => {
+  //   if (!coreData || !version) return 1;
+
+  //   const testament = getTestament(bookCode);
+  //   const verKey = version.toLowerCase();
+
+  //   // Перевіряємо, чи має ця версія даний заповіт
+  //   const hasTestament = coreData[verKey] && coreData[verKey][testament];
+
+  //   if (!hasTestament) {
+  //     console.warn(`${version} не має ${testament}`);
+  //     return 1;
+  //   }
+
+  //   // Шукаємо книгу
+  //   const groups = coreData[verKey][testament];
+  //   for (let i = 0; i < groups.length; i++) {
+  //     const bookInfo = groups[i].books.find((b) => b.code === bookCode);
+  //     if (bookInfo) return bookInfo.chapters;
+  //   }
+
+  //   return 1;
+  // };
   return (
     <>
       <div className="passage-options-group">

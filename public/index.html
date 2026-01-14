@@ -4,6 +4,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <!-- Preload критичних ресурсів -->
+    <link
+      rel="preload"
+      href="/data/core.json"
+      as="fetch"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/data/translations.json"
+      as="fetch"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/data/lang.json"
+      as="fetch"
+      crossorigin="anonymous"
+    />
+
+    <!-- Preconnect до доменів -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload шрифтів -->
+    <!-- <link
+      rel="preload"
+      href="/font/your-font.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    /> -->
     <!-- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> -->
     <link
       rel="icon"
@@ -14,11 +45,29 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
 
     <title>Under-word-app</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <script>
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker
+              .register("/sw.js")
+              .then((registration) => {
+                console.log(
+                  "Service Worker зареєстровано:",
+                  registration.scope
+                );
+              })
+              .catch((error) => {
+                console.log("Помилка реєстрації Service Worker:", error);
+              });
+          });
+        }
+      </script>
+    </div>
   </body>
 </html>

@@ -1555,7 +1555,7 @@ const TranslationSelector = ({
   initialVersions = [], // ← НОВИЙ ПРОП: поточні версії з панелі
   currentBook = "GEN", // ← НОВИЙ ПРОП: поточна книга для інтелектуального дефолту
 }) => {
-  console.log("🔄 TranslationSelector: компонент ініціалізовано");
+  // console.log("🔄 TranslationSelector: компонент ініціалізовано");
 
   // ==================== STATE ====================
   const [translations, setTranslations] = useState({ bibles: [] });
@@ -1745,11 +1745,11 @@ const TranslationSelector = ({
     return !pairTestament || pairTestament === currentTestament;
   });
   const filteredItems = useMemo(() => {
-    console.log("🔍 TranslationSelector: фільтрація елементів", {
-      languageFilter,
-      searchQuery,
-      totalItems: translations.bibles?.length || 0,
-    });
+    // console.log("🔍 TranslationSelector: фільтрація елементів", {
+    //   languageFilter,
+    //   searchQuery,
+    //   totalItems: translations.bibles?.length || 0,
+    // });
 
     const list = translations.bibles || [];
 
@@ -1786,10 +1786,10 @@ const TranslationSelector = ({
       groups[key].push(item);
     });
 
-    console.log("📊 TranslationSelector: згруповано за мовами", {
-      groupsCount: Object.keys(groups).length,
-      groups: Object.keys(groups),
-    });
+    // console.log("📊 TranslationSelector: згруповано за мовами", {
+    //   groupsCount: Object.keys(groups).length,
+    //   groups: Object.keys(groups),
+    // });
 
     return groups;
   }, [filteredItems, languageFilter, isOriginalVersion]);
@@ -2316,7 +2316,7 @@ const TranslationSelector = ({
 
 export default TranslationSelector;
 
-console.log("📦 TranslationSelector.js: модуль завантажено");
+// console.log("📦 TranslationSelector.js: модуль завантажено");
 
 /**
  * ЕКСПОРТ УТІЛІТ ДЛЯ ТЕСТУВАННЯ
