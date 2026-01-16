@@ -93,12 +93,18 @@
   border: 1px dashed #ddd;
 }
 
-.missing-verse .verse-number {
+.missing-verse {
   font-weight: bold;
   color: #95a5a6;
   margin-bottom: 5px;
 }
-
+.chapter-viewer {
+  background-image: url("/public/images/pergament.jpg");
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  height: auto;
+}
 /* Адаптивність */
 @media (max-width: 768px) {
   .versions-header {

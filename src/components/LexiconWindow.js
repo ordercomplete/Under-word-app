@@ -1025,9 +1025,9 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
           {entry.translit && ` (${entry.translit})`}
           <small className="text-muted ms-2">
             • {entry.strong || strong}
-            {isTranslationDict && (
+            {/* {isTranslationDict && (
               <span className="badge bg-success ms-2">UA</span>
-            )}
+            )} */}
           </small>
         </div>
         {onClose && <CloseIcon onClick={onClose} />}
@@ -1202,7 +1202,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
       <div className="lexicon-footer mt-2 pt-2 border-top small">
         {entry._type === "strongs_dictionary" ? (
           <div className="d-flex justify-content-between align-items-center">
-            <span className="text-primary">• Strong's Dictionary</span>
+            <span className="text-primary">• Strong's Dictionary •</span>
             <span className="badge bg-primary">ua</span>
           </div>
         ) : (

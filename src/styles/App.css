@@ -14,7 +14,9 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
 }
-
+button {
+  color: black;
+}
 .main-content {
   padding-top: 0px !important;
   /* margin-top: 65px !important; */
@@ -57,9 +59,6 @@ body {
 
 .chapter-viewer {
   background-image: url("/public/images/pergament.jpg");
-}
-
-.chapter-viewer {
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
@@ -69,100 +68,51 @@ body {
 .book-selector-content {
   position: relative;
 }
+/* .lexicon-tabs {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  min-height: 50px;
+  flex-wrap: nowrap;
+  scrollbar-width: thin;
+} */
 
-@media (max-width: 1070px) {
-  .main-content {
-    flex-direction: column;
-  }
-  .passage-container {
-    flex-direction: column;
-    /* Переносимо лексикон під */
-  }
-  .lexicon-column {
-    width: 100%;
-    /* Повна ширина */
-    padding-top: 0px;
-    flex-direction: row;
-    /* Горизонтально для лексиконів */
-    /* overflow-x: auto; */
-    /* Скрол горизонтальний */
-    overflow: hidden;
-    /* ← не скролити колонку */
-    height: auto;
-    max-height: 30%;
-    border-left: none;
-    border: 1px solid #ddd;
-    position: sticky;
-    bottom: 0;
-    background: white;
-    /* Фікс до низу */
-    display: flex;
-  }
-  .lexicon-window {
-    /* Фіксована ширина для кожного вікна */
-    min-width: 50%; /* Для скролу */
-    width: 100%;
-    height: 100%; /* Повна висота */
-    border-bottom: none;
-    border-right: 1px solid #ddd; /* Розділ горизонтальний */
-    min-height: 0; /* ← дозволяє overflow */
-    justify-content: center;
-  }
-  .lexicon-window:last-child {
-    border-right: none;
-  }
-  .dictionary-content {
-    width: 50%;
-    min-width: 256px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 256px;
-  }
-}
-
-@media (max-width: 578px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 200px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 200px;
-  }
-
-  .lexicon-tabs button {
-    padding: 10px 0;
-    margin: 0 auto;
-    flex: 0 0 auto;
-  }
-}
-
-@media (max-width: 466px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 180px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 180px;
-  }
-
-  .lexicon-tabs button {
-    font-size: 0.8rem;
-    width: auto;
-  }
-}
-@media (max-width: 426px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 160px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 160px;
-  }
-  .lexicon-tabs button {
-    font-size: 0.7rem;
-  }
-}
+/* .lexicon-tabs button {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+} */
+/* .lexicon-column {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #ddd;
+  overflow: hidden;
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  padding-top: 63px;
+} */
+/* .lexicon-window {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ddd;
+  min-height: 200px;
+} */
+/* .lexicon-content {
+  display: flex;
+  background-image: url("/public/images/stoun-bg-1.jpg");
+  padding: 1rem;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 0.95rem;
+  justify-content: center;
+} */

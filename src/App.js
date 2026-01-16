@@ -127,6 +127,7 @@ import NavbarHeader from "./components/NavbarHeader";
 // import FormatTester from "./components/FormatTester";
 
 // Імпорт стилів
+import "./styles/normalize.css";
 import "./styles/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";

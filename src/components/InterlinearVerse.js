@@ -611,6 +611,7 @@ import React, {
   memo,
 } from "react";
 import "../styles/Interlinear.css";
+// import "../styles/PassagePage.css";
 import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 import { logger } from "../utils/logger"; // Додати цей імпорт
 
@@ -916,8 +917,8 @@ const InterlinearVerse = ({
     (wordData, version, strong, isOriginal) => {
       if (!wordData || wordData.text === null) {
         return (
-          <span className="empty-word" title="Відсутній відповідник">
-            —
+          <span className="word empty-word" title="Відсутній відповідник">
+            ~~~
           </span>
         );
       }
@@ -1024,11 +1025,11 @@ const InterlinearVerse = ({
                     : "translation-header"
                 }`}
                 style={{
-                  direction: version === "THOT" ? "rtl" : "ltr",
+                  // direction: version === "THOT" ? "rtl" : "ltr",
                   unicodeBidi: version === "THOT" ? "embed" : "normal",
                 }}
               >
-                <span>[{version}]</span>
+                <span className="word-span">[{version}]</span>
               </div>
             ))}
           </div>

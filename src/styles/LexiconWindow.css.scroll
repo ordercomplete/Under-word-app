@@ -22,8 +22,8 @@
 .grammar-content::-webkit-scrollbar,
 .lexicon-column::-webkit-scrollbar,
 .lexicon-content::-webkit-scrollbar {
-  width: 3px; /* Мінімальна товщина */
-  height: 3px; /* Для горизонтального скролу */
+  width: 6px; /* Мінімальна товщина */
+  height: 6px; /* Для горизонтального скролу */
 }
 
 /* Трек скролбара */
@@ -37,9 +37,6 @@
 .lexicon-content::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 3px;
-  width: 3px; /* Мінімальна товщина */
-  height: 3px; /* Для горизонтального скролу */
-  min-width: 3px; /* Мінімальна товщина */
 }
 
 /* Повзунок скролбара - кулька */
@@ -53,8 +50,7 @@
 .lexicon-content::-webkit-scrollbar-thumb {
   background: #888; /* Сірий колір */
   border-radius: 10px; /* Кругла форма */
-  min-height: 10px; /* Мінімальна висота кульки */
-  max-height: 20px;
+  min-height: 40px; /* Мінімальна висота кульки */
 }
 
 /* Ховер ефект для повзунка */
@@ -105,6 +101,10 @@
     background: #ccc;
   }
 }
+
+/* --------------------------------------------------------- */
+/* Оригінальні стилі з вашими коментарями, де додані overflow */
+
 .lex-item {
   display: flex;
   justify-content: space-between;
@@ -141,19 +141,19 @@
   border-bottom: 1px solid #ddd;
   min-height: 50px;
   flex-wrap: nowrap;
-  scrollbar-width: thin;
   overflow-x: auto; /* Горизонтальний скрол для табів */
   overflow-y: hidden; /* Ховаємо вертикальний скрол */
 }
 
 .lexicon-tabs button {
-  flex: 1;
-  padding: 10px 8px;
+  flex: 0 0 auto; /* Не дозволяємо кнопкам стискатися */
+  padding: 10px 16px; /* Збільшив padding для кращого кліку */
   border: none;
   background: none;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap; /* Запобігає переносу тексту */
 }
 
 .lexicon-tabs button.active {
@@ -165,41 +165,47 @@
 .list-unstyled {
   font-size: 0.9rem;
   line-height: 1.5;
-  /* overflow-y: auto; */
+  overflow-y: auto; /* Розкоментував overflow */
+  max-height: 300px; /* Обмеження висоти для скролу */
 }
+
 .dictionary-content {
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-y: auto;
   width: 90%;
+  max-height: 400px; /* Додав обмеження висоти */
 }
 
 .meanings-content {
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-y: auto;
-  /* height: 100vh; */
+  max-height: 500px; /* Додав обмеження висоти */
 }
 
 .lsj-content {
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-y: auto;
-  /* height: 100vh; */
+  max-height: 500px; /* Додав обмеження висоти */
 }
 
 .lsj-content h6 {
   font-weight: bold;
   color: #495057;
 }
+
 .grammar-content {
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-y: auto;
+  max-height: 400px; /* Додав обмеження висоти */
 }
+
 .grammar-content pre {
-  overflow-x: hidden;
-  white-space: wrap;
+  overflow-x: auto; /* Додав горизонтальний скрол для довгого коду */
+  white-space: pre-wrap;
   padding: 8px;
   margin: 0;
 }
@@ -210,7 +216,7 @@
   display: flex;
   flex-direction: column;
   border-left: 1px solid #ddd;
-  overflow: hidden;
+  overflow: hidden; /* Залишаємо hidden для контейнера */
   flex-shrink: 0;
   height: 100vh;
   position: sticky;
@@ -225,21 +231,11 @@
   min-height: 200px;
 }
 
-/* .lexicon-content {
-  display: flex;
-  background-image: url("/public/images/stoun-bg-1.jpg");
-  padding: 1rem;
-  height: 100vh;
-  overflow-y: auto;
-  font-size: 0.95rem;
-  justify-content: center;
-} */
 .lexicon-content {
   display: flex;
   background-image: url("/public/images/stoun-bg-1.jpg");
-  padding: 1rem 0;
-  height: calc(100vh - 63px);
-  /* Враховуємо sticky header */
+  padding: 1rem;
+  height: calc(100vh - 63px); /* Враховуємо sticky header */
   overflow-y: auto; /* Розкоментував overflow */
   font-size: 0.95rem;
   justify-content: center;
@@ -258,108 +254,12 @@
   background: white;
   z-index: 1;
   margin: 0;
-  /* padding: 0.5rem; */
-  padding: 4px 10px;
+  padding: 8px 16px;
   border: 1px solid #ddd;
   min-height: 54px;
   align-items: center;
 }
-@media (max-width: 1070px) {
-  .main-content {
-    flex-direction: column;
-  }
-  .passage-container {
-    flex-direction: column;
-    /* Переносимо лексикон під */
-  }
-  .lexicon-column {
-    width: 100%;
-    padding-top: 0px;
-    flex-direction: row;
-    overflow: hidden;
-    height: auto;
-    max-height: 30%;
-    border-left: none;
-    border: 1px solid #ddd;
-    position: sticky;
-    bottom: 0;
-    background: white;
-    display: flex;
-  }
 
-  .lexicon-window {
-    /* Фіксована ширина для кожного вікна */
-    min-width: 50%; /* Для скролу */
-    width: 100%;
-    height: 100%; /* Повна висота */
-    border-bottom: none;
-    border-right: 1px solid #ddd; /* Розділ горизонтальний */
-    min-height: 0; /* ← дозволяє overflow */
-    justify-content: center;
-  }
-  .lexicon-title {
-    padding: 4px 10px;
-    min-height: 30px;
-    /* max-height: auto; */
-  }
-  .lexicon-window:last-child {
-    border-right: none;
-  }
-  .dictionary-content {
-    width: 50%;
-    min-width: 256px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 256px;
-  }
-}
-
-@media (max-width: 578px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 200px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 200px;
-  }
-
-  .lexicon-tabs button {
-    padding: 10px 0;
-    margin: 0 auto;
-    flex: 0 0 auto;
-  }
-}
-
-@media (max-width: 466px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 180px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 180px;
-  }
-
-  .lexicon-tabs button {
-    font-size: 0.8rem;
-    width: auto;
-  }
-}
-@media (max-width: 426px) {
-  .dictionary-content {
-    width: 50%;
-    min-width: 160px;
-  }
-  .grammar-content {
-    width: 50%;
-    min-width: 160px;
-  }
-  .lexicon-tabs button {
-    font-size: 0.7rem;
-  }
-}
 /* Додаткові класи для контролю скролу */
 .scroll-smooth {
   scroll-behavior: smooth;
@@ -397,12 +297,11 @@
   .grammar-content::-webkit-scrollbar,
   .lexicon-column::-webkit-scrollbar,
   .lexicon-content::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
+    width: 8px;
+    height: 8px;
   }
 
   .lexicon-tabs {
-    /* scrollbar-width: auto;  */
-    /* Товстіший для мобільних */
+    scrollbar-width: auto; /* Товстіший для мобільних */
   }
 }
