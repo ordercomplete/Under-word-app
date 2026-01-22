@@ -876,40 +876,6 @@ const Panel = memo(
       loadTranslations();
     }, [currentRef]);
 
-    // const getTestament = useCallback((bookCode) => {
-    //   return [
-    //     "MAT",
-    //     "MRK",
-    //     "LUK",
-    //     "JHN",
-    //     "ACT",
-    //     "ROM",
-    //     "1CO",
-    //     "2CO",
-    //     "GAL",
-    //     "EPH",
-    //     "PHP",
-    //     "COL",
-    //     "1TH",
-    //     "2TH",
-    //     "1TI",
-    //     "2TI",
-    //     "TIT",
-    //     "PHM",
-    //     "HEB",
-    //     "JAS",
-    //     "1PE",
-    //     "2PE",
-    //     "1JN",
-    //     "2JN",
-    //     "3JN",
-    //     "JUD",
-    //     "REV",
-    //   ].includes(bookCode)
-    //     ? "NewT"
-    //     : "OldT";
-    // }, []);
-    // Виправлена функція getTestament в PassagePage.js
     const getTestament = useCallback((bookCode) => {
       const newTestamentBooks = [
         "MAT",
@@ -991,29 +957,6 @@ const Panel = memo(
       logger.debug(`Кеш MISS: ${cacheKey}`);
       setLoading(true);
 
-      // const loadPromises = versions.map(async (ver) => {
-      //   const testament = getTestament(book);
-      //   const verLower = ver.toLowerCase();
-      //   const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(verLower);
-      //   const base = isOriginal ? "originals" : "translations";
-      //   const bookLower = book.toLowerCase();
-
-      //   // Тільки основні URL (без fallback для простоти)
-      //   const url = `/data/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
-
-      //   try {
-      //     const start = performance.now();
-      //     const response = await fetch(url);
-      //     const data = await response.json();
-      //     const end = performance.now();
-
-      //     logger.debug(`Завантажено ${ver} за ${(end - start).toFixed(1)}мс`);
-      //     return { ver, data: data.verses || [] };
-      //   } catch (error) {
-      //     logger.warn(`Не вдалося завантажити ${ver}:`, error);
-      //     return { ver, data: [] };
-      //   }
-      // });
       // Виправлений loadPromises в useEffect:виправив питання з посиланням
       const loadPromises = versions.map(async (ver) => {
         const testament = getTestament(book);
@@ -1180,22 +1123,6 @@ const Panel = memo(
       // Формуємо правильний шлях - не виправляє помилку щляху
       return `/data/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
     };
-    // const getFilePath = useCallback(
-    //   (version, bookCode, chapter) => {
-    //     const ver = version.toLowerCase();
-    //     const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(ver);
-    //     const base = isOriginal ? "originals" : "translations";
-    //     const testament = getTestament(bookCode);
-
-    //     return {
-    //       original: `/data/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
-    //       compressed: `/data_compressed/${base}/${ver}/${testament}/${bookCode}/${bookCode.toLowerCase()}${chapter}_${ver}.json`,
-    //       testament: testament,
-    //     };
-    //   },
-    //   [getTestament]
-    // );
-    // const [book, chapter] = currentRef.split(".");
 
     return (
       <div className="panel">
@@ -1289,7 +1216,7 @@ const PassagePage = memo(({ lang }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [lexicons]);
+  }, [lexicons]); // Залишаємо lexicons в залежностях, але не використовуємо для закриття
 
   // Завантаження core.json з кешем
   useEffect(() => {
@@ -1354,48 +1281,6 @@ const PassagePage = memo(({ lang }) => {
     [panels],
   );
 
-  // const handleWordClick = useCallback(
-  //   (data) => {
-  //     const { word, origVer } = data;
-  //     if (!word?.strong || !origVer) return;
-
-  //     const key = `${origVer}:${word.strong}`;
-
-  //     // Перевіряємо, чи вже відкритий цей словник
-  //     const existingIndex = lexicons.findIndex((l) => l.key === key);
-
-  //     if (existingIndex !== -1) {
-  //       // Оновлюємо існуючий
-  //       const newLex = [...lexicons];
-  //       newLex[existingIndex].data = data;
-  //       setLexicons(newLex);
-  //     } else if (lexicons.length < 2) {
-  //       // Додаємо новий
-  //       setLexicons([
-  //         ...lexicons,
-  //         {
-  //           id: Date.now(),
-  //           key,
-  //           data,
-  //           origVer,
-  //           lang: word.strong.startsWith("H") ? "he" : "gr",
-  //         },
-  //       ]);
-  //     } else {
-  //       // Замінюємо останній
-  //       const newLex = [...lexicons];
-  //       newLex[1] = {
-  //         id: Date.now(),
-  //         key,
-  //         data,
-  //         origVer,
-  //         lang: word.strong.startsWith("H") ? "he" : "gr",
-  //       };
-  //       setLexicons(newLex);
-  //     }
-  //   },
-  //   [lexicons],
-  // );
   // ПЕРЕРОБЛЯЄМО handleWordClick для сегментації вікон
   const handleWordClick = useCallback(
     (clickData) => {
@@ -1406,10 +1291,10 @@ const PassagePage = memo(({ lang }) => {
       const isNarrowScreen = windowWidth < 520;
 
       // Обмежуємо до одного вікна на дуже вузьких екранах
-      if (isNarrowScreen && isOriginal === false) {
-        console.log("Пропускаємо перекладні слова на вузьких екранах");
-        return;
-      }
+      // if (isNarrowScreen && isOriginal === false) {
+      //   console.log("Пропускаємо перекладні слова на вузьких екранах");
+      //   return;
+      // }
 
       setLexicons((prev) => {
         // Створюємо новий об'єкт словника
@@ -1425,34 +1310,85 @@ const PassagePage = memo(({ lang }) => {
 
         let newLexicons = [...prev];
 
-        if (isOriginal) {
-          // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
+        //       if (isOriginal) {
+        //         // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
+        //         if (newLexicons.length === 0) {
+        //           // Якщо немає вікон - створюємо перше
+        //           newLexicons = [newLexicon];
+        //         } else {
+        //           // Замінюємо перше вікно
+        //           newLexicons[0] = newLexicon;
+        //         }
+        //       } else {
+        //         // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
+        //         if (newLexicons.length === 0) {
+        //           // Якщо немає вікон - створюємо порожнє перше та друге
+        //           newLexicons = [
+        //             {
+        //               id: Date.now() - 1,
+        //               key: "placeholder",
+        //               isOriginal: true,
+        //               isEmpty: true,
+        //             },
+        //             newLexicon,
+        //           ];
+        //         } else if (newLexicons.length === 1) {
+        //           // Якщо є тільки одне вікно - додаємо друге
+        //           newLexicons.push(newLexicon);
+        //         } else {
+        //           // Замінюємо друге вікно
+        //           newLexicons[1] = newLexicon;
+        //         }
+        //       }
+
+        //       // Обмежуємо до 2 вікон
+        //       return newLexicons.slice(0, 2);
+        //     });
+        //   },
+        //   [windowWidth],
+        // );
+
+        // ОСОБЛИВИЙ РЕЖИМ ДЛЯ ВУЗЬКИХ ЕКРАНІВ (<520px)
+        if (isNarrowScreen) {
+          // На вузьких екранах всі слова відкриваються в одному вікні
           if (newLexicons.length === 0) {
-            // Якщо немає вікон - створюємо перше
+            // Якщо немає вікон - створюємо одне
             newLexicons = [newLexicon];
           } else {
-            // Замінюємо перше вікно
+            // Замінюємо єдине вікно
             newLexicons[0] = newLexicon;
           }
         } else {
-          // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
-          if (newLexicons.length === 0) {
-            // Якщо немає вікон - створюємо порожнє перше та друге
-            newLexicons = [
-              {
-                id: Date.now() - 1,
-                key: "placeholder",
-                isOriginal: true,
-                isEmpty: true,
-              },
-              newLexicon,
-            ];
-          } else if (newLexicons.length === 1) {
-            // Якщо є тільки одне вікно - додаємо друге
-            newLexicons.push(newLexicon);
+          // СТАНДАРТНИЙ РЕЖИМ (ширина ≥ 520px)
+          if (isOriginal) {
+            // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
+            if (newLexicons.length === 0) {
+              // Якщо немає вікон - створюємо перше
+              newLexicons = [newLexicon];
+            } else {
+              // Замінюємо перше вікно
+              newLexicons[0] = newLexicon;
+            }
           } else {
-            // Замінюємо друге вікно
-            newLexicons[1] = newLexicon;
+            // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
+            if (newLexicons.length === 0) {
+              // Якщо немає вікон - створюємо порожнє перше та друге
+              newLexicons = [
+                {
+                  id: Date.now() - 1,
+                  key: "placeholder",
+                  isOriginal: true,
+                  isEmpty: true,
+                },
+                newLexicon,
+              ];
+            } else if (newLexicons.length === 1) {
+              // Якщо є тільки одне вікно - додаємо друге
+              newLexicons.push(newLexicon);
+            } else {
+              // Замінюємо друге вікно
+              newLexicons[1] = newLexicon;
+            }
           }
         }
 
@@ -1494,22 +1430,6 @@ const PassagePage = memo(({ lang }) => {
         ))}
       </div>
 
-      {/* {lexicons.length > 0 && (
-        <div className="lexicon-column">
-          {lexicons.map((lex) => (
-            <LexiconWindow
-              key={lex.id}
-              data={lex.data}
-              lang={lang}
-              onClose={() =>
-                setLexicons(lexicons.filter((l) => l.id !== lex.id))
-              }
-              coreData={coreData}
-              origVer={lex.origVer}
-            />
-          ))}
-        </div>
-      )} */}
       {lexicons.length > 0 && (
         <div className="lexicon-column">
           {lexicons.map((lex, index) => (
