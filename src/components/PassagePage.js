@@ -1085,18 +1085,18 @@ const Panel = memo(
 
       // Групуємо оригінали та переклади
       const originals = versions.filter((v) =>
-        ["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase())
+        ["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase()),
       );
 
       const translations = versions.filter(
-        (v) => !["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase())
+        (v) => !["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase()),
       );
 
       originals.forEach((original) => {
         // Знаходимо переклади для цього оригіналу
         const relatedTranslations = translations.filter((trans) => {
           const transInfo = translationsData?.bibles?.find(
-            (b) => b.initials === trans
+            (b) => b.initials === trans,
           );
           if (!transInfo?.basedOn) return false;
 
@@ -1220,7 +1220,7 @@ const Panel = memo(
 
             if (coreData[versionKey] && coreData[versionKey][testament]) {
               const books = coreData[versionKey][testament].flatMap(
-                (g) => g.books
+                (g) => g.books,
               );
               const bookInfo = books.find((bk) => bk.code === b);
 
@@ -1265,7 +1265,7 @@ const Panel = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 // ==================== ОСНОВНИЙ КОМПОНЕНТ ====================
@@ -1274,6 +1274,22 @@ const PassagePage = memo(({ lang }) => {
   const [lexicons, setLexicons] = useState([]);
   const [coreData, setCoreData] = useState({});
   const [coreLoading, setCoreLoading] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Відстежуємо ширину екрану для респонсивності
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+
+      // Закриваємо друге вікно на дуже вузьких екранах (<520px)
+      if (window.innerWidth < 520 && lexicons.length > 1) {
+        setLexicons((prev) => [prev[0]]);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [lexicons]);
 
   // Завантаження core.json з кешем
   useEffect(() => {
@@ -1299,9 +1315,12 @@ const PassagePage = memo(({ lang }) => {
 
         // Кешуємо на 1 годину
         sessionStorage.setItem("core_data_v2", JSON.stringify(data));
-        setTimeout(() => {
-          sessionStorage.removeItem("core_data_v2");
-        }, 60 * 60 * 1000);
+        setTimeout(
+          () => {
+            sessionStorage.removeItem("core_data_v2");
+          },
+          60 * 60 * 1000,
+        );
 
         setCoreData(data);
       } catch (error) {
@@ -1332,51 +1351,130 @@ const PassagePage = memo(({ lang }) => {
         setPanels(panels.filter((p) => p.id !== id));
       }
     },
-    [panels]
+    [panels],
   );
 
+  // const handleWordClick = useCallback(
+  //   (data) => {
+  //     const { word, origVer } = data;
+  //     if (!word?.strong || !origVer) return;
+
+  //     const key = `${origVer}:${word.strong}`;
+
+  //     // Перевіряємо, чи вже відкритий цей словник
+  //     const existingIndex = lexicons.findIndex((l) => l.key === key);
+
+  //     if (existingIndex !== -1) {
+  //       // Оновлюємо існуючий
+  //       const newLex = [...lexicons];
+  //       newLex[existingIndex].data = data;
+  //       setLexicons(newLex);
+  //     } else if (lexicons.length < 2) {
+  //       // Додаємо новий
+  //       setLexicons([
+  //         ...lexicons,
+  //         {
+  //           id: Date.now(),
+  //           key,
+  //           data,
+  //           origVer,
+  //           lang: word.strong.startsWith("H") ? "he" : "gr",
+  //         },
+  //       ]);
+  //     } else {
+  //       // Замінюємо останній
+  //       const newLex = [...lexicons];
+  //       newLex[1] = {
+  //         id: Date.now(),
+  //         key,
+  //         data,
+  //         origVer,
+  //         lang: word.strong.startsWith("H") ? "he" : "gr",
+  //       };
+  //       setLexicons(newLex);
+  //     }
+  //   },
+  //   [lexicons],
+  // );
+  // ПЕРЕРОБЛЯЄМО handleWordClick для сегментації вікон
   const handleWordClick = useCallback(
-    (data) => {
-      const { word, origVer } = data;
-      if (!word?.strong || !origVer) return;
+    (clickData) => {
+      const { word, origVer, isOriginal } = clickData;
+      if (!word?.strong) return;
 
-      const key = `${origVer}:${word.strong}`;
+      const key = `${origVer}:${word.strong}:${Date.now()}`;
+      const isNarrowScreen = windowWidth < 520;
 
-      // Перевіряємо, чи вже відкритий цей словник
-      const existingIndex = lexicons.findIndex((l) => l.key === key);
+      // Обмежуємо до одного вікна на дуже вузьких екранах
+      if (isNarrowScreen && isOriginal === false) {
+        console.log("Пропускаємо перекладні слова на вузьких екранах");
+        return;
+      }
 
-      if (existingIndex !== -1) {
-        // Оновлюємо існуючий
-        const newLex = [...lexicons];
-        newLex[existingIndex].data = data;
-        setLexicons(newLex);
-      } else if (lexicons.length < 2) {
-        // Додаємо новий
-        setLexicons([
-          ...lexicons,
-          {
-            id: Date.now(),
-            key,
-            data,
-            origVer,
-            lang: word.strong.startsWith("H") ? "he" : "gr",
-          },
-        ]);
-      } else {
-        // Замінюємо останній
-        const newLex = [...lexicons];
-        newLex[1] = {
+      setLexicons((prev) => {
+        // Створюємо новий об'єкт словника
+        const newLexicon = {
           id: Date.now(),
           key,
-          data,
+          data: clickData,
           origVer,
           lang: word.strong.startsWith("H") ? "he" : "gr",
+          isOriginal: !!isOriginal, // зберігаємо тип
+          timestamp: Date.now(),
         };
-        setLexicons(newLex);
-      }
+
+        let newLexicons = [...prev];
+
+        if (isOriginal) {
+          // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
+          if (newLexicons.length === 0) {
+            // Якщо немає вікон - створюємо перше
+            newLexicons = [newLexicon];
+          } else {
+            // Замінюємо перше вікно
+            newLexicons[0] = newLexicon;
+          }
+        } else {
+          // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
+          if (newLexicons.length === 0) {
+            // Якщо немає вікон - створюємо порожнє перше та друге
+            newLexicons = [
+              {
+                id: Date.now() - 1,
+                key: "placeholder",
+                isOriginal: true,
+                isEmpty: true,
+              },
+              newLexicon,
+            ];
+          } else if (newLexicons.length === 1) {
+            // Якщо є тільки одне вікно - додаємо друге
+            newLexicons.push(newLexicon);
+          } else {
+            // Замінюємо друге вікно
+            newLexicons[1] = newLexicon;
+          }
+        }
+
+        // Обмежуємо до 2 вікон
+        return newLexicons.slice(0, 2);
+      });
     },
-    [lexicons]
+    [windowWidth],
   );
+  // Функція закриття вікна
+  const closeLexiconWindow = useCallback((id) => {
+    setLexicons((prev) => {
+      const newLexicons = prev.filter((l) => l.id !== id);
+
+      // Якщо залишилось одне вікно і воно порожнє - закриваємо всі
+      if (newLexicons.length === 1 && newLexicons[0].isEmpty) {
+        return [];
+      }
+
+      return newLexicons;
+    });
+  }, []);
 
   return (
     <div className="passage-container">
@@ -1396,7 +1494,7 @@ const PassagePage = memo(({ lang }) => {
         ))}
       </div>
 
-      {lexicons.length > 0 && (
+      {/* {lexicons.length > 0 && (
         <div className="lexicon-column">
           {lexicons.map((lex) => (
             <LexiconWindow
@@ -1408,6 +1506,24 @@ const PassagePage = memo(({ lang }) => {
               }
               coreData={coreData}
               origVer={lex.origVer}
+            />
+          ))}
+        </div>
+      )} */}
+      {lexicons.length > 0 && (
+        <div className="lexicon-column">
+          {lexicons.map((lex, index) => (
+            <LexiconWindow
+              key={lex.id}
+              data={lex.data}
+              lang={lang}
+              onClose={() => closeLexiconWindow(lex.id)}
+              coreData={coreData}
+              origVer={lex.origVer}
+              isOriginal={lex.isOriginal} // ДОДАЄМО ПРОП ДЛЯ ТИПУ
+              windowIndex={index} // НОМЕР ВІКНА (0 або 1)
+              totalWindows={lexicons.length} // ЗАГАЛЬНА КІЛЬКІСТЬ
+              isEmpty={lex.isEmpty} // ЧИ ПОРОЖНЄ ВІКНО
             />
           ))}
         </div>

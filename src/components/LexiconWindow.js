@@ -632,7 +632,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
         if (dictCode) {
           console.log(
             "📚 LexiconWindow: Завантаження словника перекладу",
-            dictCode
+            dictCode,
           );
 
           const [strongCode, langCode] = dictCode.split("_");
@@ -681,8 +681,8 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
                   dictLanguage === "uk"
                     ? "ukrainian_dictionary"
                     : dictLanguage === "ru"
-                    ? "russian_dictionary"
-                    : "english_dictionary",
+                      ? "russian_dictionary"
+                      : "english_dictionary",
                 _lang: dictLanguage,
               });
               setLoading(false);
@@ -690,13 +690,13 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
             } else {
               console.log(
                 "⚠️ Словник перекладу не знайдено за шляхом:",
-                dictPath
+                dictPath,
               );
             }
           } catch (dictErr) {
             console.error(
               "❌ Помилка завантаження словника перекладу:",
-              dictErr
+              dictErr,
             );
           }
         }
@@ -708,7 +708,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
           const strongRes = await fetch(`/data/strongs/${strong}.json`);
           if (!strongRes.ok) {
             throw new Error(
-              `HTTP ${strongRes.status}: Strong's словник не знайдено`
+              `HTTP ${strongRes.status}: Strong's словник не знайдено`,
             );
           }
 
@@ -744,7 +744,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
       } catch (err) {
         console.error(
           "❌ LexiconWindow: Загальна помилка завантаження словника",
-          err
+          err,
         );
         setError(`Помилка завантаження: ${err.message}`);
 
@@ -774,7 +774,7 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
     const [, book, ch, v] = match;
 
     const testament = book.match(
-      /^(MAT|MRK|LUK|JHN|ACT|ROM|1CO|2CO|GAL|EPH|PHP|COL|1TH|2TH|1TI|2TI|TIT|PHM|HEB|JAS|1PE|2PE|1JN|2JN|3JN|JUD|REV)$/
+      /^(MAT|MRK|LUK|JHN|ACT|ROM|1CO|2CO|GAL|EPH|PHP|COL|1TH|2TH|1TI|2TI|TIT|PHM|HEB|JAS|1PE|2PE|1JN|2JN|3JN|JUD|REV)$/,
     )
       ? "NewT"
       : "OldT";
