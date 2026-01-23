@@ -1204,10 +1204,16 @@ const PassagePage = memo(({ lang }) => {
   const [coreLoading, setCoreLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Стани для історії кожного вікна
-  const [historyStates, setHistoryStates] = useState({
-    strong: { canGoBack: false, canGoForward: false, position: "1/1" },
-    dictionary: { canGoBack: false, canGoForward: false, position: "1/1" },
+  // // Стани для історії кожного вікна
+  // const [historyStates, setHistoryStates] = useState({
+  //   strong: { canGoBack: false, canGoForward: false, position: "1/1" },
+  //   dictionary: { canGoBack: false, canGoForward: false, position: "1/1" },
+  // });
+  // Тепер використовуємо один глобальний менеджер історії для всіх вікон
+  const [globalHistory, setGlobalHistory] = useState({
+    canGoBack: false,
+    canGoForward: false,
+    position: "1/1",
   });
 
   // Відстежуємо ширину екрану для респонсивності
@@ -1227,16 +1233,22 @@ const PassagePage = memo(({ lang }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [lexicons]); // Залишаємо lexicons в залежностях, але не використовуємо для закриття
 
-  // Ініціалізація історії з localStorage
-  useEffect(() => {
-    // Завантажуємо початковий стан історії
-    const strongManager = globalHistoryManager.getManager("strong");
-    const dictManager = globalHistoryManager.getManager("dictionary");
+  // // Ініціалізація історії з localStorage
+  // useEffect(() => {
+  //   // Завантажуємо початковий стан історії
+  //   const strongManager = globalHistoryManager.getManager("strong");
+  //   const dictManager = globalHistoryManager.getManager("dictionary");
 
-    setHistoryStates({
-      strong: strongManager.getState(),
-      dictionary: dictManager.getState(),
-    });
+  //   setHistoryStates({
+  //     strong: strongManager.getState(),
+  //     dictionary: dictManager.getState(),
+  //   });
+  // }, []);
+
+  // Ініціалізація глобальної історії з localStorage
+  useEffect(() => {
+    const manager = globalHistoryManager.getManager("global");
+    setGlobalHistory(manager.getState());
   }, []);
 
   // Завантаження core.json з кешем
@@ -1285,22 +1297,22 @@ const PassagePage = memo(({ lang }) => {
     return () => controller.abort();
   }, []);
 
-  // Обробники
-  const addPanel = useCallback(() => {
-    const maxPanels = window.innerWidth < 992 ? 2 : 4;
-    if (panels.length < maxPanels) {
-      setPanels([...panels, { id: Date.now() }]);
-    }
-  }, [panels]);
+  // // Обробники
+  // const addPanel = useCallback(() => {
+  //   const maxPanels = window.innerWidth < 992 ? 2 : 4;
+  //   if (panels.length < maxPanels) {
+  //     setPanels([...panels, { id: Date.now() }]);
+  //   }
+  // }, [panels]);
 
-  const closePanel = useCallback(
-    (id) => {
-      if (panels.length > 1) {
-        setPanels(panels.filter((p) => p.id !== id));
-      }
-    },
-    [panels],
-  );
+  // const closePanel = useCallback(
+  //   (id) => {
+  //     if (panels.length > 1) {
+  //       setPanels(panels.filter((p) => p.id !== id));
+  //     }
+  //   },
+  //   [panels],
+  // );
 
   // // ПЕРЕРОБЛЯЄМО handleWordClick для сегментації вікон
   // const handleWordClick = useCallback(
@@ -1382,220 +1394,402 @@ const PassagePage = memo(({ lang }) => {
   //   [windowWidth],
   // );
   // Оновлений handleWordClick з історією
+  // const handleWordClick = useCallback(
+  //   (clickData) => {
+  //     const { word, origVer } = clickData;
+  //     if (!word?.strong) return;
+
+  //     const key = `${origVer}:${word.strong}:${Date.now()}`;
+  //     const isNarrowScreen = windowWidth < 520;
+
+  //     // Визначаємо тип слова
+  //     const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
+  //       origVer.toUpperCase(),
+  //     );
+
+  //     // Додаємо в історію
+  //     let historyState;
+  //     if (isNarrowScreen) {
+  //       // Для вузьких екранів - глобальна історія
+  //       historyState = globalHistoryManager.addGlobalEntry(clickData);
+  //     } else {
+  //       // Для широких екранів - окрема історія за типом
+  //       historyState = globalHistoryManager.addEntry(clickData);
+  //     }
+
+  //     if (!historyState) {
+  //       console.error("Не вдалося додати запис в історію");
+  //       return;
+  //     }
+
+  //     // Оновлюємо стан історії
+  //     if (isNarrowScreen) {
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         global: historyState,
+  //       }));
+  //     } else {
+  //       const type = isOriginal ? "strong" : "dictionary";
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         [type]: historyState,
+  //       }));
+  //     }
+
+  //     // Створюємо новий об'єкт словника
+  //     const newLexicon = {
+  //       id: Date.now(),
+  //       key,
+  //       data: clickData,
+  //       origVer,
+  //       lang: word.strong.startsWith("H") ? "he" : "gr",
+  //       isOriginal,
+  //       timestamp: Date.now(),
+  //       historyType: isNarrowScreen
+  //         ? "global"
+  //         : isOriginal
+  //           ? "strong"
+  //           : "dictionary",
+  //     };
+
+  //     setLexicons((prev) => {
+  //       let newLexicons = [...prev];
+
+  //       // ОСОБЛИВИЙ РЕЖИМ ДЛЯ ВУЗЬКИХ ЕКРАНІВ (<520px)
+  //       if (isNarrowScreen) {
+  //         // На вузьких екранах всі слова відкриваються в одному вікні
+  //         if (newLexicons.length === 0) {
+  //           // Якщо немає вікон - створюємо одне
+  //           newLexicons = [newLexicon];
+  //         } else {
+  //           // Замінюємо єдине вікно
+  //           newLexicons[0] = newLexicon;
+  //         }
+  //       } else {
+  //         // СТАНДАРТНИЙ РЕЖИМ (ширина ≥ 520px)
+  //         if (isOriginal) {
+  //           // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
+  //           if (newLexicons.length === 0) {
+  //             // Якщо немає вікон - створюємо перше
+  //             newLexicons = [newLexicon];
+  //           } else {
+  //             // Замінюємо перше вікно
+  //             newLexicons[0] = newLexicon;
+  //           }
+  //         } else {
+  //           // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
+  //           if (newLexicons.length === 0) {
+  //             // Якщо немає вікон - створюємо порожнє перше та друге
+  //             newLexicons = [
+  //               {
+  //                 id: Date.now() - 1,
+  //                 key: "placeholder",
+  //                 isOriginal: true,
+  //                 isEmpty: true,
+  //                 historyType: "strong",
+  //               },
+  //               newLexicon,
+  //             ];
+  //           } else if (newLexicons.length === 1) {
+  //             // Якщо є тільки одне вікно - додаємо друге
+  //             newLexicons.push(newLexicon);
+  //           } else {
+  //             // Замінюємо друге вікно
+  //             newLexicons[1] = newLexicon;
+  //           }
+  //         }
+  //       }
+
+  //       // Обмежуємо до 2 вікон
+  //       return newLexicons.slice(0, 2);
+  //     });
+  //   },
+  //   [windowWidth],
+  // );
+  // ПОЛНОСТЮ ПЕРЕРОБЛЯЄМО handleWordClick з новою логікою
   const handleWordClick = useCallback(
     (clickData) => {
       const { word, origVer } = clickData;
       if (!word?.strong) return;
 
-      const key = `${origVer}:${word.strong}:${Date.now()}`;
       const isNarrowScreen = windowWidth < 520;
-
-      // Визначаємо тип слова
       const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
         origVer.toUpperCase(),
       );
 
-      // Додаємо в історію
-      let historyState;
-      if (isNarrowScreen) {
-        // Для вузьких екранів - глобальна історія
-        historyState = globalHistoryManager.addGlobalEntry(clickData);
-      } else {
-        // Для широких екранів - окрема історія за типом
-        historyState = globalHistoryManager.addEntry(clickData);
-      }
-
+      // Додаємо в ГЛОБАЛЬНУ історію (для всіх вікон)
+      const historyState = globalHistoryManager.addGlobalEntry(clickData);
       if (!historyState) {
         console.error("Не вдалося додати запис в історію");
         return;
       }
 
-      // Оновлюємо стан історії
-      if (isNarrowScreen) {
-        setHistoryStates((prev) => ({
-          ...prev,
-          global: historyState,
-        }));
-      } else {
-        const type = isOriginal ? "strong" : "dictionary";
-        setHistoryStates((prev) => ({
-          ...prev,
-          [type]: historyState,
-        }));
-      }
+      // Оновлюємо стан глобальної історії
+      setGlobalHistory(historyState);
 
       // Створюємо новий об'єкт словника
       const newLexicon = {
         id: Date.now(),
-        key,
+        key: `${origVer}:${word.strong}:${Date.now()}`,
         data: clickData,
         origVer,
         lang: word.strong.startsWith("H") ? "he" : "gr",
         isOriginal,
         timestamp: Date.now(),
-        historyType: isNarrowScreen
-          ? "global"
-          : isOriginal
-            ? "strong"
-            : "dictionary",
       };
 
       setLexicons((prev) => {
-        let newLexicons = [...prev];
+        // ВИПРАВЛЕНА ЛОГІКА:
+        // 1. Якщо немає відкритих вікон - відкриваємо одне вікно (незалежно від типу слова)
+        if (prev.length === 0) {
+          return [newLexicon];
+        }
 
-        // ОСОБЛИВИЙ РЕЖИМ ДЛЯ ВУЗЬКИХ ЕКРАНІВ (<520px)
-        if (isNarrowScreen) {
-          // На вузьких екранах всі слова відкриваються в одному вікні
-          if (newLexicons.length === 0) {
-            // Якщо немає вікон - створюємо одне
-            newLexicons = [newLexicon];
-          } else {
-            // Замінюємо єдине вікно
-            newLexicons[0] = newLexicon;
+        // 2. Якщо є одне відкрите вікно:
+        if (prev.length === 1) {
+          const existingWindow = prev[0];
+
+          // Якщо натиснули на слово такого ж типу - замінюємо поточне вікно
+          if (existingWindow.isOriginal === isOriginal) {
+            return [newLexicon];
           }
-        } else {
-          // СТАНДАРТНИЙ РЕЖИМ (ширина ≥ 520px)
+
+          // Якщо натиснули на слово іншого типу - додаємо друге вікно
+          // Тепер ПЕРШЕ вікно - оригінал, ДРУГЕ - переклад
           if (isOriginal) {
-            // СЛОВО ОРИГІНАЛУ - оновлюємо перше вікно
-            if (newLexicons.length === 0) {
-              // Якщо немає вікон - створюємо перше
-              newLexicons = [newLexicon];
-            } else {
-              // Замінюємо перше вікно
-              newLexicons[0] = newLexicon;
-            }
+            // Натиснули на оригінал - ставимо першим
+            return [newLexicon, existingWindow];
           } else {
-            // СЛОВО ПЕРЕКЛАДУ - оновлюємо друге вікно
-            if (newLexicons.length === 0) {
-              // Якщо немає вікон - створюємо порожнє перше та друге
-              newLexicons = [
-                {
-                  id: Date.now() - 1,
-                  key: "placeholder",
-                  isOriginal: true,
-                  isEmpty: true,
-                  historyType: "strong",
-                },
-                newLexicon,
-              ];
-            } else if (newLexicons.length === 1) {
-              // Якщо є тільки одне вікно - додаємо друге
-              newLexicons.push(newLexicon);
-            } else {
-              // Замінюємо друге вікно
-              newLexicons[1] = newLexicon;
-            }
+            // Натиснули на переклад - ставимо другим
+            return [existingWindow, newLexicon];
           }
         }
 
-        // Обмежуємо до 2 вікон
-        return newLexicons.slice(0, 2);
+        // 3. Якщо є два відкритих вікна:
+        if (prev.length === 2) {
+          const [firstWindow, secondWindow] = prev;
+
+          // Знаходимо вікно з таким же типом слова
+          if (firstWindow.isOriginal === isOriginal) {
+            // Замінюємо перше вікно
+            return [newLexicon, secondWindow];
+          } else if (secondWindow.isOriginal === isOriginal) {
+            // Замінюємо друге вікно
+            return [firstWindow, newLexicon];
+          } else {
+            // Якщо обидва вікна іншого типу - замінюємо відповідне за позицією
+            // Оригінал завжди перший, переклад - другий
+            return isOriginal
+              ? [newLexicon, secondWindow]
+              : [firstWindow, newLexicon];
+          }
+        }
+
+        return prev;
       });
     },
     [windowWidth],
   );
 
-  // Функції навігації для кожного вікна
-  const handleNavigateBack = useCallback((windowIndex, historyType) => {
-    let manager;
+  // // Функції навігації для кожного вікна
+  // const handleNavigateBack = useCallback((windowIndex, historyType) => {
+  //   let manager;
 
-    if (historyType === "global") {
-      manager = globalHistoryManager.getManager("global");
-    } else {
-      const type = windowIndex === 0 ? "strong" : "dictionary";
-      manager = globalHistoryManager.getManager(type);
-    }
+  //   if (historyType === "global") {
+  //     manager = globalHistoryManager.getManager("global");
+  //   } else {
+  //     const type = windowIndex === 0 ? "strong" : "dictionary";
+  //     manager = globalHistoryManager.getManager(type);
+  //   }
 
+  //   const entry = manager.goBack();
+  //   if (entry) {
+  //     // Оновлюємо відповідне вікно
+  //     setLexicons((prev) => {
+  //       const newLexicons = [...prev];
+  //       if (newLexicons[windowIndex]) {
+  //         newLexicons[windowIndex] = {
+  //           ...newLexicons[windowIndex],
+  //           id: Date.now(),
+  //           key: `${entry.origVer}:${entry.word.strong}:${Date.now()}`,
+  //           data: entry.data,
+  //           origVer: entry.origVer,
+  //           isOriginal: entry.isOriginal,
+  //           lang: entry.lang,
+  //           timestamp: Date.now(),
+  //         };
+  //       }
+  //       return newLexicons;
+  //     });
+
+  //     // Оновлюємо стан історії
+  //     if (historyType === "global") {
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         global: manager.getState(),
+  //       }));
+  //     } else {
+  //       const type = windowIndex === 0 ? "strong" : "dictionary";
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         [type]: manager.getState(),
+  //       }));
+  //     }
+  //   }
+  // }, []);
+
+  // const handleNavigateForward = useCallback((windowIndex, historyType) => {
+  //   let manager;
+
+  //   if (historyType === "global") {
+  //     manager = globalHistoryManager.getManager("global");
+  //   } else {
+  //     const type = windowIndex === 0 ? "strong" : "dictionary";
+  //     manager = globalHistoryManager.getManager(type);
+  //   }
+
+  //   const entry = manager.goForward();
+  //   if (entry) {
+  //     // Оновлюємо відповідне вікно
+  //     setLexicons((prev) => {
+  //       const newLexicons = [...prev];
+  //       if (newLexicons[windowIndex]) {
+  //         newLexicons[windowIndex] = {
+  //           ...newLexicons[windowIndex],
+  //           id: Date.now(),
+  //           key: `${entry.origVer}:${entry.word.strong}:${Date.now()}`,
+  //           data: entry.data,
+  //           origVer: entry.origVer,
+  //           isOriginal: entry.isOriginal,
+  //           lang: entry.lang,
+  //           timestamp: Date.now(),
+  //         };
+  //       }
+  //       return newLexicons;
+  //     });
+
+  //     // Оновлюємо стан історії
+  //     if (historyType === "global") {
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         global: manager.getState(),
+  //       }));
+  //     } else {
+  //       const type = windowIndex === 0 ? "strong" : "dictionary";
+  //       setHistoryStates((prev) => ({
+  //         ...prev,
+  //         [type]: manager.getState(),
+  //       }));
+  //     }
+  //   }
+  // }, []);
+
+  // Функції навігації по глобальній історії
+  const handleNavigateBack = useCallback(() => {
+    const manager = globalHistoryManager.getManager("global");
     const entry = manager.goBack();
-    if (entry) {
-      // Оновлюємо відповідне вікно
-      setLexicons((prev) => {
-        const newLexicons = [...prev];
-        if (newLexicons[windowIndex]) {
-          newLexicons[windowIndex] = {
-            ...newLexicons[windowIndex],
-            id: Date.now(),
-            key: `${entry.origVer}:${entry.word.strong}:${Date.now()}`,
-            data: entry.data,
-            origVer: entry.origVer,
-            isOriginal: entry.isOriginal,
-            lang: entry.lang,
-            timestamp: Date.now(),
-          };
-        }
-        return newLexicons;
-      });
 
-      // Оновлюємо стан історії
-      if (historyType === "global") {
-        setHistoryStates((prev) => ({
-          ...prev,
-          global: manager.getState(),
-        }));
-      } else {
-        const type = windowIndex === 0 ? "strong" : "dictionary";
-        setHistoryStates((prev) => ({
-          ...prev,
-          [type]: manager.getState(),
-        }));
-      }
+    if (entry) {
+      // Оновлюємо відповідне вікно словника
+      updateWindowWithHistoryEntry(entry);
+
+      // Оновлюємо стан глобальної історії
+      setGlobalHistory(manager.getState());
     }
   }, []);
 
-  const handleNavigateForward = useCallback((windowIndex, historyType) => {
-    let manager;
-
-    if (historyType === "global") {
-      manager = globalHistoryManager.getManager("global");
-    } else {
-      const type = windowIndex === 0 ? "strong" : "dictionary";
-      manager = globalHistoryManager.getManager(type);
-    }
-
+  const handleNavigateForward = useCallback(() => {
+    const manager = globalHistoryManager.getManager("global");
     const entry = manager.goForward();
-    if (entry) {
-      // Оновлюємо відповідне вікно
-      setLexicons((prev) => {
-        const newLexicons = [...prev];
-        if (newLexicons[windowIndex]) {
-          newLexicons[windowIndex] = {
-            ...newLexicons[windowIndex],
-            id: Date.now(),
-            key: `${entry.origVer}:${entry.word.strong}:${Date.now()}`,
-            data: entry.data,
-            origVer: entry.origVer,
-            isOriginal: entry.isOriginal,
-            lang: entry.lang,
-            timestamp: Date.now(),
-          };
-        }
-        return newLexicons;
-      });
 
-      // Оновлюємо стан історії
-      if (historyType === "global") {
-        setHistoryStates((prev) => ({
-          ...prev,
-          global: manager.getState(),
-        }));
-      } else {
-        const type = windowIndex === 0 ? "strong" : "dictionary";
-        setHistoryStates((prev) => ({
-          ...prev,
-          [type]: manager.getState(),
-        }));
-      }
+    if (entry) {
+      // Оновлюємо відповідне вікно словника
+      updateWindowWithHistoryEntry(entry);
+
+      // Оновлюємо стан глобальної історії
+      setGlobalHistory(manager.getState());
     }
   }, []);
 
+  // Допоміжна функція для оновлення вікна з запису історії
+  const updateWindowWithHistoryEntry = useCallback((entry) => {
+    if (!entry) return;
+
+    const newLexicon = {
+      id: Date.now(),
+      key: `${entry.origVer}:${entry.word.strong}:${Date.now()}`,
+      data: entry.data,
+      origVer: entry.origVer,
+      lang: entry.lang,
+      isOriginal: entry.isOriginal,
+      timestamp: Date.now(),
+    };
+
+    setLexicons((prev) => {
+      if (prev.length === 0) return [newLexicon];
+
+      if (prev.length === 1) {
+        const existingWindow = prev[0];
+        // Якщо типи збігаються - замінюємо
+        if (existingWindow.isOriginal === entry.isOriginal) {
+          return [newLexicon];
+        } else {
+          // Додаємо друге вікно
+          return entry.isOriginal
+            ? [newLexicon, existingWindow]
+            : [existingWindow, newLexicon];
+        }
+      }
+
+      if (prev.length === 2) {
+        const [firstWindow, secondWindow] = prev;
+        // Знаходимо вікно з таким же типом
+        if (firstWindow.isOriginal === entry.isOriginal) {
+          return [newLexicon, secondWindow];
+        } else if (secondWindow.isOriginal === entry.isOriginal) {
+          return [firstWindow, newLexicon];
+        } else {
+          // Замінюємо відповідне за позицією
+          return entry.isOriginal
+            ? [newLexicon, secondWindow]
+            : [firstWindow, newLexicon];
+        }
+      }
+
+      return prev;
+    });
+  }, []);
+
+  // Обробники
+  const addPanel = useCallback(() => {
+    const maxPanels = window.innerWidth < 992 ? 2 : 4;
+    if (panels.length < maxPanels) {
+      setPanels([...panels, { id: Date.now() }]);
+    }
+  }, [panels]);
+
+  const closePanel = useCallback(
+    (id) => {
+      if (panels.length > 1) {
+        setPanels(panels.filter((p) => p.id !== id));
+      }
+    },
+    [panels],
+  );
   // Функція закриття вікна
   const closeLexiconWindow = useCallback((id) => {
     setLexicons((prev) => {
       const newLexicons = prev.filter((l) => l.id !== id);
 
-      // Якщо залишилось одне вікно і воно порожнє - закриваємо всі
-      if (newLexicons.length === 1 && newLexicons[0].isEmpty) {
-        return [];
+      // // Якщо залишилось одне вікно і воно порожнє - закриваємо всі
+      // if (newLexicons.length === 1 && newLexicons[0].isEmpty) {
+      //   return [];
+      // }
+      // Перевпорядковуємо, щоб залишилося максимум 2 вікна з правильним порядком
+      if (newLexicons.length === 2) {
+        const [first, second] = newLexicons;
+        // Сортуємо: оригінал перший, переклад другий
+        return first.isOriginal ? [first, second] : [second, first];
       }
 
       return newLexicons;
@@ -1638,7 +1832,7 @@ const PassagePage = memo(({ lang }) => {
           ))}
         </div>
       )} */}
-      {lexicons.length > 0 && (
+      {/* {lexicons.length > 0 && (
         <div className="lexicon-column">
           {lexicons.map((lex, index) => {
             // Визначаємо тип історії для цього вікна
@@ -1676,6 +1870,28 @@ const PassagePage = memo(({ lang }) => {
               />
             );
           })}
+        </div>
+      )} */}
+      {lexicons.length > 0 && (
+        <div className="lexicon-column">
+          {lexicons.map((lex, index) => (
+            <LexiconWindow
+              key={lex.id}
+              data={lex.data}
+              lang={lang}
+              onClose={() => closeLexiconWindow(lex.id)}
+              coreData={coreData}
+              origVer={lex.origVer}
+              isOriginal={lex.isOriginal}
+              windowIndex={index}
+              totalWindows={lexicons.length}
+              // Передаємо глобальну історію всім вікнам
+              historyState={globalHistory}
+              onNavigateBack={handleNavigateBack}
+              onNavigateForward={handleNavigateForward}
+              isNarrowScreen={windowWidth < 520}
+            />
+          ))}
         </div>
       )}
     </div>

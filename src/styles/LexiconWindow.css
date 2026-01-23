@@ -568,3 +568,61 @@
 .lexicon-window.navigating {
   opacity: 0.7;
 }
+
+/* =================== */
+
+/* Стилі для правильного відображення вікон */
+
+/* Коли одне вікно - воно займає всю висоту */
+/* .lexicon-column:has(.lexicon-window:only-child) {
+  height: 100vh;
+}
+
+.lexicon-column:has(.lexicon-window:only-child) .lexicon-window {
+  height: 100%;
+} */
+
+/* Коли два вікна - розподіл висоти */
+/* .lexicon-column:has(.lexicon-window:nth-child(2)) {
+  display: flex;
+  flex-direction: column;
+} */
+
+.lexicon-column:has(.lexicon-window:nth-child(2)) .lexicon-window:first-child {
+  flex: 1;
+  min-height: 50%;
+  max-height: 60%;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.lexicon-column:has(.lexicon-window:nth-child(2)) .lexicon-window:last-child {
+  flex: 1;
+  min-height: 40%;
+  max-height: 50%;
+}
+
+/* Стилі для пустих вікон та вікон з помилками */
+.lexicon-window.empty-entry .lexicon-header-with-nav {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+.lexicon-window.error-entry .lexicon-header-with-nav {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.lexicon-window.empty-entry .window-type-badge,
+.lexicon-window.error-entry .window-type-badge {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Адаптивність для вузьких екранів */
+@media (max-width: 520px) {
+  .lexicon-column {
+    height: 50vh;
+  }
+
+  .lexicon-window {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}

@@ -56,8 +56,30 @@ class HistoryManager {
       return this.getState();
     }
 
-    // Видаляємо дублікати
-    this.history = this.history.filter((item) => item.id !== entry.id);
+    // // Видаляємо дублікати
+    // this.history = this.history.filter((item) => item.id !== entry.id);
+
+    // ФІЛЬТР ДУБЛІКАТІВ: порівнюємо за strong кодом та словом
+    // (не за ID, бо ID містить timestamp)
+    const isDuplicate = this.history.some(
+      (item) =>
+        item.word?.strong === entry.word?.strong &&
+        item.word?.word === entry.word?.word &&
+        item.isOriginal === entry.isOriginal,
+    );
+
+    if (isDuplicate) {
+      console.log("⏩ Пропускаємо дублікат в історії:", entry.word?.strong);
+      // Переміщуємо існуючий запис в кінець (оновлюємо timestamp)
+      this.history = this.history.filter(
+        (item) =>
+          !(
+            item.word?.strong === entry.word?.strong &&
+            item.word?.word === entry.word?.word &&
+            item.isOriginal === entry.isOriginal
+          ),
+      );
+    }
 
     // Додаємо новий запис
     this.history.push({
@@ -75,6 +97,42 @@ class HistoryManager {
     this.saveToStorage();
 
     return this.getState();
+  }
+
+  // У методі addGlobalEntry також додаємо фільтрацію:
+  addGlobalEntry(data) {
+    try {
+      const { word, origVer } = data;
+      if (!word || !origVer) return null;
+
+      const entryId = `${origVer}:${word.strong}:${Date.now()}`;
+      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
+        origVer.toUpperCase(),
+      );
+
+      const entry = {
+        id: entryId,
+        data: data,
+        origVer: origVer,
+        word: {
+          word: word.word,
+          strong: word.strong,
+          lemma: word.lemma,
+          morph: word.morph,
+          dict: word.dict,
+        },
+        lang: word.strong?.startsWith("H") ? "he" : "gr",
+        isOriginal: isOriginal,
+        timestamp: Date.now(),
+        type: isOriginal ? "strong" : "dictionary",
+      };
+
+      const globalManager = this.getManager("global");
+      return globalManager.addEntry(entry);
+    } catch (error) {
+      console.error("Помилка додавання запису в глобальну історію:", error);
+      return null;
+    }
   }
 
   /**

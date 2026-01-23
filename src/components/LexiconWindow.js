@@ -597,6 +597,7 @@ import React, { useState, useEffect, useCallback, memo, useRef } from "react";
 import { Link } from "react-router-dom";
 import CloseIcon from "../elements/CloseIcon";
 import "../styles/LexiconWindow.css";
+import { globalHistoryManager } from "../utils/historyManager";
 
 // import { loadStrongEntry } from "../utils/loadStrong";
 
@@ -641,6 +642,8 @@ const LexiconWindow = memo(
       if (!strong && !dictCode) {
         setLoading(false);
         setError("Немає даних для завантаження словника");
+        // Додаємо порожній запис в історію для навігації
+        addEmptyEntryToHistory();
         return;
       }
 
@@ -649,6 +652,7 @@ const LexiconWindow = memo(
       setEntry(null);
 
       const loadDictionary = async () => {
+        let entryAddedToHistory = false;
         try {
           // 1. СПОЧАТКУ пробуємо завантажити словник перекладу (dictCode)
           if (dictCode) {
@@ -707,6 +711,8 @@ const LexiconWindow = memo(
                         : "english_dictionary",
                   _lang: dictLanguage,
                 });
+                // Позначаємо, що запис додано в історію
+                entryAddedToHistory = true;
                 setLoading(false);
                 return true;
               } else {
@@ -762,7 +768,9 @@ const LexiconWindow = memo(
               usages_count: strongEntry.u || strongEntry.usages_count || 0,
               _type: "strongs_dictionary",
             });
-            return true;
+            // Позначаємо, що запис додано в історію
+            entryAddedToHistory = true;
+            return;
           } catch (strongErr) {
             console.error("❌ Помилка завантаження Strong's:", strongErr);
             throw strongErr;
@@ -783,15 +791,80 @@ const LexiconWindow = memo(
               morphology: data.word.morph || "",
               dictCode: dictCode,
               _type: "fallback",
+              _error: `Не вдалося завантажити словник: ${err.message}`,
             });
+            // Додаємо запис з помилкою в історію
+            addErrorEntryToHistory(err.message);
+            entryAddedToHistory = true;
+          } else {
+            setError(`Помилка завантаження: ${err.message}`);
           }
         } finally {
           setLoading(false);
+          // Якщо не додано запис в історію (не знайдено файл) - додаємо порожній
+          if (!entryAddedToHistory && strong) {
+            addEmptyEntryToHistory();
+          }
         }
       };
 
       loadDictionary();
     }, [strong, dictCode, data?.word, origVer]);
+
+    // Додаємо нові функції для обробки історії
+    const addEmptyEntryToHistory = useCallback(() => {
+      if (!data?.word) return;
+
+      const emptyEntry = {
+        id: `empty_${Date.now()}`,
+        data: data,
+        origVer: origVer,
+        word: {
+          word: data.word.word || "",
+          strong: data.word.strong || "",
+          lemma: data.word.lemma || "",
+          morph: data.word.morph || "",
+          dict: data.word.dict || "",
+        },
+        lang: data.word.strong?.startsWith("H") ? "he" : "gr",
+        isOriginal: false,
+        timestamp: Date.now(),
+        isEmpty: true,
+      };
+
+      // Оновлюємо глобальну історію
+      const manager = globalHistoryManager.getManager("global");
+      manager.addEntry(emptyEntry);
+    }, [data, origVer]);
+
+    const addErrorEntryToHistory = useCallback(
+      (errorMessage) => {
+        if (!data?.word) return;
+
+        const errorEntry = {
+          id: `error_${Date.now()}`,
+          data: data,
+          origVer: origVer,
+          word: {
+            word: data.word.word || "",
+            strong: data.word.strong || "",
+            lemma: data.word.lemma || "",
+            morph: data.word.morph || "",
+            dict: data.word.dict || "",
+          },
+          lang: data.word.strong?.startsWith("H") ? "he" : "gr",
+          isOriginal: false,
+          timestamp: Date.now(),
+          isError: true,
+          error: errorMessage,
+        };
+
+        // Оновлюємо глобальну історію
+        const manager = globalHistoryManager.getManager("global");
+        manager.addEntry(errorEntry);
+      },
+      [data, origVer],
+    );
 
     // Ефект для свайпу на мобільних пристроях 23.01.2026
     useEffect(() => {
