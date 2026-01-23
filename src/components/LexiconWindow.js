@@ -592,601 +592,826 @@
 
 // ================
 
-import React, { useState, useEffect } from "react";
+// src/components/LexiconWindow.js
+import React, { useState, useEffect, useCallback, memo, useRef } from "react";
 import { Link } from "react-router-dom";
 import CloseIcon from "../elements/CloseIcon";
 import "../styles/LexiconWindow.css";
 
-const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
-  const [entry, setEntry] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState("dictionary");
-  const [isTranslationDict, setIsTranslationDict] = useState(false);
+// import { loadStrongEntry } from "../utils/loadStrong";
 
-  const strong = data?.word?.strong;
-  const dictCode = data?.word?.dict;
+const LexiconWindow = memo(
+  ({
+    data,
+    lang,
+    onClose,
+    coreData,
+    origVer,
+    windowIndex,
+    totalWindows,
+    isEmpty,
+    // Нові пропси для навігації
+    historyState,
+    onNavigateBack,
+    onNavigateForward,
+    isNarrowScreen = false,
+  }) => {
+    const [entry, setEntry] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [activeTab, setActiveTab] = useState("dictionary");
+    const [isTranslationDict, setIsTranslationDict] = useState(false);
 
-  useEffect(() => {
-    console.log("📥 LexiconWindow отримав дані:", {
-      word: data?.word?.word,
-      strong: data?.word?.strong,
-      dict: data?.word?.dict,
-      origVer: origVer,
-      timestamp: new Date().toISOString(),
-    });
+    const windowRef = useRef(null);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
 
-    if (!strong && !dictCode) {
-      setLoading(false);
-      setError("Немає даних для завантаження словника");
-      return;
-    }
+    const strong = data?.word?.strong;
+    const dictCode = data?.word?.dict;
 
-    setLoading(true);
-    setError(null);
-    setEntry(null);
+    useEffect(() => {
+      console.log("📥 LexiconWindow отримав дані:", {
+        word: data?.word?.word,
+        strong: data?.word?.strong,
+        dict: data?.word?.dict,
+        origVer: origVer,
+        timestamp: new Date().toISOString(),
+      });
 
-    const loadDictionary = async () => {
-      try {
-        // 1. СПОЧАТКУ пробуємо завантажити словник перекладу (dictCode)
-        if (dictCode) {
-          console.log(
-            "📚 LexiconWindow: Завантаження словника перекладу",
-            dictCode,
-          );
+      if (!strong && !dictCode) {
+        setLoading(false);
+        setError("Немає даних для завантаження словника");
+        return;
+      }
 
-          const [strongCode, langCode] = dictCode.split("_");
-          const category = strongCode.startsWith("G") ? "G" : "H"; // ← ВИПРАВЛЕНО
+      setLoading(true);
+      setError(null);
+      setEntry(null);
 
-          // Формуємо правильний шлях до словника перекладу
-          const dictPath = `/data/dictionaries/${langCode.toLowerCase()}/${category}/${dictCode}.json`;
+      const loadDictionary = async () => {
+        try {
+          // 1. СПОЧАТКУ пробуємо завантажити словник перекладу (dictCode)
+          if (dictCode) {
+            console.log(
+              "📚 LexiconWindow: Завантаження словника перекладу",
+              dictCode,
+            );
 
-          console.log("📂 Правильний шлях до словника:", dictPath);
+            const [strongCode, langCode] = dictCode.split("_");
+            const category = strongCode.startsWith("G") ? "G" : "H"; // ← ВИПРАВЛЕНО
 
-          try {
-            const dictRes = await fetch(dictPath);
-            if (dictRes.ok) {
-              const dictData = await dictRes.json();
-              console.log("✅ Словник перекладу завантажено успішно");
+            // Формуємо правильний шлях до словника перекладу
+            const dictPath = `/data/dictionaries/${langCode.toLowerCase()}/${category}/${dictCode}.json`;
 
-              // Обробка даних словника перекладу
-              const dictEntry = dictData[strongCode] || dictData;
-              // setIsTranslationDict(true);
-              const dictLanguage = langCode.toLowerCase();
-              setIsTranslationDict(dictLanguage !== "en"); // Тільки якщо не англійський
+            console.log("📂 Правильний шлях до словника:", dictPath);
 
-              setEntry({
-                strong: strongCode,
-                word: dictEntry.w || dictEntry.word || data?.word?.word || "",
-                translit: dictEntry.t || dictEntry.translit || "",
-                translation:
-                  dictEntry.tr ||
-                  dictEntry.translation ||
-                  dictEntry.translation_uk ||
-                  "",
-                morphology:
-                  dictEntry.m ||
-                  dictEntry.morphology ||
-                  data?.word?.morph ||
-                  "",
-                meanings: dictEntry.mn || dictEntry.meanings || [],
-                definitions: dictEntry.definitions || {},
-                lxx_usage: dictEntry.lxx_usage || [],
-                hebrew_equivalents: dictEntry.hebrew_equivalents || [],
-                usage_count: dictEntry.uc || dictEntry.usage_count || 0,
-                // _type: "translation_dictionary",
-                // _lang: langCode,
-                // Додаємо в запис:
-                _type:
-                  dictLanguage === "uk"
-                    ? "ukrainian_dictionary"
-                    : dictLanguage === "ru"
-                      ? "russian_dictionary"
-                      : "english_dictionary",
-                _lang: dictLanguage,
-              });
-              setLoading(false);
-              return;
-            } else {
-              console.log(
-                "⚠️ Словник перекладу не знайдено за шляхом:",
-                dictPath,
+            try {
+              const dictRes = await fetch(dictPath);
+              if (dictRes.ok) {
+                const dictData = await dictRes.json();
+                console.log("✅ Словник перекладу завантажено успішно");
+
+                // Обробка даних словника перекладу
+                const dictEntry = dictData[strongCode] || dictData;
+                // setIsTranslationDict(true);
+                const dictLanguage = langCode.toLowerCase();
+                setIsTranslationDict(dictLanguage !== "en"); // Тільки якщо не англійський
+
+                setEntry({
+                  strong: strongCode,
+                  word: dictEntry.w || dictEntry.word || data?.word?.word || "",
+                  translit: dictEntry.t || dictEntry.translit || "",
+                  translation:
+                    dictEntry.tr ||
+                    dictEntry.translation ||
+                    dictEntry.translation_uk ||
+                    "",
+                  morphology:
+                    dictEntry.m ||
+                    dictEntry.morphology ||
+                    data?.word?.morph ||
+                    "",
+                  meanings: dictEntry.mn || dictEntry.meanings || [],
+                  definitions: dictEntry.definitions || {},
+                  lxx_usage: dictEntry.lxx_usage || [],
+                  hebrew_equivalents: dictEntry.hebrew_equivalents || [],
+                  usage_count: dictEntry.uc || dictEntry.usage_count || 0,
+                  // _type: "translation_dictionary",
+                  // _lang: langCode,
+                  // Додаємо в запис:
+                  _type:
+                    dictLanguage === "uk"
+                      ? "ukrainian_dictionary"
+                      : dictLanguage === "ru"
+                        ? "russian_dictionary"
+                        : "english_dictionary",
+                  _lang: dictLanguage,
+                });
+                setLoading(false);
+                return true;
+              } else {
+                console.log(
+                  "⚠️ Словник перекладу не знайдено за шляхом:",
+                  dictPath,
+                );
+              }
+            } catch (dictErr) {
+              console.error(
+                "❌ Помилка завантаження словника перекладу:",
+                dictErr,
               );
             }
-          } catch (dictErr) {
-            console.error(
-              "❌ Помилка завантаження словника перекладу:",
-              dictErr,
-            );
-          }
-        }
-
-        // 2. ЯКЩО немає словника перекладу або не знайдено - завантажуємо Strong's
-        console.log("🔍 LexiconWindow: Завантаження Strong's словника", strong);
-
-        try {
-          const strongRes = await fetch(`/data/strongs/${strong}.json`);
-          if (!strongRes.ok) {
-            throw new Error(
-              `HTTP ${strongRes.status}: Strong's словник не знайдено`,
-            );
           }
 
-          const strongData = await strongRes.json();
-          console.log("✅ Strong's словник завантажено");
+          // 2. ЯКЩО немає словника перекладу або не знайдено - завантажуємо Strong's
+          console.log(
+            "🔍 LexiconWindow: Завантаження Strong's словника",
+            strong,
+          );
 
-          // Обробка даних Strong's
-          const strongEntry = strongData[strong] || strongData;
-          setIsTranslationDict(false);
+          try {
+            const strongRes = await fetch(`/data/strongs/${strong}.json`);
+            if (!strongRes.ok) {
+              throw new Error(
+                `HTTP ${strongRes.status}: Strong's словник не знайдено`,
+              );
+            }
 
-          setEntry({
-            strong: strong,
-            word: strongEntry.w || strongEntry.word || data?.word?.word || "",
-            translit: strongEntry.t || strongEntry.translit || "",
-            translation: strongEntry.tr || strongEntry.translation || "",
-            morphology:
-              strongEntry.m ||
-              strongEntry.morphology ||
-              data?.word?.morph ||
-              "",
-            meanings: strongEntry.mn || strongEntry.meanings || [],
-            definition: strongEntry.d || strongEntry.definition || "",
-            lsj_definition_raw:
-              strongEntry.lsj || strongEntry.lsj_definition_raw || "",
-            grammar: strongEntry.g || strongEntry.grammar || "",
-            usages_count: strongEntry.u || strongEntry.usages_count || 0,
-            _type: "strongs_dictionary",
-          });
-        } catch (strongErr) {
-          console.error("❌ Помилка завантаження Strong's:", strongErr);
-          throw strongErr;
+            const strongData = await strongRes.json();
+            console.log("✅ Strong's словник завантажено");
+
+            // Обробка даних Strong's
+            const strongEntry = strongData[strong] || strongData;
+            setIsTranslationDict(false);
+
+            setEntry({
+              strong: strong,
+              word: strongEntry.w || strongEntry.word || data?.word?.word || "",
+              translit: strongEntry.t || strongEntry.translit || "",
+              translation: strongEntry.tr || strongEntry.translation || "",
+              morphology:
+                strongEntry.m ||
+                strongEntry.morphology ||
+                data?.word?.morph ||
+                "",
+              meanings: strongEntry.mn || strongEntry.meanings || [],
+              definition: strongEntry.d || strongEntry.definition || "",
+              lsj_definition_raw:
+                strongEntry.lsj || strongEntry.lsj_definition_raw || "",
+              grammar: strongEntry.g || strongEntry.grammar || "",
+              usages_count: strongEntry.u || strongEntry.usages_count || 0,
+              _type: "strongs_dictionary",
+            });
+            return true;
+          } catch (strongErr) {
+            console.error("❌ Помилка завантаження Strong's:", strongErr);
+            throw strongErr;
+          }
+        } catch (err) {
+          console.error(
+            "❌ LexiconWindow: Загальна помилка завантаження словника",
+            err,
+          );
+          setError(`Помилка завантаження: ${err.message}`);
+
+          // Якщо не вдалося завантажити - створюємо базовий запис
+          if (data?.word) {
+            setEntry({
+              strong: strong,
+              word: data.word.word || "",
+              translation: data.word.lemma || "",
+              morphology: data.word.morph || "",
+              dictCode: dictCode,
+              _type: "fallback",
+            });
+          }
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        console.error(
-          "❌ LexiconWindow: Загальна помилка завантаження словника",
-          err,
-        );
-        setError(`Помилка завантаження: ${err.message}`);
+      };
 
-        // Якщо не вдалося завантажити - створюємо базовий запис
-        if (data?.word) {
-          setEntry({
-            strong: strong,
-            word: data.word.word || "",
-            translation: data.word.lemma || "",
-            morphology: data.word.morph || "",
-            dictCode: dictCode,
-            _type: "fallback",
-          });
+      loadDictionary();
+    }, [strong, dictCode, data?.word, origVer]);
+
+    // Ефект для свайпу на мобільних пристроях 23.01.2026
+    useEffect(() => {
+      if (!isNarrowScreen || !windowRef.current) return;
+
+      const element = windowRef.current;
+
+      const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+      };
+
+      const handleTouchEnd = (e) => {
+        touchEndX.current = e.changedTouches[0].clientX;
+        handleSwipe();
+      };
+
+      const handleSwipe = () => {
+        const swipeThreshold = 50;
+        const diff = touchStartX.current - touchEndX.current;
+
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0 && historyState?.canGoForward && onNavigateForward) {
+            onNavigateForward();
+          } else if (diff < 0 && historyState?.canGoBack && onNavigateBack) {
+            onNavigateBack();
+          }
         }
-      } finally {
-        setLoading(false);
+      };
+
+      element.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      element.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+      return () => {
+        element.removeEventListener("touchstart", handleTouchStart);
+        element.removeEventListener("touchend", handleTouchEnd);
+      };
+    }, [isNarrowScreen, historyState, onNavigateBack, onNavigateForward]);
+
+    // Обробники кліків на стрілки навігації
+    const handleBackClick = useCallback(
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (historyState?.canGoBack && onNavigateBack) {
+          onNavigateBack();
+        }
+      },
+      [historyState, onNavigateBack],
+    );
+
+    const handleForwardClick = useCallback(
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (historyState?.canGoForward && onNavigateForward) {
+          onNavigateForward();
+        }
+      },
+      [historyState, onNavigateForward],
+    );
+    // ============================ Ефект для свайпу на мобільних пристроях 23.01.2026 end
+
+    // Обробка посилань у тексті
+    const parseRef = (ref) => {
+      const match = ref.match(/([A-Z]+)\.(\d+):(\d+)/);
+      if (!match) return null;
+      const [, book, ch, v] = match;
+
+      const testament = book.match(
+        /^(MAT|MRK|LUK|JHN|ACT|ROM|1CO|2CO|GAL|EPH|PHP|COL|1TH|2TH|1TI|2TI|TIT|PHM|HEB|JAS|1PE|2PE|1JN|2JN|3JN|JUD|REV)$/,
+      )
+        ? "NewT"
+        : "OldT";
+
+      let bookData = null;
+      if (coreData) {
+        const versions = ["lxx", "thot", "tr", "gnt"];
+        for (const ver of versions) {
+          if (coreData[ver] && coreData[ver][testament]) {
+            bookData = coreData[ver][testament]
+              .flatMap((g) => g.books)
+              .find((b) => b.code === book);
+            if (bookData) break;
+          }
+        }
       }
+
+      if (!bookData) return null;
+      return { book: bookData.code, chapter: ch, verse: v };
     };
 
-    loadDictionary();
-  }, [strong, dictCode, data?.word, origVer]);
+    const renderWithLinks = (text) => {
+      if (!text || typeof text !== "string") return text;
 
-  // Обробка посилань у тексті
-  const parseRef = (ref) => {
-    const match = ref.match(/([A-Z]+)\.(\d+):(\d+)/);
-    if (!match) return null;
-    const [, book, ch, v] = match;
+      return text
+        .split(/(\[[^\]]+\]|\([^\)]+\)|\b[A-Z]+\.\d+:\d+\b)/g)
+        .map((part, i) => {
+          if (part.match(/^\[[^\]]+\]$/)) {
+            return (
+              <sup key={i} className="text-muted">
+                [посилання]
+              </sup>
+            );
+          }
+          if (part.match(/^\([^\)]+\)$/)) {
+            return (
+              <span key={i} className="text-muted">
+                {part}
+              </span>
+            );
+          }
+          const ref = parseRef(part);
+          if (ref) {
+            return (
+              <Link
+                key={i}
+                to={`/?ref=${ref.book}.${ref.chapter}#v${ref.verse}`}
+                className="text-primary text-decoration-underline"
+                title={`Відкрити ${ref.book} ${ref.chapter}:${ref.verse}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("Перехід до:", ref);
+                }}
+              >
+                {part}
+              </Link>
+            );
+          }
+          return part;
+        });
+    };
 
-    const testament = book.match(
-      /^(MAT|MRK|LUK|JHN|ACT|ROM|1CO|2CO|GAL|EPH|PHP|COL|1TH|2TH|1TI|2TI|TIT|PHM|HEB|JAS|1PE|2PE|1JN|2JN|3JN|JUD|REV)$/,
-    )
-      ? "NewT"
-      : "OldT";
-
-    let bookData = null;
-    if (coreData) {
-      const versions = ["lxx", "thot", "tr", "gnt"];
-      for (const ver of versions) {
-        if (coreData[ver] && coreData[ver][testament]) {
-          bookData = coreData[ver][testament]
-            .flatMap((g) => g.books)
-            .find((b) => b.code === book);
-          if (bookData) break;
-        }
+    const renderLSJ = (text) => {
+      if (!text || text.trim() === "") {
+        return <p className="text-muted p-3">Немає даних LSJ</p>;
       }
-    }
 
-    if (!bookData) return null;
-    return { book: bookData.code, chapter: ch, verse: v };
-  };
+      const sections = text.split(/__(.+?)__/).filter(Boolean);
+      if (sections.length === 0) {
+        return (
+          <p
+            dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, "<br>") }}
+          />
+        );
+      }
 
-  const renderWithLinks = (text) => {
-    if (!text || typeof text !== "string") return text;
-
-    return text
-      .split(/(\[[^\]]+\]|\([^\)]+\)|\b[A-Z]+\.\d+:\d+\b)/g)
-      .map((part, i) => {
-        if (part.match(/^\[[^\]]+\]$/)) {
+      return sections.map((sec, i) => {
+        if (i % 2 === 0) {
           return (
-            <sup key={i} className="text-muted">
-              [посилання]
-            </sup>
-          );
-        }
-        if (part.match(/^\([^\)]+\)$/)) {
-          return (
-            <span key={i} className="text-muted">
-              {part}
-            </span>
-          );
-        }
-        const ref = parseRef(part);
-        if (ref) {
-          return (
-            <Link
+            <p
               key={i}
-              to={`/?ref=${ref.book}.${ref.chapter}#v${ref.verse}`}
-              className="text-primary text-decoration-underline"
-              title={`Відкрити ${ref.book} ${ref.chapter}:${ref.verse}`}
-              onClick={(e) => {
-                e.preventDefault();
-                console.log("Перехід до:", ref);
-              }}
-            >
-              {part}
-            </Link>
+              dangerouslySetInnerHTML={{ __html: sec.replace(/\n/g, "<br>") }}
+            />
+          );
+        } else {
+          return (
+            <h6 key={i} className="mt-3 text-primary">
+              {sec}
+            </h6>
           );
         }
-        return part;
       });
-  };
+    };
 
-  const renderLSJ = (text) => {
-    if (!text || text.trim() === "") {
-      return <p className="text-muted p-3">Немає даних LSJ</p>;
-    }
+    const renderMeanings = (meanings) => {
+      if (!meanings || !Array.isArray(meanings) || meanings.length === 0) {
+        return <p className="text-muted p-3">Немає значень</p>;
+      }
 
-    const sections = text.split(/__(.+?)__/).filter(Boolean);
-    if (sections.length === 0) {
       return (
-        <p dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, "<br>") }} />
+        <ul className="list-unstyled">
+          {meanings.map((meaning, i) => (
+            <li key={i} className="mb-2">
+              {typeof meaning === "string"
+                ? renderWithLinks(meaning)
+                : String(meaning)}
+            </li>
+          ))}
+        </ul>
+      );
+    };
+
+    const renderDefinitions = (definitions) => {
+      if (!definitions || typeof definitions !== "object") {
+        return null;
+      }
+
+      return (
+        <div className="definitions-content">
+          {Object.entries(definitions).map(([key, value]) => (
+            <div key={key} className="mb-3">
+              <h6 className="text-primary">
+                {key.replace("_", " ").toUpperCase()}:
+              </h6>
+              {typeof value === "object" ? (
+                <ul className="list-unstyled ms-3">
+                  {Object.entries(value).map(([subKey, subValue]) => (
+                    <li key={subKey} className="mb-1">
+                      <strong>{subKey}:</strong> {String(subValue)}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{String(value)}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      );
+    };
+
+    const renderLXXUsage = (usage) => {
+      if (!usage || !Array.isArray(usage) || usage.length === 0) {
+        return null;
+      }
+
+      return (
+        <div className="lxx-usage mt-3">
+          <h6 className="text-primary">Використання в LXX:</h6>
+          <ul className="list-unstyled">
+            {usage.map((item, i) => (
+              <li key={i} className="mb-2 small">
+                {renderWithLinks(item)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
+    const renderHebrewEquivalents = (equivalents) => {
+      if (
+        !equivalents ||
+        !Array.isArray(equivalents) ||
+        equivalents.length === 0
+      ) {
+        return null;
+      }
+
+      return (
+        <div className="hebrew-equivalents mt-3">
+          <h6 className="text-primary">Єврейські еквіваленти:</h6>
+          <ul className="list-unstyled">
+            {equivalents.map((item, i) => (
+              <li key={i} className="mb-1">
+                {renderWithLinks(item)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
+    if (!strong && !dictCode) {
+      return (
+        <div className="lexicon-window">
+          <h5 className="lexicon-title">
+            {lang.lexicon || "Лексикон"}
+            {onClose && <CloseIcon onClick={onClose} />}
+          </h5>
+          <div className="text-muted text-center p-3">Оберіть слово</div>
+        </div>
       );
     }
 
-    return sections.map((sec, i) => {
-      if (i % 2 === 0) {
-        return (
-          <p
-            key={i}
-            dangerouslySetInnerHTML={{ __html: sec.replace(/\n/g, "<br>") }}
-          />
-        );
-      } else {
-        return (
-          <h6 key={i} className="mt-3 text-primary">
-            {sec}
-          </h6>
-        );
-      }
-    });
-  };
-
-  const renderMeanings = (meanings) => {
-    if (!meanings || !Array.isArray(meanings) || meanings.length === 0) {
-      return <p className="text-muted p-3">Немає значень</p>;
-    }
-
-    return (
-      <ul className="list-unstyled">
-        {meanings.map((meaning, i) => (
-          <li key={i} className="mb-2">
-            {typeof meaning === "string"
-              ? renderWithLinks(meaning)
-              : String(meaning)}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const renderDefinitions = (definitions) => {
-    if (!definitions || typeof definitions !== "object") {
-      return null;
-    }
-
-    return (
-      <div className="definitions-content">
-        {Object.entries(definitions).map(([key, value]) => (
-          <div key={key} className="mb-3">
-            <h6 className="text-primary">
-              {key.replace("_", " ").toUpperCase()}:
-            </h6>
-            {typeof value === "object" ? (
-              <ul className="list-unstyled ms-3">
-                {Object.entries(value).map(([subKey, subValue]) => (
-                  <li key={subKey} className="mb-1">
-                    <strong>{subKey}:</strong> {String(subValue)}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>{String(value)}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderLXXUsage = (usage) => {
-    if (!usage || !Array.isArray(usage) || usage.length === 0) {
-      return null;
-    }
-
-    return (
-      <div className="lxx-usage mt-3">
-        <h6 className="text-primary">Використання в LXX:</h6>
-        <ul className="list-unstyled">
-          {usage.map((item, i) => (
-            <li key={i} className="mb-2 small">
-              {renderWithLinks(item)}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
-
-  const renderHebrewEquivalents = (equivalents) => {
-    if (
-      !equivalents ||
-      !Array.isArray(equivalents) ||
-      equivalents.length === 0
-    ) {
-      return null;
-    }
-
-    return (
-      <div className="hebrew-equivalents mt-3">
-        <h6 className="text-primary">Єврейські еквіваленти:</h6>
-        <ul className="list-unstyled">
-          {equivalents.map((item, i) => (
-            <li key={i} className="mb-1">
-              {renderWithLinks(item)}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
-
-  if (!strong && !dictCode) {
-    return (
-      <div className="lexicon-window">
-        <h5 className="lexicon-title">
-          {lang.lexicon || "Лексикон"}
-          {onClose && <CloseIcon onClick={onClose} />}
-        </h5>
-        <div className="text-muted text-center p-3">Оберіть слово</div>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="lexicon-window">
-        <h5 className="lexicon-title">
-          {dictCode || strong}
-          {onClose && <CloseIcon onClick={onClose} />}
-        </h5>
-        <div className="p-3 text-center">
-          <div
-            className="spinner-border spinner-border-sm text-primary me-2"
-            role="status"
-          >
-            <span className="visually-hidden">Завантаження...</span>
-          </div>
-          Завантаження словника...
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !entry) {
-    return (
-      <div className="lexicon-window">
-        <h5 className="lexicon-title">
-          {dictCode || strong}
-          {onClose && <CloseIcon onClick={onClose} />}
-        </h5>
-        <div className="p-3 text-danger text-center">
-          {error || "Дані відсутні"}
-          <div className="mt-2 small text-muted">
-            {dictCode && <div>Словник: {dictCode}</div>}
-            {strong && <div>Strong: {strong}</div>}
-            {entry?._type && <div>Тип: {entry._type}</div>}
+    if (loading) {
+      return (
+        <div className="lexicon-window">
+          <h5 className="lexicon-title">
+            {dictCode || strong}
+            {onClose && <CloseIcon onClick={onClose} />}
+          </h5>
+          <div className="p-3 text-center">
+            <div
+              className="spinner-border spinner-border-sm text-primary me-2"
+              role="status"
+            >
+              <span className="visually-hidden">Завантаження...</span>
+            </div>
+            Завантаження словника...
           </div>
         </div>
-      </div>
-    );
-  }
-  // Додайте функцію для отримання назви мови:
-  const getLanguageName = (langCode) => {
-    const languages = {
-      uk: "українська",
-      en: "англійська",
-      ru: "російська",
-      gr: "грецька",
-      he: "єврейська",
+      );
+    }
+
+    if (error || !entry) {
+      return (
+        <div className="lexicon-window">
+          <h5 className="lexicon-title">
+            {dictCode || strong}
+            {onClose && <CloseIcon onClick={onClose} />}
+          </h5>
+          <div className="p-3 text-danger text-center">
+            {error || "Дані відсутні"}
+            <div className="mt-2 small text-muted">
+              {dictCode && <div>Словник: {dictCode}</div>}
+              {strong && <div>Strong: {strong}</div>}
+              {entry?._type && <div>Тип: {entry._type}</div>}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    // Додайте функцію для отримання назви мови:
+    const getLanguageName = (langCode) => {
+      const languages = {
+        uk: "українська",
+        en: "англійська",
+        ru: "російська",
+        gr: "грецька",
+        he: "єврейська",
+      };
+      return languages[langCode] || langCode;
     };
-    return languages[langCode] || langCode;
-  };
-  return (
-    <div className="lexicon-window">
-      <h5 className="lexicon-title">
-        <div>
-          <strong>{entry.word}</strong>
-          {entry.translit && ` (${entry.translit})`}
-          <small className="text-muted ms-2">
-            • {entry.strong || strong}
-            {/* {isTranslationDict && (
-              <span className="badge bg-success ms-2">UA</span>
-            )} */}
+
+    // Заголовок з навігацією
+    const renderHeader = () => {
+      // Визначаємо тип вікна для заголовка
+      let windowType = "";
+      if (isNarrowScreen) {
+        windowType = "Словник";
+      } else {
+        windowType = windowIndex === 0 ? "Orig" : "Trans";
+      }
+
+      return (
+        <div className="lexicon-header-with-nav">
+          <div className="nav-controls">
+            <button
+              className={`nav-arrow ${!historyState?.canGoBack ? "disabled" : ""}`}
+              onClick={handleBackClick}
+              disabled={!historyState?.canGoBack}
+              title="Назад"
+            >
+              ‹
+            </button>
+
+            <span className="nav-position">
+              {historyState?.position || "1/1"}
+            </span>
+
+            <button
+              className={`nav-arrow ${!historyState?.canGoForward ? "disabled" : ""}`}
+              onClick={handleForwardClick}
+              disabled={!historyState?.canGoForward}
+              title="Вперед"
+            >
+              ›
+            </button>
+          </div>
+
+          <div className="lexicon-title-content">
+            <div>
+              <strong>{entry?.word || data?.word?.word || "Словник"}</strong>
+              {/* {entry?.translit && ` (${entry.translit})`} */}
+              <small className="text-muted ms-2">
+                • {entry?.strong || strong}
+                <span className="window-type-badge ms-2">{windowType}</span>
+              </small>
+            </div>
+          </div>
+
+          {onClose && <CloseIcon onClick={onClose} />}
+        </div>
+      );
+    };
+
+    // Індикатор свайпу для мобільних
+    const renderSwipeIndicator = () => {
+      if (!isNarrowScreen) return null;
+
+      return (
+        <div className="swipe-indicator">
+          <small>
+            {historyState?.canGoBack && "← Свайп вліво для попереднього "}
+            {historyState?.canGoBack && historyState?.canGoForward && " • "}
+            {historyState?.canGoForward && "Свайп вправо для наступного →"}
           </small>
         </div>
-        {onClose && <CloseIcon onClick={onClose} />}
-      </h5>
+      );
+    };
+    // Решта компонента залишається без змін (рендер вмісту)
+    // ... (parseRef, renderWithLinks, renderLSJ, renderMeanings тощо залишаються як були)
 
-      <div className="lexicon-tabs">
-        <button
-          className={activeTab === "dictionary" ? "active" : ""}
-          onClick={() => setActiveTab("dictionary")}
-        >
-          {isTranslationDict ? "Словник UA" : "Словник"}
-        </button>
-
-        {entry.meanings && entry.meanings.length > 0 && (
-          <button
-            className={activeTab === "meanings" ? "active" : ""}
-            onClick={() => setActiveTab("meanings")}
-          >
-            Значення ({entry.meanings.length})
-          </button>
-        )}
-
-        {entry.definitions && Object.keys(entry.definitions).length > 0 && (
-          <button
-            className={activeTab === "definitions" ? "active" : ""}
-            onClick={() => setActiveTab("definitions")}
-          >
-            Визначення
-          </button>
-        )}
-
-        {entry.lxx_usage && entry.lxx_usage.length > 0 && (
-          <button
-            className={activeTab === "lxx" ? "active" : ""}
-            onClick={() => setActiveTab("lxx")}
-          >
-            LXX ({entry.lxx_usage.length})
-          </button>
-        )}
-
-        {entry.lsj_definition_raw && entry.lsj_definition_raw.trim() && (
-          <button
-            className={activeTab === "lsj" ? "active" : ""}
-            onClick={() => setActiveTab("lsj")}
-          >
-            LSJ
-          </button>
-        )}
-
-        {(entry.grammar || entry.morphology) && (
-          <button
-            className={activeTab === "grammar" ? "active" : ""}
-            onClick={() => setActiveTab("grammar")}
-          >
-            Граматика
-          </button>
-        )}
-      </div>
-
-      <div className="lexicon-content">
-        {activeTab === "dictionary" && (
-          <div className="dictionary-content">
-            {entry.word && (
-              <div className="lex-item">
-                <span className="label">Слово:</span>
-                <span
-                  className={`value ${
-                    entry.strong?.startsWith("H") ? "he" : "gr"
-                  }`}
-                >
-                  {entry.word}
-                </span>
-              </div>
-            )}
-
-            {entry.translit && (
-              <div className="lex-item">
-                <span className="label">Трансліт:</span>
-                <span className="value">{entry.translit}</span>
-              </div>
-            )}
-
-            {entry.translation && (
-              <div className="lex-item">
-                <span className="label">Переклад:</span>
-                <span className="value uk">{entry.translation}</span>
-              </div>
-            )}
-
-            {entry.morphology && (
-              <div className="lex-item">
-                <span className="label">Морфологія:</span>
-                <span className="value">{entry.morphology}</span>
-              </div>
-            )}
-
-            {entry.usage_count > 0 && (
-              <div className="lex-item">
-                <span className="label">Вживань:</span>
-                <span className="value">{entry.usage_count}</span>
-              </div>
-            )}
-
-            {/* Додаткова інформація для словників перекладів */}
-            {isTranslationDict && (
-              <>
-                {renderHebrewEquivalents(entry.hebrew_equivalents)}
-                {renderLXXUsage(entry.lxx_usage)}
-              </>
-            )}
+    if (isEmpty) {
+      return (
+        <div className="lexicon-window empty-window" ref={windowRef}>
+          <h5 className="lexicon-title">
+            {windowIndex === 0 ? "Оригінал" : "Переклад"}
+            {onClose && <CloseIcon onClick={onClose} />}
+          </h5>
+          <div className="text-muted text-center p-3">
+            <small>Оберіть слово для відображення словника</small>
           </div>
-        )}
+          {renderSwipeIndicator()}
+        </div>
+      );
+    }
 
-        {activeTab === "meanings" && (
-          <div className="meanings-content">
-            {renderMeanings(entry.meanings)}
+    if (!strong && !dictCode) {
+      return (
+        <div className="lexicon-window" ref={windowRef}>
+          <h5 className="lexicon-title">
+            {lang.lexicon || "Лексикон"}
+            {onClose && <CloseIcon onClick={onClose} />}
+          </h5>
+          <div className="text-muted text-center p-3">Оберіть слово</div>
+          {renderSwipeIndicator()}
+        </div>
+      );
+    }
+
+    if (loading) {
+      return (
+        <div className="lexicon-window" ref={windowRef}>
+          {renderHeader()}
+          <div className="p-3 text-center">
+            <div
+              className="spinner-border spinner-border-sm text-primary me-2"
+              role="status"
+            >
+              <span className="visually-hidden">Завантаження...</span>
+            </div>
+            Завантаження словника...
           </div>
-        )}
+          {renderSwipeIndicator()}
+        </div>
+      );
+    }
 
-        {activeTab === "definitions" && entry.definitions && (
-          <div className="definitions-content">
-            {renderDefinitions(entry.definitions)}
+    if (error || !entry) {
+      return (
+        <div className="lexicon-window" ref={windowRef}>
+          {renderHeader()}
+          <div className="p-3 text-danger text-center">
+            {error || "Дані відсутні"}
+            <div className="mt-2 small text-muted">
+              {dictCode && <div>Словник: {dictCode}</div>}
+              {strong && <div>Strong: {strong}</div>}
+              {entry?._type && <div>Тип: {entry._type}</div>}
+            </div>
           </div>
-        )}
+          {renderSwipeIndicator()}
+        </div>
+      );
+    }
 
-        {activeTab === "lxx" && entry.lxx_usage && (
-          <div className="lxx-content">{renderLXXUsage(entry.lxx_usage)}</div>
-        )}
-
-        {activeTab === "lsj" && (
-          <div className="lsj-content">
-            {renderLSJ(entry.lsj_definition_raw)}
+    return (
+      <div className="lexicon-window" ref={windowRef}>
+        {renderHeader()}
+        {/* <h5 className="lexicon-title">
+          <div>
+            <strong>{entry.word}</strong>
+            {entry.translit && ` (${entry.translit})`}
+            <small className="text-muted ms-2">
+              • {entry.strong || strong} */}
+        {/* {isTranslationDict && (
+              <span className="badge bg-success ms-2">UA</span>
+            )} */}
+        {/* </small>
           </div>
-        )}
+          {onClose && <CloseIcon onClick={onClose} />}
+        </h5> */}
 
-        {activeTab === "grammar" && (
-          <div className="grammar-content">
-            {entry.morphology && (
-              <div className="mb-3">
-                <h6>Морфологія:</h6>
-                <pre className="bg-light rounded p-2 small">
-                  {entry.morphology}
-                </pre>
-              </div>
-            )}
-            {entry.grammar && (
-              <div>
-                <h6>Граматика:</h6>
-                <pre className="bg-light rounded p-2 small">
-                  {entry.grammar}
-                </pre>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+        <div className="lexicon-tabs">
+          <button
+            className={activeTab === "dictionary" ? "active" : ""}
+            onClick={() => setActiveTab("dictionary")}
+          >
+            {isTranslationDict ? "Словник UA" : "Словник"}
+          </button>
 
-      {/* Інформація про тип словника */}
-      {/* <div className="lexicon-footer mt-2 pt-2 border-top small">
+          {entry.meanings && entry.meanings.length > 0 && (
+            <button
+              className={activeTab === "meanings" ? "active" : ""}
+              onClick={() => setActiveTab("meanings")}
+            >
+              Значення ({entry.meanings.length})
+            </button>
+          )}
+
+          {entry.definitions && Object.keys(entry.definitions).length > 0 && (
+            <button
+              className={activeTab === "definitions" ? "active" : ""}
+              onClick={() => setActiveTab("definitions")}
+            >
+              Визначення
+            </button>
+          )}
+
+          {entry.lxx_usage && entry.lxx_usage.length > 0 && (
+            <button
+              className={activeTab === "lxx" ? "active" : ""}
+              onClick={() => setActiveTab("lxx")}
+            >
+              LXX ({entry.lxx_usage.length})
+            </button>
+          )}
+
+          {entry.lsj_definition_raw && entry.lsj_definition_raw.trim() && (
+            <button
+              className={activeTab === "lsj" ? "active" : ""}
+              onClick={() => setActiveTab("lsj")}
+            >
+              LSJ
+            </button>
+          )}
+
+          {(entry.grammar || entry.morphology) && (
+            <button
+              className={activeTab === "grammar" ? "active" : ""}
+              onClick={() => setActiveTab("grammar")}
+            >
+              Граматика
+            </button>
+          )}
+        </div>
+
+        <div className="lexicon-content">
+          {activeTab === "dictionary" && (
+            <div className="dictionary-content">
+              {entry.word && (
+                <div className="lex-item">
+                  <span className="label">Слово:</span>
+                  <span
+                    className={`value ${
+                      entry.strong?.startsWith("H") ? "he" : "gr"
+                    }`}
+                  >
+                    {entry.word}
+                  </span>
+                </div>
+              )}
+
+              {entry.translit && (
+                <div className="lex-item">
+                  <span className="label">Трансліт:</span>
+                  <span className="value">{entry.translit}</span>
+                </div>
+              )}
+
+              {entry.translation && (
+                <div className="lex-item">
+                  <span className="label">Переклад:</span>
+                  <span className="value uk">{entry.translation}</span>
+                </div>
+              )}
+
+              {entry.morphology && (
+                <div className="lex-item">
+                  <span className="label">Морфологія:</span>
+                  <span className="value">{entry.morphology}</span>
+                </div>
+              )}
+
+              {entry.usage_count > 0 && (
+                <div className="lex-item">
+                  <span className="label">Вживань:</span>
+                  <span className="value">{entry.usage_count}</span>
+                </div>
+              )}
+
+              {/* Додаткова інформація для словників перекладів */}
+              {isTranslationDict && (
+                <>
+                  {renderHebrewEquivalents(entry.hebrew_equivalents)}
+                  {renderLXXUsage(entry.lxx_usage)}
+                </>
+              )}
+            </div>
+          )}
+
+          {activeTab === "meanings" && (
+            <div className="meanings-content">
+              {renderMeanings(entry.meanings)}
+            </div>
+          )}
+
+          {activeTab === "definitions" && entry.definitions && (
+            <div className="definitions-content">
+              {renderDefinitions(entry.definitions)}
+            </div>
+          )}
+
+          {activeTab === "lxx" && entry.lxx_usage && (
+            <div className="lxx-content">{renderLXXUsage(entry.lxx_usage)}</div>
+          )}
+
+          {activeTab === "lsj" && (
+            <div className="lsj-content">
+              {renderLSJ(entry.lsj_definition_raw)}
+            </div>
+          )}
+
+          {activeTab === "grammar" && (
+            <div className="grammar-content">
+              {entry.morphology && (
+                <div className="mb-3">
+                  <h6>Морфологія:</h6>
+                  <pre className="bg-light rounded p-2 small">
+                    {entry.morphology}
+                  </pre>
+                </div>
+              )}
+              {entry.grammar && (
+                <div>
+                  <h6>Граматика:</h6>
+                  <pre className="bg-light rounded p-2 small">
+                    {entry.grammar}
+                  </pre>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Інформація про тип словника */}
+        {/* <div className="lexicon-footer mt-2 pt-2 border-top small">
         {isTranslationDict ? (
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-success">• Український словник</span>
@@ -1199,29 +1424,31 @@ const LexiconWindow = ({ data, lang, onClose, coreData, origVer }) => {
           </div>
         )}
       </div> */}
-      <div className="lexicon-footer mt-2 pt-2 border-top small">
-        {entry._type === "strongs_dictionary" ? (
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="text-primary">• Strong's Dictionary •</span>
-            <span className="badge bg-primary">ua</span>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="text-success">
-              • Словник ({getLanguageName(entry._lang)})
-            </span>
-            <span
-              className={`badge bg-${
-                entry._lang === "uk" ? "success" : "info"
-              }`}
-            >
-              {entry._lang.toUpperCase()}
-            </span>
-          </div>
-        )}
+        <div className="lexicon-footer mt-2 pt-2 border-top small">
+          {entry._type === "strongs_dictionary" ? (
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-primary">• Strong's Dictionary •</span>
+              <span className="badge bg-primary">ua</span>
+            </div>
+          ) : (
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-success">
+                • Словник ({getLanguageName(entry._lang)})
+              </span>
+              <span
+                className={`badge bg-${
+                  entry._lang === "uk" ? "success" : "info"
+                }`}
+              >
+                {entry._lang.toUpperCase()}
+              </span>
+            </div>
+          )}
+        </div>
+        {renderSwipeIndicator()}
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default LexiconWindow;
