@@ -44,7 +44,7 @@
 
 // ========================
 
-// utils/logger.js - ПОЛІПШЕНА ВЕРСІЯ
+// utils/logger.js -
 const isDevelopment = process.env.NODE_ENV === "development";
 
 // Функція для перевірки, чи відкрита консоль
