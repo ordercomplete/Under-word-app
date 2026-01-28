@@ -2225,66 +2225,9 @@ const LexiconWindow = memo(
       );
     };
 
-    if (!strong && !dictCode) {
-      return (
-        <div className="lexicon-window">
-          {/* <h5 className="lexicon-title">
-            {lang.lexicon || "Лексикон"}
-            {onClose && <CloseIcon onClick={onClose} />}
-          </h5> */}
-          {renderHeader()}
-          <div className="text-muted text-center p-3">Оберіть слово</div>
-          {renderSwipeIndicator()} {/* ВИПРАВЛЕННЯ: Додано індикатор свайпу */}
-        </div>
-      );
-    }
-
-    if (loading) {
-      return (
-        <div className="lexicon-window">
-          {/* <h5 className="lexicon-title">
-            {dictCode || strong}
-            {onClose && <CloseIcon onClick={onClose} />}
-          </h5> */}
-          {renderHeader()}
-          <div className="p-3 text-center">
-            <div
-              className="spinner-border spinner-border-sm text-primary me-2"
-              role="status"
-            >
-              <span className="visually-hidden">Завантаження...</span>
-            </div>
-            Завантаження словника...
-          </div>
-          {renderSwipeIndicator()} {/* ВИПРАВЛЕННЯ: Додано індикатор свайпу */}
-        </div>
-      );
-    }
-
-    // if (error || !entry) {
-    //   return (
-    //     <div className="lexicon-window">
-    //       {renderHeader()}
-    //       <div className="p-3 text-danger text-center">
-    //         {error || "Дані відсутні"}
-    //         <div className="mt-2 small text-muted">
-    //           {dictCode && <div>Словник: {dictCode}</div>}
-    //           {strong && <div>Strong: {strong}</div>}
-    //           {entry?._type && <div>Тип: {entry._type}</div>}
-    //         </div>
-    //       </div>
-    //       {renderSwipeIndicator()}
-    //     </div>
-    //   );
-    // }
-
     if (isEmpty) {
       return (
         <div className="lexicon-window empty-window" ref={windowRef}>
-          {/* <h5 className="lexicon-title">
-            {windowIndex === 0 ? "Оригінал" : "Переклад"}
-            {onClose && <CloseIcon onClick={onClose} />}
-          </h5> */}
           {renderHeader()}
           <div className="text-muted text-center p-3">
             <small>Оберіть слово для відображення словника</small>
@@ -2297,12 +2240,10 @@ const LexiconWindow = memo(
     if (!strong && !dictCode) {
       return (
         <div className="lexicon-window" ref={windowRef}>
-          {/* <h5 className="lexicon-title">
-            {lang.lexicon || "Лексикон"}
-            {onClose && <CloseIcon onClick={onClose} />}
-          </h5> */}
           {renderHeader()}
-          <div className="text-muted text-center p-3">Оберіть слово</div>
+          <div className="text-muted text-center p-3 lexicon-content">
+            Оберіть слово
+          </div>
           {renderSwipeIndicator()}
         </div>
       );
@@ -2312,12 +2253,14 @@ const LexiconWindow = memo(
       return (
         <div className="lexicon-window" ref={windowRef}>
           {renderHeader()}
-          <div className="p-3 text-center">
+          <div className="p-3 text-center lexicon-content">
             <div
               className="spinner-border spinner-border-sm text-primary me-2"
               role="status"
             >
-              <span className="visually-hidden">Завантаження...</span>
+              <span className="visually-hidden dictionary-content">
+                Завантаження...
+              </span>
             </div>
             Завантаження словника...
           </div>
@@ -2330,9 +2273,9 @@ const LexiconWindow = memo(
       return (
         <div className="lexicon-window" ref={windowRef}>
           {renderHeader()}
-          <div className="p-3 text-danger text-center">
+          <div className="p-3 text-danger text-center lexicon-content-error">
             {error || "Дані відсутні"}
-            <div className="mt-2 small text-muted">
+            <div className="mt-2 small text-muted dictionary-content-error">
               {dictCode && <div>Словник: {dictCode}</div>}
               {strong && <div>Strong: {strong}</div>}
               {entry?._type && <div>Тип: {entry._type}</div>}
@@ -2346,19 +2289,6 @@ const LexiconWindow = memo(
     return (
       <div className="lexicon-window" ref={windowRef}>
         {renderHeader()}
-        {/* <h5 className="lexicon-title">
-          <div>
-            <strong>{entry.word}</strong>
-            {entry.translit && ` (${entry.translit})`}
-            <small className="text-muted ms-2">
-              • {entry.strong || strong} */}
-        {/* {isTranslationDict && (
-              <span className="badge bg-success ms-2">UA</span>
-            )} */}
-        {/* </small>
-          </div>
-          {onClose && <CloseIcon onClick={onClose} />}
-        </h5> */}
 
         <div className="lexicon-tabs">
           <button

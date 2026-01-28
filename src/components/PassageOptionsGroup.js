@@ -31,12 +31,24 @@ const PassageOptionsGroup = ({
   const [showBook, setShowBook] = useState(false);
   const [showChapter, setShowChapter] = useState(false);
   const [selectedBook, setSelectedBook] = useState("GEN");
-  const [selectedChapters, setSelectedChapters] = useState(50);
+  const [selectedChapters, setSelectedChapters] = useState();
 
   const [book, chapter] = currentRef.split(".");
 
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
+
+  // Функція для отримання кількості розділів поточної книги
+  const getCurrentBookChapters = () => {
+    return getMaxChaptersForBook(book, versions); // використовуємо функцію з попереднього варіанту
+  };
+
+  // Нова функція для вибору книги + розділу
+  const handleSelectBookAndChapter = (bookCode, chapter) => {
+    setCurrentRef(`${bookCode}.${chapter}`);
+    setSelectedBook(bookCode);
+    // Опціонально: оновити chapters, якщо потрібно
+  };
   // console.log(
   //   "Panel: 2-PassageOptionsGroup coreData keys:",
   //   Object.keys(coreData || {})
@@ -61,18 +73,18 @@ const PassageOptionsGroup = ({
 
     // 1. Шукаємо в NewT
     const newTBook = verData.NewT?.flatMap((g) => g.books).find(
-      (b) => b.code === bookCode
+      (b) => b.code === bookCode,
     );
     if (newTBook) return newTBook.chapters;
 
     // 2. Шукаємо в OldT
     const oldTBook = verData.OldT?.flatMap((g) => g.books).find(
-      (b) => b.code === bookCode
+      (b) => b.code === bookCode,
     );
     if (oldTBook) return oldTBook.chapters;
 
     // 3. Якщо не знайдено
-    console.warn(`Book ${bookCode} not found for version ${version}`);
+    console.log(`Book ${bookCode} не знайдена ця версія ${version}`);
     return 1;
   };
   // const getBookChapters = (bookCode, version) => {
@@ -98,6 +110,14 @@ const PassageOptionsGroup = ({
 
   //   return 1;
   // };
+  const getMaxChaptersForBook = (bookCode, versions) => {
+    let maxChapters = 1;
+    versions.forEach((version) => {
+      const chapters = getBookChapters(bookCode, version);
+      if (chapters > maxChapters) maxChapters = chapters;
+    });
+    return maxChapters;
+  };
   return (
     <>
       <div className="passage-options-group">
@@ -221,14 +241,22 @@ const PassageOptionsGroup = ({
         versions={versions}
         coreData={coreData}
         coreLoading={coreLoading}
+        // Старий пропс (можна залишити для сумісності або прибрати)
         onSelectBook={(code) => {
-          setSelectedBook(code);
+          // setSelectedBook(code);
           // Визначаємо кількість розділів на основі ПЕРШОЇ вибраної версії
-          const firstVersion = versions[0];
-          const chapters = getBookChapters(code, firstVersion);
+          // const firstVersion = versions[0];
+          // const chapters = getBookChapters(code, firstVersion);
+          // setSelectedChapters(chapters);
+          // setCurrentRef(`${code}.1`);
+          // Тепер не використовується автоматично
+          setSelectedBook(code);
+          const chapters = getMaxChaptersForBook(code, versions);
           setSelectedChapters(chapters);
-          setCurrentRef(`${code}.1`);
+          // НЕ викликаємо setCurrentRef тут!
         }}
+        // Новий пропс для комбінованого вибору
+        onSelectBookAndChapter={handleSelectBookAndChapter}
       />
 
       <ChapterSelector
@@ -236,7 +264,8 @@ const PassageOptionsGroup = ({
         onRequestClose={() => setShowChapter(false)}
         lang={lang}
         bookCode={book}
-        chapters={selectedChapters}
+        // chapters={selectedChapters}
+        chapters={getCurrentBookChapters()} // реальна кількість розділів
         onSelectChapter={(ch) => {
           setCurrentRef(`${book}.${ch}`);
         }}
