@@ -875,7 +875,7 @@ const Panel = memo(
       };
 
       loadTranslations();
-    }, [currentRef]);
+    }, [currentRef, getCache, setCache]);
 
     const getTestament = useCallback((bookCode) => {
       const newTestamentBooks = [
@@ -976,20 +976,42 @@ const Panel = memo(
           logger.debug(`Пропускаємо ${ver} для ${book} (несумісність)`);
           return { ver, data: [] };
         }
+        // ВИПРАВЛЕННЯ: Перевіряємо, чи версія має потрібний заповіт
+        // const verKey = verLower;
+        // if (!coreData[verKey] || !coreData[verKey][testament]) {
+        //   logger.debug(`Пропускаємо ${ver} — немає ${testament}`);
+        //   return { ver, data: [] };
+        // }
 
         const url = `/data/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
 
+        // try {
+        //   const response = await fetch(url);
+        //   if (response.ok) {
+        //     const data = await response.json();
+        //     return { ver, data: data.verses || [] };
+        //   }
+        // } catch (error) {
+        //   console.log(`Не вдалося завантажити ${ver}:`, error);
+        // }
         try {
           const response = await fetch(url);
-          if (response.ok) {
-            const data = await response.json();
-            return { ver, data: data.verses || [] };
-          }
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          return { ver, data: data.verses || [] }; // Fallback на []
         } catch (error) {
-          logger.warn(`Не вдалося завантажити ${ver}:`, error);
+          console.log(`Помилка завантаження ${ver}: ${error}`); // Залишити console.log
+          return { ver, data: [] }; // Не скидати весь chapterData
         }
-
-        return { ver, data: [] };
+        // try {
+        //   const data = await response.json();
+        //   return { ver, data: data.verses || [] }; // fallback на []
+        // } catch (e) {
+        //   console.log(`Помилка парсингу ${ver}: ${e}`);
+        //   return { ver, data: [] };
+        // }
+        // при зміні logger.error на console.log зникає скидання тексту при переході між заповітами при відсутніх файлах перекладів
+        // іreturn { ver, data: [] };
       });
 
       Promise.all(loadPromises)
@@ -1015,7 +1037,6 @@ const Panel = memo(
       getCache,
       setCache,
       translationsData,
-      versions,
       getTestament,
     ]);
 
@@ -1036,6 +1057,10 @@ const Panel = memo(
         (v) => !["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase()),
       );
 
+      if (translations.length > 0 && originals.length === 0) {
+        pairs.push({ original: null, translations, testament });
+      }
+
       originals.forEach((original) => {
         // Знаходимо переклади для цього оригіналу
         const relatedTranslations = translations.filter((trans) => {
@@ -1047,7 +1072,8 @@ const Panel = memo(
           if (testament === "OldT") {
             return transInfo.basedOn.old_testament === original.toLowerCase();
           } else {
-            return transInfo.basedOn.new_testament === "tr"; // Для NT всі переклади на основі TR
+            // return transInfo.basedOn.new_testament === "tr"; // Для NT всі переклади на основі TR
+            return transInfo.basedOn.new_testament === original.toLowerCase(); // Виправлено на lower для сумісності
           }
         });
 
@@ -1057,6 +1083,24 @@ const Panel = memo(
           testament: testament,
         });
       });
+      // Оновлений fallback: Якщо немає originals, або translations залишилися невикористаними 31.01.2026
+      // const unusedTranslations = translations.filter(
+      //   (t) => !pairs.some((p) => p.translations.includes(t)),
+      // );
+      // if (unusedTranslations.length > 0) {
+      //   pairs.push({
+      //     original: null, // Для одиночних перекладів
+      //     translations: unusedTranslations,
+      //     testament,
+      //   });
+      // }
+      if (originals.length === 0 && translations.length > 0) {
+        pairs.push({
+          original: null, // Маркер для одиночних перекладів
+          translations: translations, // Всі переклади без оригіналу
+          testament: testament,
+        });
+      }
 
       return pairs;
     }, [versions, translationsData, currentRef, getTestament]);
@@ -1164,7 +1208,7 @@ const Panel = memo(
           coreLoading={coreLoading}
         />
 
-        <div className="chapter-viewer flex-fill overflow-auto p-3">
+        <div className="chapter-viewer flex-fill overflow-auto ">
           {loading ? (
             <div className="text-center p-4">
               <div className="spinner-border text-primary" role="status"></div>
@@ -1177,7 +1221,7 @@ const Panel = memo(
             </div>
           ) : (
             <>
-              <h4 className="text-center mb-4">{currentRef}</h4>
+              <h6 className="text-center ">{currentRef}</h6>
               {verseNumbers.map((verseNum, index) => (
                 <InterlinearVerse
                   key={verseNum}
@@ -1236,7 +1280,7 @@ const PassagePage = memo(({ lang }) => {
     // Початкова перевірка при монтуванні
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Залишаємо lexicons в залежностях, але не використовуємо для закриття
+  }, [lexicons]); // Залишаємо lexicons в залежностях, але не використовуємо для закриття - без lexicons не спрацьовує автоматичне закривання другого вікна
 
   // Ініціалізація глобальної історії з localStorage
   useEffect(() => {
@@ -1749,3 +1793,5 @@ const PassagePage = memo(({ lang }) => {
 
 PassagePage.displayName = "PassagePage";
 export default PassagePage;
+
+// ================================== 29.01.2026

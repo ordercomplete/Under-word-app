@@ -271,6 +271,14 @@
   container-name: chapter-viewer;
   width: 100%;
 }
+.chapter-viewer {
+  background-image: url("/public/images/pergament.jpg");
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 60px;
+  padding: 1rem;
+  height: auto;
+}
 
 /* ==================== АДАПТИВНІСТЬ ДО ШИРИНИ CHAPTER-VIEWER ==================== */
 /* Адаптація коли chapter-viewer <= 1200px (наприклад, коли є 2 вікна) */
@@ -412,7 +420,66 @@
     max-height: 20px;
   }
 }
+@media (max-width: 430px) {
+  .interlinear-verse {
+    margin-bottom: 10px;
+    padding: 5px;
+    background: none;
+    width: 100%;
+    position: relative;
+  }
+  .chapter-viewer {
+    /* background-image: url("/public/images/pergament.jpg"); */
+    /* flex: 1; */
+    /* overflow-y: auto; */
+    padding: 5px;
+    height: auto;
+  }
+  .verse-number {
+    /* font-weight: bold;
+    color: #2c3e50;
+    margin-right: 5px;
+    padding: 5px;
+    border: 2px solid #3498db; */
+    border-radius: 6px;
+    font-size: 0.7em;
+  }
 
+  .verse-headers {
+    /* display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    vertical-align: top;
+    position: relative; */
+    padding: 0 5px 0 0;
+  }
+  .word {
+    /* flex: 1;
+    min-width: 40px;
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s;
+    cursor: default;
+    user-select: none; */
+    font-size: 1em;
+    padding: 2px 4px;
+    max-height: 32px;
+  }
+  .verse-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-height: 32px;
+    padding: 2px 4px;
+    margin: 4px 0;
+    transition: background-color 0.2s;
+    font-size: 0.66em;
+  }
+}
 /* ==================== ДОДАТКОВІ СТИЛІ ==================== */
 .word-block {
   break-inside: avoid;

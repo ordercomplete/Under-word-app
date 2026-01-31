@@ -1507,30 +1507,867 @@
 // --------------друга версія
 // Проблема в тому, що isOriginalVersion визначена всередині компонента як useCallback, але намагається експортуватися за межами компонента. Потрібно виправити експорт.
 
-// src/modals/TranslationSelector.js -
+// // src/modals/TranslationSelector.js -
+// import React, { useState, useEffect, useMemo, useCallback } from "react";
+// import CloseIcon from "../elements/CloseIcon";
+// import TranslationTabs from "../elements/TranslationTabs";
+// import LanguageFilter from "../elements/LanguageFilter";
+// import TranslationFooter from "../elements/TranslationFooter";
+// import "../styles/TranslationSelector.css";
+
+// // ==================== УТІЛІТИ ДЛЯ ЕКСПОРТУ ====================
+// // Виношу їх за межі компонента, бо вони не залежать від стану
+
+// /**
+//  * ПЕРЕВІРКА ЧИ ВЕРСІЯ Є ОРИГІНАЛОМ
+//  * Використовується зовні для тестування
+//  */
+// export const isOriginalVersionUtil = (initials, translationsData) => {
+//   if (!translationsData || !translationsData.bibles) return false;
+//   const bible = translationsData.bibles.find((b) => b.initials === initials);
+//   return bible?.features?.includes("originals") || false;
+// };
+
+// /**
+//  * ОТРИМАТИ НАЗВУ МОВИ ЗА КОДОМ
+//  */
+// export const getLanguageNameUtil = (code, langDict = {}) => {
+//   const langMap = {
+//     _all: langDict.all_languages || "Всі мови",
+//     _ancient: langDict.ancient || "Стародавні",
+//     grc: langDict.greek || "Грецька",
+//     he: langDict.hebrew || "Єврейська",
+//     uk: langDict.ukrainian || "Українська",
+//     ru: langDict.russian || "Російська",
+//     en: langDict.english || "Англійська",
+//   };
+
+//   return langMap[code] || code;
+// };
+
+// // ==================== КОМПОНЕНТ ====================
+
+// const TranslationSelector = ({
+//   isOpen,
+//   onRequestClose,
+//   lang,
+//   onSelectVersions,
+//   initialVersions = [], // ← НОВИЙ ПРОП: поточні версії з панелі
+//   currentBook = "GEN", // ← НОВИЙ ПРОП: поточна книга для інтелектуального дефолту
+// }) => {
+//   // console.log("🔄 TranslationSelector: компонент ініціалізовано");
+
+//   // ==================== STATE ====================
+//   const [translations, setTranslations] = useState({ bibles: [] });
+//   const [selectedVersions, setSelectedVersions] = useState([]);
+//   const [readingMode, setReadingMode] = useState(false);
+//   const [languageFilter, setLanguageFilter] = useState("_all");
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   // ==================== КОНСТАНТИ ====================
+//   const getTestament = (bookCode) => {
+//     const newTestamentBooks = [
+//       "MAT",
+//       "MRK",
+//       "LUK",
+//       "JHN",
+//       "ACT",
+//       "ROM",
+//       "1CO",
+//       "2CO",
+//       "GAL",
+//       "EPH",
+//       "PHP",
+//       "COL",
+//       "1TH",
+//       "2TH",
+//       "1TI",
+//       "2TI",
+//       "TIT",
+//       "PHM",
+//       "HEB",
+//       "JAS",
+//       "1PE",
+//       "2PE",
+//       "1JN",
+//       "2JN",
+//       "3JN",
+//       "JUD",
+//       "REV",
+//     ];
+//     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+//   };
+//   /**
+//    * ОСНОВНІ ПАРИ ОРИГІНАЛІВ
+//    * Визначають обов'язкові комбінації версій
+//    */
+//   const MAIN_PAIRS = [
+//     {
+//       key: "lxx-utt",
+//       originals: ["LXX"],
+//       translations: ["UTT"],
+//       name: "LXX + UTT",
+//       description: "Септуагінта з українським перекладом",
+//       isDefault: true,
+//       removable: true,
+//       // minSelection: 2,
+//       // requiredTogether: true,
+//       testament: "OldT", // ← Додаємо заповіт
+//     },
+//     {
+//       key: "thot-ubt",
+//       originals: ["THOT"],
+//       translations: ["UBT"],
+//       name: "THOT + UBT",
+//       description: "Масоретський текст з українським перекладом",
+//       removable: true,
+//       // requiredTogether: true,
+//       // autoSelect: false,
+//       testament: "OldT", // ← Додаємо заповіт
+//     },
+//     {
+//       key: "tr-utt",
+//       originals: ["TR"],
+//       translations: ["UTT"],
+//       name: "TR + UTT",
+//       description: "Textus Receptus з українським перекладом",
+//       removable: true,
+//       testament: "NewT", // ← Додаємо заповіт
+//     },
+//     {
+//       key: "gnt-translations",
+//       originals: ["GNT"],
+//       translations: [], // ← Порожній, користувач обирає
+//       name: "GNT + переклади",
+//       description: "Сучасний грецький текст з перекладами",
+//       removable: true,
+//       testament: "NewT", // ← Додаємо заповіт
+//     },
+//   ];
+
+//   // ==================== ФУНКЦІЇ ДОПОМОГИ (всередині компонента) ====================
+
+//   const getBibleInfo = useCallback(
+//     (initials) => {
+//       return translations.bibles?.find((b) => b.initials === initials);
+//     },
+//     [translations]
+//   );
+
+//   const isOriginalVersion = useCallback(
+//     (initials) => {
+//       const bible = getBibleInfo(initials);
+//       return bible?.features?.includes("originals") || false;
+//     },
+//     [getBibleInfo]
+//   );
+
+//   const getLanguageName = useCallback(
+//     (code) => {
+//       return getLanguageNameUtil(code, lang);
+//     },
+//     [lang]
+//   );
+
+//   // ==================== ЕФЕКТИ ====================
+
+//   /**
+//    * ЗАВАНТАЖЕННЯ ДАНИХ ПРО ПЕРЕКЛАДИ
+//    */
+
+//   useEffect(() => {
+//     let isMounted = true;
+
+//     const loadTranslations = async () => {
+//       try {
+//         setIsLoading(true);
+//         setError(null);
+
+//         const res = await fetch("/data/translations.json");
+//         if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+
+//         const data = await res.json();
+
+//         if (!isMounted) return;
+//         setTranslations(data);
+
+//         // === ВИПРАВЛЕНА ЛОГІКА: ===
+
+//         // 1. Якщо є initialVersions - використовуємо їх
+//         if (initialVersions && initialVersions.length > 0) {
+//           console.log(
+//             "🔄 TranslationSelector: використовую initialVersions",
+//             initialVersions
+//           );
+//           setSelectedVersions(initialVersions);
+//           // Не викликаємо onSelectVersions - бо це вже встановлено
+//         }
+//         // 2. Інакше - інтелектуальний дефолт на основі книги
+//         else {
+//           const testament = getTestament(currentBook);
+//           let defaultSelection;
+
+//           if (testament === "NewT") {
+//             defaultSelection = ["TR", "UTT"]; // NT дефолт
+//           } else {
+//             defaultSelection = ["LXX", "UTT"]; // OT дефолт
+//           }
+
+//           console.log("⚙️ TranslationSelector: інтелектуальний дефолт", {
+//             book: currentBook,
+//             testament,
+//             defaultSelection,
+//           });
+
+//           setSelectedVersions(defaultSelection);
+//           onSelectVersions(defaultSelection);
+//         }
+//       } catch (err) {
+//         // ... обробка помилок
+//       } finally {
+//         if (isMounted) setIsLoading(false);
+//       }
+//     };
+
+//     if (isOpen) loadTranslations();
+
+//     return () => {
+//       isMounted = false;
+//     };
+//   }, [isOpen, onSelectVersions, initialVersions, currentBook]); // ← Додаємо залежності
+
+//   // ==================== ФІЛЬТРАЦІЯ ТА ГРУПУВАННЯ ====================
+//   const filteredMainPairs = MAIN_PAIRS.filter((pair) => {
+//     const pairTestament = pair.testament;
+//     const currentTestament = getTestament(currentBook);
+//     return !pairTestament || pairTestament === currentTestament;
+//   });
+//   const filteredItems = useMemo(() => {
+//     // console.log("🔍 TranslationSelector: фільтрація елементів", {
+//     //   languageFilter,
+//     //   searchQuery,
+//     //   totalItems: translations.bibles?.length || 0,
+//     // });
+
+//     const list = translations.bibles || [];
+
+//     return list.filter((item) => {
+//       // Фільтр за мовою
+//       const matchesLang =
+//         languageFilter === "_all" ||
+//         item.lang === languageFilter ||
+//         (languageFilter === "_ancient" && isOriginalVersion(item.initials));
+
+//       // Фільтр за пошуком
+//       const matchesSearch =
+//         !searchQuery ||
+//         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//         item.initials.toLowerCase().includes(searchQuery.toLowerCase());
+
+//       return matchesLang && matchesSearch;
+//     });
+//   }, [translations, languageFilter, searchQuery, isOriginalVersion]);
+
+//   const groupedByLanguage = useMemo(() => {
+//     const groups = {};
+
+//     filteredItems.forEach((item) => {
+//       const isOriginal = isOriginalVersion(item.initials);
+//       const key =
+//         languageFilter === "_ancient" && isOriginal
+//           ? "_ancient"
+//           : languageFilter !== "_all"
+//           ? languageFilter
+//           : item.lang || "_other";
+
+//       if (!groups[key]) groups[key] = [];
+//       groups[key].push(item);
+//     });
+
+//     // console.log("📊 TranslationSelector: згруповано за мовами", {
+//     //   groupsCount: Object.keys(groups).length,
+//     //   groups: Object.keys(groups),
+//     // });
+
+//     return groups;
+//   }, [filteredItems, languageFilter, isOriginalVersion]);
+
+//   // ==================== ОБРОБНИКИ ПОДІЙ ====================
+
+//   const handlePairSelection = (pairKey, isSelected) => {
+//     console.log("🔄 TranslationSelector: обробка вибору пари", {
+//       pairKey,
+//       isSelected,
+//       currentSelection: selectedVersions,
+//     });
+
+//     const pair = MAIN_PAIRS.find((p) => p.key === pairKey);
+//     if (!pair) {
+//       console.error("❌ TranslationSelector: пара не знайдена", pairKey);
+//       return;
+//     }
+
+//     let newSelected = [...selectedVersions];
+
+//     if (isSelected) {
+//       // ДОДАЄМО ВСЮ ПАРУ
+//       const allItems = [...pair.originals, ...pair.translations];
+//       newSelected = [...new Set([...newSelected, ...allItems])];
+
+//       console.log("➕ TranslationSelector: додано пару", {
+//         pair: pair.name,
+//         addedItems: allItems,
+//         newSelection: newSelected,
+//       });
+//     } else {
+//       // ПЕРЕВІРКА ЧИ МОЖНА ВИДАЛИТИ
+//       if (!pair.removable) {
+//         console.warn("⚠️ TranslationSelector: пару не можна видалити", pairKey);
+//         alert(lang.cannot_remove_pair || "Цю пару не можна вимкнути");
+//         return;
+//       }
+
+//       // ПЕРЕВІРКА МІНІМАЛЬНОЇ КІЛЬКОСТІ ПАР
+//       const remainingPairs = MAIN_PAIRS.filter(
+//         (p) =>
+//           p.key !== pairKey && p.originals.some((o) => newSelected.includes(o))
+//       );
+
+//       if (remainingPairs.length === 0 && MAIN_PAIRS.length > 1) {
+//         console.warn("⚠️ TranslationSelector: спроба видалити останню пару");
+//         alert(
+//           lang.need_at_least_one_pair || "Потрібно залишити хоча б одну пару"
+//         );
+//         return;
+//       }
+
+//       // ВИДАЛЯЄМО ЕЛЕМЕНТИ ПАРИ
+//       const itemsToRemove = [...pair.originals, ...pair.translations];
+//       newSelected = newSelected.filter((v) => !itemsToRemove.includes(v));
+
+//       console.log("➖ TranslationSelector: видалено пару", {
+//         pair: pair.name,
+//         removedItems: itemsToRemove,
+//         newSelection: newSelected,
+//       });
+//     }
+
+//     setSelectedVersions(newSelected);
+//   };
+
+//   const handleSingleCheckbox = (initials, isSelected) => {
+//     console.log("🔄 TranslationSelector: обробка окремого чекбоксу", {
+//       initials,
+//       isSelected,
+//       currentSelection: selectedVersions,
+//     });
+
+//     const bible = getBibleInfo(initials);
+//     if (!bible) {
+//       console.error("❌ TranslationSelector: переклад не знайдено", initials);
+//       return;
+//     }
+
+//     let newSelected = [...selectedVersions];
+
+//     if (isSelected) {
+//       // ДОДАЄМО ПЕРЕКЛАД
+//       newSelected.push(initials);
+
+//       // ПЕРЕВІРЯЄМО ОБОВ'ЯЗКОВІ СУПУТНИКИ
+//       if (bible.requiredWith && bible.requiredWith.length > 0) {
+//         const missingRequired = bible.requiredWith.filter(
+//           (r) => !newSelected.includes(r)
+//         );
+//         if (missingRequired.length > 0) {
+//           console.log(
+//             "🔗 TranslationSelector: додаю обов'язкові супутники",
+//             missingRequired
+//           );
+//           newSelected = [...new Set([...newSelected, ...missingRequired])];
+//         }
+//       }
+
+//       // ОСОБЛИВА ОБРОБКА ДЛЯ GNT
+//       if (initials === "GNT") {
+//         console.log(
+//           "🇬🇷 TranslationSelector: обробка GNT - шукаю відповідний переклад"
+//         );
+
+//         // Шукаємо переклад, що використовується з TR
+//         const trTranslation = newSelected.find((v) => {
+//           if (v === "TR" || v === "GNT") return false;
+//           const b = getBibleInfo(v);
+//           return b?.basedOn?.new_testament === "tr";
+//         });
+
+//         if (trTranslation) {
+//           console.log(
+//             "🔗 TranslationSelector: знайдено переклад для GNT",
+//             trTranslation
+//           );
+//           newSelected.push(trTranslation); // Додаємо той самий переклад
+//         } else {
+//           console.log("ℹ️ TranslationSelector: для GNT не знайдено переклад");
+//         }
+//       }
+
+//       newSelected = [...new Set(newSelected)];
+//     } else {
+//       // ВИДАЛЯЄМО ПЕРЕКЛАД
+//       newSelected = newSelected.filter((v) => v !== initials);
+
+//       // ЯКЩО ВИДАЛЯЄМО ОРИГІНАЛ - ВИДАЛЯЄМО ЙОГО ОБОВ'ЯЗКОВІ СУПУТНИКИ
+//       if (bible.requiredWith) {
+//         const toRemove = bible.requiredWith.filter(
+//           (r) =>
+//             !newSelected.some((v) => {
+//               const b = getBibleInfo(v);
+//               return b?.requiredWith?.includes(r);
+//             })
+//         );
+
+//         if (toRemove.length > 0) {
+//           console.log(
+//             "🗑️ TranslationSelector: видаляю супутники оригіналу",
+//             toRemove
+//           );
+//           newSelected = newSelected.filter((v) => !toRemove.includes(v));
+//         }
+//       }
+//     }
+
+//     console.log("📝 TranslationSelector: оновлений вибір", newSelected);
+//     setSelectedVersions(newSelected);
+//   };
+
+//   const toggleReadingMode = () => {
+//     const newMode = !readingMode;
+//     console.log("🔄 TranslationSelector: перемикання режиму", {
+//       from: readingMode ? "reading" : "interlinear",
+//       to: newMode ? "reading" : "interlinear",
+//     });
+
+//     setReadingMode(newMode);
+
+//     if (newMode) {
+//       // РЕЖИМ ЧИТАННЯ: залишаємо тільки один вибраний
+//       if (selectedVersions.length > 0) {
+//         const singleVersion = selectedVersions[0];
+//         setSelectedVersions([singleVersion]);
+//         console.log(
+//           "📖 TranslationSelector: увімкнено режим читання",
+//           singleVersion
+//         );
+//       }
+//     } else {
+//       // РЕЖИМ ІНТЕРЛІНЕАР: повертаємо дефолт
+//       const defaultSelection = ["LXX", "TR", "UTT"];
+//       setSelectedVersions(defaultSelection);
+//       console.log(
+//         "🔤 TranslationSelector: увімкнено інтерлінеарний режим",
+//         defaultSelection
+//       );
+//     }
+//   };
+
+//   const handleApply = () => {
+//     console.log("✅ TranslationSelector: застосування вибору", {
+//       selectedVersions,
+//       readingMode,
+//       count: selectedVersions.length,
+//     });
+
+//     if (selectedVersions.length === 0) {
+//       console.warn("⚠️ TranslationSelector: немає вибраних версій");
+//       alert(lang.select_at_least_one || "Оберіть хоча б одну версію");
+//       return;
+//     }
+
+//     onSelectVersions(selectedVersions);
+//     onRequestClose();
+//   };
+
+//   const validateSelection = () => {
+//     console.log("🔍 TranslationSelector: перевірка валідності вибору");
+
+//     // Перевіряємо тільки ті пари, які користувач ЧАСТКОВО обрав
+//     for (const pair of MAIN_PAIRS) {
+//       // Якщо хоч один елемент пари вибраний
+//       const hasSomeOriginals = pair.originals.some((o) =>
+//         selectedVersions.includes(o)
+//       );
+//       // ... але НЕ всі обов'язкові елементи (originals + translations)
+//       const hasAllRequired = [...pair.originals, ...pair.translations].every(
+//         (v) => selectedVersions.includes(v)
+//       );
+
+//       if (hasSomeOriginals && !hasAllRequired && pair.requiredTogether) {
+//         // Тільки ТОДИ показуємо помилку
+//         return {
+//           valid: false,
+//           message: `Пара ${pair.name} повинна бути обрана повністю.`,
+//         };
+//       }
+//     }
+//     // ------------------
+
+//     // 2. Перевірка обов'язкових супутників
+//     for (const version of selectedVersions) {
+//       const bible = getBibleInfo(version);
+//       if (bible?.requiredWith) {
+//         const missing = bible.requiredWith.filter(
+//           (r) => !selectedVersions.includes(r)
+//         );
+//         if (missing.length > 0) {
+//           console.error(
+//             "❌ TranslationSelector: відсутні обов'язкові супутники",
+//             {
+//               version,
+//               missing,
+//             }
+//           );
+//           return {
+//             valid: false,
+//             message: `Для ${version} потрібно також обрати: ${missing.join(
+//               ", "
+//             )}`,
+//           };
+//         }
+//       }
+//     }
+
+//     console.log("✅ TranslationSelector: вибір валідний");
+//     return { valid: true };
+//   };
+
+//   // ==================== РЕНДЕРИНГ ====================
+
+//   if (!isOpen) {
+//     console.log("🚫 TranslationSelector: модальне вікно закрите");
+//     return null;
+//   }
+
+//   // console.log("🎨 TranslationSelector: початок рендерингу", {
+//   //   isLoading,
+//   //   error,
+//   //   selectedCount: selectedVersions.length,
+//   //   readingMode,
+//   // });
+
+//   if (isLoading) {
+//     return (
+//       <div className="translation-selector-loading">
+//         <div className="spinner-border text-primary" role="status">
+//           <span className="visually-hidden">Завантаження...</span>
+//         </div>
+//         <p>{lang.loading || "Завантаження перекладів..."}</p>
+//       </div>
+//     );
+//   }
+
+//   if (error) {
+//     return (
+//       <div className="translation-selector-error">
+//         <div className="alert alert-danger">
+//           <h5>Помилка завантаження</h5>
+//           <p>{error}</p>
+//           <button className="btn btn-secondary" onClick={onRequestClose}>
+//             {lang.close || "Закрити"}
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   const validationResult = validateSelection();
+
+//   return (
+//     <>
+//       <div className="modal-backdrop fade in" onClick={onRequestClose}></div>
+
+//       <div className="modal in" style={{ display: "block" }} tabIndex="-1">
+//         <div className="modal-dialog modal-lg">
+//           <div className="modal-content stepModalFgBg">
+//             {/* ЗАГОЛОВОК З ПЕРЕМИКАЧЕМ РЕЖИМУ */}
+//             <div className="modal-header">
+//               <h5>{lang.select_translations || "Оберіть переклади"}</h5>
+
+//               <div className="reading-mode-toggle">
+//                 <label className="form-check form-switch">
+//                   <input
+//                     type="checkbox"
+//                     className="form-check-input"
+//                     checked={readingMode}
+//                     onChange={toggleReadingMode}
+//                   />
+//                   <span className="form-check-label">
+//                     {lang.reading_mode || "Режим читання"}
+//                   </span>
+//                 </label>
+//                 {readingMode && (
+//                   <span className="badge bg-info ms-2">
+//                     {lang.single_selection || "Один вибір"}
+//                   </span>
+//                 )}
+//               </div>
+
+//               <CloseIcon onClick={onRequestClose} />
+//             </div>
+
+//             <div className="modal-body">
+//               {readingMode ? (
+//                 /* ========== РЕЖИМ ЧИТАННЯ ========== */
+//                 <div className="reading-mode-selection">
+//                   <div className="alert alert-info mb-3">
+//                     <i className="bi bi-info-circle"></i>
+//                     {lang.reading_mode_description ||
+//                       "Режим читання: оберіть одну версію для читання"}
+//                   </div>
+
+//                   {translations.bibles.map((bible) => (
+//                     <div key={bible.initials} className="radio-option">
+//                       <input
+//                         type="radio"
+//                         id={`radio-${bible.initials}`}
+//                         name="reading-translation"
+//                         checked={selectedVersions.includes(bible.initials)}
+//                         onChange={() => setSelectedVersions([bible.initials])}
+//                       />
+//                       <label htmlFor={`radio-${bible.initials}`}>
+//                         <strong className="version-initials">
+//                           [{bible.initials}]
+//                         </strong>
+//                         <span className="version-name"> - {bible.name}</span>
+
+//                         {bible.features?.includes("originals") && (
+//                           <span className="badge bg-primary ms-2">
+//                             {lang.original || "Оригінал"}
+//                           </span>
+//                         )}
+//                       </label>
+//                     </div>
+//                   ))}
+//                 </div>
+//               ) : (
+//                 /* ========== РЕЖИМ ІНТЕРЛІНЕАР ========== */
+//                 <>
+//                   {/* ПОМИЛКА ВАЛІДАЦІЇ */}
+//                   {!validationResult.valid && (
+//                     <div className="alert alert-warning">
+//                       <i className="bi bi-exclamation-triangle"></i>
+//                       {validationResult.message}
+//                     </div>
+//                   )}
+
+//                   {/* ОСНОВНІ ПАРИ */}
+//                   <div className="main-pairs-section">
+//                     <h6 className="section-title">
+//                       {lang.main_pairs || "Основні пари"}
+//                     </h6>
+
+//                     {MAIN_PAIRS.map((pair) => {
+//                       const isSelected = [
+//                         ...pair.originals,
+//                         ...pair.translations,
+//                       ].every((v) => selectedVersions.includes(v));
+//                       const isDisabled =
+//                         pair.isDefault && selectedVersions.length <= 3;
+
+//                       return (
+//                         <div
+//                           key={pair.key}
+//                           className={`pair-option ${
+//                             isSelected ? "selected" : ""
+//                           }`}
+//                         >
+//                           <input
+//                             type="checkbox"
+//                             id={`pair-${pair.key}`}
+//                             checked={isSelected}
+//                             onChange={(e) =>
+//                               handlePairSelection(pair.key, e.target.checked)
+//                             }
+//                             disabled={isDisabled && !isSelected}
+//                           />
+//                           <label htmlFor={`pair-${pair.key}`}>
+//                             <div className="pair-name">
+//                               <strong>{pair.name}</strong>
+//                               {pair.isDefault && (
+//                                 <span className="badge bg-success ms-2">
+//                                   {lang.default || "За замовчуванням"}
+//                                 </span>
+//                               )}
+//                             </div>
+//                             <small className="pair-description">
+//                               {pair.description}
+//                             </small>
+//                           </label>
+//                         </div>
+//                       );
+//                     })}
+//                   </div>
+
+//                   {/* ІНШІ ПЕРЕКЛАДИ */}
+//                   <div className="other-translations-section">
+//                     <h6 className="section-title">
+//                       {lang.other_translations || "Інші переклади"}
+//                     </h6>
+
+//                     {/* ГРУПИ ЗА МОВОЮ */}
+//                     {Object.entries(groupedByLanguage).map(
+//                       ([langCode, items]) => {
+//                         const filteredItems = items.filter(
+//                           (item) =>
+//                             !MAIN_PAIRS.some(
+//                               (pair) =>
+//                                 pair.originals.includes(item.initials) ||
+//                                 pair.translations.includes(item.initials)
+//                             )
+//                         );
+
+//                         if (filteredItems.length === 0) return null;
+
+//                         return (
+//                           <div key={langCode} className="language-group">
+//                             <div className="language-header">
+//                               <span className="language-name">
+//                                 {getLanguageName(langCode)}
+//                               </span>
+//                               <span className="language-count">
+//                                 ({filteredItems.length})
+//                               </span>
+//                             </div>
+
+//                             <div className="translations-list">
+//                               {filteredItems.map((item) => (
+//                                 <div
+//                                   key={item.initials}
+//                                   className="translation-option"
+//                                 >
+//                                   <input
+//                                     type="checkbox"
+//                                     id={`trans-${item.initials}`}
+//                                     checked={selectedVersions.includes(
+//                                       item.initials
+//                                     )}
+//                                     onChange={(e) =>
+//                                       handleSingleCheckbox(
+//                                         item.initials,
+//                                         e.target.checked
+//                                       )
+//                                     }
+//                                   />
+//                                   <label htmlFor={`trans-${item.initials}`}>
+//                                     <span className="translation-initials">
+//                                       [{item.initials}]
+//                                     </span>
+//                                     <span className="translation-name">
+//                                       {item.name}
+//                                     </span>
+//                                   </label>
+//                                 </div>
+//                               ))}
+//                             </div>
+//                           </div>
+//                         );
+//                       }
+//                     )}
+//                   </div>
+//                 </>
+//               )}
+//             </div>
+
+//             {/* ФУТЕР */}
+//             <div className="modal-footer">
+//               <div className="selection-info">
+//                 <span className="badge bg-primary">
+//                   {selectedVersions.length} {lang.selected || "обрано"}
+//                 </span>
+//                 {readingMode && (
+//                   <span className="badge bg-info ms-2">
+//                     {lang.reading_mode || "Режим читання"}
+//                   </span>
+//                 )}
+//               </div>
+
+//               <div className="footer-buttons">
+//                 <button className="btn btn-secondary" onClick={onRequestClose}>
+//                   {lang.cancel || "Скасувати"}
+//                 </button>
+
+//                 <button
+//                   className="btn btn-primary"
+//                   onClick={handleApply}
+//                   disabled={!validationResult.valid}
+//                 >
+//                   {lang.apply || "Застосувати"}
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default TranslationSelector;
+
+// // console.log("📦 TranslationSelector.js: модуль завантажено");
+
+// /**
+//  * ЕКСПОРТ УТІЛІТ ДЛЯ ТЕСТУВАННЯ
+//  */
+// export const TranslationSelectorUtils = {
+//   isOriginalVersion: isOriginalVersionUtil,
+//   getLanguageName: getLanguageNameUtil,
+//   MAIN_PAIRS: [
+//     {
+//       key: "lxx-utt",
+//       originals: ["LXX"],
+//       translations: ["UTT"],
+//       name: "LXX + UTT",
+//     },
+//     {
+//       kkey: "thot-ubt",
+//       originals: ["THOT"],
+//       translations: ["UBT"],
+//       name: "THOT + UBT",
+//     },
+//     {
+//       key: "tr-utt",
+//       originals: ["TR"],
+//       translations: ["UTT"],
+//       name: "TR + UTT",
+//     },
+//     {
+//       key: "gnt-translations",
+//       originals: ["GNT"],
+//       translations: [], // ← Порожній, користувач обирає
+//       name: "GNT + переклади",
+//     },
+//   ],
+// };
+
+// ==================================
+
+// src/modals/TranslationSelector.js
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import CloseIcon from "../elements/CloseIcon";
 import TranslationTabs from "../elements/TranslationTabs";
-import LanguageFilter from "../elements/LanguageFilter";
 import TranslationFooter from "../elements/TranslationFooter";
 import "../styles/TranslationSelector.css";
 
-// ==================== УТІЛІТИ ДЛЯ ЕКСПОРТУ ====================
-// Виношу їх за межі компонента, бо вони не залежать від стану
-
-/**
- * ПЕРЕВІРКА ЧИ ВЕРСІЯ Є ОРИГІНАЛОМ
- * Використовується зовні для тестування
- */
+// ==================== УТІЛІТИ ====================
 export const isOriginalVersionUtil = (initials, translationsData) => {
   if (!translationsData || !translationsData.bibles) return false;
   const bible = translationsData.bibles.find((b) => b.initials === initials);
   return bible?.features?.includes("originals") || false;
 };
 
-/**
- * ОТРИМАТИ НАЗВУ МОВИ ЗА КОДОМ
- */
 export const getLanguageNameUtil = (code, langDict = {}) => {
   const langMap = {
     _all: langDict.all_languages || "Всі мови",
@@ -1541,34 +2378,27 @@ export const getLanguageNameUtil = (code, langDict = {}) => {
     ru: langDict.russian || "Російська",
     en: langDict.english || "Англійська",
   };
-
   return langMap[code] || code;
 };
 
 // ==================== КОМПОНЕНТ ====================
-
 const TranslationSelector = ({
   isOpen,
   onRequestClose,
   lang,
   onSelectVersions,
-  initialVersions = [], // ← НОВИЙ ПРОП: поточні версії з панелі
-  currentBook = "GEN", // ← НОВИЙ ПРОП: поточна книга для інтелектуального дефолту
+  initialVersions = [],
+  currentBook = "GEN",
 }) => {
-  // console.log("🔄 TranslationSelector: компонент ініціалізовано");
-
-  // ==================== STATE ====================
   const [translations, setTranslations] = useState({ bibles: [] });
   const [selectedVersions, setSelectedVersions] = useState([]);
-  const [readingMode, setReadingMode] = useState(false);
-  const [languageFilter, setLanguageFilter] = useState("_all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [activeOriginalTab, setActiveOriginalTab] = useState("lxx");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // ==================== КОНСТАНТИ ====================
   const getTestament = (bookCode) => {
-    const newTestamentBooks = [
+    const ntBooks = [
       "MAT",
       "MRK",
       "LUK",
@@ -1597,86 +2427,12 @@ const TranslationSelector = ({
       "JUD",
       "REV",
     ];
-    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+    return ntBooks.includes(bookCode) ? "NewT" : "OldT";
   };
-  /**
-   * ОСНОВНІ ПАРИ ОРИГІНАЛІВ
-   * Визначають обов'язкові комбінації версій
-   */
-  const MAIN_PAIRS = [
-    {
-      key: "lxx-utt",
-      originals: ["LXX"],
-      translations: ["UTT"],
-      name: "LXX + UTT",
-      description: "Септуагінта з українським перекладом",
-      isDefault: true,
-      removable: true,
-      // minSelection: 2,
-      // requiredTogether: true,
-      testament: "OldT", // ← Додаємо заповіт
-    },
-    {
-      key: "thot-ubt",
-      originals: ["THOT"],
-      translations: ["UBT"],
-      name: "THOT + UBT",
-      description: "Масоретський текст з українським перекладом",
-      removable: true,
-      // requiredTogether: true,
-      // autoSelect: false,
-      testament: "OldT", // ← Додаємо заповіт
-    },
-    {
-      key: "tr-utt",
-      originals: ["TR"],
-      translations: ["UTT"],
-      name: "TR + UTT",
-      description: "Textus Receptus з українським перекладом",
-      removable: true,
-      testament: "NewT", // ← Додаємо заповіт
-    },
-    {
-      key: "gnt-translations",
-      originals: ["GNT"],
-      translations: [], // ← Порожній, користувач обирає
-      name: "GNT + переклади",
-      description: "Сучасний грецький текст з перекладами",
-      removable: true,
-      testament: "NewT", // ← Додаємо заповіт
-    },
-  ];
 
-  // ==================== ФУНКЦІЇ ДОПОМОГИ (всередині компонента) ====================
-
-  const getBibleInfo = useCallback(
-    (initials) => {
-      return translations.bibles?.find((b) => b.initials === initials);
-    },
-    [translations]
-  );
-
-  const isOriginalVersion = useCallback(
-    (initials) => {
-      const bible = getBibleInfo(initials);
-      return bible?.features?.includes("originals") || false;
-    },
-    [getBibleInfo]
-  );
-
-  const getLanguageName = useCallback(
-    (code) => {
-      return getLanguageNameUtil(code, lang);
-    },
-    [lang]
-  );
+  const originalOrder = ["LXX", "THOT", "TR", "GNT"];
 
   // ==================== ЕФЕКТИ ====================
-
-  /**
-   * ЗАВАНТАЖЕННЯ ДАНИХ ПРО ПЕРЕКЛАДИ
-   */
-
   useEffect(() => {
     let isMounted = true;
 
@@ -1686,46 +2442,28 @@ const TranslationSelector = ({
         setError(null);
 
         const res = await fetch("/data/translations.json");
-        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
-
         if (!isMounted) return;
         setTranslations(data);
 
-        // === ВИПРАВЛЕНА ЛОГІКА: ===
+        // Встановлення дефолту
+        let defaultVersions = [];
+        const testament = getTestament(currentBook);
 
-        // 1. Якщо є initialVersions - використовуємо їх
-        if (initialVersions && initialVersions.length > 0) {
-          console.log(
-            "🔄 TranslationSelector: використовую initialVersions",
-            initialVersions
-          );
-          setSelectedVersions(initialVersions);
-          // Не викликаємо onSelectVersions - бо це вже встановлено
+        if (initialVersions.length > 0) {
+          defaultVersions = initialVersions;
+        } else if (testament === "NewT") {
+          defaultVersions = ["TR", "UTT"];
+        } else {
+          defaultVersions = ["LXX", "UTT"];
         }
-        // 2. Інакше - інтелектуальний дефолт на основі книги
-        else {
-          const testament = getTestament(currentBook);
-          let defaultSelection;
 
-          if (testament === "NewT") {
-            defaultSelection = ["TR", "UTT"]; // NT дефолт
-          } else {
-            defaultSelection = ["LXX", "UTT"]; // OT дефолт
-          }
-
-          console.log("⚙️ TranslationSelector: інтелектуальний дефолт", {
-            book: currentBook,
-            testament,
-            defaultSelection,
-          });
-
-          setSelectedVersions(defaultSelection);
-          onSelectVersions(defaultSelection);
-        }
+        setSelectedVersions(defaultVersions);
+        setActiveOriginalTab(testament === "NewT" ? "tr" : "lxx");
       } catch (err) {
-        // ... обробка помилок
+        if (isMounted) setError(err.message);
       } finally {
         if (isMounted) setIsLoading(false);
       }
@@ -1736,326 +2474,76 @@ const TranslationSelector = ({
     return () => {
       isMounted = false;
     };
-  }, [isOpen, onSelectVersions, initialVersions, currentBook]); // ← Додаємо залежності
+  }, [isOpen, initialVersions, currentBook]);
 
-  // ==================== ФІЛЬТРАЦІЯ ТА ГРУПУВАННЯ ====================
-  const filteredMainPairs = MAIN_PAIRS.filter((pair) => {
-    const pairTestament = pair.testament;
-    const currentTestament = getTestament(currentBook);
-    return !pairTestament || pairTestament === currentTestament;
-  });
-  const filteredItems = useMemo(() => {
-    // console.log("🔍 TranslationSelector: фільтрація елементів", {
-    //   languageFilter,
-    //   searchQuery,
-    //   totalItems: translations.bibles?.length || 0,
-    // });
+  // ==================== ГРУПУВАННЯ ЗА ОРИГІНАЛАМИ ====================
+  const groupedByOriginal = useMemo(() => {
+    const originals =
+      translations.bibles?.filter((b) => b.features?.includes("originals")) ||
+      [];
 
-    const list = translations.bibles || [];
+    const result = {};
 
-    return list.filter((item) => {
-      // Фільтр за мовою
-      const matchesLang =
-        languageFilter === "_all" ||
-        item.lang === languageFilter ||
-        (languageFilter === "_ancient" && isOriginalVersion(item.initials));
+    originals.forEach((orig) => {
+      const origKey = orig.initials.toLowerCase();
+      result[origKey] = {
+        original: orig,
+        translations: [],
+      };
 
-      // Фільтр за пошуком
-      const matchesSearch =
-        !searchQuery ||
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.initials.toLowerCase().includes(searchQuery.toLowerCase());
+      // Знаходимо переклади, що базуються на цьому оригіналі
+      translations.bibles.forEach((item) => {
+        if (!item.basedOn) return;
 
-      return matchesLang && matchesSearch;
-    });
-  }, [translations, languageFilter, searchQuery, isOriginalVersion]);
+        const basedOn = item.basedOn;
+        const isMatch =
+          (origKey === "lxx" && basedOn.old_testament === "lxx") ||
+          (origKey === "thot" && basedOn.old_testament === "thot") ||
+          (origKey === "tr" && basedOn.new_testament === "tr") ||
+          (origKey === "gnt" && basedOn.new_testament === "tr"); // GNT використовує ті ж переклади, що TR
 
-  const groupedByLanguage = useMemo(() => {
-    const groups = {};
-
-    filteredItems.forEach((item) => {
-      const isOriginal = isOriginalVersion(item.initials);
-      const key =
-        languageFilter === "_ancient" && isOriginal
-          ? "_ancient"
-          : languageFilter !== "_all"
-          ? languageFilter
-          : item.lang || "_other";
-
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(item);
-    });
-
-    // console.log("📊 TranslationSelector: згруповано за мовами", {
-    //   groupsCount: Object.keys(groups).length,
-    //   groups: Object.keys(groups),
-    // });
-
-    return groups;
-  }, [filteredItems, languageFilter, isOriginalVersion]);
-
-  // ==================== ОБРОБНИКИ ПОДІЙ ====================
-
-  const handlePairSelection = (pairKey, isSelected) => {
-    console.log("🔄 TranslationSelector: обробка вибору пари", {
-      pairKey,
-      isSelected,
-      currentSelection: selectedVersions,
-    });
-
-    const pair = MAIN_PAIRS.find((p) => p.key === pairKey);
-    if (!pair) {
-      console.error("❌ TranslationSelector: пара не знайдена", pairKey);
-      return;
-    }
-
-    let newSelected = [...selectedVersions];
-
-    if (isSelected) {
-      // ДОДАЄМО ВСЮ ПАРУ
-      const allItems = [...pair.originals, ...pair.translations];
-      newSelected = [...new Set([...newSelected, ...allItems])];
-
-      console.log("➕ TranslationSelector: додано пару", {
-        pair: pair.name,
-        addedItems: allItems,
-        newSelection: newSelected,
+        if (isMatch) {
+          result[origKey].translations.push(item);
+        }
       });
-    } else {
-      // ПЕРЕВІРКА ЧИ МОЖНА ВИДАЛИТИ
-      if (!pair.removable) {
-        console.warn("⚠️ TranslationSelector: пару не можна видалити", pairKey);
-        alert(lang.cannot_remove_pair || "Цю пару не можна вимкнути");
-        return;
-      }
-
-      // ПЕРЕВІРКА МІНІМАЛЬНОЇ КІЛЬКОСТІ ПАР
-      const remainingPairs = MAIN_PAIRS.filter(
-        (p) =>
-          p.key !== pairKey && p.originals.some((o) => newSelected.includes(o))
-      );
-
-      if (remainingPairs.length === 0 && MAIN_PAIRS.length > 1) {
-        console.warn("⚠️ TranslationSelector: спроба видалити останню пару");
-        alert(
-          lang.need_at_least_one_pair || "Потрібно залишити хоча б одну пару"
-        );
-        return;
-      }
-
-      // ВИДАЛЯЄМО ЕЛЕМЕНТИ ПАРИ
-      const itemsToRemove = [...pair.originals, ...pair.translations];
-      newSelected = newSelected.filter((v) => !itemsToRemove.includes(v));
-
-      console.log("➖ TranslationSelector: видалено пару", {
-        pair: pair.name,
-        removedItems: itemsToRemove,
-        newSelection: newSelected,
-      });
-    }
-
-    setSelectedVersions(newSelected);
-  };
-
-  const handleSingleCheckbox = (initials, isSelected) => {
-    console.log("🔄 TranslationSelector: обробка окремого чекбоксу", {
-      initials,
-      isSelected,
-      currentSelection: selectedVersions,
     });
 
-    const bible = getBibleInfo(initials);
-    if (!bible) {
-      console.error("❌ TranslationSelector: переклад не знайдено", initials);
-      return;
-    }
+    return result;
+  }, [translations]);
 
-    let newSelected = [...selectedVersions];
-
-    if (isSelected) {
-      // ДОДАЄМО ПЕРЕКЛАД
-      newSelected.push(initials);
-
-      // ПЕРЕВІРЯЄМО ОБОВ'ЯЗКОВІ СУПУТНИКИ
-      if (bible.requiredWith && bible.requiredWith.length > 0) {
-        const missingRequired = bible.requiredWith.filter(
-          (r) => !newSelected.includes(r)
-        );
-        if (missingRequired.length > 0) {
-          console.log(
-            "🔗 TranslationSelector: додаю обов'язкові супутники",
-            missingRequired
-          );
-          newSelected = [...new Set([...newSelected, ...missingRequired])];
-        }
+  // ==================== ОБРОБНИКИ ====================
+  // const handleCheckbox = (initials, checked) => {
+  //   setSelectedVersions((prev) => {
+  //     if (checked) {
+  //       return [...new Set([...prev, initials])];
+  //     } else {
+  //       return prev.filter((v) => v !== initials);
+  //     }
+  //   });
+  // };
+  const handleCheckbox = (initials, checked) => {
+    setSelectedVersions((prev) => {
+      if (checked) {
+        // Просто додаємо обрану версію, без жодних автоматичних супутників
+        return [...new Set([...prev, initials])];
+      } else {
+        // Просто видаляємо
+        return prev.filter((v) => v !== initials);
       }
-
-      // ОСОБЛИВА ОБРОБКА ДЛЯ GNT
-      if (initials === "GNT") {
-        console.log(
-          "🇬🇷 TranslationSelector: обробка GNT - шукаю відповідний переклад"
-        );
-
-        // Шукаємо переклад, що використовується з TR
-        const trTranslation = newSelected.find((v) => {
-          if (v === "TR" || v === "GNT") return false;
-          const b = getBibleInfo(v);
-          return b?.basedOn?.new_testament === "tr";
-        });
-
-        if (trTranslation) {
-          console.log(
-            "🔗 TranslationSelector: знайдено переклад для GNT",
-            trTranslation
-          );
-          newSelected.push(trTranslation); // Додаємо той самий переклад
-        } else {
-          console.log("ℹ️ TranslationSelector: для GNT не знайдено переклад");
-        }
-      }
-
-      newSelected = [...new Set(newSelected)];
-    } else {
-      // ВИДАЛЯЄМО ПЕРЕКЛАД
-      newSelected = newSelected.filter((v) => v !== initials);
-
-      // ЯКЩО ВИДАЛЯЄМО ОРИГІНАЛ - ВИДАЛЯЄМО ЙОГО ОБОВ'ЯЗКОВІ СУПУТНИКИ
-      if (bible.requiredWith) {
-        const toRemove = bible.requiredWith.filter(
-          (r) =>
-            !newSelected.some((v) => {
-              const b = getBibleInfo(v);
-              return b?.requiredWith?.includes(r);
-            })
-        );
-
-        if (toRemove.length > 0) {
-          console.log(
-            "🗑️ TranslationSelector: видаляю супутники оригіналу",
-            toRemove
-          );
-          newSelected = newSelected.filter((v) => !toRemove.includes(v));
-        }
-      }
-    }
-
-    console.log("📝 TranslationSelector: оновлений вибір", newSelected);
-    setSelectedVersions(newSelected);
-  };
-
-  const toggleReadingMode = () => {
-    const newMode = !readingMode;
-    console.log("🔄 TranslationSelector: перемикання режиму", {
-      from: readingMode ? "reading" : "interlinear",
-      to: newMode ? "reading" : "interlinear",
     });
-
-    setReadingMode(newMode);
-
-    if (newMode) {
-      // РЕЖИМ ЧИТАННЯ: залишаємо тільки один вибраний
-      if (selectedVersions.length > 0) {
-        const singleVersion = selectedVersions[0];
-        setSelectedVersions([singleVersion]);
-        console.log(
-          "📖 TranslationSelector: увімкнено режим читання",
-          singleVersion
-        );
-      }
-    } else {
-      // РЕЖИМ ІНТЕРЛІНЕАР: повертаємо дефолт
-      const defaultSelection = ["LXX", "TR", "UTT"];
-      setSelectedVersions(defaultSelection);
-      console.log(
-        "🔤 TranslationSelector: увімкнено інтерлінеарний режим",
-        defaultSelection
-      );
-    }
   };
 
   const handleApply = () => {
-    console.log("✅ TranslationSelector: застосування вибору", {
-      selectedVersions,
-      readingMode,
-      count: selectedVersions.length,
-    });
-
     if (selectedVersions.length === 0) {
-      console.warn("⚠️ TranslationSelector: немає вибраних версій");
       alert(lang.select_at_least_one || "Оберіть хоча б одну версію");
       return;
     }
-
     onSelectVersions(selectedVersions);
     onRequestClose();
   };
 
-  const validateSelection = () => {
-    console.log("🔍 TranslationSelector: перевірка валідності вибору");
-
-    // Перевіряємо тільки ті пари, які користувач ЧАСТКОВО обрав
-    for (const pair of MAIN_PAIRS) {
-      // Якщо хоч один елемент пари вибраний
-      const hasSomeOriginals = pair.originals.some((o) =>
-        selectedVersions.includes(o)
-      );
-      // ... але НЕ всі обов'язкові елементи (originals + translations)
-      const hasAllRequired = [...pair.originals, ...pair.translations].every(
-        (v) => selectedVersions.includes(v)
-      );
-
-      if (hasSomeOriginals && !hasAllRequired && pair.requiredTogether) {
-        // Тільки ТОДИ показуємо помилку
-        return {
-          valid: false,
-          message: `Пара ${pair.name} повинна бути обрана повністю.`,
-        };
-      }
-    }
-    // ------------------
-
-    // 2. Перевірка обов'язкових супутників
-    for (const version of selectedVersions) {
-      const bible = getBibleInfo(version);
-      if (bible?.requiredWith) {
-        const missing = bible.requiredWith.filter(
-          (r) => !selectedVersions.includes(r)
-        );
-        if (missing.length > 0) {
-          console.error(
-            "❌ TranslationSelector: відсутні обов'язкові супутники",
-            {
-              version,
-              missing,
-            }
-          );
-          return {
-            valid: false,
-            message: `Для ${version} потрібно також обрати: ${missing.join(
-              ", "
-            )}`,
-          };
-        }
-      }
-    }
-
-    console.log("✅ TranslationSelector: вибір валідний");
-    return { valid: true };
-  };
-
   // ==================== РЕНДЕРИНГ ====================
-
-  if (!isOpen) {
-    console.log("🚫 TranslationSelector: модальне вікно закрите");
-    return null;
-  }
-
-  // console.log("🎨 TranslationSelector: початок рендерингу", {
-  //   isLoading,
-  //   error,
-  //   selectedCount: selectedVersions.length,
-  //   readingMode,
-  // });
+  if (!isOpen) return null;
 
   if (isLoading) {
     return (
@@ -2082,7 +2570,10 @@ const TranslationSelector = ({
     );
   }
 
-  const validationResult = validateSelection();
+  const currentGroup = groupedByOriginal[activeOriginalTab] || {
+    original: null,
+    translations: [],
+  };
 
   return (
     <>
@@ -2091,222 +2582,127 @@ const TranslationSelector = ({
       <div className="modal in" style={{ display: "block" }} tabIndex="-1">
         <div className="modal-dialog modal-lg">
           <div className="modal-content stepModalFgBg">
-            {/* ЗАГОЛОВОК З ПЕРЕМИКАЧЕМ РЕЖИМУ */}
+            {/* Заголовок */}
             <div className="modal-header">
               <h5>{lang.select_translations || "Оберіть переклади"}</h5>
-
-              <div className="reading-mode-toggle">
-                <label className="form-check form-switch">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={readingMode}
-                    onChange={toggleReadingMode}
-                  />
-                  <span className="form-check-label">
-                    {lang.reading_mode || "Режим читання"}
-                  </span>
-                </label>
-                {readingMode && (
-                  <span className="badge bg-info ms-2">
-                    {lang.single_selection || "Один вибір"}
-                  </span>
-                )}
-              </div>
-
               <CloseIcon onClick={onRequestClose} />
             </div>
 
+            {/* Таби за оригіналами */}
+            <TranslationTabs
+              lang={lang}
+              activeTab={activeOriginalTab}
+              onTabChange={setActiveOriginalTab}
+            />
+
             <div className="modal-body">
-              {readingMode ? (
-                /* ========== РЕЖИМ ЧИТАННЯ ========== */
-                <div className="reading-mode-selection">
-                  <div className="alert alert-info mb-3">
-                    <i className="bi bi-info-circle"></i>
-                    {lang.reading_mode_description ||
-                      "Режим читання: оберіть одну версію для читання"}
+              {/* Оригінал */}
+              {currentGroup.original && (
+                <div className="original-item mb-3">
+                  <div className="d-flex align-items-center">
+                    <input
+                      type="checkbox"
+                      id={`orig-${currentGroup.original.initials}`}
+                      checked={selectedVersions.includes(
+                        currentGroup.original.initials,
+                      )}
+                      onChange={(e) =>
+                        handleCheckbox(
+                          currentGroup.original.initials,
+                          e.target.checked,
+                        )
+                      }
+                    />
+                    <label
+                      htmlFor={`orig-${currentGroup.original.initials}`}
+                      className="ms-2"
+                    >
+                      <strong>
+                        [{currentGroup.original.initials}]{" "}
+                        {currentGroup.original.name}
+                      </strong>
+                    </label>
                   </div>
+                  {currentGroup.original.note && (
+                    <small className="text-muted d-block mt-1 ms-4">
+                      {currentGroup.original.note}
+                    </small>
+                  )}
+                </div>
+              )}
 
-                  {translations.bibles.map((bible) => (
-                    <div key={bible.initials} className="radio-option">
+              {/* Переклади */}
+              <div className="translations-list mt-3">
+                {/* {currentGroup.translations.map((item) => (
+                  <div key={item.initials} className="translation-item mb-2">
+                    <div className="d-flex align-items-center">
                       <input
-                        type="radio"
-                        id={`radio-${bible.initials}`}
-                        name="reading-translation"
-                        checked={selectedVersions.includes(bible.initials)}
-                        onChange={() => setSelectedVersions([bible.initials])}
+                        type="checkbox"
+                        id={`trans-${item.initials}`}
+                        checked={selectedVersions.includes(item.initials)}
+                        onChange={(e) =>
+                          handleCheckbox(item.initials, e.target.checked)
+                        }
                       />
-                      <label htmlFor={`radio-${bible.initials}`}>
-                        <strong className="version-initials">
-                          [{bible.initials}]
-                        </strong>
-                        <span className="version-name"> - {bible.name}</span>
-
-                        {bible.features?.includes("originals") && (
-                          <span className="badge bg-primary ms-2">
-                            {lang.original || "Оригінал"}
-                          </span>
-                        )}
+                      <label
+                        htmlFor={`trans-${item.initials}`}
+                        className="ms-2"
+                      >
+                        <span className="fw-bold">
+                          [{item.initials}] {item.name}
+                        </span>
                       </label>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                /* ========== РЕЖИМ ІНТЕРЛІНЕАР ========== */
-                <>
-                  {/* ПОМИЛКА ВАЛІДАЦІЇ */}
-                  {!validationResult.valid && (
-                    <div className="alert alert-warning">
-                      <i className="bi bi-exclamation-triangle"></i>
-                      {validationResult.message}
-                    </div>
-                  )}
-
-                  {/* ОСНОВНІ ПАРИ */}
-                  <div className="main-pairs-section">
-                    <h6 className="section-title">
-                      {lang.main_pairs || "Основні пари"}
-                    </h6>
-
-                    {MAIN_PAIRS.map((pair) => {
-                      const isSelected = [
-                        ...pair.originals,
-                        ...pair.translations,
-                      ].every((v) => selectedVersions.includes(v));
-                      const isDisabled =
-                        pair.isDefault && selectedVersions.length <= 3;
-
-                      return (
-                        <div
-                          key={pair.key}
-                          className={`pair-option ${
-                            isSelected ? "selected" : ""
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            id={`pair-${pair.key}`}
-                            checked={isSelected}
-                            onChange={(e) =>
-                              handlePairSelection(pair.key, e.target.checked)
-                            }
-                            disabled={isDisabled && !isSelected}
-                          />
-                          <label htmlFor={`pair-${pair.key}`}>
-                            <div className="pair-name">
-                              <strong>{pair.name}</strong>
-                              {pair.isDefault && (
-                                <span className="badge bg-success ms-2">
-                                  {lang.default || "За замовчуванням"}
-                                </span>
-                              )}
-                            </div>
-                            <small className="pair-description">
-                              {pair.description}
-                            </small>
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* ІНШІ ПЕРЕКЛАДИ */}
-                  <div className="other-translations-section">
-                    <h6 className="section-title">
-                      {lang.other_translations || "Інші переклади"}
-                    </h6>
-
-                    {/* ГРУПИ ЗА МОВОЮ */}
-                    {Object.entries(groupedByLanguage).map(
-                      ([langCode, items]) => {
-                        const filteredItems = items.filter(
-                          (item) =>
-                            !MAIN_PAIRS.some(
-                              (pair) =>
-                                pair.originals.includes(item.initials) ||
-                                pair.translations.includes(item.initials)
-                            )
-                        );
-
-                        if (filteredItems.length === 0) return null;
-
-                        return (
-                          <div key={langCode} className="language-group">
-                            <div className="language-header">
-                              <span className="language-name">
-                                {getLanguageName(langCode)}
-                              </span>
-                              <span className="language-count">
-                                ({filteredItems.length})
-                              </span>
-                            </div>
-
-                            <div className="translations-list">
-                              {filteredItems.map((item) => (
-                                <div
-                                  key={item.initials}
-                                  className="translation-option"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    id={`trans-${item.initials}`}
-                                    checked={selectedVersions.includes(
-                                      item.initials
-                                    )}
-                                    onChange={(e) =>
-                                      handleSingleCheckbox(
-                                        item.initials,
-                                        e.target.checked
-                                      )
-                                    }
-                                  />
-                                  <label htmlFor={`trans-${item.initials}`}>
-                                    <span className="translation-initials">
-                                      [{item.initials}]
-                                    </span>
-                                    <span className="translation-name">
-                                      {item.name}
-                                    </span>
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      }
+                    {item.note && (
+                      <small className="text-muted d-block ms-4">
+                        {item.note}
+                      </small>
                     )}
                   </div>
-                </>
+                ))} */}
+                {currentGroup.translations.map((item) => (
+                  <div key={item.initials} className="translation-item mb-2">
+                    <div className="d-flex align-items-center">
+                      <input
+                        type="checkbox"
+                        id={`trans-${item.initials}`}
+                        checked={selectedVersions.includes(item.initials)}
+                        onChange={(e) =>
+                          handleCheckbox(item.initials, e.target.checked)
+                        }
+                      />
+                      <label
+                        htmlFor={`trans-${item.initials}`}
+                        className="ms-2"
+                      >
+                        <span className="fw-bold">
+                          [{item.initials}] {item.name}
+                        </span>
+                      </label>
+                    </div>
+                    {item.note && (
+                      <small className="text-muted d-block ms-4">
+                        {item.note}
+                      </small>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {currentGroup.translations.length === 0 && (
+                <div className="alert alert-info mt-3">
+                  Для цього оригіналу поки немає відповідних перекладів.
+                </div>
               )}
             </div>
 
-            {/* ФУТЕР */}
-            <div className="modal-footer">
-              <div className="selection-info">
-                <span className="badge bg-primary">
-                  {selectedVersions.length} {lang.selected || "обрано"}
-                </span>
-                {readingMode && (
-                  <span className="badge bg-info ms-2">
-                    {lang.reading_mode || "Режим читання"}
-                  </span>
-                )}
-              </div>
-
-              <div className="footer-buttons">
-                <button className="btn btn-secondary" onClick={onRequestClose}>
-                  {lang.cancel || "Скасувати"}
-                </button>
-
-                <button
-                  className="btn btn-primary"
-                  onClick={handleApply}
-                  disabled={!validationResult.valid}
-                >
-                  {lang.apply || "Застосувати"}
-                </button>
-              </div>
-            </div>
+            {/* Футер */}
+            <TranslationFooter
+              selectedCount={selectedVersions.length}
+              onApply={handleApply}
+              onCancel={onRequestClose}
+              lang={lang}
+            />
           </div>
         </div>
       </div>
@@ -2316,39 +2712,4 @@ const TranslationSelector = ({
 
 export default TranslationSelector;
 
-// console.log("📦 TranslationSelector.js: модуль завантажено");
-
-/**
- * ЕКСПОРТ УТІЛІТ ДЛЯ ТЕСТУВАННЯ
- */
-export const TranslationSelectorUtils = {
-  isOriginalVersion: isOriginalVersionUtil,
-  getLanguageName: getLanguageNameUtil,
-  MAIN_PAIRS: [
-    {
-      key: "lxx-utt",
-      originals: ["LXX"],
-      translations: ["UTT"],
-      name: "LXX + UTT",
-    },
-    {
-      kkey: "thot-ubt",
-      originals: ["THOT"],
-      translations: ["UBT"],
-      name: "THOT + UBT",
-    },
-    {
-      key: "tr-utt",
-      originals: ["TR"],
-      translations: ["UTT"],
-      name: "TR + UTT",
-    },
-    {
-      key: "gnt-translations",
-      originals: ["GNT"],
-      translations: [], // ← Порожній, користувач обирає
-      name: "GNT + переклади",
-    },
-  ],
-};
-// помилки зникли
+// ==================================================== 29.01.2026

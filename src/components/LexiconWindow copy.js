@@ -412,7 +412,7 @@
 //           {entry.translit && ` (${entry.translit})`}
 //           <small className="text-muted ms-2">
 //             • {entry.strong}
-//             {isTranslationDict && <span className="text-success"> • UA</span>}
+//             {isTranslationDict && <span className="text-success"> • uk</span>}
 //           </small>
 //         </div>
 //         {onClose && <CloseIcon onClick={onClose} />}
@@ -423,7 +423,7 @@
 //           className={activeTab === "dictionary" ? "active" : ""}
 //           onClick={() => setActiveTab("dictionary")}
 //         >
-//           {isTranslationDict ? "Словник UA" : "Словник"}
+//           {isTranslationDict ? "Словник uk" : "Словник"}
 //         </button>
 
 //         {entry.meanings && entry.meanings.length > 0 && (
@@ -575,7 +575,7 @@
 //         {isTranslationDict ? (
 //           <div className="d-flex justify-content-between align-items-center">
 //             <span>Словник українського перекладу</span>
-//             <span className="badge bg-success">UA</span>
+//             <span className="badge bg-success">uk</span>
 //           </div>
 //         ) : (
 //           <div className="d-flex justify-content-between align-items-center">
@@ -811,7 +811,7 @@ const LexiconWindow = memo(
               grammar: strongEntry.g || strongEntry.grammar || "",
               usages_count: strongEntry.u || strongEntry.usages_count || 0,
               _type: "strongs_dictionary",
-              _lang: "ua",
+              _lang: "uk",
               _id: currentEntryId,
             };
             // Позначаємо, що запис додано в історію
@@ -1657,7 +1657,9 @@ const LexiconWindow = memo(
         return (
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-primary">• Strong's Dictionary •</span>
-            <span className="badge bg-primary">UA</span>
+            <span className="badge bg-primary">
+              {getLanguageName(entry._lang)}
+            </span>
           </div>
         );
       } else if (entry._type.includes("dictionary")) {
@@ -1687,7 +1689,7 @@ const LexiconWindow = memo(
             <small className="text-muted ms-2">
               • {entry.strong || strong} */}
         {/* {isTranslationDict && (
-              <span className="badge bg-success ms-2">UA</span>
+              <span className="badge bg-success ms-2">uk</span>
             )} */}
         {/* </small>
           </div>
@@ -1699,7 +1701,7 @@ const LexiconWindow = memo(
             className={activeTab === "dictionary" ? "active" : ""}
             onClick={() => setActiveTab("dictionary")}
           >
-            {/* {isTranslationDict ? "Словник UA" : "Словник"} */}
+            {/* {isTranslationDict ? "Словник uk" : "Словник"} */}
             {entry._type === "strongs_dictionary" ? "Strong" : "Словник"}
           </button>
 
@@ -1852,7 +1854,7 @@ const LexiconWindow = memo(
           {/* {entry._type === "strongs_dictionary" ? (
             <div className="d-flex justify-content-between align-items-center">
               <span className="text-primary">• Strong's Dictionary •</span>
-              <span className="badge bg-primary">ua</span>
+              <span className="badge bg-primary">uk</span>
             </div>
           ) : (
             <div className="d-flex justify-content-between align-items-center">

@@ -558,7 +558,7 @@
 //               <>
 //                 <strong className="dict-code">{hoveredWord.dictCode}</strong>
 //                 <span className="version-badge">[{hoveredWord.version}]</span>
-//                 <span className="badge bg-success ms-2">UA</span>
+//                 <span className="badge bg-success ms-2">uk</span>
 //               </>
 //             ) : (
 //               <>
@@ -1083,7 +1083,7 @@
 //               <>
 //                 <strong className="dict-code">{hoveredWord.dictCode}</strong>
 //                 <span className="version-badge">[{hoveredWord.version}]</span>
-//                 <span className="badge bg-success ms-2">UA</span>
+//                 <span className="badge bg-success ms-2">uk</span>
 //               </>
 //             ) : (
 //               <>
@@ -1495,11 +1495,17 @@ const InterlinearVerse = ({
 
     for (let i = 0; i < pairs.length; i++) {
       const pair = pairs[i];
+
       if (pair.original && !seen.has(pair.original)) {
         seen.add(pair.original);
         versions.push(pair.original);
       }
-
+      if (pair.original === null) {
+        // Рендерити тільки переклади як рядок без вирівнювання
+        const transVerse = getVerseData(pair.translations[0], verseNum); // Беремо перший переклад
+        const words = getWordsFromVerse(transVerse);
+        // Рендерити як для оригіналу: ітерація по words з renderWord(isOriginal: false)
+      }
       if (pair.translations) {
         for (let j = 0; j < pair.translations.length; j++) {
           const trans = pair.translations[j];
@@ -1613,7 +1619,7 @@ const InterlinearVerse = ({
               <>
                 <strong className="dict-code">{hoveredWord.dictCode}</strong>
                 <span className="version-badge">[{hoveredWord.version}]</span>
-                <span className="badge bg-success ms-2">UA</span>
+                <span className="badge bg-success ms-2">uk</span>
               </>
             ) : (
               <>

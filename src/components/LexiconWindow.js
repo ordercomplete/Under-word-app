@@ -412,7 +412,7 @@
 //           {entry.translit && ` (${entry.translit})`}
 //           <small className="text-muted ms-2">
 //             • {entry.strong}
-//             {isTranslationDict && <span className="text-success"> • UA</span>}
+//             {isTranslationDict && <span className="text-success"> • uk</span>}
 //           </small>
 //         </div>
 //         {onClose && <CloseIcon onClick={onClose} />}
@@ -423,7 +423,7 @@
 //           className={activeTab === "dictionary" ? "active" : ""}
 //           onClick={() => setActiveTab("dictionary")}
 //         >
-//           {isTranslationDict ? "Словник UA" : "Словник"}
+//           {isTranslationDict ? "Словник uk" : "Словник"}
 //         </button>
 
 //         {entry.meanings && entry.meanings.length > 0 && (
@@ -575,7 +575,7 @@
 //         {isTranslationDict ? (
 //           <div className="d-flex justify-content-between align-items-center">
 //             <span>Словник українського перекладу</span>
-//             <span className="badge bg-success">UA</span>
+//             <span className="badge bg-success">uk</span>
 //           </div>
 //         ) : (
 //           <div className="d-flex justify-content-between align-items-center">
@@ -1344,7 +1344,7 @@
 //             <small className="text-muted ms-2">
 //               • {entry.strong || strong} */}
 //         {/* {isTranslationDict && (
-//               <span className="badge bg-success ms-2">UA</span>
+//               <span className="badge bg-success ms-2">uk</span>
 //             )} */}
 //         {/* </small>
 //           </div>
@@ -1356,7 +1356,7 @@
 //             className={activeTab === "dictionary" ? "active" : ""}
 //             onClick={() => setActiveTab("dictionary")}
 //           >
-//             {isTranslationDict ? "Словник UA" : "Словник"}
+//             {isTranslationDict ? "Словник uk" : "Словник"}
 //           </button>
 
 //           {entry.meanings && entry.meanings.length > 0 && (
@@ -1508,7 +1508,7 @@
 //         {isTranslationDict ? (
 //           <div className="d-flex justify-content-between align-items-center">
 //             <span className="text-success">• Український словник</span>
-//             <span className="badge bg-success">UA</span>
+//             <span className="badge bg-success">uk</span>
 //           </div>
 //         ) : (
 //           <div className="d-flex justify-content-between align-items-center">
@@ -1521,7 +1521,7 @@
 //           {entry._type === "strongs_dictionary" ? (
 //             <div className="d-flex justify-content-between align-items-center">
 //               <span className="text-primary">• Strong's Dictionary •</span>
-//               <span className="badge bg-primary">ua</span>
+//               <span className="badge bg-primary">uk</span>
 //             </div>
 //           ) : (
 //             <div className="d-flex justify-content-between align-items-center">
@@ -1899,10 +1899,14 @@ const LexiconWindow = memo(
         const diff = touchStartX.current - touchEndX.current;
 
         if (Math.abs(diff) > swipeThreshold) {
-          if (diff > 0 && historyState?.canGoForward && onNavigateForward) {
-            onNavigateForward();
-          } else if (diff < 0 && historyState?.canGoBack && onNavigateBack) {
+          if (diff > 0 && historyState?.canGoBack && onNavigateBack) {
             onNavigateBack();
+          } else if (
+            diff < 0 &&
+            historyState?.canGoForward &&
+            onNavigateForward
+          ) {
+            onNavigateForward();
           }
         }
       };
@@ -2216,10 +2220,10 @@ const LexiconWindow = memo(
 
       return (
         <div className="swipe-indicator">
-          <small>
-            {historyState?.canGoBack && "← Свайп вліво для попереднього "}
+          <small className="swipe-indicator-arrow p-0">
+            {historyState?.canGoBack && " ← "}
             {historyState?.canGoBack && historyState?.canGoForward && " • "}
-            {historyState?.canGoForward && "Свайп вправо для наступного →"}
+            {historyState?.canGoForward && " → "}
           </small>
         </div>
       );
@@ -2230,7 +2234,7 @@ const LexiconWindow = memo(
         <div className="lexicon-window empty-window" ref={windowRef}>
           {renderHeader()}
           <div className="text-muted text-center p-3">
-            <small>Оберіть слово для відображення словника</small>
+            <small>Оберіть слово</small>
           </div>
           {renderSwipeIndicator()}
         </div>
@@ -2295,7 +2299,7 @@ const LexiconWindow = memo(
             className={activeTab === "dictionary" ? "active" : ""}
             onClick={() => setActiveTab("dictionary")}
           >
-            {isTranslationDict ? "Словник UA" : "Словник"}
+            {isTranslationDict ? "Словник uk" : "Словник"}
           </button>
 
           {entry.meanings && entry.meanings.length > 0 && (
@@ -2453,7 +2457,7 @@ const LexiconWindow = memo(
         {isTranslationDict ? (
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-success">• Український словник</span>
-            <span className="badge bg-success">UA</span>
+            <span className="badge bg-success">uk</span>
           </div>
         ) : (
           <div className="d-flex justify-content-between align-items-center">
@@ -2462,17 +2466,17 @@ const LexiconWindow = memo(
           </div>
         )}
       </div> */}
-        <div className="lexicon-footer mt-2 pt-2 border-top small">
+        <div className="lexicon-footer  border-top small ps-1 pe-2 ">
           {entry._type === "strongs_dictionary" ? (
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-primary">• Strong's Dictionary •</span>
-              <span className="badge bg-primary">ua</span>
+            <div className="d-flex justify-content-between align-items-center ">
+              <span className="text-primary "> • Strong's Dict •</span>
+              <span>{renderSwipeIndicator()}</span>
+              <span className="badge mr-5px bg-primary">uk</span>
             </div>
           ) : (
             <div className="d-flex justify-content-between align-items-center">
-              <span className="text-success">
-                • Словник ({getLanguageName(entry._lang)})
-              </span>
+              <span className="text-success">• Словник •</span>
+              <span>{renderSwipeIndicator()}</span>
               <span
                 className={`badge bg-${
                   entry._lang === "uk" ? "success" : "info"
@@ -2483,10 +2487,11 @@ const LexiconWindow = memo(
             </div>
           )}
         </div>
-        {renderSwipeIndicator()}
       </div>
     );
   },
 );
 
 export default LexiconWindow;
+
+// ========================= 29.01.2026

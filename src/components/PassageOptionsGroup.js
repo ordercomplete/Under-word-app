@@ -66,6 +66,7 @@ const PassageOptionsGroup = ({
       fetch(url, { priority: "low", mode: "no-cors" }).catch(() => {});
     });
   };
+
   // Додайте цю функцію всередині компонента перед return 24.12.15
   const getBookChapters = (bookCode, version) => {
     const verData = coreData[version?.toLowerCase()];
@@ -84,7 +85,7 @@ const PassageOptionsGroup = ({
     if (oldTBook) return oldTBook.chapters;
 
     // 3. Якщо не знайдено
-    console.log(`Book ${bookCode} не знайдена ця версія ${version}`);
+    console.log(`Не знайдена Book ${bookCode} для ${version}`);
     return 1;
   };
   // const getBookChapters = (bookCode, version) => {

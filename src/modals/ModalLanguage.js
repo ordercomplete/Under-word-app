@@ -5,7 +5,7 @@ const ModalLanguage = ({ isOpen, onRequestClose, lang, onSelectLanguage }) => {
   if (!isOpen) return null;
 
   const languages = [
-    { code: "ua", name: "Українська", flag: "UA" },
+    { code: "uk", name: "Українська", flag: "UA" },
     { code: "en", name: "English", flag: "US" },
     { code: "ru", name: "Русский", flag: "RU" },
   ];

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "updated": "2023-12-28",
+  "updated": "29.01.2026",
   "description": "Список перекладів та оригіналів для Under-Word App",
   "bibles": [
     {
@@ -11,13 +11,14 @@
       "testaments": ["OldT"],
       "type": "original",
       "pair": "LXX+TR",
-      "defaultWith": ["TR", "UTT"],
+      "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
       "path": "originals/lxx",
       "basedOn": null,
       "autoPair": null,
-      "note": "Септуагінта - грецький переклад Старого Заповіту"
+      "note": "Септуагінта - грецький переклад Старого Заповіту",
+      "otNtSplit": false
     },
     {
       "initials": "THOT",
@@ -27,13 +28,14 @@
       "testaments": ["OldT"],
       "type": "original",
       "pair": "THOT+TR",
-      "defaultWith": ["TR", "UBT"],
+      "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
       "path": "originals/thot",
       "basedOn": null,
       "autoPair": "THOT+TR",
-      "note": "Масоретський текст Старого Заповіту"
+      "note": "Масоретський текст Старого Заповіту",
+      "otNtSplit": false
     },
     {
       "initials": "TR",
@@ -42,14 +44,15 @@
       "features": ["originals", "N", "G", "V", "I"],
       "testaments": ["NewT"],
       "type": "original",
-      "pair": ["LXX+TR", "THOT+TR"],
-      "defaultWith": ["LXX", "UTT"],
+      "pair": [],
+      "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
       "path": "originals/tr",
       "basedOn": null,
       "autoPair": null,
-      "note": "Грецький текст Нового Заповіту (Textus Receptus)"
+      "note": "Грецький текст Нового Заповіту (Textus Receptus)",
+      "otNtSplit": false
     },
     {
       "initials": "GNT",
@@ -66,7 +69,8 @@
       "path": "originals/gnt",
       "basedOn": null,
       "autoPair": null,
-      "note": "Сучасний критичний текст Нового Заповіту"
+      "note": "Сучасний критичний текст Нового Заповіту",
+      "otNtSplit": false
     },
     {
       "initials": "UTT",
@@ -85,7 +89,8 @@
         "new_testament": "tr"
       },
       "autoPair": "LXX+TR",
-      "note": "Український переклад з Септуагінти"
+      "note": "Український переклад з Септуагінти",
+      "otNtSplit": true
     },
     {
       "initials": "UBT",
@@ -104,7 +109,8 @@
         "new_testament": "tr"
       },
       "autoPair": "THOT+TR",
-      "note": "Українська Біблія за масоретським текстом"
+      "note": "Українська Біблія за масоретським текстом",
+      "otNtSplit": true
     },
     {
       "initials": "Synodal",
@@ -123,7 +129,8 @@
         "new_testament": "tr"
       },
       "autoPair": "THOT+TR",
-      "note": "Синодальний переклад (російська)"
+      "note": "Синодальний переклад (російська)",
+      "otNtSplit": true
     },
     {
       "initials": "KJV",
@@ -142,7 +149,8 @@
         "new_testament": "tr"
       },
       "autoPair": null,
-      "note": "Біблія короля Якова (англійська)"
+      "note": "Біблія короля Якова (англійська)",
+      "otNtSplit": true
     },
     {
       "initials": "OGIENKO",
@@ -161,7 +169,9 @@
         "new_testament": "tr"
       },
       "autoPair": null,
-      "note": "Переклад Івана Огієнка"
+      "note": "Переклад Івана Огієнка",
+      "description": "Український класичний переклад за масоретським текстом",
+      "otNtSplit": true
     },
     {
       "initials": "KHOMENKO",
@@ -180,7 +190,8 @@
         "new_testament": "tr"
       },
       "autoPair": null,
-      "note": "Переклад Платона Хоменка"
+      "note": "Переклад Платона Хоменка",
+      "otNtSplit": true
     },
     {
       "initials": "SIRYY",
@@ -199,7 +210,8 @@
         "new_testament": "tr"
       },
       "autoPair": null,
-      "note": "Переклад Юрія Сірого"
+      "note": "Переклад Юрія Сірого",
+      "otNtSplit": true
     }
   ],
   "commentaries": []

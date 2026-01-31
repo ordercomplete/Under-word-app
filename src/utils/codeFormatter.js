@@ -104,7 +104,7 @@ export const formatWindowTitle = (entry, isOriginal, windowIndex) => {
   // Якщо це словник перекладу, змінюємо typeBadge
   if (title.isTranslationDict && !isOriginal) {
     const langNames = {
-      uk: "UA",
+      uk: "uk",
       ru: "RU",
       en: "EN",
     };

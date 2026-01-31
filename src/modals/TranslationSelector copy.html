@@ -1,0 +1,1719 @@
+<div class="modal-dialog">
+  <div class="modal-content stepModalFgBg">
+    <div class="modal-body">
+      <span class="pull-right"
+        ><button
+          type="button"
+          style="
+            background: var(--clrBackground);
+            color: var(--clrText);
+            opacity: 0.9;
+          "
+          class="close"
+          data-dismiss="modal"
+          onclick="step.util.closeModal('bibleVersions')"
+        >
+          X
+        </button></span
+      >
+      <ul class="nav nav-tabs bookTypeTabs">
+        <span
+          class="pull-left"
+          style="font-size: 13px; margin-top: 12px; font-weight: bold"
+          >Book type:&nbsp;</span
+        >
+        <li class="pull-left active">
+          <a
+            href="#bibleList"
+            data-toggle="tab"
+            style="font-weight: bold; font-size: 13px"
+            >Bibles</a
+          >
+        </li>
+        <li class="pull-left">
+          <a
+            href="#commentaryList"
+            data-toggle="tab"
+            style="font-weight: normal; font-size: 12px"
+            >Commentaries</a
+          >
+        </li>
+      </ul>
+      <span
+        class="pull-left"
+        style="font-size: 13px; margin-top: 9px; font-weight: bold"
+        >Language:&nbsp;</span
+      >
+      <form role="form" class="form-inline" style="margin-top: 8px">
+        <span class="form-group btn-group" data-toggle="buttons"
+          ><label class="btn btn-default btn-sm stepButton"
+            ><input
+              type="radio"
+              name="languageFilter"
+              data-lang="_all"
+            />All</label
+          ><label class="btn btn-default btn-sm stepButton"
+            ><input
+              type="radio"
+              name="languageFilter"
+              data-lang="en"
+              checked="checked"
+            />English</label
+          ><label class="btn btn-default btn-sm stepButton"
+            ><input
+              type="radio"
+              name="languageFilter"
+              data-lang="uk"
+              %=""
+            />Ukrainian</label
+          ><label class="btn btn-default btn-sm stepButton"
+            ><input
+              type="radio"
+              name="languageFilter"
+              data-lang="ru"
+              %=""
+            />Russian</label
+          ><label
+            class="btn btn-default btn-sm stepButton stepPressedButton active"
+            ><input
+              type="radio"
+              name="languageFilter"
+              data-lang="_ancient"
+            />Ancient</label
+          ></span
+        >
+      </form>
+      <label
+        class="selectGeo"
+        style="font-size: 16px; display: none"
+        for="selectGeo"
+        >Filter languages by geography:</label
+      ><select
+        class="selectGeo"
+        onchange="step.util.σu3()"
+        style="display: none"
+      >
+        <option value="all">All</option>
+        <option value="africa">Africa</option>
+        <option value="americas">Americas</option>
+        <option value="east_south_east_asia">East and Southeast Asia</option>
+        <option value="europe">Europe</option>
+        <option value="oceania">Oceania</option>
+        <option value="south_asia">South Asia</option>
+        <option value="western_asia">Western Asia</option>
+      </select>
+      <div class="tab-content">
+        <div class="tab-pane active" id="bibleList">
+          <span class="langSpan span_Currently_showing"
+            ><button
+              class="langBtn btn_Currently_showing stepButton stepPressedButton"
+            >
+              Currently showing&nbsp;<span
+                class="langPlusMinus plusminus_Currently_showing"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Currently_showing" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="LXX"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="LXX"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >LXX - Septuagint, Morphologically Tagged Rahlfs'</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=LXX"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Septuagint Interlinear"
+                  >S</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="UkrOgienko"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="UkrOgienko"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >UkrOgienko - Українська Біблія. Переклад Івана Огієнка.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=UkrOgienko"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Most_widely_used"
+            ><button
+              class="langBtn btn_Most_widely_used stepButton stepPressedButton"
+            >
+              Most widely used&nbsp;<span
+                class="langPlusMinus plusminus_Most widely used"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Most_widely_used" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="THOT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="THOT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >THOT - Translators Hebrew Old Testament, 2019 with KQ variants
+                OT (Mar'21)</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=THOT"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="LXX"
+              style="padding-left: 1.5em; text-indent: -1.5em; display: none"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="LXX"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >LXX - Septuagint, Morphologically Tagged Rahlfs'</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=LXX"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Septuagint Interlinear"
+                  >S</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="THGNT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="THGNT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >THGNT - Tyndale House Greek New Testament, 2017. Based on the
+                earliest manuscripts and scribal habits.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=THGNT"
+              ></a
+              ><span class="BibleFeatures" style="float: right">
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Byz"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Byz"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Byz - Byzantine Greek NT ed. Robinson &amp; Pierpont 2005</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Byz"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="TR"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="TR"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >TR - KJV Greek NT ed. Stephens 1550 &amp; Scrivener 1894.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=TR"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SBLG"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SBLG"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SBLG - The Greek New Testament: SBLGNT with upgraded notes.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SBLG"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Hebrew_OT"
+            ><button class="langBtn btn_Hebrew_OT stepButton stepPressedButton">
+              Hebrew OT&nbsp;<span class="langPlusMinus plusminus_Hebrew OT"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Hebrew_OT" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="THOT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="THOT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >THOT - Translators Hebrew Old Testament, 2019 with KQ variants
+                OT (Mar'21)</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=THOT"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Alep"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Alep"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Alep - Hebrew OT: Aleppo unpointed Masoretic</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Alep"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="OHB"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="OHB"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >OHB - Hebrew OT: Leningrad pointed Masoretic text (like BHS)
+                with morphology by Open Scriptures</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=OHB"
+              ></a
+              ><span class="BibleFeatures" style="float: right">
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="WLC"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="WLC"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >WLC - Heb. OT: Leningrad Codex based on BHS</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=WLC"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="MapM"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="MapM"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >MapM - Hebrew OT: Aleppo pointed Masoretic OT in Hebrew</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=MapM"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Greek_OT"
+            ><button class="langBtn btn_Greek_OT stepButton stepPressedButton">
+              Greek OT&nbsp;<span class="langPlusMinus plusminus_Greek OT"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Greek_OT" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="LXX"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="LXX"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >LXX - Septuagint, Morphologically Tagged Rahlfs'</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=LXX"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Septuagint Interlinear"
+                  >S</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="AB"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="AB"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >AB - Septuagint ed Rahlfs tr. Esposito 2004 OT in English</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=AB"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="ABEn"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="ABEn"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >ABEn - Apostolic Bible Polyglot English Text adapted by Tyndale
+                House</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=ABEn"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Septuagint Interlinear"
+                  >S</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="ABGk"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="ABGk"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >ABGk - Apostolic Bible Polyglot Greek Text (abpgrk) adapted by
+                Tyndale House</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=ABGk"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Septuagint Interlinear"
+                  >S</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Greek_NT"
+            ><button class="langBtn btn_Greek_NT stepButton stepPressedButton">
+              Greek NT&nbsp;<span class="langPlusMinus plusminus_Greek NT"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Greek_NT" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Ant"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Ant"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Ant - Orthodox Greek NT ed. Antoniades 1912</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Ant"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Byz"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Byz"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Byz - Byzantine Greek NT ed. Robinson &amp; Pierpont 2005</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Byz"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Elz"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Elz"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Elz - KJV Greek NT ed.Elzevir 1624</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Elz"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Nestle"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Nestle"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Nestle - Ancient Greek NT ed.1904</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Nestle"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SBLG"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SBLG"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SBLG - The Greek New Testament: SBLGNT with upgraded notes.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SBLG"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SRGNT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SRGNT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SRGNT - Statistical Restoration Greek New Testament 2022 Center
+                for New Testament Restoration / Statistical Restoration Greek
+                New Testament NT in Ancient Greek to 1453</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SRGNT"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="THGNT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="THGNT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >THGNT - Tyndale House Greek New Testament, 2017. Based on the
+                earliest manuscripts and scribal habits.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=THGNT"
+              ></a
+              ><span class="BibleFeatures" style="float: right">
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Tisch"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Tisch"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Tisch - Ancient Greek NT ed. Tischendorf 1872</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Tisch"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="TNT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="TNT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >TNT - Ancient Greek NT ed. Tregelles 1879</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=TNT"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="TR"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="TR"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >TR - KJV Greek NT ed. Stephens 1550 &amp; Scrivener 1894.</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=TR"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="WHNU"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="WHNU"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >WHNU - Ancient Greek NT ed. 1881</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=WHNU"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Coptic_texts_and_translations"
+            ><button
+              class="langBtn btn_Coptic_texts_and_translations stepButton stepPressedButton"
+            >
+              Coptic texts and translations&nbsp;<span
+                class="langPlusMinus plusminus_Coptic texts and translations"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul
+            class="list-group langUL ul_Coptic_texts_and_translations"
+            style=""
+          >
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="CopSahHorner"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="CopSahHorner"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >CopSahHorner - Sahidic Coptic NT ed. Horner 1924 NT</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=CopSahHorner"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="CopSahidica"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="CopSahidica"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >CopSahidica - Sahidic Coptic NT ed. Wells 2008 NT in Coptic</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=CopSahidica"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="CopSahidicMSS"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="CopSahidicMSS"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >CopSahidicMSS - Sahidic Coptic NT manuscripts NT in Coptic</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=CopSahidicMSS"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Latin_texts_and_translations"
+            ><button
+              class="langBtn btn_Latin_texts_and_translations stepButton stepPressedButton"
+            >
+              Latin texts and translations&nbsp;<span
+                class="langPlusMinus plusminus_Latin texts and translations"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul
+            class="list-group langUL ul_Latin_texts_and_translations"
+            style=""
+          >
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="DRC"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="DRC"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >DRC - Douay-Rheims Translation of Vulgate 1752 in English</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=DRC"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="VulgJ"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="VulgJ"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >VulgJ - Latin Vulgate tr Jerome 405 in Latin</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=VulgJ"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="VulgS"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="VulgS"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >VulgS - Latin Vulgate Sixti 1590 in Latin</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=VulgS"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="VulgCH"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="VulgCH"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >VulgCH - Latin Vulgate Clem. ed. Hetzenauer 1914 in Latin</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=VulgCH"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="VulgCC"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="VulgCC"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >VulgCC - Latin Vulgate Clem. ed. Conte 2009 in Latin</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=VulgCC"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="VulgCT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="VulgCT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >VulgCT - Latin Vulgate Clem. ed. C &amp; T 1985 in Latin</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=VulgCT"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Syriac_texts_and_translations"
+            ><button
+              class="langBtn btn_Syriac_texts_and_translations stepButton stepPressedButton"
+            >
+              Syriac texts and translations&nbsp;<span
+                class="langPlusMinus plusminus_Syriac texts and translations"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul
+            class="list-group langUL ul_Syriac_texts_and_translations"
+            style=""
+          >
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Pesh"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Pesh"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Pesh - Syriac NT Peshitta 1905</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Pesh"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Eth"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Eth"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Eth - Syriac NT Peshitta tr. Etheridge 1849 in English</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Eth"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="Murd"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="Murd"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >Murd - Syriac NT Peshitta tr. Murcock 1852 in English</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=Murd"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Samaritan_Pentateuch"
+            ><button
+              class="langBtn btn_Samaritan_Pentateuch stepButton stepPressedButton"
+            >
+              Samaritan Pentateuch&nbsp;<span
+                class="langPlusMinus plusminus_Samaritan Pentateuch"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Samaritan_Pentateuch" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SP"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SP"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SP - Samaritan Pentateuch, tagged like MT ed.Sigalov</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SP"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SPMT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SPMT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SPMT - MT tagged like Samaritan Pentateuch ed.Sigalov</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SPMT"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Grammar available">G</span>
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SPVar"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SPVar"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SPVar - Samaritan Pentateuch, tagged like MT Variants
+                ed.Sigalov</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SPVar"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SPDS"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SPDS"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SPDS - Dead Sea Scrolls variants tagged like Samaritan
+                Pentateuch</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SPDS"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="SPE"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="SPE"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >SPE - Samaritan Pentateuch in KJV English ed.Sigalov</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=SPE"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span class="versionFeature" title="Vocabulary available"
+                  >V</span
+                >
+                <span class="versionFeature" title="Interlinear available"
+                  >I</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+          <span class="langSpan span_Other_resources"
+            ><button
+              class="langBtn btn_Other_resources stepButton stepPressedButton"
+            >
+              Other resources&nbsp;<span
+                class="langPlusMinus plusminus_Other resources"
+                >-</span
+              ></button
+            ><br
+          /></span>
+          <ul class="list-group langUL ul_Other_resources" style="">
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="f35"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="f35"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >f35 - Family 35</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=f35"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="HebDelitzsch"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="HebDelitzsch"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >HebDelitzsch - Hebrew New Testament with Niqqud, based on
+                Delitzsch's translation</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=HebDelitzsch"
+              ></a
+              ><span class="BibleFeatures" style="margin-top: 4px; float: right"
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="HebHD"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="HebHD"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >HebHD - The Way: Hebrew Living NT / Habrit Hakhadasha -
+                Haderekh | Biblica 2009 | Israel</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=HebHD"
+              ></a
+              ><span
+                class="BibleFeatures"
+                style="margin-top: 4px; float: right"
+              >
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+            <li
+              class="list-group-item stepModalFgBg"
+              data-initials="HebHLNT"
+              style="padding-left: 1.5em; text-indent: -1.5em"
+            >
+              <input
+                class="list-group-checkbox"
+                type="checkbox"
+                input-initials="HebHLNT"
+                style="margin-left: 3px"
+              />&nbsp;<a class="resource" href="javascript:void(0)"
+                >HebHLNT - Habrit Hakhadasha/Haderekh “The Way” (Hebrew Living
+                NT) (הברית החדשה/הדרך Habrit Hakhadasha/Haderekh) (HLNT) NT
+                Dec'2020</a
+              >&rlm;<a
+                class="glyphicon glyphicon-info-sign"
+                style="display: inline; margin-left: 10px"
+                title="Information about this Bible / Commentary"
+                target="_blank"
+                href="https://www.stepbible.org/version.jsp?version=HebHLNT"
+              ></a
+              ><span class="BibleFeatures" style="float: right">
+                <span
+                  class="versionFeature"
+                  title="Notes and/or cross-references."
+                  >N</span
+                >&nbsp;</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="tab-pane" id="commentaryList"></div>
+      </div>
+      <div class="modal-footer">
+        <p>
+          Features: N=Notes G=Grammar V=Vocab I=Interlinear S=Septuagint
+          interlinear
+        </p>
+        <span class="tagLine">Showing 43 of 705</span
+        ><input
+          type="text"
+          id="enterYourTranslation"
+          style="font-size: 14px; height: 24px"
+          placeholder="Optionally search"
+        /><button
+          id="order_button_bible_modal"
+          class="btn btn-default btn-sm stepButton"
+          data-dismiss="modal"
+        >
+          <label>Update display order</label></button
+        ><button
+          id="ok_button_bible_modal"
+          class="btn btn-default btn-sm stepButton"
+          data-dismiss="modal"
+        >
+          <label>OK</label>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

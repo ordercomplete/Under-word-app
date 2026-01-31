@@ -418,93 +418,6 @@ const BookSelector = ({
     return max;
   };
 
-  // console.log("1-BookSelector: coreData keys:", Object.keys(coreData || {}));
-
-  // // Мапа книга → жанр (аналогічно ChapterSelector.js)
-  // const bookToGenre = {
-  //   GEN: "Torah",
-  //   EXO: "Torah",
-  //   LEV: "Torah",
-  //   NUM: "Torah",
-  //   DEU: "Torah",
-  //   JOS: "Historical",
-  //   JDG: "Historical",
-  //   RUT: "Historical",
-  //   "1SA": "Historical",
-  //   "2SA": "Historical",
-  //   "1KI": "Historical",
-  //   "2KI": "Historical",
-  //   "1CH": "Historical",
-  //   "2CH": "Historical",
-  //   EZR: "Historical",
-  //   NEH: "Historical",
-  //   EST: "Historical",
-  //   JOB: "Poetry/Wisdom",
-  //   PSA: "Poetry/Wisdom",
-  //   PRO: "Poetry/Wisdom",
-  //   ECC: "Poetry/Wisdom",
-  //   SNG: "Poetry/Wisdom",
-  //   ISA: "Prophets",
-  //   JER: "Prophets",
-  //   LAM: "Prophets",
-  //   EZE: "Prophets",
-  //   DAN: "Prophets",
-  //   HOS: "Prophets",
-  //   JOL: "Prophets",
-  //   AMO: "Prophets",
-  //   OBA: "Prophets",
-  //   JON: "Prophets",
-  //   MIC: "Prophets",
-  //   NAM: "Prophets",
-  //   HAB: "Prophets",
-  //   SOP: "Prophets",
-  //   HAG: "Prophets",
-  //   ZEC: "Prophets",
-  //   MAL: "Prophets",
-  //   MAT: "Gospels",
-  //   MRK: "Gospels",
-  //   LUK: "Gospels",
-  //   JHN: "Gospels",
-  //   ACT: "Acts",
-  //   ROM: "Epistles",
-  //   "1CO": "Epistles",
-  //   "2CO": "Epistles",
-  //   GAL: "Epistles",
-  //   EPH: "Epistles",
-  //   PHP: "Epistles",
-  //   COL: "Epistles",
-  //   "1TH": "Epistles",
-  //   "2TH": "Epistles",
-  //   "1TI": "Epistles",
-  //   "2TI": "Epistles",
-  //   TIT: "Epistles",
-  //   PHM: "Epistles",
-  //   HEB: "Epistles",
-  //   JAS: "Epistles",
-  //   "1PE": "Epistles",
-  //   "2PE": "Epistles",
-  //   "1JN": "Epistles",
-  //   "2JN": "Epistles",
-  //   "3JN": "Epistles",
-  //   JUD: "Epistles",
-  //   REV: "Revelation",
-  // };
-  // const genreColors = {
-  //   Torah: "#d4a373",
-  //   Historical: "#8b8b8b",
-  //   "Poetry/Wisdom": "#6b8e23",
-  //   Prophets: "#8b0000",
-  //   Gospels: "#1e90ff",
-  //   Acts: "#32cd32",
-  //   Epistles: "#9932cc",
-  //   Revelation: "#ff4500",
-  // };
-  // // Динамічний колір для вибраної книги (в режимі розділів)
-  // const genreColorForBook = useMemo(() => {
-  //   if (!selectedBookCode) return "#6c757d";
-  //   const genre = bookToGenre[selectedBookCode];
-  //   return genre ? genreColors[genre] : "#6c757d";
-  // }, [selectedBookCode]);
   const genreColorForBook = getGenreColor(selectedBookCode);
   // ... (існуючі константи groupOrder, bookOrderInGroup, genreColors — без змін)
 
@@ -620,25 +533,18 @@ const BookSelector = ({
     Revelation: ["REV"],
   };
 
-  // const genreColors = {
-  //   Torah: "#d4a373",
-  //   Historical: "#8b8b8b",
-  //   "Poetry/Wisdom": "#6b8e23",
-  //   Prophets: "#8b0000",
-  //   Gospels: "#1e90ff",
-  //   Acts: "#32cd32",
-  //   Epistles: "#9932cc",
-  //   Revelation: "#ff4500",
-  // };
-
   const groupedBooks = useMemo(() => {
     const result = {};
     const seen = new Set();
+
     // Проблема: return в середині forEach не припиняє весь цикл - він припиняє тільки поточну ітерацію. Якщо перша версія не знайдена, це не має блокувати показ книг для інших версій. Також: Логіка console.log/console.warn зайва в продакшені.
     versions.forEach((v) => {
       const key = v.toLowerCase();
-      const data = coreData[key];
-
+      // const data = coreData[key];
+      const normalizedCoreData = Object.fromEntries(
+        Object.entries(coreData).map(([k, v]) => [k.toLowerCase(), v]),
+      );
+      const data = normalizedCoreData[key];
       console.log("BookSelector: coreData keys:", Object.keys(coreData || {}));
 
       if (!data) {

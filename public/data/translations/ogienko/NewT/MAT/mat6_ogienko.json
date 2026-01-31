@@ -1,0 +1,70 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 2,
+    "converted": "2025-12-24T00:00:00.000Z",
+    "info": {
+      "translation": "ubt",
+      "type": "translation",
+      "book": "MAT",
+      "chapter": 6,
+      "testament": "NewT",
+      "language": "ukrainian",
+      "name": "Українська Біблія (UBT)",
+      "hasStrongs": true,
+      "hasMorphology": false,
+      "hasLemma": false,
+      "basedOn": {
+        "old_testament": "thot",
+        "new_testament": "tr"
+      },
+      "originalPath": "translations\\ubt\\NewT\\MAT\\mat6_ubt.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 13,
+      "words": [
+        { "word": "І", "strong": "G2532" },
+        { "word": "не", "strong": "G3361" },
+        { "word": "введи", "strong": "G1533" },
+        { "word": "нас", "strong": "G1473" },
+        { "word": "у", "strong": "G1519" },
+        { "word": "спокусу,", "strong": "G3986" },
+        { "word": "а", "strong": "G235" },
+        { "word": "звільни", "strong": "G4506" },
+        { "word": "нас", "strong": "G1473" },
+        { "word": "від", "strong": "G575" },
+        { "word": "злого.", "strong": "G4190" },
+        { "word": "Бо", "strong": "G3754" },
+        { "word": "Твоє", "strong": "G4671" },
+        { "word": "є", "strong": "G1510" },
+        { "word": "Царство", "strong": "G932" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "сила", "strong": "G1411" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "слава", "strong": "G1391" },
+        { "word": "на", "strong": "G1519" },
+        { "word": "віки.", "strong": "G165" },
+        { "word": "Амінь.", "strong": "G281" }
+      ]
+    },
+    {
+      "v": 14,
+      "words": [
+        { "word": "Якщо", "strong": "G1437" },
+        { "word": "бо", "strong": "G1063" },
+        { "word": "пробачите", "strong": "G863" },
+        { "word": "людям", "strong": "G444" },
+        { "word": "провини", "strong": "G3900" },
+        { "word": "їхні,", "strong": "G846" },
+        { "word": "пробачить", "strong": "G863" },
+        { "word": "і", "strong": "G2532" },
+        { "word": "вам", "strong": "G4771" },
+        { "word": "Отець", "strong": "G3962" },
+        { "word": "ваш", "strong": "G4771" },
+        { "word": "Небесний.", "strong": "G3770" }
+      ]
+    }
+  ]
+}

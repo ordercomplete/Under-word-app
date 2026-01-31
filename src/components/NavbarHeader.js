@@ -37,7 +37,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
     fetch("/data/lang.json")
       .then((res) => res.json())
       .then((data) => setAllLangData(data))
-      .catch(() => setAllLangData({ ua: lang }));
+      .catch(() => setAllLangData({ uk: lang }));
   }, [lang]);
 
   const handleLanguageSelect = (langCode) => {

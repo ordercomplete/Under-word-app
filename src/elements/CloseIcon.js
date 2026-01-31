@@ -63,7 +63,7 @@ const CloseIcon = ({
   disabled = false,
   onClick,
   title = "Закрити",
-  className = "btn btn-link p-0 d-sm-inline-block",
+  className = "closeIcon btn btn-link p-0 d-sm-inline-block",
 }) => {
   return (
     <button

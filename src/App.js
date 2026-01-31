@@ -18,7 +18,7 @@
 //   const [showTester, setShowTester] = useState(false); // НОВИЙ СТАН
 
 //   useEffect(() => {
-//     const savedLang = localStorage.getItem("appLanguage") || "ua";
+//     const savedLang = localStorage.getItem("appLanguage") || "uk";
 
 //     // Перевіряємо налаштування тестувальника
 //     const savedShowTester = localStorage.getItem("showFormatTester");
@@ -32,7 +32,7 @@
 //         if (!langRes.ok) throw new Error("lang.json not found");
 
 //         const langData = await langRes.json();
-//         setLang(langData[savedLang] || langData.ua);
+//         setLang(langData[savedLang] || langData.uk);
 //       } catch (err) {
 //         console.error(err);
 //         setLang({
@@ -182,7 +182,7 @@ const App = () => {
   const [showTester, setShowTester] = useState(false);
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("appLanguage") || "ua";
+    const savedLang = localStorage.getItem("appLanguage") || "uk";
 
     // Перевіряємо налаштування тестувальника
     const savedShowTester = localStorage.getItem("showFormatTester");
@@ -196,7 +196,7 @@ const App = () => {
         if (!langRes.ok) throw new Error("lang.json not found");
 
         const langData = await langRes.json();
-        setLang(langData[savedLang] || langData.ua);
+        setLang(langData[savedLang] || langData.uk);
       } catch (err) {
         console.error(err);
         setLang({
