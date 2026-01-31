@@ -28,6 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:prod": "NODE_ENV=production npm run build",
+    "preinstall": "npm cache verify || npm cache clean --force",
     "convert-json": "node scripts/convertTranslations.js",
     "convert-and-replace": "node scripts/convertTranslations.js && cp -r public/data_compressed/* public/data/",
     "build:with-data": "react-scripts build && cp -r public/data_compressed/* build/data/",
@@ -35,6 +36,7 @@
   },
   "proxy": "http://localhost:3000",
   "devDependencies": {
+    "@types/istanbul-lib-report": "^3.0.3",
     "react-scripts": "5.0.1"
   },
   "browserslist": {
