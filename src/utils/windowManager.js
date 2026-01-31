@@ -1,3 +1,4 @@
+import globalHistoryManager from "./historyManager";
 /**
  * Менеджер для управління станом вікон словників
  */

@@ -36,9 +36,9 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -310,15 +310,15 @@ a {
 }
 
 /* Оптимізація для мобільних пристроїв */
-@media (hover: none) and (pointer: coarse) {
+/* @media (hover: none) and (pointer: coarse) {
   input,
   textarea,
   select,
   button {
-    font-size: 16px !important; /* Запобігає масштабуванню в iOS */
+    font-size: 16px !important;
   }
-}
-
+} */
+/* Запобігає масштабуванню в iOS */
 /* Стилі для темної теми */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -354,7 +354,7 @@ a {
    ========================================================================== */
 
 /* Покращення відгуку на тач пристроях */
-@media (pointer: coarse) {
+/* @media (pointer: coarse) {
   button,
   a,
   input[type="button"],
@@ -363,7 +363,7 @@ a {
     min-height: 44px;
     min-width: 44px;
   }
-}
+} */
 
 /* Запобігання виділенню при тапі */
 .no-tap-highlight {
