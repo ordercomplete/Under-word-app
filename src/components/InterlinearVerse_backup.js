@@ -3168,7 +3168,7 @@
 //       KHOMENKO: { OT: "THOT", NT: "TR" },
 //       SIRYY: { OT: "THOT", NT: "TR" },
 //       // Інші переклади
-//       SYNODAL: { OT: "THOT", NT: "TR" },
+//       SYNOD: { OT: "THOT", NT: "TR" },
 //       KJV: { OT: "THOT", NT: "TR" },
 //     };
 
@@ -3632,7 +3632,7 @@ const InterlinearVerse = ({
 
       if (Array.isArray(adapted)) {
         result[key] = adapted.filter(
-          (item) => item && typeof item === "object"
+          (item) => item && typeof item === "object",
         );
       } else {
         result[key] = [];
@@ -3650,7 +3650,7 @@ const InterlinearVerse = ({
       });
       return verse;
     },
-    [adaptedData]
+    [adaptedData],
   );
 
   // Оновлення ширини контейнера
@@ -3826,7 +3826,7 @@ const InterlinearVerse = ({
         });
       }
     },
-    [onWordClick, getWordText, getLemma, getMorph]
+    [onWordClick, getWordText, getLemma, getMorph],
   );
 
   // Відображення слова з інтервалом
@@ -3866,7 +3866,7 @@ const InterlinearVerse = ({
         </span>
       );
     },
-    [handleWordClick]
+    [handleWordClick],
   ); // handleWordClick тепер з useCallback
 
   if (!pairs || pairs.length === 0 || !chapterData) {
@@ -3933,7 +3933,7 @@ const InterlinearVerse = ({
                       wordData,
                       version,
                       block.strong,
-                      isOriginalVersion(version)
+                      isOriginalVersion(version),
                     )}
                   </div>
                 );

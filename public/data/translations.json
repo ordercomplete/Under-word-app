@@ -33,7 +33,7 @@
       "readingMode": true,
       "path": "originals/thot",
       "basedOn": null,
-      "autoPair": "THOT+TR",
+      "autoPair": null,
       "note": "Масоретський текст Старого Заповіту",
       "otNtSplit": false
     },
@@ -88,7 +88,7 @@
         "old_testament": "lxx",
         "new_testament": "tr"
       },
-      "autoPair": "LXX+TR",
+      "autoPair": null,
       "note": "Український переклад з Септуагінти",
       "otNtSplit": true
     },
@@ -113,7 +113,7 @@
       "otNtSplit": true
     },
     {
-      "initials": "Synodal",
+      "initials": "SYNODAL",
       "name": "Синодальный перевод",
       "lang": "ru",
       "features": ["R"],
@@ -128,7 +128,7 @@
         "old_testament": "thot",
         "new_testament": "tr"
       },
-      "autoPair": "THOT+TR",
+      "autoPair": null,
       "note": "Синодальний переклад (російська)",
       "otNtSplit": true
     },
@@ -163,7 +163,7 @@
       "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
-      "path": "translations/OGIENKO",
+      "path": "translations/ogienko",
       "basedOn": {
         "old_testament": "thot",
         "new_testament": "tr"
@@ -184,7 +184,7 @@
       "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
-      "path": "translations/KHOMENKO",
+      "path": "translations/jhomenko",
       "basedOn": {
         "old_testament": "thot",
         "new_testament": "tr"
@@ -204,7 +204,7 @@
       "defaultWith": [],
       "requiredWith": [],
       "readingMode": true,
-      "path": "translations/SIRYY",
+      "path": "translations/siryy",
       "basedOn": {
         "old_testament": "thot",
         "new_testament": "tr"

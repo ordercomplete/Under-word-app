@@ -1444,7 +1444,7 @@ const InterlinearVerse = ({
       if (!wordData || wordData.text === null) {
         return (
           <span className="word empty-word" title="Відсутній відповідник">
-            ~~~
+            ~
           </span>
         );
       }

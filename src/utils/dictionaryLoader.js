@@ -66,7 +66,7 @@ export const getLanguageFromVersion = (version) => {
     UTT: "uk",
     UBT: "uk",
     UKR: "uk",
-    SIR: "uk",
+    SIRYY: "uk",
     OGI: "uk",
     KHO: "uk",
 
