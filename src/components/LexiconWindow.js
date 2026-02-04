@@ -1899,10 +1899,10 @@ const LexiconWindow = memo(
         const diff = touchStartX.current - touchEndX.current;
 
         if (Math.abs(diff) > swipeThreshold) {
-          if (diff > 0 && historyState?.canGoBack && onNavigateBack) {
+          if (diff < 0 && historyState?.canGoBack && onNavigateBack) {
             onNavigateBack();
           } else if (
-            diff < 0 &&
+            diff > 0 &&
             historyState?.canGoForward &&
             onNavigateForward
           ) {
