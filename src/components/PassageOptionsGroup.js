@@ -1,6 +1,4 @@
-// --------------------------------------------------------
-
-// PassageOptionsGroup.js
+// src\components\PassageOptionsGroup.js
 import React, { useState } from "react";
 import ShareDropdown from "../elements/ShareDropdown";
 import TranslationSelector from "../modals/TranslationSelector.js";
@@ -53,7 +51,7 @@ const PassageOptionsGroup = ({
   //   "Panel: 2-PassageOptionsGroup coreData keys:",
   //   Object.keys(coreData || {})
   // );
-  // Додайте в PassageOptionsGroup.js
+  // prefetchChapter - Свойство "prefetchChapter" объявлено, но его значение не было прочитано
   const prefetchChapter = (book, chapter, versions) => {
     versions.forEach((version) => {
       const testament = getTestament(book);
@@ -88,29 +86,7 @@ const PassageOptionsGroup = ({
     console.log(`Не знайдена Book ${bookCode} для ${version}`);
     return 1;
   };
-  // const getBookChapters = (bookCode, version) => {
-  //   if (!coreData || !version) return 1;
 
-  //   const testament = getTestament(bookCode);
-  //   const verKey = version.toLowerCase();
-
-  //   // Перевіряємо, чи має ця версія даний заповіт
-  //   const hasTestament = coreData[verKey] && coreData[verKey][testament];
-
-  //   if (!hasTestament) {
-  //     console.warn(`${version} не має ${testament}`);
-  //     return 1;
-  //   }
-
-  //   // Шукаємо книгу
-  //   const groups = coreData[verKey][testament];
-  //   for (let i = 0; i < groups.length; i++) {
-  //     const bookInfo = groups[i].books.find((b) => b.code === bookCode);
-  //     if (bookInfo) return bookInfo.chapters;
-  //   }
-
-  //   return 1;
-  // };
   const getMaxChaptersForBook = (bookCode, versions) => {
     let maxChapters = 1;
     versions.forEach((version) => {
@@ -218,23 +194,7 @@ const PassageOptionsGroup = ({
         initialVersions={versions} // ← ПЕРЕДАЄМО поточні версії
         currentBook={book} // ← ПЕРЕДАЄМО поточну книгу
       />
-      {/* <BookSelector
-        isOpen={showBook}
-        onRequestClose={() => setShowBook(false)}
-        lang={lang}
-        versions={versions}
-        coreData={coreData} // ← ДОДАНО
-        coreLoading={coreLoading} // ← ДОДАНО
-        onSelectBook={(code) => {
-          setSelectedBook(code);
-          const bookData = coreData[versions[0].toLowerCase()]?.OldT?.flatMap(
-            (g) => g.books
-          ).find((b) => b.code === code);
 
-          setSelectedChapters(bookData?.chapters || 1);
-          setCurrentRef(`${code}.1`);
-        }}
-      /> */}
       <BookSelector
         isOpen={showBook}
         onRequestClose={() => setShowBook(false)}
@@ -244,13 +204,6 @@ const PassageOptionsGroup = ({
         coreLoading={coreLoading}
         // Старий пропс (можна залишити для сумісності або прибрати)
         onSelectBook={(code) => {
-          // setSelectedBook(code);
-          // Визначаємо кількість розділів на основі ПЕРШОЇ вибраної версії
-          // const firstVersion = versions[0];
-          // const chapters = getBookChapters(code, firstVersion);
-          // setSelectedChapters(chapters);
-          // setCurrentRef(`${code}.1`);
-          // Тепер не використовується автоматично
           setSelectedBook(code);
           const chapters = getMaxChaptersForBook(code, versions);
           setSelectedChapters(chapters);

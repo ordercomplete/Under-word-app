@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 1,
+    "converted": "2025-12-09T20:33:45.545Z",
+    "info": {
+      "translation": "lxx",
+      "type": "original",
+      "book": "GEN",
+      "chapter": 1,
+      "language": "greek",
+      "name": "Septuagint (LXX)",
+      "hasStrongs": true,
+      "hasMorphology": true,
+      "hasLemma": true,
+      "originalPath": "originals\\lxx\\OldT\\GEN\\gen1_lxx.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "Ἐν", "s": "G1722", "l": "ἐν", "m": "PREP" },
+        { "w": "ἀρχῇ", "s": "G746", "l": "ἀρχή", "m": "N-DSF" },
+        { "w": "ἐποίησεν", "s": "G4160", "l": "ποιέω", "m": "V-AAI-3S" },
+        { "w": "ὁ", "s": "G3588", "l": "ὁ", "m": "T-NSM" },
+        { "w": "Θεὸς", "s": "G2316", "l": "θεός", "m": "N-NSM" },
+        { "w": "τὸν", "s": "G3588", "l": "ὁ", "m": "T-ASM" },
+        { "w": "οὐρανὸν", "s": "G3772", "l": "οὐρανός", "m": "N-ASM" },
+        { "w": "καὶ", "s": "G2532", "l": "καί", "m": "CONJ" },
+        { "w": "τὴν", "s": "G3588", "l": "ὁ", "m": "T-ASF" },
+        { "w": "γῆν", "s": "G1093", "l": "γῆ", "m": "N-ASF" }
+      ]
+    }
+  ]
+}

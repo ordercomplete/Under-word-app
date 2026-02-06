@@ -80,13 +80,13 @@ button {
   overflow-y: auto;
 }
 
-.chapter-viewer {
+/* .chapter-viewer {
   background-image: url("/public/images/pergament.jpg");
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
   height: auto;
-}
+} */
 
 /* .book-selector-content {
   position: relative;

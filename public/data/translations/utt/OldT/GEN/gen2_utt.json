@@ -1,0 +1,70 @@
+{
+  "_meta": {
+    "converter": "under-word-converter",
+    "version": 1,
+    "converted": "2025-12-09T20:33:45.534Z",
+    "info": {
+      "translation": "utt",
+      "type": "translation",
+      "book": "GEN",
+      "chapter": 1,
+      "testament": "OldT",
+      "language": "ukrainian",
+      "name": "Український переклад Турконяка",
+      "hasStrongs": true,
+      "hasMorphology": true,
+      "hasLemma": true,
+      "hasDictionary": true,
+      "dictionaryLang": "uk",
+      "basedOn": {
+        "old_testament": "lxx",
+        "new_testament": "tr"
+      },
+      "originalPath": "translations\\utt\\OldT\\GEN\\gen1_utt.json"
+    }
+  },
+  "verses": [
+    {
+      "v": 1,
+      "ws": [
+        { "w": "На", "s": "G1722", "l": "ἐν", "m": "PREP", "dict": "G1722_uk" },
+        {
+          "w": "початку",
+          "s": "G746",
+          "l": "ἀρχή",
+          "m": "N-DSF",
+          "dict": "G746_uk"
+        },
+        {
+          "w": "створив",
+          "s": "G4160",
+          "l": "ποιέω",
+          "m": "V-AAI-3S",
+          "dict": "G4160_uk"
+        },
+        {
+          "w": "Бог",
+          "s": "G2316",
+          "l": "θεός",
+          "m": "N-NSM",
+          "dict": "G2316_uk"
+        },
+        {
+          "w": "небо",
+          "s": "G3772",
+          "l": "οὐρανός",
+          "m": "N-ASM",
+          "dict": "G3772_uk"
+        },
+        { "w": "і", "s": "G2532", "l": "καί", "m": "CONJ", "dict": "G2532_uk" },
+        {
+          "w": "землю.",
+          "s": "G1093",
+          "l": "γῆ",
+          "m": "N-ASF",
+          "dict": "G1093_uk"
+        }
+      ]
+    }
+  ]
+}
