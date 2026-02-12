@@ -197,7 +197,7 @@
   margin-right: 12px;
 }
 
-.nav-arrow {
+.nav-arrow-pass {
   width: 32px;
   height: 32px;
   border: none;
@@ -209,14 +209,74 @@
   line-height: 1;
 }
 
-.nav-arrow.disabled {
+.nav-arrow-pass.disabled {
   color: #ccc;
   cursor: not-allowed;
 }
 
-.nav-position {
+/* .nav-position {
   font-size: 0.9rem;
   color: #6c757d;
   min-width: 50px;
   text-align: center;
+} */
+
+/* =========================== */
+
+.history-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.nav-arrow-pass {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #6c757d;
+  border-radius: 4px;
+  background: transparent;
+  color: #6c757d;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-arrow-pass:hover:not(.disabled) {
+  background: #e9ecef;
+  color: #343a40;
+}
+
+.nav-arrow-pass.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #adb5bd;
+}
+
+.nav-position-pass {
+  min-width: 40px;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* На дуже вузьких екранах робимо компактніше */
+@media (max-width: 420px) {
+  .history-nav-controls {
+    gap: 0.3rem;
+  }
+  .nav-arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 1rem;
+  }
+  .nav-position-pass {
+    font-size: 0.8rem;
+  }
 }
