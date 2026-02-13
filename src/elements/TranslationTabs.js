@@ -46,11 +46,15 @@ import React from "react";
 
 const TranslationTabs = ({ lang, activeTab, onTabChange }) => {
   const tabs = [
-    { id: "lxx", label: "LXX", title: "Септуагінта (Старозавітний оригінал)" },
+    {
+      id: "lxx",
+      label: "LXX",
+      title: lang.septuagint || "Септуагінта (Старозавітний оригінал)",
+    },
     {
       id: "thot",
       label: "THOT",
-      title: "Масоретський текст (Старозавітний оригінал)",
+      title: lang.notes || "Масоретський текст (Старозавітний оригінал)",
     },
     { id: "tr", label: "TR", title: "Textus Receptus (Новозавітний оригінал)" },
     { id: "gnt", label: "GNT", title: "Сучасний критичний грецький текст NT" },

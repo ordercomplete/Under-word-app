@@ -1,4 +1,4 @@
-// src/utils/translationUtils.js
+// src/utils/translationUtils.js був розроблений для роботи історії відвідувань
 export const translationUtils = {
   /**
    * Перевіряє чи є версія оригіналом

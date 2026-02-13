@@ -40,10 +40,23 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
       .catch(() => setAllLangData({ uk: lang }));
   }, [lang]);
 
+  // const handleLanguageSelect = (langCode) => {
+  //   if (allLangData?.[langCode]) {
+  //     localStorage.setItem("appLanguage", langCode);
+  //     onLanguageChange(allLangData[langCode]);
+  //     setShowLanguageModal(false);
+  //   }
+  // };
+
+  // src/components/NavbarHeader.js - фрагмент для handleLanguageSelect (замінити існуючий)
   const handleLanguageSelect = (langCode) => {
-    if (allLangData?.[langCode]) {
+    if (allLangData) {
+      const langObj = {};
+      Object.keys(allLangData).forEach((key) => {
+        langObj[key] = allLangData[key][langCode] || allLangData[key].uk || "";
+      });
       localStorage.setItem("appLanguage", langCode);
-      onLanguageChange(allLangData[langCode]);
+      onLanguageChange(langObj);
       setShowLanguageModal(false);
     }
   };
