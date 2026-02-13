@@ -62,6 +62,37 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [showTester, setShowTester] = useState(false);
 
+  // useEffect(() => {
+  //   const savedLang = localStorage.getItem("appLanguage") || "uk";
+
+  //   // Перевіряємо налаштування тестувальника
+  //   const savedShowTester = localStorage.getItem("showFormatTester");
+  //   if (savedShowTester !== null) {
+  //     setShowTester(savedShowTester === "true");
+  //   }
+
+  //   const loadData = async () => {
+  //     try {
+  //       const langRes = await fetch("/data/lang.json");
+  //       if (!langRes.ok) throw new Error("lang.json not found");
+
+  //       const langData = await langRes.json();
+  //       setLang(langData[savedLang] || langData.uk);
+  //     } catch (err) {
+  //       console.error(err);
+  //       setLang({
+  //         welcome: "Under-word-app",
+  //         loading: "Loading...",
+  //         error: "Помилка завантаження",
+  //       });
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadData();
+  // }, []);
+  // src/App.js - фрагмент для завантаження lang.json (замінити існуючий useEffect з loadData)
   useEffect(() => {
     const savedLang = localStorage.getItem("appLanguage") || "uk";
 
@@ -76,8 +107,12 @@ const App = () => {
         const langRes = await fetch("/data/lang.json");
         if (!langRes.ok) throw new Error("lang.json not found");
 
-        const langData = await langRes.json();
-        setLang(langData[savedLang] || langData.uk);
+        const data = await langRes.json();
+        const langObj = {};
+        Object.keys(data).forEach((key) => {
+          langObj[key] = data[key][savedLang] || data[key].uk || "";
+        });
+        setLang(langObj);
       } catch (err) {
         console.error(err);
         setLang({

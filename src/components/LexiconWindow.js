@@ -744,7 +744,7 @@ const LexiconWindow = memo(
       <div className="lexicon-window" ref={windowRef}>
         {renderHeader()}
 
-        <div className="lexicon-tabs">
+        {/* <div className="lexicon-tabs">
           <button
             className={activeTab === "dictionary" ? "active" : ""}
             onClick={() => setActiveTab("dictionary")}
@@ -796,6 +796,63 @@ const LexiconWindow = memo(
               Граматика
             </button>
           )}
+        </div> */}
+        <div className="lexicon-tabs">
+          <button
+            className={activeTab === "dictionary" ? "active" : ""}
+            onClick={() => setActiveTab("dictionary")}
+          >
+            {isTranslationDict
+              ? entry?._lang === "uk"
+                ? "Словник uk"
+                : lang.dictionary_tab || "Словник"
+              : lang.strongs_dict || "Strong's Dict"}
+          </button>
+
+          {entry.meanings && entry.meanings.length > 0 && (
+            <button
+              className={activeTab === "meanings" ? "active" : ""}
+              onClick={() => setActiveTab("meanings")}
+            >
+              {lang.meanings_tab || "Значення"} ({entry.meanings.length})
+            </button>
+          )}
+
+          {entry.definitions && Object.keys(entry.definitions).length > 0 && (
+            <button
+              className={activeTab === "definitions" ? "active" : ""}
+              onClick={() => setActiveTab("definitions")}
+            >
+              {lang.definitions_tab || "Визначення"}
+            </button>
+          )}
+
+          {entry.lxx_usage && entry.lxx_usage.length > 0 && (
+            <button
+              className={activeTab === "lxx" ? "active" : ""}
+              onClick={() => setActiveTab("lxx")}
+            >
+              {lang.lxx_usage_tab || "LXX Usage"} ({entry.lxx_usage.length})
+            </button>
+          )}
+
+          {entry.lsj_definition_raw && entry.lsj_definition_raw.trim() && (
+            <button
+              className={activeTab === "lsj" ? "active" : ""}
+              onClick={() => setActiveTab("lsj")}
+            >
+              {lang.lsj_tab || "LSJ"}
+            </button>
+          )}
+
+          {(entry.grammar || entry.morphology) && (
+            <button
+              className={activeTab === "grammar" ? "active" : ""}
+              onClick={() => setActiveTab("grammar")}
+            >
+              {lang.grammar_tab || "Граматика"}
+            </button>
+          )}
         </div>
 
         <div className="lexicon-content">
@@ -807,7 +864,7 @@ const LexiconWindow = memo(
                   Повні дані відсутні
                 </div>
               )}
-              {entry.word && (
+              {/* {entry.word && (
                 <div className="lex-item">
                   <span className="label">Слово:</span>
                   <span
@@ -844,6 +901,50 @@ const LexiconWindow = memo(
               {entry.usage_count > 0 && (
                 <div className="lex-item">
                   <span className="label">Вживань:</span>
+                  <span className="value">{entry.usage_count}</span>
+                </div>
+              )} */}
+              {entry.word && (
+                <div className="lex-item">
+                  <span className="label">{lang.word || "Слово"}:</span>
+                  <span
+                    className={`value ${entry.strong?.startsWith("H") ? "he" : "gr"}`}
+                  >
+                    {entry.word}
+                  </span>
+                </div>
+              )}
+
+              {entry.translit && (
+                <div className="lex-item">
+                  <span className="label">{lang.translit || "Трансліт"}:</span>
+                  <span className="value">{entry.translit}</span>
+                </div>
+              )}
+
+              {entry.translation && (
+                <div className="lex-item">
+                  <span className="label">
+                    {lang.translation || "Переклад"}:
+                  </span>
+                  <span className="value uk">{entry.translation}</span>
+                </div>
+              )}
+
+              {entry.morphology && (
+                <div className="lex-item">
+                  <span className="label">
+                    {lang.morphology || "Морфологія"}:
+                  </span>
+                  <span className="value">{entry.morphology}</span>
+                </div>
+              )}
+
+              {entry.usage_count > 0 && (
+                <div className="lex-item">
+                  <span className="label">
+                    {lang.usage_count || "Вживань"}:
+                  </span>
                   <span className="value">{entry.usage_count}</span>
                 </div>
               )}
