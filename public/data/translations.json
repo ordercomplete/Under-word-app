@@ -13,6 +13,7 @@
       "pair": "LXX+TR",
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": true,
       "readingMode": true,
       "path": "originals/lxx",
       "basedOn": null,
@@ -30,6 +31,7 @@
       "pair": "THOT+TR",
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "originals/thot",
       "basedOn": null,
@@ -47,6 +49,7 @@
       "pair": [],
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": true,
       "readingMode": true,
       "path": "originals/tr",
       "basedOn": null,
@@ -65,6 +68,7 @@
       "defaultWith": [],
       "requiredWith": [],
       "requiresTranslation": true,
+      "isDefault": false,
       "readingMode": true,
       "path": "originals/gnt",
       "basedOn": null,
@@ -82,6 +86,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": true,
       "readingMode": true,
       "path": "translations/utt",
       "basedOn": {
@@ -102,6 +107,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/ubt",
       "basedOn": {
@@ -122,6 +128,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/Synodal",
       "basedOn": {
@@ -142,6 +149,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/kjv",
       "basedOn": {
@@ -162,6 +170,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/ogienko",
       "basedOn": {
@@ -183,6 +192,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/jhomenko",
       "basedOn": {
@@ -203,6 +213,7 @@
       "pair": null,
       "defaultWith": [],
       "requiredWith": [],
+      "isDefault": false,
       "readingMode": true,
       "path": "translations/siryy",
       "basedOn": {

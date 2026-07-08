@@ -143,7 +143,8 @@ export const generateFormatReport = async () => {
 
   const report = {
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV,
+    environment:
+      typeof process !== "undefined" && process.env && process.env.NODE_ENV,
     baseUrl: window.location.origin,
     files: [],
   };

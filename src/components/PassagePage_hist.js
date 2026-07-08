@@ -16,6 +16,7 @@ import "../styles/PassagePage.css";
 import { isMobile } from "../utils/deviceDetector";
 
 import { globalHistoryManager } from "../utils/historyManager";
+import { getDefaultVersions } from "../utils/defaultVersions";
 // ==================== КЕШ МЕНЕДЖЕР ====================
 const useChapterCache = () => {
   const cache = useRef(chapterCache);
@@ -105,10 +106,10 @@ const Panel = memo(
 
             // Встановлюємо дефолтні версії
             const [book] = currentRef.split(".");
-            const testament = getTestament(book);
-            const defaultVersions =
-              testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
-            setVersions(defaultVersions);
+            const defaultVersions = getDefaultVersions(book, data);
+            if (defaultVersions.length > 0) {
+              setVersions(defaultVersions);
+            }
           }
         } catch (error) {
           logger.error("Помилка завантаження translations.json:", error);
@@ -171,9 +172,10 @@ const Panel = memo(
 
         // Якщо після корекції масив порожній - встановлюємо дефолт
         if (correctedVersions.length === 0) {
-          const defaultVersions =
-            testament === "NewT" ? ["TR", "UTT"] : ["LXX", "UTT"];
-          setVersions(defaultVersions);
+          const defaultVersions = getDefaultVersions(book, translationsData);
+          if (defaultVersions.length > 0) {
+            setVersions(defaultVersions);
+          }
         } else if (correctedVersions.length !== versions.length) {
           setVersions(correctedVersions);
         }
@@ -563,7 +565,8 @@ const PassagePage = memo(({ lang }) => {
     // Додаємо початковий запис ТІЛЬКИ якщо історія порожня
     if (state.history.length === 0) {
       const initialRef = panels[0]?.initialRef || "GEN.1";
-      const initialVersions = panels[0]?.initialVersions || ["LXX", "UTT"];
+      // Дефолтні версії будуть встановлені через getDefaultVersions в Panel
+      const initialVersions = panels[0]?.initialVersions || [];
       const [book, chapter] = initialRef.split(".");
 
       globalHistoryManager.addPassageEntry({

@@ -58,18 +58,23 @@ export const translationUtils = {
   getDefaultVersions(testament) {
     const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
 
-    // Оригінали для заповіту
+    // Оригінали для заповіту (з isDefault)
     const originals = bibles
-      .filter((b) => b.type === "original" && b.testaments.includes(testament))
+      .filter(
+        (b) =>
+          b.type === "original" &&
+          b.testaments.includes(testament) &&
+          b.isDefault,
+      )
       .map((b) => b.initials);
 
-    // Переклади UTT/UBT для заповіту
+    // Переклади для заповіту (з isDefault)
     const translations = bibles
       .filter(
         (b) =>
           b.type === "translation" &&
           b.testaments.includes(testament) &&
-          (b.initials === "UTT" || b.initials === "UBT"),
+          b.isDefault,
       )
       .map((b) => b.initials);
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavbarHeader from "./components/NavbarHeader";
+import { NavigationProvider } from "./contexts/NavigationContext";
 
 // import PassagePage from "./components/PassagePage";
 // import AdminPanel from "./admin/AdminPanel";
@@ -143,67 +144,76 @@ const App = () => {
   }
 
   return (
-    <div className="app-container">
-      <NavbarHeader lang={lang} onLanguageChange={handleLanguageChange} />
+    <NavigationProvider>
+      <div className="app-container">
+        <NavbarHeader lang={lang} onLanguageChange={handleLanguageChange} />
 
-      {/* Кнопка перемикання тестувальника (тільки в розробці) */}
-      {process.env.NODE_ENV === "development" && (
-        <button
-          className="btn btn-sm btn-warning position-fixed d-flex justify-content-center align-items-center"
-          style={{
-            top: "10px",
-            left: "200px",
-            zIndex: 9998,
-            fontSize: "0.8em",
-            opacity: 0.8,
-          }}
-          onClick={toggleTester}
-          title="Перемикач тесту формату"
-        >
-          <i className={`bi bi-${showTester ? "eye-slash" : "eye"}`}>JSON</i>
-        </button>
-      )}
-      {process.env.NODE_ENV === "development" && (
-        <button
-          onClick={() => {
-            if (window.clearAppCache) window.clearAppCache();
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.reload();
-          }}
-          className="btn btn-sm btn-danger d-flex justify-content-center align-items-center"
-          style={{
-            position: "fixed",
-            top: "10px",
-            left: "250px",
-            zIndex: 9999,
-            fontSize: "0.6em",
-          }}
-        >
-          CLEAR CACHE
-        </button>
-      )}
+        {/* Кнопка перемикання тестувальника (тільки в розробці) */}
+        {typeof process !== "undefined" &&
+          process.env &&
+          process.env.NODE_ENV === "development" && (
+            <button
+              className="btn btn-sm btn-warning position-fixed d-flex justify-content-center align-items-center"
+              style={{
+                top: "10px",
+                left: "200px",
+                zIndex: 9998,
+                fontSize: "0.8em",
+                opacity: 0.8,
+              }}
+              onClick={toggleTester}
+              title="Перемикач тесту формату"
+            >
+              <i className={`bi bi-${showTester ? "eye-slash" : "eye"}`}>
+                JSON
+              </i>
+            </button>
+          )}
+        {typeof process !== "undefined" &&
+          process.env &&
+          process.env.NODE_ENV === "development" && (
+            <button
+              onClick={() => {
+                if (window.clearAppCache) window.clearAppCache();
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.reload();
+              }}
+              className="btn btn-sm btn-danger d-flex justify-content-center align-items-center"
+              style={{
+                position: "fixed",
+                top: "10px",
+                left: "250px",
+                zIndex: 9999,
+                fontSize: "0.6em",
+              }}
+            >
+              CLEAR CACHE
+            </button>
+          )}
 
-      {/* Suspense для лінивого завантаження */}
-      <Suspense fallback={<LoadingSpinner />}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="main-content d-flex flex-column">
-                <PassagePage lang={lang} />
-              </div>
-            }
-          />
-          <Route path="/admin" element={<AdminPanel lang={lang} />} />
-        </Routes>
+        {/* Suspense для лінивого завантаження */}
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="main-content d-flex flex-column">
+                  <PassagePage lang={lang} />
+                </div>
+              }
+            />
+            <Route path="/admin" element={<AdminPanel lang={lang} />} />
+          </Routes>
+        </Suspense>
 
         {/* Тестувальник формату (тільки в розробці) */}
-        {process.env.NODE_ENV === "development" && showTester && (
-          <FormatTester lang={lang} />
-        )}
-      </Suspense>
-    </div>
+        {typeof process !== "undefined" &&
+          process.env &&
+          process.env.NODE_ENV === "development" &&
+          showTester && <FormatTester lang={lang} />}
+      </div>
+    </NavigationProvider>
   );
 };
 
