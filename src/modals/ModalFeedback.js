@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/ModalFeedback.css";
+import CloseIcon from "../elements/CloseIcon";
 
 const ModalFeedback = ({ isOpen, onRequestClose, lang }) => {
   const [formData, setFormData] = useState({
@@ -33,21 +34,10 @@ const ModalFeedback = ({ isOpen, onRequestClose, lang }) => {
           <div className="modal-content stepModalFgBg">
             {/* Header */}
             <div className="modal-header">
-              <button
-                type="button"
-                className="close"
-                onClick={onRequestClose}
-                style={{
-                  background: "var(--clrBackground)",
-                  color: "var(--clrText)",
-                  opacity: 0.9,
-                }}
-              >
-                X
-              </button>
               <h4 className="modal-title" id="raiseSupportLabel">
                 {lang.feedback || "Зворотний зв'язок"}
               </h4>
+              <CloseIcon onClick={onRequestClose} />
             </div>
 
             {/* Body */}

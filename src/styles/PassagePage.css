@@ -11,7 +11,9 @@
 }
 
 .chapter-viewer {
-  padding-top: 55px; /* Відступ для фіксованого passage-options-group */
+  flex: 1;
+  overflow: auto;
+  min-height: 0; /* Для коректної прокрутки в flex-контейнері */
 }
 
 .panel:last-child {

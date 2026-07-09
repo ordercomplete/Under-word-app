@@ -88,8 +88,10 @@ export const getLanguageFromVersion = (version) => {
 export const isOriginalVersion = (version) => {
   if (!version) return false;
 
-  const originals = ["LXX", "THOT", "TR", "GNT"];
-  return originals.includes(version.toUpperCase());
+  // Використовуємо глобальні дані translations.json
+  const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+  const bible = bibles.find((b) => b.initials === version.toUpperCase());
+  return bible?.type === "original" || false;
 };
 
 export default {

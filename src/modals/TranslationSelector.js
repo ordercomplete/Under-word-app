@@ -5,6 +5,7 @@ import TranslationTabs from "../elements/TranslationTabs";
 import TranslationFooter from "../elements/TranslationFooter";
 import "../styles/TranslationSelector.css";
 import { getDefaultVersions } from "../utils/defaultVersions";
+import translationUtils from "../utils/translationUtils";
 
 // ==================== УТІЛІТИ ====================
 export const isOriginalVersionUtil = (initials, translationsData) => {
@@ -75,7 +76,7 @@ const TranslationSelector = ({
     return ntBooks.includes(bookCode) ? "NewT" : "OldT";
   };
 
-  const originalOrder = ["LXX", "THOT", "TR", "GNT"];
+  const originalOrder = translationUtils.getOriginalsList();
 
   // ==================== ЕФЕКТИ ====================
   useEffect(() => {
@@ -99,12 +100,7 @@ const TranslationSelector = ({
 
         if (initialVersions.length > 0) {
           const hasIncompatible = initialVersions.some((ver) => {
-            const verLower = ver.toLowerCase();
-            if (verLower === "lxx" && testament === "NewT") return true;
-            if (verLower === "thot" && testament === "NewT") return true;
-            if (verLower === "tr" && testament === "OldT") return true;
-            if (verLower === "gnt" && testament === "OldT") return true;
-            return false;
+            return !translationUtils.supportsTestament(ver, testament);
           });
 
           if (hasIncompatible) {
@@ -154,11 +150,10 @@ const TranslationSelector = ({
         if (!item.basedOn) return;
 
         const basedOn = item.basedOn;
+        // Перевіряємо чи переклад базується на цьому оригіналі в будь-якому заповіті
         const isMatch =
-          (origKey === "lxx" && basedOn.old_testament === "lxx") ||
-          (origKey === "thot" && basedOn.old_testament === "thot") ||
-          (origKey === "tr" && basedOn.new_testament === "tr") ||
-          (origKey === "gnt" && basedOn.new_testament === "tr"); // GNT використовує ті ж переклади, що TR
+          basedOn.old_testament === origKey ||
+          basedOn.new_testament === origKey;
 
         if (isMatch) {
           result[origKey].translations.push(item);
@@ -199,14 +194,11 @@ const TranslationSelector = ({
 
     // Перевіряємо, чи є хоч один оригінал серед вибраних
     const hasOriginal = selectedVersions.some((ver) =>
-      ["LXX", "THOT", "TR", "GNT"].includes(ver.toUpperCase()),
+      translationUtils.isOriginalInitials(ver),
     );
 
     if (!hasOriginal) {
-      alert(
-        lang.need_original ||
-          "Потрібно обрати хоча б один оригінал (LXX, THOT, TR або GNT)",
-      );
+      alert(lang.need_original || "Потрібно обрати хоча б один оригінал");
       return;
     }
 

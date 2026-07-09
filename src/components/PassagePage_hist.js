@@ -17,6 +17,7 @@ import { isMobile } from "../utils/deviceDetector";
 
 import { globalHistoryManager } from "../utils/historyManager";
 import { getDefaultVersions } from "../utils/defaultVersions";
+import translationUtils from "../utils/translationUtils";
 // ==================== КЕШ МЕНЕДЖЕР ====================
 const useChapterCache = () => {
   const cache = useRef(chapterCache);
@@ -160,14 +161,7 @@ const Panel = memo(
 
         // Автоматично корегуємо версії при зміні книги
         const correctedVersions = versions.filter((ver) => {
-          const verLower = ver.toLowerCase();
-
-          if (verLower === "lxx" && testament === "NewT") return false;
-          if (verLower === "thot" && testament === "NewT") return false;
-          if (verLower === "tr" && testament === "OldT") return false;
-          if (verLower === "gnt" && testament === "OldT") return false;
-
-          return true;
+          return translationUtils.supportsTestament(ver, testament);
         });
 
         // Якщо після корекції масив порожній - встановлюємо дефолт
@@ -201,7 +195,7 @@ const Panel = memo(
       const loadPromises = versions.map(async (ver) => {
         const testament = getTestament(book);
         const verLower = ver.toLowerCase();
-        const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(verLower);
+        const isOriginal = translationUtils.isOriginal(ver);
         const base = isOriginal ? "originals" : "translations";
         const bookLower = book.toLowerCase();
 
@@ -265,11 +259,11 @@ const Panel = memo(
 
       // Групуємо оригінали та переклади
       const originals = versions.filter((v) =>
-        ["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase()),
+        translationUtils.isOriginalInitials(v),
       );
 
       const translations = versions.filter(
-        (v) => !["LXX", "THOT", "TR", "GNT"].includes(v.toUpperCase()),
+        (v) => !translationUtils.isOriginalInitials(v),
       );
 
       if (translations.length > 0 && originals.length === 0) {
@@ -791,7 +785,7 @@ const PassagePage = memo(({ lang }) => {
       const getWordType = (version) => {
         if (!version) return "translation";
         const upperVersion = version.toUpperCase();
-        return ["LXX", "THOT", "TR", "GNT"].includes(upperVersion)
+        return translationUtils.isOriginalInitials(upperVersion)
           ? "original"
           : "translation";
       };

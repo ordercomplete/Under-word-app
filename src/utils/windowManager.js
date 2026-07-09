@@ -9,10 +9,10 @@ import globalHistoryManager from "./historyManager";
 export const determineWindowType = (origVer) => {
   if (!origVer) return "translation";
 
-  const originalVersions = ["LXX", "THOT", "TR", "GNT"];
-  return originalVersions.includes(origVer.toUpperCase())
-    ? "strong"
-    : "dictionary";
+  // Використовуємо глобальні дані translations.json
+  const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+  const bible = bibles.find((b) => b.initials === origVer.toUpperCase());
+  return bible?.type === "original" ? "strong" : "dictionary";
 };
 
 /**

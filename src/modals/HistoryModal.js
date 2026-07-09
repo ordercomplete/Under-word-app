@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { getHistory, clearHistory } from "../utils/visitHistory";
-import { useNavigation } from "../contexts/NavigationContext";
+import { getBookmarks, clearHistory } from "../utils/visitHistory";
 import "../styles/HistoryModal.css";
+import CloseIcon from "../elements/CloseIcon";
 
 const HistoryModal = ({ isOpen, onRequestClose, lang }) => {
-  const { navigateToRef } = useNavigation();
-  const [history, setHistory] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
-      loadHistory();
+      loadBookmarks();
     }
   }, [isOpen]);
 
-  const loadHistory = () => {
-    const visitHistory = getHistory();
-    setHistory(visitHistory.reverse()); // Найновіші спочатку
+  const loadBookmarks = () => {
+    const bookmarksList = getBookmarks();
+    setBookmarks(bookmarksList.reverse()); // Найновіші спочатку
   };
 
   const handleClearHistory = () => {
     if (window.confirm(lang.clear_history_confirm || "Очистити всю історію?")) {
       clearHistory();
-      setHistory([]);
+      setBookmarks([]);
     }
   };
 
   const handleItemClick = (entry) => {
-    navigateToRef(entry.ref, entry.versions);
+    // НЕ використовуємо panelIndex з запису - він буде визначений в PassagePage
+    // Вікно відкривається в першій панелі (якщо одна) або другій (якщо декілька)
+
+    // Використовуємо кастомне подію для сповіщення PassagePage
+    const event = new CustomEvent("navigateToBookmark", {
+      detail: {
+        ref: entry.ref,
+        versions: entry.versions,
+        // panelIndex прибираємо - буде визначено в PassagePage
+      },
+    });
+    window.dispatchEvent(event);
+
     onRequestClose();
   };
 
@@ -41,9 +52,9 @@ const HistoryModal = ({ isOpen, onRequestClose, lang }) => {
     });
   };
 
-  const renderHistoryItem = (entry) => (
+  const renderBookmarkItem = (entry, index) => (
     <div
-      key={`${entry.ref}-${entry.timestamp}`}
+      key={`${entry.ref}-${entry.key || entry.timestamp}`}
       className="history-item"
       onClick={() => handleItemClick(entry)}
     >
@@ -78,36 +89,28 @@ const HistoryModal = ({ isOpen, onRequestClose, lang }) => {
           <div className="modal-content history-modal-content">
             <div className="modal-header">
               <h5>{lang.bookmarks || "Історія відвідувань"}</h5>
-              <button
-                className="btn btn-outline-secondary btn-sm"
-                onClick={onRequestClose}
-              >
-                ✕
-              </button>
+              {bookmarks.length > 0 && (
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={handleClearHistory}
+                >
+                  {lang.clear_history || "Очистити історію"}
+                </button>
+              )}
+              <CloseIcon onClick={onRequestClose} />
             </div>
 
             <div className="modal-body">
-              {history.length === 0 ? (
+              {bookmarks.length === 0 ? (
                 <div className="empty-history">
                   <p>{lang.no_history || "Історія порожня"}</p>
                 </div>
               ) : (
                 <div className="history-list">
-                  {history.map(renderHistoryItem)}
+                  {bookmarks.map(renderBookmarkItem)}
                 </div>
               )}
             </div>
-
-            {history.length > 0 && (
-              <div className="modal-footer">
-                <button className="btn btn-danger" onClick={handleClearHistory}>
-                  {lang.clear_history || "Очистити історію"}
-                </button>
-                <button className="btn btn-secondary" onClick={onRequestClose}>
-                  {lang.close || "Закрити"}
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>

@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import CloseIcon from "../elements/CloseIcon";
 import "../styles/LexiconWindow.css";
 import { globalHistoryManager } from "../utils/historyManager";
-
-// import { loadStrongEntry } from "../utils/loadStrong";
+import translationUtils from "../utils/translationUtils";
 
 const LexiconWindow = memo(
   ({
@@ -234,9 +233,7 @@ const LexiconWindow = memo(
       if (!data?.word) return;
 
       // ВИПРАВЛЕННЯ: Динамічне isOriginal для порожніх
-      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
-        origVer?.toUpperCase() || "",
-      );
+      const isOriginal = translationUtils.isOriginalInitials(origVer);
 
       const emptyEntry = {
         id: `empty_${Date.now()}`,
@@ -293,9 +290,7 @@ const LexiconWindow = memo(
       // ВИПРАВЛЕННЯ: Нова функція для мінімального fallback
       if (!data?.word) return;
 
-      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
-        origVer?.toUpperCase() || "",
-      );
+      const isOriginal = translationUtils.isOriginalInitials(origVer);
 
       const minimalEntry = {
         id: `minimal_${Date.now()}`,

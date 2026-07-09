@@ -11,15 +11,16 @@
   background: #fff;
   border-bottom: 1px solid #ddd;
   font-size: 0.9rem;
-  position: fixed;
-  top: 58px;
+  position: sticky;
+  top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1000;
   min-height: 55px;
   border: 1px solid #ccc;
   flex-shrink: 0;
+  padding-top: 70px;
+  z-index: 10;
 }
 
 /* Блок вибору (choice) */
@@ -146,33 +147,34 @@
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
 }
-.btn {
+/* Кнопки в навігації - обмежені для контексту arg-summary-navigation */
+.arg-summary-navigation .btn {
   width: 38px;
   height: 38px;
-  border: 1px solid #6c757d !important;
-  background: transparent !important;
-  padding: 0.25rem 0.5rem !important;
-  border-radius: 0.2rem !important;
-  color: #6c757d !important;
-  transition: all 0.15s ease-in-out !important;
+  border: 1px solid #6c757d;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.2rem;
+  color: #6c757d;
+  transition: all 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn:hover {
-  color: #fff !important;
-  background-color: #6c757d !important;
-  border-color: #6c757d !important;
+.arg-summary-navigation .btn:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
-.btn:focus {
-  outline: 0 !important;
-  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25) !important;
+.arg-summary-navigation .btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
 }
 
-.btn:disabled,
-.btn.disabled {
+.arg-summary-navigation .btn:disabled,
+.arg-summary-navigation .btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

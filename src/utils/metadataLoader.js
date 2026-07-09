@@ -38,7 +38,7 @@ export async function loadBookMetadata(bookCode, version) {
 
     // Спробуємо отримати метадані з файлу
     const response = await fetch(
-      `/data/translations/${versionLower}/OldT/${bookCode}/metadata.json`
+      `/data/translations/${versionLower}/OldT/${bookCode}/metadata.json`,
     );
 
     if (response.ok) {
@@ -52,14 +52,13 @@ export async function loadBookMetadata(bookCode, version) {
       book: bookCode,
       version: version,
       chapters: 50, // За замовчуванням
-      language:
-        version.includes("LXX") || version.includes("GNT")
-          ? "greek"
-          : version.includes("THOT")
+      language: version.match(/^(LXX|GNT)$/i)
+        ? "greek"
+        : version.match(/^THOT$/i)
           ? "hebrew"
           : "ukrainian",
       hasStrongs: true,
-      hasMorphology: version.includes("LXX") || version.includes("GNT"),
+      hasMorphology: version.match(/^(LXX|GNT)$/i) ? true : false,
       updated: new Date().toISOString(),
     };
 
@@ -68,7 +67,7 @@ export async function loadBookMetadata(bookCode, version) {
   } catch (error) {
     console.error(
       `Помилка завантаження метаданих для ${bookCode} ${version}:`,
-      error
+      error,
     );
     return null;
   }

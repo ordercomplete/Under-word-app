@@ -39,6 +39,40 @@ const PassageOptionsGroup = ({
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
 
+  // Функція для визначення заповіту
+  const getTestament = (bookCode) => {
+    const newTestamentBooks = [
+      "MAT",
+      "MRK",
+      "LUK",
+      "JHN",
+      "ACT",
+      "ROM",
+      "1CO",
+      "2CO",
+      "GAL",
+      "EPH",
+      "PHP",
+      "COL",
+      "1TH",
+      "2TH",
+      "1TI",
+      "2TI",
+      "TIT",
+      "PHM",
+      "HEB",
+      "JAS",
+      "1PE",
+      "2PE",
+      "1JN",
+      "2JN",
+      "3JN",
+      "JUD",
+      "REV",
+    ];
+    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  };
+
   // Функція для отримання кількості розділів поточної книги
   const getCurrentBookChapters = () => {
     return getMaxChaptersForBook(book, versions); // використовуємо функцію з попереднього варіанту
@@ -49,23 +83,6 @@ const PassageOptionsGroup = ({
     setCurrentRef(`${bookCode}.${chapter}`);
     setSelectedBook(bookCode);
     // Опціонально: оновити chapters, якщо потрібно
-  };
-  // console.log(
-  //   "Panel: 2-PassageOptionsGroup coreData keys:",
-  //   Object.keys(coreData || {})
-  // );
-  // prefetchChapter - Свойство "prefetchChapter" объявлено, но его значение не было прочитано
-  const prefetchChapter = (book, chapter, versions) => {
-    versions.forEach((version) => {
-      const testament = getTestament(book);
-      const verLower = version.toLowerCase();
-      const isOriginal = ["lxx", "thot", "tr", "gnt"].includes(verLower);
-      const base = isOriginal ? "originals" : "translations";
-      const url = `/data/${base}/${verLower}/${testament}/${book}/${book.toLowerCase()}${chapter}_${verLower}.json`;
-
-      // Пресетч без блокування
-      fetch(url, { priority: "low", mode: "no-cors" }).catch(() => {});
-    });
   };
 
   // Додайте цю функцію всередині компонента перед return 24.12.15

@@ -2,6 +2,7 @@
  * Утиліта для визначення дефолтних версій на основі translations.json
  * Замінює жорстку прив'язку на динамічний розрахунок
  */
+import translationUtils from "./translationUtils";
 
 /**
  * Визначає заповіт за кодом книги
@@ -42,6 +43,15 @@ export const getTestament = (bookCode) => {
 };
 
 /**
+ * Перевіряє чи оригінал підходить для конкретної книги (OT/NT)
+ * Використовує translationUtils.supportsTestament замість хардкоду
+ */
+const isOriginalCompatibleWithBook = (originalInitials, bookCode) => {
+  const testament = getTestament(bookCode);
+  return translationUtils.supportsTestament(originalInitials, testament);
+};
+
+/**
  * Отримує дефолтні версії для книги
  * @param {string} bookCode - код книги (наприклад, "GEN", "MAT")
  * @param {Object} translationsData - дані з translations.json
@@ -55,18 +65,17 @@ export const getDefaultVersions = (bookCode, translationsData) => {
   const testament = getTestament(bookCode);
 
   // Знаходимо дефолтний оригінал для цього заповіту
-  const defaultOriginal = translationsData.bibles.find(
-    (b) =>
-      b.type === "original" &&
-      b.isDefault === true &&
-      b.testaments?.includes(testament),
-  );
+  const defaultOriginal = translationsData.bibles.find((b) => {
+    if (b.type !== "original" || b.isDefault !== true) return false;
+    if (!b.testaments?.includes(testament)) return false;
+    return true;
+  });
 
   if (!defaultOriginal) {
     return [];
   }
 
-  // Знаходимо дефолтний переклад, що базуються на цьому оригіналі
+  // Знаходимо дефолтний переклад, що базується на цьому оригіналі
   const defaultTranslation = translationsData.bibles.find((b) => {
     if (b.type !== "translation" || b.isDefault !== true) return false;
     if (!b.testaments?.includes(testament)) return false;
@@ -74,6 +83,7 @@ export const getDefaultVersions = (bookCode, translationsData) => {
     // Перевіряємо basedOn
     if (!b.basedOn) return false;
     const basedOnKey = testament === "OldT" ? "old_testament" : "new_testament";
+
     return b.basedOn[basedOnKey] === defaultOriginal.initials.toLowerCase();
   });
 

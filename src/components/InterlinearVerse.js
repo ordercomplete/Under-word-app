@@ -11,6 +11,7 @@ import "../styles/Interlinear.css";
 // import "../styles/PassagePage.css";
 import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 import { logger } from "../utils/logger"; // Додати цей імпорт
+import translationUtils from "../utils/translationUtils";
 
 const InterlinearVerse = ({
   verseNum,
@@ -393,10 +394,7 @@ const InterlinearVerse = ({
   }, [pairs]);
 
   const isOriginalVersion = useCallback((version) => {
-    const upper = version.toUpperCase();
-    return (
-      upper === "LXX" || upper === "THOT" || upper === "TR" || upper === "GNT"
-    );
+    return translationUtils.isOriginalInitials(version);
   }, []);
 
   // ==================== ОПТИМІЗОВАНИЙ РЕНДЕРИНГ ====================

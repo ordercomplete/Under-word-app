@@ -12,6 +12,7 @@ import { NavigationProvider } from "./contexts/NavigationContext";
 import "./styles/normalize.css";
 import "./styles/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Для Dropdown та інших компонентів
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 // ЛІНИВЕ ЗАВАНТАЖЕННЯ КОМПОНЕНТІВ
@@ -105,8 +106,18 @@ const App = () => {
 
     const loadData = async () => {
       try {
-        const langRes = await fetch("/data/lang.json");
+        // Завантажуємо переклади та встановлюємо глобально для всього додатку
+        const [langRes, transRes] = await Promise.all([
+          fetch("/data/lang.json"),
+          fetch("/data/translations.json"),
+        ]);
+
         if (!langRes.ok) throw new Error("lang.json not found");
+
+        if (transRes.ok) {
+          const transData = await transRes.json();
+          window.__TRANSLATIONS_DATA__ = transData;
+        }
 
         const data = await langRes.json();
         const langObj = {};
