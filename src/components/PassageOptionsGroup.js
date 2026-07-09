@@ -144,11 +144,7 @@ const PassageOptionsGroup = ({
             onClick={onPrevChapter}
             title={lang.prev_chapter}
           >
-            <i
-              className={`bi bi-chevron-left fs-4 transition-all ${
-                hoverPrev ? "text-danger" : "text-primary"
-              }`}
-            ></i>
+            <i className="bi bi-chevron-left fs-5"></i>
           </button>
 
           <div className=" m-0">{localCurrentRef || currentRef}</div>
@@ -161,7 +157,7 @@ const PassageOptionsGroup = ({
             title={lang.next_chapter}
           >
             <i
-              className={`bi bi-chevron-right fs-4 transition-all ${
+              className={`bi bi-chevron-right fs-5 transition-all ${
                 hoverNext ? "text-danger" : "text-primary"
               }`}
             ></i>
@@ -178,7 +174,7 @@ const PassageOptionsGroup = ({
             onClick={onNewPanel}
             title={lang.new_panel}
           >
-            <i className="bi bi-plus-circle-fill text-success fs-5"></i>
+            <i className="bi bi-plus-circle-fill fs-5"></i>
           </button>
 
           <CloseIcon
