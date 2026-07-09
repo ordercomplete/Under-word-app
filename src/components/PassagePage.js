@@ -56,6 +56,7 @@ const Panel = memo(
     const [chapterData, setChapterData] = useState({});
     const [loading, setLoading] = useState(false);
     const [translationsData, setTranslationsData] = useState(null);
+    const [localCurrentRef, setLocalCurrentRef] = useState(currentRef);
 
     // Завантаження translations.json (один раз)
     useEffect(() => {
@@ -73,7 +74,7 @@ const Panel = memo(
 
             // Встановлюємо дефолтні версії, якщо versions порожні або немає оригіналу
             if (!versions || versions.length === 0 || !hasOriginal) {
-              const [book] = currentRef.split(".");
+              const [book] = localCurrentRef.split(".");
               const defaultVersions = getDefaultVersions(book, data);
               if (defaultVersions.length > 0) {
                 updateVersions(defaultVersions);
@@ -86,7 +87,7 @@ const Panel = memo(
       };
 
       loadTranslations();
-    }, [currentRef, getCache, setCache, versions, updateVersions]);
+    }, [localCurrentRef, getCache, setCache, versions, updateVersions]);
 
     const getTestament = useCallback((bookCode) => {
       const newTestamentBooks = [
@@ -124,7 +125,7 @@ const Panel = memo(
     // Завантаження глави з кешем
     useEffect(() => {
       if (translationsData) {
-        const [book] = currentRef.split(".");
+        const [book] = localCurrentRef.split(".");
         const testament = getTestament(book);
 
         // Автоматично корегуємо версії при зміні книги
@@ -156,7 +157,7 @@ const Panel = memo(
       }
 
       if (versions.length === 0) return;
-      const [book, chapterStr] = currentRef.split(".");
+      const [book, chapterStr] = localCurrentRef.split(".");
       const chapter = parseInt(chapterStr);
       if (!book || !chapter) return;
       const cacheKey = `${book}.${chapter}.${versions.join(",")}`;
@@ -220,20 +221,19 @@ const Panel = memo(
           setLoading(false);
         });
     }, [
-      currentRef,
+      localCurrentRef,
       versions,
       getTestament,
       getCache,
       setCache,
       translationsData,
-      getTestament,
     ]);
 
     // Формування пар для InterlinearVerse
     const pairs = useMemo(() => {
       if (!translationsData) return [];
 
-      const [book] = currentRef.split(".");
+      const [book] = localCurrentRef.split(".");
       const testament = getTestament(book);
       const pairs = [];
 
@@ -282,7 +282,7 @@ const Panel = memo(
       }
 
       return pairs;
-    }, [versions, translationsData, currentRef, getTestament]);
+    }, [versions, translationsData, localCurrentRef, getTestament]);
 
     // Номери віршів
     const verseNumbers = useMemo(() => {
@@ -305,18 +305,24 @@ const Panel = memo(
       return sorted;
     }, [chapterData]);
 
-    // Повертаємо визначення функцій назад у Panel
+    // Відстежуємо, чи навігація відбулася всередині панелі
+    const isInternalNavigation = useRef(false);
+
+    // Навігація для панелі - оновлює глобальний стан та локальний
     const handlePrevChapter = () => {
-      const [b, c] = currentRef.split(".");
+      isInternalNavigation.current = true;
+      const [b, c] = localCurrentRef.split(".");
       const nc = Math.max(1, parseInt(c) - 1);
-      updateRef(`${b}.${nc}`);
+      const newRef = `${b}.${nc}`;
+      setLocalCurrentRef(newRef);
+      updateRef(newRef);
     };
 
     const handleNextChapter = () => {
-      const [b, c] = currentRef.split(".");
+      isInternalNavigation.current = true;
+      const [b, c] = localCurrentRef.split(".");
       const nc = parseInt(c) + 1;
 
-      // Перевіряємо максимальну кількість глав (та сама логіка, що була раніше)
       const testament = getTestament(b);
       const versionKey = versions[0]?.toLowerCase();
 
@@ -325,13 +331,33 @@ const Panel = memo(
         const bookInfo = books.find((bk) => bk.code === b);
 
         if (bookInfo && nc <= bookInfo.chapters) {
-          updateRef(`${b}.${nc}`);
+          const newRef = `${b}.${nc}`;
+          setLocalCurrentRef(newRef);
+          updateRef(newRef);
         }
       } else {
-        // Якщо даних немає — просто переходимо (fallback)
-        updateRef(`${b}.${nc}`);
+        const newRef = `${b}.${nc}`;
+        setLocalCurrentRef(newRef);
+        updateRef(newRef);
       }
     };
+
+    // Локальна функція для оновлення currentRef тільки в межах цієї панелі
+    const handleSetLocalRef = useCallback(
+      (newRef) => {
+        setLocalCurrentRef(newRef);
+        updateRef(newRef); // Оновлюємо глобально при прямому виборі
+      },
+      [updateRef],
+    );
+
+    // Синхронізуємо localCurrentRef при зміні global currentRef ззовні
+    useEffect(() => {
+      if (!isInternalNavigation.current) {
+        setLocalCurrentRef(currentRef);
+      }
+      isInternalNavigation.current = false;
+    }, [currentRef]);
 
     // Свайп для перемикання розділів (тільки мобільний режим)
 
@@ -438,8 +464,8 @@ const Panel = memo(
       <div className="panel">
         <PassageOptionsGroup
           lang={lang}
-          currentRef={currentRef}
-          setCurrentRef={updateRef}
+          currentRef={localCurrentRef}
+          setCurrentRef={handleSetLocalRef}
           versions={versions}
           setVersions={updateVersions}
           onPrevChapter={handlePrevChapter}
@@ -449,6 +475,7 @@ const Panel = memo(
           disableClose={disableClose}
           coreData={coreData}
           coreLoading={coreLoading}
+          localCurrentRef={localCurrentRef}
         />
 
         <div

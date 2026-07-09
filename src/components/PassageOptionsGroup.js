@@ -20,6 +20,7 @@ const PassageOptionsGroup = ({
   coreData,
   coreLoading,
   disableClose,
+  localCurrentRef,
 }) => {
   // console.log(
   //   "Panel: 1-PassageOptionsGroup coreData keys:",
@@ -31,7 +32,9 @@ const PassageOptionsGroup = ({
   const [selectedBook, setSelectedBook] = useState("GEN");
   const [selectedChapters, setSelectedChapters] = useState();
 
-  const [book, chapter] = currentRef.split(".");
+  const [book, chapter] = localCurrentRef
+    ? localCurrentRef.split(".")
+    : currentRef.split(".");
 
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
@@ -148,7 +151,7 @@ const PassageOptionsGroup = ({
             ></i>
           </button>
 
-          <div className=" m-0">{lang.chapter || "Розділ"}</div>
+          <div className=" m-0">{localCurrentRef || currentRef}</div>
 
           <button
             className="custom-button-nav"
