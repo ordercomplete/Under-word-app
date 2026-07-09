@@ -115,6 +115,11 @@ const Panel = memo(
     const [loading, setLoading] = useState(false);
     const [translationsData, setTranslationsData] = useState(null);
 
+    // Ref для скасування поточного fetch-запиту при швидкій навігації
+    const fetchControllerRef = useRef(null);
+    // Лічильник для визначення найсвіжішого запиту (запобігає race conditions)
+    const latestFetchIdRef = useRef(0);
+
     // Синхронізація з initialRef/initialVersions при зміні з зовні
     // ВИПРАВЛЕННЯ: Реагуємо тільки при зміні через key (якщо initialRef відрізняється від поточного)
     // Це запобігає циклу: setPanelRef -> onPanelChange -> setPanels -> initialRef змінюється
@@ -224,7 +229,7 @@ const Panel = memo(
       return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
     }, []);
 
-    // Завантаження глави з кешем
+    // Завантаження глави з кешем (з AbortController для запобігання race conditions)
     useEffect(() => {
       if (panelVersions.length === 0) return;
 
@@ -260,10 +265,23 @@ const Panel = memo(
         }
       }
 
-      logger.debug(`Кеш MISS: ${cacheKey}`);
+      // Скасовуємо попередній запит, якщо він ще виконується
+      if (fetchControllerRef.current) {
+        fetchControllerRef.current.abort();
+      }
+
+      // Створюємо новий AbortController для поточного запиту
+      const controller = new AbortController();
+      fetchControllerRef.current = controller;
+      const fetchId = ++latestFetchIdRef.current;
+
+      logger.debug(`Кеш MISS: ${cacheKey} (fetchId: ${fetchId})`);
       setLoading(true);
 
       const loadPromises = panelVersions.map(async (ver) => {
+        // Якщо запит вже скасовано — не виконуємо
+        if (controller.signal.aborted) return { ver, data: [] };
+
         const testament = getTestament(book);
         const isOriginal = translationUtils.isOriginal(ver);
         const base = isOriginal ? "originals" : "translations";
@@ -278,18 +296,32 @@ const Panel = memo(
         const url = `/data/${base}/${verLower}/${testament}/${book}/${bookLower}${chapter}_${verLower}.json`;
 
         try {
-          const response = await fetch(url);
+          const response = await fetch(url, { signal: controller.signal });
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           const data = await response.json();
           return { ver, data: data.verses || [] };
         } catch (error) {
-          console.log(`Помилка завантаження ${ver}: ${error}`);
+          // AbortError — це нормально, просто ігноруємо
+          if (error.name === "AbortError") {
+            logger.debug(`Запит ${ver} скасовано (fetchId: ${fetchId})`);
+            return { ver, data: [] };
+          }
+          // Інші помилки — повертаємо порожні дані без блокування
+          logger.debug(`Помилка завантаження ${ver}: ${error.message}`);
           return { ver, data: [] };
         }
       });
 
       Promise.all(loadPromises)
         .then((results) => {
+          // Якщо з'явився новіший запит — ігноруємо результати
+          if (fetchId !== latestFetchIdRef.current) {
+            logger.debug(
+              `Пропускаємо застарілий результат (fetchId: ${fetchId})`,
+            );
+            return;
+          }
+
           const newData = {};
           results.forEach(({ ver, data }) => {
             newData[ver] = data;
@@ -299,11 +331,21 @@ const Panel = memo(
           setChapterData(newData);
         })
         .catch((error) => {
+          // Помилка Promise.all (наприклад, якщо всі fetch були скасовані)
+          if (error.name === "AbortError") return;
           logger.error("Помилка завантаження глави:", error);
         })
         .finally(() => {
-          setLoading(false);
+          // Оновлюємо loading тільки якщо це все ще актуальний запит
+          if (fetchId === latestFetchIdRef.current) {
+            setLoading(false);
+          }
         });
+
+      // Cleanup: скасовуємо запит при демонтажі компонента або повторному запуску ефекту
+      return () => {
+        controller.abort();
+      };
     }, [
       panelRef,
       panelVersions,

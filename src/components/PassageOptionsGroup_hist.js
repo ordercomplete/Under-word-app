@@ -39,12 +39,6 @@ const PassageOptionsGroup = ({
 
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
-  // Історія переглядів глав / книг / наборів перекладів
-  // const [passageHistoryState, setPassageHistoryState] = useState(
-  //   globalHistoryManager.getPassageState(),
-  // );
-
-  // const [isNavigatingFromHistory, setIsNavigatingFromHistory] = useState(false);
 
   // Функція для отримання кількості розділів поточної книги
   const getCurrentBookChapters = () => {
