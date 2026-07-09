@@ -2,6 +2,10 @@
   "name": "under-word-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
+  },
   "dependencies": {
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.13.1",

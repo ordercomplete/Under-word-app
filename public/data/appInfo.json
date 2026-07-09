@@ -1,0 +1,51 @@
+{
+  "techStack": [
+    "React ^18.3.1 - Основна бібліотека UI",
+    "React Router ^6.30.4 - Маршрутизація",
+    "React Bootstrap ^2.10.0 - UI компоненти",
+    "Bootstrap ^5.3.2 - CSS фреймворк",
+    "Bootstrap Icons ^1.13.1 - Іконки"
+  ],
+  "modules": [
+    {
+      "name": "PassagePage",
+      "description": "Мультивіконний перегляд (до 4 панелей)"
+    },
+    {
+      "name": "InterlinearVerse",
+      "description": "Вірівнювання слів оригіналу та перекладу"
+    },
+    {
+      "name": "LexiconWindow",
+      "description": "Словниковий пошук (Strong's, LSJ, LXX)"
+    }
+  ],
+  "originals": [
+    "LXX (Септуагінта)",
+    "THOT (Єврейський)",
+    "TR (Textus Receptus)",
+    "GNT (Modern Critical)"
+  ],
+  "translations": [
+    "UTT",
+    "UBT",
+    "Synodal",
+    "KJV",
+    "Ogienko",
+    "Khomenko",
+    "Siry"
+  ],
+  "features": [
+    "AbortController - скасування запитів при навігації",
+    "Debounce - оптимізація збереження стану",
+    "Кешування в sessionStorage (1 година)",
+    "Адаптивний дизайн для мобільних пристроїв",
+    "Service Worker для офлайн-режиму"
+  ],
+  "commands": [
+    "npm start # Dev сервер",
+    "npm run build # Збірка",
+    "npm run deploy # Деплой на Netlify"
+  ],
+  "lastUpdate": "09.07.2026"
+}

@@ -53,22 +53,37 @@ const DropdownMenu = ({ lang }) => {
       >
         {lang.help_us}
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => setShowFeedbackModal(true)}>
+      <NavDropdown.Item
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Відкриття модального вікна зі затримкою
+          setTimeout(() => setShowFeedbackModal(true), 100);
+        }}
+      >
         {lang.feedback}
       </NavDropdown.Item>
-      <NavDropdown.Item href="/cookies-policy" target="_blank">
-        {lang.privacy_policy}
-      </NavDropdown.Item>
       <NavDropdown.Item
-        href="https://stepbibleguide.blogspot.com/p/copyrights-licences.html"
-        target="_blank"
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Відкриття модального вікна зі затримкою
+          setTimeout(() => setShowAboutModal(true), 100);
+        }}
       >
-        {lang.copyright}
-      </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => setShowAboutModal(true)}>
         {lang.about}
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => setShowAdminModal(true)}>
+      <NavDropdown.Item
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Відкриття модального вікна зі затримкою
+          setTimeout(() => setShowAdminModal(true), 100);
+        }}
+      >
         {lang.admin}
       </NavDropdown.Item>
 

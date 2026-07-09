@@ -25,6 +25,12 @@
   font-size: 1.1rem;
 }
 
+.history-modal-content .modal-header .modal-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
 .history-modal-content .modal-body {
   padding: 0.6rem 0.8rem;
   overflow-y: auto;
@@ -126,6 +132,24 @@
   justify-content: center;
   align-items: center;
   z-index: 1055;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.modal.in {
+  display: block;
 }
 
 @media (max-width: 768px) {
@@ -143,4 +167,16 @@
   .history-date {
     font-size: 0.8rem;
   }
+}
+
+/* Заборона скролу на body коли відкрите модальне вікно */
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+}
+
+/* Прибираємо зовнішній скрол для модальних вікон */
+.modal-backdrop ~ .modal {
+  overflow-y: auto;
+  max-height: 90vh;
 }
