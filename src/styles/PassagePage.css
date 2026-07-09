@@ -10,6 +10,10 @@
   overflow: hidden;
 }
 
+.chapter-viewer {
+  padding-top: 55px; /* Відступ для фіксованого passage-options-group */
+}
+
 .panel:last-child {
   border-right: none;
 }

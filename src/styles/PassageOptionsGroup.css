@@ -11,8 +11,11 @@
   background: #fff;
   border-bottom: 1px solid #ddd;
   font-size: 0.9rem;
-  position: sticky;
+  position: fixed;
   top: 58px;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   min-height: 55px;
   border: 1px solid #ccc;

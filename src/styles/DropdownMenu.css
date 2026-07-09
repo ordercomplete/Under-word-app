@@ -6,6 +6,7 @@
   min-width: 180px; /* Зменшено з 234px для адаптивності */
   width: auto; /* Дозволяє меню адаптуватися до вмісту */
   padding: 0.5rem 0;
+  z-index: 1050;
 }
 
 .dropdown-menu-end {
@@ -17,6 +18,7 @@
   color: #333;
   padding: 0.25rem 1.25rem;
   white-space: nowrap;
+  z-index: 1040;
 }
 
 .dropdown-item:hover,

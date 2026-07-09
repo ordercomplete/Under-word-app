@@ -226,15 +226,18 @@
 /* ------------------------------------ */
 
 .lexicon-column {
+  /* position: fixed; */
+  margin-top: 58px;
+  right: 0;
+  bottom: 0;
   width: 320px;
   display: flex;
   flex-direction: column;
   border-left: 1px solid #ddd;
   overflow: hidden;
   flex-shrink: 0;
-  height: 100vh;
-  position: sticky;
-  padding-top: 63px;
+  padding-top: 55px;
+  z-index: 1020;
 }
 
 .lexicon-window {
@@ -251,6 +254,7 @@
   background-image: url("/public/images/stoun-bg-1.jpg");
   /* padding: 1rem 0; */
   height: calc(100vh - 63px);
+  /* height: 100%; */
   /* Враховуємо sticky header */
   overflow-y: auto; /* Розкоментував overflow */
   font-size: 0.95rem;
@@ -405,6 +409,7 @@
     /* Переносимо лексикон під */
   }
   .lexicon-column {
+    margin-top: 0;
     width: 100%;
     padding-top: 0px;
     flex-direction: row;
@@ -418,6 +423,7 @@
     background: white;
     display: flex;
     justify-content: center;
+    z-index: 1020;
   }
 
   .lexicon-window {
