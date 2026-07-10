@@ -219,11 +219,11 @@
 /* Додаємо або оновлюємо в src/styles/PassageOptionsGroup.css */
 
 /* Приховуємо звичайну навігацію prev/next в мобільному режимі */
-@media (max-width: 520px) {
+/* @media (max-width: 520px) {
   .arg-summary-navigation .custom-button-nav {
-    display: none; /* ховаємо стрілки prev/next chapter */
+    display: none; 
   }
-}
+} */
 
 /* Стилі для нової навігації по історії */
 .chapter-history-nav {
@@ -250,12 +250,12 @@
   cursor: not-allowed;
 }
 
-/* .nav-position {
+.nav-position {
   font-size: 0.9rem;
   color: #6c757d;
   min-width: 50px;
   text-align: center;
-} */
+}
 
 /* =========================== */
 

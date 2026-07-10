@@ -9,6 +9,8 @@ import React, {
 } from "react";
 import PassageOptionsGroup from "./PassageOptionsGroup";
 import InterlinearVerse from "./InterlinearVerse";
+import AllVersesInline from "./AllVersesInline";
+import PanelSettingsModal from "./PanelSettingsModal";
 import LexiconWindow from "./LexiconWindow";
 import { logger } from "../utils/logger";
 import { chapterCache } from "../utils/cacheManager";
@@ -89,11 +91,14 @@ const Panel = memo(
     initialVersions,
     onNavigateToRef,
     onPanelChange, // НОВИЙ ПРОПС для оновлення стану в PassagePage
+    initialInlineFlow,
   }) => {
     const { get: getCache, set: setCache } = useChapterCache();
     // Локальне стан кожної панелі
     const [panelRef, setPanelRef] = useState(initialRef || "GEN.1");
     const [panelVersions, setPanelVersions] = useState(initialVersions || []);
+    const [panelInlineFlow, setPanelInlineFlow] = useState(!!initialInlineFlow);
+    const [showPanelSettings, setShowPanelSettings] = useState(false);
 
     // Оновлення стану панелей в PassagePage при зміні локального стану
     // Використовуємо ref для відстеження попередніх значень і уникнути циклів
@@ -530,6 +535,7 @@ const Panel = memo(
           disableClose={disableClose}
           coreData={coreData}
           coreLoading={coreLoading}
+          onOpenPanelSettings={() => setShowPanelSettings(true)}
         />
 
         <div
@@ -554,19 +560,38 @@ const Panel = memo(
                   <small>‹ свайп для зміни розділу ›</small>
                 </div>
               )}
-              {verseNumbers.map((verseNum, index) => (
-                <InterlinearVerse
-                  key={verseNum}
-                  verseNum={verseNum}
+              {panelInlineFlow ? (
+                <AllVersesInline
+                  verseNumbers={verseNumbers}
                   pairs={pairs}
                   chapterData={chapterData}
                   onWordClick={onWordClick}
-                  isFirstInChapter={index === 0}
                 />
-              ))}
+              ) : (
+                verseNumbers.map((verseNum, index) => (
+                  <InterlinearVerse
+                    key={verseNum}
+                    verseNum={verseNum}
+                    pairs={pairs}
+                    chapterData={chapterData}
+                    onWordClick={onWordClick}
+                    isFirstInChapter={index === 0}
+                  />
+                ))
+              )}
             </>
           )}
         </div>
+
+        <PanelSettingsModal
+          isOpen={showPanelSettings}
+          onRequestClose={() => setShowPanelSettings(false)}
+          settings={{ inlineFlow: panelInlineFlow }}
+          onSettingsChange={(newSettings) => {
+            setPanelInlineFlow(newSettings.inlineFlow);
+            setShowPanelSettings(false);
+          }}
+        />
       </div>
     );
   },
@@ -1032,13 +1057,24 @@ const PassagePage = memo(({ lang }) => {
   }, []);
 
   // Callback для оновлення стану панелей в PassagePage коли змінюється стан панелі
-  const handlePanelChange = useCallback((panelId, newRef, newVersions) => {
-    setPanels((prev) =>
-      prev.map((p) =>
-        p.id === panelId ? { ...p, ref: newRef, versions: newVersions } : p,
-      ),
-    );
-  }, []);
+  const handlePanelChange = useCallback(
+    (panelId, newRef, newVersions, newInlineFlow) => {
+      setPanels((prev) =>
+        prev.map((p) =>
+          p.id === panelId
+            ? {
+                ...p,
+                ref: newRef,
+                versions: newVersions,
+                inlineFlow:
+                  newInlineFlow !== undefined ? newInlineFlow : p.inlineFlow,
+              }
+            : p,
+        ),
+      );
+    },
+    [],
+  );
 
   // Обробка відвідувань - зберігає в історію (debounce для уникнення багатьох записів)
   // Працює тільки коли є реальні версії
@@ -1103,6 +1139,7 @@ const PassagePage = memo(({ lang }) => {
             initialVersions={panel.versions}
             onNavigateToRef={handleNavigateToPanel}
             onPanelChange={handlePanelChange}
+            initialInlineFlow={panel.inlineFlow}
           />
         ))}
       </div>

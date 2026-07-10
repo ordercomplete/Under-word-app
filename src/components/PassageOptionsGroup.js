@@ -21,6 +21,7 @@ const PassageOptionsGroup = ({
   coreLoading,
   disableClose,
   localCurrentRef,
+  onOpenPanelSettings,
 }) => {
   // console.log(
   //   "Panel: 1-PassageOptionsGroup coreData keys:",
@@ -192,6 +193,14 @@ const PassageOptionsGroup = ({
             title={lang.new_panel}
           >
             <i className="bi bi-plus-circle-fill fs-5"></i>
+          </button>
+
+          <button
+            className="custom-button-nav"
+            onClick={onOpenPanelSettings}
+            title={lang?.panel_settings || "Налаштування панелі"}
+          >
+            <i className="bi bi-three-dots-vertical"></i>
           </button>
 
           <CloseIcon
