@@ -16,6 +16,7 @@ import ModalFeedback from "../modals/ModalFeedback";
 import ModalAbout from "../modals/ModalAbout";
 import ModalAdmin from "../modals/ModalAdmin";
 import HistoryModal from "../modals/HistoryModal";
+import ModalFAQ from "../modals/ModalFAQ";
 import { useMediaQuery } from "react-responsive";
 import "../styles/NavbarHeader.css";
 
@@ -31,6 +32,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [showFAQModal, setShowFAQModal] = useState(false);
 
   const [allLangData, setAllLangData] = useState(null);
 
@@ -150,7 +152,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
             <IconLink
               icon="bi-question-circle"
               text={lang.faq}
-              onClick={() => alert(lang.developing)}
+              onClick={() => setShowFAQModal(true)}
             />
 
             <NavDropdown
@@ -220,6 +222,12 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
       <HistoryModal
         isOpen={showHistoryModal}
         onRequestClose={() => setShowHistoryModal(false)}
+        lang={lang}
+      />
+
+      <ModalFAQ
+        isOpen={showFAQModal}
+        onRequestClose={() => setShowFAQModal(false)}
         lang={lang}
       />
     </Navbar>
