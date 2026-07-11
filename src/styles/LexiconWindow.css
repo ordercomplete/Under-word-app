@@ -105,6 +105,7 @@
     background: #ccc;
   }
 }
+
 .lex-item {
   display: flex;
   justify-content: space-between;
@@ -130,6 +131,7 @@
 .value.uk {
   color: #2c3e50;
 }
+
 /* ------------------------------------ */
 
 .lexicon-tabs {
@@ -149,11 +151,12 @@
 .lexicon-tabs button {
   flex: 1;
   padding: 10px 8px;
-  border: none;
+  border: 1px solid #6c757d;
   background: none;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
+  color: #6c757d;
 }
 
 .lexicon-tabs button.active {
@@ -167,6 +170,7 @@
   line-height: 1.5;
   /* overflow-y: auto; */
 }
+
 .dictionary-content {
   font-size: 0.9rem;
   line-height: 1.5;
@@ -204,12 +208,14 @@
   font-weight: bold;
   color: #495057;
 }
+
 .grammar-content {
   width: 90%;
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-y: auto;
 }
+
 .grammar-content pre {
   overflow-x: hidden;
   white-space: wrap;
@@ -223,11 +229,10 @@
   line-height: 1.5;
   overflow-y: auto;
 }
+
 /* ------------------------------------ */
 
 .lexicon-column {
-  /* position: fixed; */
-  /* margin-top: 58px; */
   right: 0;
   bottom: 0;
   width: 320px;
@@ -252,23 +257,10 @@
 .lexicon-content-error {
   display: flex;
   background-image: url("/public/images/stoun-bg-1.jpg");
-  /* padding: 1rem 0; */
-  height: calc(100vh - 63px);
-  /* height: 100%; */
-  /* Враховуємо sticky header */
-  overflow-y: auto; /* Розкоментував overflow */
-  font-size: 0.95rem;
-  justify-content: center;
-}
-.lexicon-content-error {
-  flex-direction: column;
-  /* display: flex;
-  background-image: url("/public/images/stoun-bg-1.jpg");
-  padding: 1rem 0;
   height: calc(100vh - 63px);
   overflow-y: auto;
   font-size: 0.95rem;
-  justify-content: center; */
+  justify-content: center;
 }
 
 .lexicon-window:last-child {
@@ -284,7 +276,6 @@
   background: white;
   z-index: 1;
   margin: 0;
-  /* padding: 0.5rem; */
   padding: 4px 10px;
   border: 1px solid #ddd;
   min-height: 54px;
@@ -293,16 +284,10 @@
 
 /* Індикатор свайпу для мобільних */
 .swipe-indicator {
-  /* text-align: center;
-  padding: 8px;
-  color: #7f8c8d;
-  font-size: 0.8em;
-  border-top: 1px dashed #ddd;
-  background: #f8f9fa; */
   display: none;
 }
-/* Стилі для навігації в заголовку */
 
+/* Стилі для навігації в заголовку */
 .lexicon-header-with-nav {
   display: flex;
   align-items: center;
@@ -310,7 +295,6 @@
   padding: 10px 15px;
   background: linear-gradient(135deg, #c4c7c7, #d0c9fa);
   color: white;
-  /* border-radius: 8px 8px 0 0; */
   min-height: 60px;
   align-items: center;
   justify-content: center;
@@ -394,19 +378,14 @@
 .lexicon-window.navigating {
   opacity: 0.7;
 }
-.closeIcon {
-  /* height: 20px;
-  width: 20px; */
-  height: auto;
-  width: auto;
-}
+
+/* Адаптивність */
 @media (max-width: 1070px) {
   .main-content {
     flex-direction: column;
   }
   .passage-container {
     flex-direction: column;
-    /* Переносимо лексикон під */
   }
   .lexicon-column {
     margin-top: 0;
@@ -427,23 +406,16 @@
   }
 
   .lexicon-window {
-    /* Фіксована ширина для кожного вікна */
-    /* min-width: 70%; */
-    /* Для скролу */
     width: 100%;
     height: 100%;
-    /* Повна висота */
     border-bottom: none;
     border-right: 1px solid #ddd;
-    /* Розділ горизонтальний */
     min-height: 0;
-    /* ← дозволяє overflow */
     justify-content: center;
   }
   .lexicon-title {
     padding: 4px 10px;
     min-height: 30px;
-    /* max-height: auto; */
   }
   .lexicon-window:last-child {
     border-right: none;
@@ -458,7 +430,6 @@
   }
 }
 
-/* Для мобільних пристроїв - трошки ширший скролбар для легшого тапу */
 @media (max-width: 768px) {
   .lexicon-tabs::-webkit-scrollbar,
   .list-unstyled::-webkit-scrollbar,
@@ -474,7 +445,6 @@
 
   .lexicon-tabs {
     scrollbar-width: 1px;
-    /* Товстіший для мобільних */
   }
 }
 
@@ -491,10 +461,9 @@
   .lexicon-tabs button {
     padding: 10px 0;
     margin: 0 auto;
-    /* flex: 0 0 auto; */
   }
 }
-/* Адаптивність для вузьких екранів */
+
 @media (max-width: 520px) {
   .dictionary-content {
     width: 80%;
@@ -537,12 +506,8 @@
   .swipe-indicator {
     display: block;
     text-align: center;
-    /* padding: 8px; */
-
-    /* padding: 0; */
-    /* border-top: 1px dashed #ddd; */
-    /* background: #f8f9fa; */
   }
+
   .swipe-indicator-arrow {
     text-align: center;
     color: #577072;
@@ -551,7 +516,6 @@
     margin: 0;
   }
 
-  /* На вузьких екранах зменшуємо заголовок */
   .lexicon-title-content {
     font-size: 0.9em;
   }
@@ -573,20 +537,6 @@
   }
 }
 
-/* @media (max-width: 426px) {
-  .dictionary-content {
-    width: 90%;
-    min-width: 160px;
-  }
-  .grammar-content {
-    width: 80%;
-    min-width: 160px;
-  }
-  .lexicon-tabs button {
-    font-size: 0.7rem;
-  }
-} */
-
 @media (max-width: 430px) {
   .dictionary-content {
     width: 100%;
@@ -604,7 +554,6 @@
     overflow-y: auto;
     width: 100%;
     padding: 5px;
-    /* height: 100vh; */
   }
 
   .lsj-content {
@@ -613,7 +562,6 @@
     overflow-y: auto;
     width: 100%;
     padding: 5px;
-    /* height: 100vh; */
   }
 
   .lsj-content h6 {
@@ -621,9 +569,6 @@
     color: #495057;
   }
 
-  /* .lexicon-tabs button {
-    font-size: 0.7rem;
-  } */
   .lexicon-header-with-nav {
     display: flex;
     align-items: center;
@@ -643,7 +588,6 @@
     scrollbar-width: thin;
     overflow-x: auto;
     overflow-y: hidden;
-    /* font-size: 0.5rem; */
   }
 
   .lexicon-tabs button {
@@ -657,6 +601,7 @@
     font-weight: 600;
   }
 }
+
 /* Додаткові класи для контролю скролу */
 .scroll-smooth {
   scroll-behavior: smooth;
@@ -683,5 +628,3 @@
   overflow-y: auto;
   max-height: 300px;
 }
-
-/* ========================= */

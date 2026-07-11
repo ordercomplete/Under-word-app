@@ -27,8 +27,18 @@ const ShareDropdown = ({ url, text, lang }) => {
   return (
     <>
       <Dropdown className=" d-sm-block">
-        <Dropdown.Toggle variant="link" className="p-0 text-decoration-none">
-          <i className="bi bi-share-fill fs-5"></i>
+        <Dropdown.Toggle
+          variant="link"
+          className="custom-button-nav p-0 text-decoration-none"
+          style={{
+            width: "34px",
+            height: "34px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <i className="bi bi-share-fill"></i>
         </Dropdown.Toggle>
         <Dropdown.Menu align="end">
           <Dropdown.Item onClick={copyToClipboard}>

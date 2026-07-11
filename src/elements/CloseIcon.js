@@ -1,14 +1,14 @@
 import React from "react";
 
 /**
- * Універсальна кнопка закриття панелі (як +)
- * Використовує Bootstrap-іконку та стилі
+ * Універсальна кнопка закриття панелі
+ * Використовує стандартний стиль custom-button-nav
  */
 const CloseIcon = ({
   disabled = false,
   onClick,
   title = "Закрити",
-  className = "closeIcon btn btn-link p-0 d-sm-inline-block",
+  className = "custom-button-nav",
 }) => {
   return (
     <button
@@ -18,13 +18,10 @@ const CloseIcon = ({
       title={title}
       style={{
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 0.9,
-        transition: "opacity 0.2s",
+        opacity: disabled ? 0.5 : 1,
       }}
-      onMouseEnter={(e) => !disabled && (e.currentTarget.style.opacity = 1)}
-      onMouseLeave={(e) => !disabled && (e.currentTarget.style.opacity = 0.9)}
     >
-      <i className="bi bi-x-circle-fill fs-5"></i>
+      <i className="bi bi-x-circle-fill"></i>
     </button>
   );
 };

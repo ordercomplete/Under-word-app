@@ -23,10 +23,6 @@ const PassageOptionsGroup = ({
   localCurrentRef,
   onOpenPanelSettings,
 }) => {
-  // console.log(
-  //   "Panel: 1-PassageOptionsGroup coreData keys:",
-  //   Object.keys(coreData || {})
-  // );
   const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showBook, setShowBook] = useState(false);
   const [showChapter, setShowChapter] = useState(false);
@@ -40,7 +36,6 @@ const PassageOptionsGroup = ({
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
 
-  // Функція для визначення заповіту
   const getTestament = (bookCode) => {
     const newTestamentBooks = [
       "MAT",
@@ -74,36 +69,20 @@ const PassageOptionsGroup = ({
     return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
   };
 
-  // Функція для отримання кількості розділів поточної книги
-  const getCurrentBookChapters = () => {
-    return getMaxChaptersForBook(book, versions); // використовуємо функцію з попереднього варіанту
-  };
-
-  // Нова функція для вибору книги + розділу
-  const handleSelectBookAndChapter = (bookCode, chapter) => {
-    setCurrentRef(`${bookCode}.${chapter}`);
-    setSelectedBook(bookCode);
-    // Опціонально: оновити chapters, якщо потрібно
-  };
-
-  // Додайте цю функцію всередині компонента перед return 24.12.15
   const getBookChapters = (bookCode, version) => {
     const verData = coreData[version?.toLowerCase()];
     if (!verData) return 1;
 
-    // 1. Шукаємо в NewT
     const newTBook = verData.NewT?.flatMap((g) => g.books).find(
       (b) => b.code === bookCode,
     );
     if (newTBook) return newTBook.chapters;
 
-    // 2. Шукаємо в OldT
     const oldTBook = verData.OldT?.flatMap((g) => g.books).find(
       (b) => b.code === bookCode,
     );
     if (oldTBook) return oldTBook.chapters;
 
-    // 3. Якщо не знайдено
     console.log(`Не знайдена Book ${bookCode} для ${version}`);
     return 1;
   };
@@ -116,10 +95,19 @@ const PassageOptionsGroup = ({
     });
     return maxChapters;
   };
+
+  const getCurrentBookChapters = () => {
+    return getMaxChaptersForBook(book, versions);
+  };
+
+  const handleSelectBookAndChapter = (bookCode, chapter) => {
+    setCurrentRef(`${bookCode}.${chapter}`);
+    setSelectedBook(bookCode);
+  };
+
   return (
     <>
       <div className="passage-options-group">
-        {/* argSummary */}
         <div className="arg-summary-choice">
           <button
             className="custom-button-Trans"
@@ -140,46 +128,46 @@ const PassageOptionsGroup = ({
             {book}
           </button>
           <span className="text-muted">|</span>
-          <button
-            className="custom-button-choice"
-            onClick={() => setShowChapter(true)}
-          >
-            {chapter}
-          </button>
+
+          {/* Навігація навколо кнопки розділу */}
+          <div className="chapter-nav-group">
+            <button
+              className="custom-button-nav"
+              onMouseEnter={() => setHoverPrev(true)}
+              onMouseLeave={() => setHoverPrev(false)}
+              onClick={onPrevChapter}
+              title={lang.prev_chapter}
+            >
+              <i className="bi bi-chevron-left fs-5"></i>
+            </button>
+
+            <button
+              className="custom-button-choice chapter-ref-button"
+              onClick={() => setShowChapter(true)}
+            >
+              {chapter}
+            </button>
+
+            <button
+              className="custom-button-nav"
+              onMouseEnter={() => setHoverNext(true)}
+              onMouseLeave={() => setHoverNext(false)}
+              onClick={onNextChapter}
+              title={lang.next_chapter}
+            >
+              <i
+                className={`bi bi-chevron-right fs-5 transition-all ${
+                  hoverNext ? "text-danger" : "text-primary"
+                }`}
+              ></i>
+            </button>
+          </div>
 
           <span className="text-muted">|</span>
           <button className="custom-button-choice">
             <i className="bi bi-search"></i>
           </button>
-        </div>
-
-        {/* Prev/Next */}
-        <div className="arg-summary-navigation">
-          <button
-            className="custom-button-nav"
-            onMouseEnter={() => setHoverPrev(true)}
-            onMouseLeave={() => setHoverPrev(false)}
-            onClick={onPrevChapter}
-            title={lang.prev_chapter}
-          >
-            <i className="bi bi-chevron-left fs-5"></i>
-          </button>
-
-          <div className=" m-0">{localCurrentRef || currentRef}</div>
-
-          <button
-            className="custom-button-nav"
-            onMouseEnter={() => setHoverNext(true)}
-            onMouseLeave={() => setHoverNext(false)}
-            onClick={onNextChapter}
-            title={lang.next_chapter}
-          >
-            <i
-              className={`bi bi-chevron-right fs-5 transition-all ${
-                hoverNext ? "text-danger" : "text-primary"
-              }`}
-            ></i>
-          </button>
+          <span className="text-muted">|</span>
 
           <ShareDropdown
             url={window.location.href}
@@ -188,11 +176,11 @@ const PassageOptionsGroup = ({
           />
 
           <button
-            className="btn p-0"
+            className="custom-button-nav"
             onClick={onNewPanel}
             title={lang.new_panel}
           >
-            <i className="bi bi-plus-circle-fill fs-5"></i>
+            <i className="bi bi-plus-circle-fill"></i>
           </button>
 
           <button
@@ -203,21 +191,20 @@ const PassageOptionsGroup = ({
             <i className="bi bi-three-dots-vertical"></i>
           </button>
 
-          <CloseIcon
-            className="btn fs-5 p-0 "
-            disabled={disableClose}
-            onClick={onClosePanel}
-          />
+          {!disableClose && (
+            <CloseIcon className="custom-button-nav" onClick={onClosePanel} />
+          )}
         </div>
       </div>
+
       {/* Translation Selector Modal */}
       <TranslationSelector
         isOpen={showTranslationModal}
         onRequestClose={() => setShowTranslationModal(false)}
         lang={lang}
         onSelectVersions={setVersions}
-        initialVersions={versions} // ← ПЕРЕДАЄМО поточні версії
-        currentBook={book} // ← ПЕРЕДАЄМО поточну книгу
+        initialVersions={versions}
+        currentBook={book}
       />
 
       <BookSelector
@@ -227,14 +214,11 @@ const PassageOptionsGroup = ({
         versions={versions}
         coreData={coreData}
         coreLoading={coreLoading}
-        // Старий пропс (можна залишити для сумісності або прибрати)
         onSelectBook={(code) => {
           setSelectedBook(code);
           const chapters = getMaxChaptersForBook(code, versions);
           setSelectedChapters(chapters);
-          // НЕ викликаємо setCurrentRef тут!
         }}
-        // Новий пропс для комбінованого вибору
         onSelectBookAndChapter={handleSelectBookAndChapter}
       />
 
@@ -243,8 +227,7 @@ const PassageOptionsGroup = ({
         onRequestClose={() => setShowChapter(false)}
         lang={lang}
         bookCode={book}
-        // chapters={selectedChapters}
-        chapters={getCurrentBookChapters()} // реальна кількість розділів
+        chapters={getCurrentBookChapters()}
         onSelectChapter={(ch) => {
           setCurrentRef(`${book}.${ch}`);
         }}

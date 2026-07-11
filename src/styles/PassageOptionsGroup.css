@@ -3,11 +3,11 @@
 /* Основний контейнер: flex з динамічним перенесенням */
 .passage-options-group {
   display: flex;
-  flex-wrap: wrap; /* Перенос при переповненні ширини контейнера */
-  justify-content: space-between; /* По боках до перенесення */
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem; /* Відстань між блоками */
-  padding: 0.5rem 1rem; /* Вертикальний/горизонтальний відступ */
+  gap: 1rem;
+  padding: 0.5rem 1rem;
   background: #fff;
   border-bottom: 1px solid #ddd;
   font-size: 0.9rem;
@@ -27,75 +27,85 @@
 .arg-summary-choice {
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* Між елементами */
-  flex-wrap: wrap; /* Перенос всередині блоку */
-  flex: 0 0 auto; /* Авто-ширина, не розтягується */
-  min-width: 200px; /* Мінімальна ширина */
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  min-width: 200px;
 }
 
-/* Блок навігації (navigation) */
-.arg-summary-navigation {
+/* Група Prev-Розділ-Next (навігація навколо кнопки розділу) */
+.chapter-nav-group {
   display: flex;
   align-items: center;
-  gap: 0.1rem; /* Між елементами */
-  flex-wrap: wrap; /* Перенос, якщо потрібно */
-  flex: 0 0 auto; /* Авто-ширина, не розтягується */
-  justify-content: flex-end; /* Праворуч */
-  min-width: 150px; /* Мінімальна ширина */
+  gap: 0.1rem;
 }
 
-/* Група стрілок */
-.next-prev-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Кастомна кнопка (перенесено з JSX) */
-.custom-button-choice {
+/* Єдиний стиль для всіх кнопок в групі */
+.custom-button-choice,
+.custom-button-nav,
+.chapter-ref-button {
+  height: 34px;
   min-height: 34px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  border: 1px solid transparent;
-  padding: 0.25rem 0.5rem; /* btn-sm */
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
-  transition:
-    color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
 
-  color: #6c757d; /* btn-outline-secondary */
+  color: #6c757d;
   background-color: transparent;
-  border-color: #6c757d;
+  border: 1px solid #6c757d;
+  cursor: pointer;
 }
 
-.custom-button-choice:hover {
+/* Спеціальні розміри */
+.custom-button-nav {
+  width: 34px;
+  padding: 0;
+}
+
+/* Кнопки з однаковою шириною та висотою 34px */
+.custom-button-choice,
+.chapter-ref-button {
+  width: 34px;
+  padding: 0.25rem 0.4rem;
+}
+
+/* Hover стани */
+.custom-button-choice:hover,
+.custom-button-nav:hover,
+.chapter-ref-button:hover {
   color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
 }
 
-.custom-button-choice:focus {
+/* Focus стани */
+.custom-button-choice:focus,
+.custom-button-nav:focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
 }
 
 /* Обрізка тексту з трьома крапками */
 .custom-button-Trans {
+  height: 34px;
   min-height: 34px;
-  width: 100px; /* Обмеження ширини */
-  white-space: nowrap; /* Не переносити на новий рядок */
-  overflow: hidden; /* Ховати зайве */
-  text-overflow: ellipsis; /* Додати ... */
-  display: inline-block; /* Потрібно для ellipsis */
-  padding: 0.25rem 0.5rem; /* Зберігаємо padding */
+  width: 75px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
@@ -103,6 +113,7 @@
   background-color: transparent;
   border: 1px solid #6c757d;
   transition: all 0.15s ease-in-out;
+  cursor: pointer;
 }
 
 .custom-button-Trans:hover {
@@ -111,153 +122,77 @@
   border-color: #6c757d;
 }
 
-/* Кнопка пошуку (перенесено з JSX) */
+/* Кнопка пошуку */
 .bi-search {
   font-size: 1rem;
-  /* Приклад розміру */
-}
-.chapter-button-nav {
-  display: flex;
-  align-items: center;
-}
-.custom-button-nav {
-  width: 38px;
-  height: 38px;
-  border: 1px solid #6c757d;
-  background: transparent;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  transition: all 0.15s ease-in-out;
-  border-radius: 0.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #6c757d;
-  font-size: 0.875rem;
-  line-height: 1.5;
 }
 
-.custom-button-nav:hover {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+/* Стилі для ShareDropdown toggle - щоб перекрити Bootstrap link variant */
+.dropdown-toggle.custom-button-nav {
+  border: 1px solid #6c757d !important;
+  background-color: transparent !important;
+  color: #6c757d !important;
 }
 
-.custom-button-nav:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
-}
-/* Кнопки в навігації - обмежені для контексту arg-summary-navigation */
-.arg-summary-navigation .btn {
-  width: 38px;
-  height: 38px;
-  border: 1px solid #6c757d;
-  background: transparent;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.2rem;
-  color: #6c757d;
-  transition: all 0.15s ease-in-out;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.dropdown-toggle.custom-button-nav:hover {
+  color: #fff !important;
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
 }
 
-.arg-summary-navigation .btn:hover {
-  color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-.arg-summary-navigation .btn:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
-}
-
-.arg-summary-navigation .btn:disabled,
-.arg-summary-navigation .btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-/* Плавна анімація */
-.transition-all {
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-/* Масштабування при наведенні */
-.scale-110 {
-  transform: scale(1.1);
-}
-
-/* Кастомний колір (наприклад, #dc3545) */
-.text-custom-red {
-  color: #dc3545 !important;
-}
-
-/* Текст-роздільники (перенесено з JSX) */
+/* Текст-роздільники */
 .text-muted {
   color: #6c757d;
 }
 
-/* Центрування після перенесення (автоматично, без медіа) */
+/* Центрування після перенесення */
 .passage-options-group > * {
-  margin: 0 auto; /* Центрує блоки після wrap */
+  margin: 0 auto;
 }
 
-/* Медіа-запит для мобілок (опціонально, для повної адаптації) */
+/* Медіа-запит для мобілок (max-width: 576px) */
 @media (max-width: 576px) {
   .passage-options-group {
     flex-direction: column;
-    /* Вертикально на маленьких екранах */
-    /* align-items: center; */
-    /* Центрування по горизонталі */
     min-height: 106px;
   }
 }
 
-/* Додаємо або оновлюємо в src/styles/PassageOptionsGroup.css */
-
-/* Приховуємо звичайну навігацію prev/next в мобільному режимі */
-/* @media (max-width: 520px) {
-  .arg-summary-navigation .custom-button-nav {
-    display: none; 
+/* Адаптивність для мобільних (max-width: 520px) */
+@media (max-width: 520px) {
+  /* Робимо кнопки компактнішими */
+  .custom-button-nav,
+  .custom-button-choice,
+  .chapter-ref-button {
+    width: 34px;
+    height: 34px;
+    min-height: 34px;
+    padding: 0.25rem 0.4rem;
   }
-} */
 
-/* Стилі для нової навігації по історії */
+  /* Іконки маленькіші */
+  .arg-summary-choice .bi {
+    font-size: 0.9rem;
+  }
+
+  /* Кнопка розділу */
+  .chapter-ref-button {
+    min-width: 40px;
+  }
+
+  /* Зменшуємо відступи в блоці */
+  .arg-summary-choice {
+    gap: 0.15rem;
+  }
+}
+
+/* Стилі для навігації по історії (інші компоненти) */
 .chapter-history-nav {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-right: 12px;
 }
-
-.nav-arrow-pass {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: none;
-  font-size: 1.5rem;
-  color: #007bff;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.nav-arrow-pass.disabled {
-  color: #ccc;
-  cursor: not-allowed;
-}
-
-.nav-position {
-  font-size: 0.9rem;
-  color: #6c757d;
-  min-width: 50px;
-  text-align: center;
-}
-
-/* =========================== */
 
 .history-nav-controls {
   display: flex;
@@ -309,11 +244,13 @@
   .history-nav-controls {
     gap: 0.3rem;
   }
-  .nav-arrow {
+
+  .nav-arrow-pass {
     width: 26px;
     height: 26px;
     font-size: 1rem;
   }
+
   .nav-position-pass {
     font-size: 0.8rem;
   }
