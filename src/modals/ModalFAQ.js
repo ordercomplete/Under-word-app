@@ -42,11 +42,111 @@ const ModalFAQ = ({ isOpen, onRequestClose, lang }) => {
 
   if (!isOpen) return null;
 
+  // Функція для створення HTML таблиці
+  const createTableHTML = (headers, rows) => {
+    // Допоміжна функція для обробки markdown всередині комірок
+    const processCell = (cell) => {
+      return cell
+        .replace(/\*\*(.*)\*\*/gim, "<strong>$1</strong>")
+        .replace(/\*(.*)\*/gim, "<em>$1</em>");
+    };
+
+    let table = '<table class="faq-table">\n';
+
+    // Заголовок таблиці
+    if (headers.length > 0) {
+      table += "  <thead>\n    <tr>\n";
+      table += headers
+        .map((header) => `      <th>${processCell(header)}</th>`)
+        .join("\n");
+      table += "\n    </tr>\n  </thead>\n";
+    }
+
+    // Тіло таблиці
+    if (rows.length > 0) {
+      table += "  <tbody>\n";
+      rows.forEach((row) => {
+        table += "    <tr>\n";
+        const cols = headers.length > 0 ? headers.length : row.length;
+        for (let i = 0; i < cols && i < row.length; i++) {
+          table += `      <td>${processCell(row[i] || "")}</td>\n`;
+        }
+        table += "    </tr>\n";
+      });
+      table += "  </tbody>\n";
+    }
+
+    table += "</table>";
+    return table;
+  };
+
+  // Функція для парсингу markdown-таблиць
+  const parseMarkdownTables = (markdown) => {
+    if (!markdown) return "";
+
+    const lines = markdown.split("\n");
+    const processedLines = [];
+    let inTable = false;
+    let tableContent = [];
+    let tableHeader = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmedLine = line.trim();
+
+      // Перевіряємо, чи це рядок таблиці
+      if (trimmedLine.startsWith("|") && trimmedLine.endsWith("|")) {
+        const cells = trimmedLine
+          .split("|")
+          .filter((cell) => cell.trim() !== "");
+
+        // Перевіряємо, чи це роздільна лінія (наприклад, |---|---|)
+        const isSeparator = cells.every((cell) => /^[-:]+$/.test(cell.trim()));
+
+        if (isSeparator) {
+          // Це роздільна лінія - таблиця розпочалась, перший рядок був заголовком
+          inTable = true;
+          continue;
+        }
+
+        if (!inTable) {
+          // Це перший рядок таблиці (заголовок)
+          tableHeader = cells.map((cell) => cell.trim());
+          inTable = true;
+          continue;
+        }
+
+        // Це рядок даних таблиці
+        tableContent.push(cells.map((cell) => cell.trim()));
+      } else {
+        // Якщо ми були в межах таблиці і це не рядок таблиці
+        if (inTable) {
+          // Закінчуємо таблицю
+          processedLines.push(createTableHTML(tableHeader, tableContent));
+          tableContent = [];
+          tableHeader = [];
+          inTable = false;
+        }
+        processedLines.push(line);
+      }
+    }
+
+    // Обробляємо таблицю, якщо вона була в кінці файлу або без наступного рядка
+    if (inTable && (tableContent.length > 0 || tableHeader.length > 0)) {
+      processedLines.push(createTableHTML(tableHeader, tableContent));
+    }
+
+    return processedLines.join("\n");
+  };
+
   // Функція простого парсингу markdown в HTML
   const parseMarkdown = (markdown) => {
     if (!markdown) return "";
 
     let html = markdown;
+
+    // Таблиці (повинні бути першими, перш ніж обробляти інші елементи)
+    html = parseMarkdownTables(html);
 
     // Заголовки
     html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
@@ -56,6 +156,12 @@ const ModalFAQ = ({ isOpen, onRequestClose, lang }) => {
 
     // Горизонтальна лінія
     html = html.replace(/^---$/gim, "<hr>");
+
+    // Посилання (додати перед обробкою жирного тексту)
+    html = html.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/gim,
+      '<a href="$2" class="faq-external-link" target="_blank" rel="noopener noreferrer">$1</a>',
+    );
 
     // Жирний текст
     html = html.replace(/\*\*(.*)\*\*/gim, "<strong>$1</strong>");
@@ -74,7 +180,12 @@ const ModalFAQ = ({ isOpen, onRequestClose, lang }) => {
     html = html
       .split("\n\n")
       .map((paragraph) => {
-        if (paragraph.includes("<h") || paragraph.includes("<ul")) {
+        if (
+          paragraph.includes("<h") ||
+          paragraph.includes("<ul") ||
+          paragraph.includes("<table") ||
+          paragraph.includes("<a")
+        ) {
           return paragraph;
         }
         return `<p>${paragraph}</p>`;
