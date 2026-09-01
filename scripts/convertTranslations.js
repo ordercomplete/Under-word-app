@@ -9,7 +9,6 @@ const CONFIG = {
     "ubt",
     "ogienko",
     "khomenko",
-    "siryy",
     "synodal",
     "kjv",
   ],
@@ -186,7 +185,6 @@ function getFileInfo(filePath) {
     ubt: "ukrainian",
     ogienko: "ukrainian",
     khomenko: "ukrainian",
-    siryy: "ukrainian",
     synodal: "russian",
     kjv: "english",
   };

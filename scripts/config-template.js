@@ -6,7 +6,6 @@ module.exports = {
     "ubt",
     "ogienko",
     "khomenko",
-    "siryy",
     "lxx",
     "thot",
     "gnt",

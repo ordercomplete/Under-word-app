@@ -108,10 +108,6 @@ UNDER-WORD-APP/(version 06-02-2026)
 
 │   │   │   │   │   │   └── gen1_ogienko.json
 
-│   │   │   ├── siryy/OldT/GEN/
-
-│   │   │   │   │   │   └── gen1_siryy.json
-
 │   │   │   ├── synodal/OldT/GEN/
 
 │   │   │   │   │   │   └── gen1_synodal.json

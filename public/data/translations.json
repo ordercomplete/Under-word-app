@@ -202,27 +202,6 @@
       "autoPair": null,
       "note": "Переклад Платона Хоменка",
       "otNtSplit": true
-    },
-    {
-      "initials": "SIRYY",
-      "name": "Переклад Юрія Сірого (масоретський)",
-      "lang": "uk",
-      "features": ["R"],
-      "testaments": ["OldT", "NewT"],
-      "type": "translation",
-      "pair": null,
-      "defaultWith": [],
-      "requiredWith": [],
-      "isDefault": false,
-      "readingMode": true,
-      "path": "translations/siryy",
-      "basedOn": {
-        "old_testament": "thot",
-        "new_testament": "tr"
-      },
-      "autoPair": null,
-      "note": "Переклад Юрія Сірого",
-      "otNtSplit": true
     }
   ],
   "commentaries": []

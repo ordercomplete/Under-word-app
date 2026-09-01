@@ -183,7 +183,6 @@ under-word-app/
 | KJV      | King James Version   | en   | thot/tr | Англійська Біблія 1611 року                        |
 | OGIENKO  | Переклад Огієнка     | uk   | thot/tr | Український класичний переклад                     |
 | KHOMENKO | Переклад Хоменка     | uk   | thot/tr | Переклад Платона Хоменка                           |
-| SIRYY    | Переклад Сірого      | uk   | thot/tr | Переклад Юрія Сірого                               |
 
 ---
 
