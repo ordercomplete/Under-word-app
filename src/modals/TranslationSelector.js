@@ -1365,13 +1365,14 @@
 //                     {Object.entries(groupedByLanguage).map(
 //                       ([langCode, items]) => {
 //                         // Фільтруємо тільки ті, що не входять в основні пари
+//                         // Але GNT - це оригінал, тому його треба завжди показувати
 //                         const filteredItems = items.filter(
 //                           (item) =>
 //                             !MAIN_PAIRS.some(
 //                               (pair) =>
 //                                 pair.originals.includes(item.initials) ||
 //                                 pair.translations.includes(item.initials)
-//                             )
+//                             ) || item.initials === "GNT"
 //                         );
 
 //                         if (filteredItems.length === 0) return null;
@@ -2479,8 +2480,9 @@ const TranslationSelector = ({
   // ==================== ГРУПУВАННЯ ЗА ОРИГІНАЛАМИ ====================
   const groupedByOriginal = useMemo(() => {
     const originals =
-      translations.bibles?.filter((b) => b.features?.includes("originals")) ||
-      [];
+      translations.bibles?.filter((b) => 
+        b.features?.includes("originals") && b.initials !== "GNT"
+      ) || [];
 
     const result = {};
 
@@ -2499,14 +2501,23 @@ const TranslationSelector = ({
         const isMatch =
           (origKey === "lxx" && basedOn.old_testament === "lxx") ||
           (origKey === "thot" && basedOn.old_testament === "thot") ||
-          (origKey === "tr" && basedOn.new_testament === "tr") ||
-          (origKey === "gnt" && basedOn.new_testament === "tr"); // GNT використовує ті ж переклади, що TR
+          (origKey === "tr" && basedOn.new_testament === "tr");
 
         if (isMatch) {
           result[origKey].translations.push(item);
         }
       });
     });
+
+    // Додаємо GNT як окремий незалежний переклад
+    const gntBible = translations.bibles?.find((b) => b.initials === "GNT");
+    if (gntBible) {
+      result["gnt"] = {
+        original: null,
+        translations: [gntBible],
+        isIndependent: true,
+      };
+    }
 
     return result;
   }, [translations]);
@@ -2689,7 +2700,37 @@ const TranslationSelector = ({
                 ))}
               </div>
 
-              {currentGroup.translations.length === 0 && (
+              {/* GNT як окремий незалежний переклад */}
+              {currentGroup.isIndependent && currentGroup.translations.map((item) => (
+                <div key={item.initials} className="translation-item mb-2 mt-4 border-top pt-3">
+                  <div className="d-flex align-items-center">
+                    <input
+                      type="checkbox"
+                      id={`trans-${item.initials}`}
+                      checked={selectedVersions.includes(item.initials)}
+                      onChange={(e) =>
+                        handleCheckbox(item.initials, e.target.checked)
+                      }
+                    />
+                    <label
+                      htmlFor={`trans-${item.initials}`}
+                      className="ms-2"
+                    >
+                      <span className="fw-bold text-primary">
+                        [{item.initials}] {item.name}
+                      </span>
+                      <small className="text-muted ms-2">(незалежний переклад)</small>
+                    </label>
+                  </div>
+                  {item.note && (
+                    <small className="text-muted d-block ms-4 mt-1">
+                      {item.note}
+                    </small>
+                  )}
+                </div>
+              ))}
+
+              {currentGroup.translations.length === 0 && !currentGroup.isIndependent && (
                 <div className="alert alert-info mt-3">
                   Для цього оригіналу поки немає відповідних перекладів.
                 </div>

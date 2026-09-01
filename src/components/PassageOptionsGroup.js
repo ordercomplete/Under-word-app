@@ -1,5 +1,5 @@
 // src\components\PassageOptionsGroup.js
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ShareDropdown from "../elements/ShareDropdown";
 import TranslationSelector from "../modals/TranslationSelector.js";
 import BookSelector from "../modals/BookSelector.js";
@@ -7,12 +7,20 @@ import ChapterSelector from "../modals/ChapterSelector.js";
 import CloseIcon from "../elements/CloseIcon";
 import "../styles/PassageOptionsGroup.css";
 
+// ==================== КОНСТАНТИ ====================
+const DEFAULT_VERSIONS = {
+  OldT: ["LXX", "UTT"],
+  NewT: ["TR", "UTT"],
+};
+
 const PassageOptionsGroup = ({
   lang,
   currentRef,
   setCurrentRef,
   versions,
   setVersions,
+  testamentVersions,
+  setTestamentVersions,
   onPrevChapter,
   onNextChapter,
   onNewPanel,
@@ -21,15 +29,46 @@ const PassageOptionsGroup = ({
   coreLoading,
   disableClose,
 }) => {
-  // console.log(
-  //   "Panel: 1-PassageOptionsGroup coreData keys:",
-  //   Object.keys(coreData || {})
-  // );
+  // ==================== STATE ====================
   const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showBook, setShowBook] = useState(false);
   const [showChapter, setShowChapter] = useState(false);
   const [selectedBook, setSelectedBook] = useState("GEN");
   const [selectedChapters, setSelectedChapters] = useState();
+
+  // ==================== ФУНКЦІЯ ВИЗНАЧЕННЯ ЗАПОВІТУ (всередині компонента) ====================
+  const getTestament = (bookCode) => {
+    const newTestamentBooks = [
+      "MAT",
+      "MRK",
+      "LUK",
+      "JHN",
+      "ACT",
+      "ROM",
+      "1CO",
+      "2CO",
+      "GAL",
+      "EPH",
+      "PHP",
+      "COL",
+      "1TH",
+      "2TH",
+      "1TI",
+      "2TI",
+      "TIT",
+      "PHM",
+      "HEB",
+      "JAS",
+      "1PE",
+      "2PE",
+      "1JN",
+      "2JN",
+      "3JN",
+      "JUD",
+      "REV",
+    ];
+    return newTestamentBooks.includes(bookCode) ? "NewT" : "OldT";
+  };
 
   const [book, chapter] = currentRef.split(".");
 
@@ -43,6 +82,23 @@ const PassageOptionsGroup = ({
 
   // Нова функція для вибору книги + розділу
   const handleSelectBookAndChapter = (bookCode, chapter) => {
+    // Зберігаємо поточні версії для поточного заповіту
+    const currentTestament = getTestament(book);
+    setTestamentVersions((prev) => ({
+      ...prev,
+      [currentTestament]: [...versions],
+    }));
+
+    // Визначаємо новий заповіт
+    const newTestament = getTestament(bookCode);
+
+    // Якщо змінився заповіт - встановлюємо збережені версії для нового заповіту
+    if (currentTestament !== newTestament) {
+      const savedVersions = testamentVersions[newTestament] || [];
+      // Використовуємо дефолтні версії, якщо немає збережених
+      setVersions(savedVersions.length > 0 ? savedVersions : DEFAULT_VERSIONS[newTestament]);
+    }
+
     setCurrentRef(`${bookCode}.${chapter}`);
     setSelectedBook(bookCode);
     // Опціонально: оновити chapters, якщо потрібно
@@ -95,6 +151,27 @@ const PassageOptionsGroup = ({
     });
     return maxChapters;
   };
+
+  // ==================== ОБРОБНИКИ НАВІГАЦІЇ З ЗБЕРЕЖЕННЯМ ВЕРСІЙ ====================
+  const handlePrevChapter = () => {
+    // Зберігаємо поточні версії перед перемиканням
+    const currentTestament = getTestament(book);
+    setTestamentVersions((prev) => ({
+      ...prev,
+      [currentTestament]: [...versions],
+    }));
+    onPrevChapter();
+  };
+
+  const handleNextChapter = () => {
+    // Зберігаємо поточні версії перед перемиканням
+    const currentTestament = getTestament(book);
+    setTestamentVersions((prev) => ({
+      ...prev,
+      [currentTestament]: [...versions],
+    }));
+    onNextChapter();
+  };
   return (
     <>
       <div className="passage-options-group">
@@ -138,7 +215,7 @@ const PassageOptionsGroup = ({
             className="custom-button-nav"
             onMouseEnter={() => setHoverPrev(true)}
             onMouseLeave={() => setHoverPrev(false)}
-            onClick={onPrevChapter}
+            onClick={handlePrevChapter}
             title={lang.prev_chapter}
           >
             <i
@@ -154,7 +231,7 @@ const PassageOptionsGroup = ({
             className="custom-button-nav"
             onMouseEnter={() => setHoverNext(true)}
             onMouseLeave={() => setHoverNext(false)}
-            onClick={onNextChapter}
+            onClick={handleNextChapter}
             title={lang.next_chapter}
           >
             <i

@@ -61,15 +61,14 @@
       "features": ["originals", "N", "G", "V", "I"],
       "testaments": ["NewT"],
       "type": "original",
-      "pair": "GNT+[same-translation]",
+      "pair": [],
       "defaultWith": [],
       "requiredWith": [],
-      "requiresTranslation": true,
       "readingMode": true,
-      "path": "originals/gnt",
+      "path": "originals/GNT",
       "basedOn": null,
       "autoPair": null,
-      "note": "Сучасний критичний текст Нового Заповіту",
+      "note": "Сучасний критичний текст Нового Заповіту (критичний текст, подібний до TR)",
       "otNtSplit": false
     },
     {

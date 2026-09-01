@@ -207,8 +207,7 @@ const Panel = memo(
         if (
           (verLower === "lxx" && testament === "NewT") ||
           (verLower === "thot" && testament === "NewT") ||
-          (verLower === "tr" && testament === "OldT") ||
-          (verLower === "gnt" && testament === "OldT")
+          (verLower === "tr" && testament === "OldT")
         ) {
           logger.debug(`Пропускаємо ${ver} для ${book} (несумісність)`);
           return { ver, data: [] };
@@ -445,12 +444,6 @@ const Panel = memo(
       // 3. TR - тільки NewT (згідно нових вимог)
       if (verLower === "tr" && testament === "OldT") {
         console.warn("TR тільки для NewT");
-        return null;
-      }
-
-      // 4. GNT - тільки NewT
-      if (verLower === "gnt" && testament === "OldT") {
-        console.warn("GNT тільки для NewT");
         return null;
       }
 

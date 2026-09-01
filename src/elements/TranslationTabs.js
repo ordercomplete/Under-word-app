@@ -57,7 +57,6 @@ const TranslationTabs = ({ lang, activeTab, onTabChange }) => {
       title: lang.notes || "Масоретський текст (Старозавітний оригінал)",
     },
     { id: "tr", label: "TR", title: "Textus Receptus (Новозавітний оригінал)" },
-    { id: "gnt", label: "GNT", title: "Сучасний критичний грецький текст NT" },
   ];
 
   return (

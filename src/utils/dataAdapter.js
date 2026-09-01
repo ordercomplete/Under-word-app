@@ -114,7 +114,7 @@ export function getWordsForDisplay(chapterData, translationKey, verseNum) {
     // Додаємо додаткові дані для відображення
     displayText: word.word,
     hasStrong: !!word.strong,
-    isOriginal: ["lxx", "thot", "gnt"].includes(translationKey),
+    isOriginal: ["lxx", "thot", "tr", "gnt"].includes(translationKey),
   }));
 }
 
