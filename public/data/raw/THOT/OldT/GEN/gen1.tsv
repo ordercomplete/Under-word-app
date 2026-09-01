@@ -1,0 +1,638 @@
+#book	chapter	verse	word	strong	lemma	morph
+GEN	1	1	בְּ	H9003	H7225	HR/Ncfsa
+GEN	1	1	רֵאשִׁ֖ית	H7225	H7225	HR/Ncfsa
+GEN	1	1	בָּרָ֣א	H1254	H1254	HVqp3ms
+GEN	1	1	אֱלֹהִ֑ים	H0430	H0430	HNcmpa
+GEN	1	1	אֵ֥ת	H0853		HTo
+GEN	1	1	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	1	שָּׁמַ֖יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	1	וְ	H9002		HC/To
+GEN	1	1	אֵ֥ת	H0853		HC/To
+GEN	1	1	הָ/אָֽרֶץ\׃	H9009	H0776	HTd/Ncfsa
+GEN	1	2	וְ	H9002	H0776	HC/Td/Ncfsa
+GEN	1	2	הָ	H9009	H0776	HC/Td/Ncfsa
+GEN	1	2	אָ֗רֶץ	H0776	H0776	HC/Td/Ncfsa
+GEN	1	2	הָיְתָ֥ה	H1961	H1961	HVqp3fs
+GEN	1	2	תֹ֙הוּ֙	H8414	H8414	HNcmsa
+GEN	1	2	וָ	H9002	H0922	HC/Ncmsa
+GEN	1	2	בֹ֔הוּ	H0922	H0922	HC/Ncmsa
+GEN	1	2	וְ	H9002	H2822	HC/Ncmsa
+GEN	1	2	חֹ֖שֶׁךְ	H2822	H2822	HC/Ncmsa
+GEN	1	2	עַל\־	H5921		HR
+GEN	1	2	פְּנֵ֣י	H6440		HNcmpc
+GEN	1	2	תְה֑וֹם	H8415	H8415	HNcfsa
+GEN	1	2	וְ	H9002	H7307	HC/Ncfsc
+GEN	1	2	ר֣וּחַ	H7307	H7307	HC/Ncfsc
+GEN	1	2	אֱלֹהִ֔ים	H0430	H0430	HNcmpa
+GEN	1	2	מְרַחֶ֖פֶת	H7363	H7363	HVprfsa
+GEN	1	2	עַל\־	H5921		HR
+GEN	1	2	פְּנֵ֥י	H6440		HNcmpc
+GEN	1	2	הַ/מָּֽיִם\׃	H9009	H4325	HTd/Ncmpa
+GEN	1	3	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	3	יֹּ֥אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	3	אֱלֹהִ֖ים	H0430	H0430	HNcmpa
+GEN	1	3	יְהִ֣י	H1961		HVqj3ms
+GEN	1	3	א֑וֹר	H0216		HNcfsa
+GEN	1	3	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	3	אֽוֹר\׃	H0216		HNcfsa
+GEN	1	4	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	4	יַּ֧רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	4	אֱלֹהִ֛ים	H0430		HNcmpa
+GEN	1	4	אֶת\־	H0853	H0853	HTo
+GEN	1	4	הָ	H9009		HTd/Ncfsa
+GEN	1	4	א֖וֹר	H0216		HTd/Ncfsa
+GEN	1	4	כִּי\־	H3588	H3588	HTc
+GEN	1	4	ט֑וֹב	H2895	H2895	HVqp3ms
+GEN	1	4	וַ	H9001	H0914	Hc/Vhw3ms
+GEN	1	4	יַּבְדֵּ֣ל	H0914	H0914	Hc/Vhw3ms
+GEN	1	4	אֱלֹהִ֔ים	H0430		HNcmpa
+GEN	1	4	בֵּ֥ין	H0996		HAcmsc
+GEN	1	4	הָ	H9009		HTd/Ncfsa
+GEN	1	4	א֖וֹר	H0216		HTd/Ncfsa
+GEN	1	4	וּ	H9002		HC/Acmsc
+GEN	1	4	בֵ֥ין	H0996		HC/Acmsc
+GEN	1	4	הַ/חֹֽשֶׁךְ\׃	H9009	H2822	HTd/Ncmsa
+GEN	1	5	וַ	H9001		Hc/Vqw3ms
+GEN	1	5	יִּקְרָ֨א	H7121		Hc/Vqw3ms
+GEN	1	5	אֱלֹהִ֤ים\׀	H0430	H0430	HNcmpa
+GEN	1	5	לָ	H9005	H0216	HRd/Ncfsa
+GEN	1	5	אוֹר֙	H0216	H0216	HRd/Ncfsa
+GEN	1	5	י֔וֹם	H3117		HNcmsa
+GEN	1	5	וְ	H9002	H2822	HC/Rd/Ncmsa
+GEN	1	5	לַ	H9005	H2822	HC/Rd/Ncmsa
+GEN	1	5	חֹ֖שֶׁךְ	H2822	H2822	HC/Rd/Ncmsa
+GEN	1	5	קָ֣רָא	H7121		HVqp3ms
+GEN	1	5	לָ֑יְלָה	H3915	H3915	HNcmsa
+GEN	1	5	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	5	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	5	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	5	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	5	י֥וֹם	H3117		HNcmsa
+GEN	1	5	אֶחָֽד\׃\ \פ	H0259	H0259	HAcfsa
+GEN	1	6	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	6	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	6	אֱלֹהִ֔ים	H0430	H0430	HNcmpa
+GEN	1	6	יְהִ֥י	H1961		HVqj3ms
+GEN	1	6	רָקִ֖יעַ	H7549	H7549	HNcmsa
+GEN	1	6	בְּ	H9003	H8432	HR/Ncmsc
+GEN	1	6	ת֣וֹךְ	H8432	H8432	HR/Ncmsc
+GEN	1	6	הַ	H9009		HTd/Ncmpa
+GEN	1	6	מָּ֑יִם	H4325		HTd/Ncmpa
+GEN	1	6	וִ	H9002		HC/Vqj3ms
+GEN	1	6	יהִ֣י	H1961		HC/Vqj3ms
+GEN	1	6	מַבְדִּ֔יל	H0914	H0914	HVhrmsa
+GEN	1	6	בֵּ֥ין	H0996	H0996	HAcmsc
+GEN	1	6	מַ֖יִם	H4325		HNcmpa
+GEN	1	6	לָ/מָֽיִם\׃	H9005		HR/Ncmpa
+GEN	1	7	וַ	H9001	H6213	Hc/Vqw3ms
+GEN	1	7	יַּ֣עַשׂ	H6213	H6213	Hc/Vqw3ms
+GEN	1	7	אֱלֹהִים֮	H0430	H0430	HNcmpa
+GEN	1	7	אֶת\־	H0853	H0853	HTo
+GEN	1	7	הָ	H9009		HTd/Ncmsa
+GEN	1	7	רָקִיעַ֒	H7549		HTd/Ncmsa
+GEN	1	7	וַ	H9001	H0914	Hc/Vhw3ms
+GEN	1	7	יַּבְדֵּ֗ל	H0914	H0914	Hc/Vhw3ms
+GEN	1	7	בֵּ֤ין	H0996		HAcmsc
+GEN	1	7	הַ	H9009		HTd/Ncmpa
+GEN	1	7	מַּ֙יִם֙	H4325		HTd/Ncmpa
+GEN	1	7	אֲשֶׁר֙	H0834		HTr
+GEN	1	7	מִ	H9006	H8478	HR/Ncmsc
+GEN	1	7	תַּ֣חַת	H8478	H8478	HR/Ncmsc
+GEN	1	7	לָ	H9005		HRd/Ncmsa
+GEN	1	7	רָקִ֔יעַ	H7549		HRd/Ncmsa
+GEN	1	7	וּ	H9002		HC/Acmsc
+GEN	1	7	בֵ֣ין	H0996		HC/Acmsc
+GEN	1	7	הַ	H9009		HTd/Ncmpa
+GEN	1	7	מַּ֔יִם	H4325		HTd/Ncmpa
+GEN	1	7	אֲשֶׁ֖ר	H0834		HTr
+GEN	1	7	מֵ	H9006	H5921	HR/R
+GEN	1	7	עַ֣ל	H5921	H5921	HR/R
+GEN	1	7	לָ	H9005		HRd/Ncmsa
+GEN	1	7	רָקִ֑יעַ	H7549		HRd/Ncmsa
+GEN	1	7	וַֽ/יְהִי\־	H9001	H1961	Hc/Vqw3ms
+GEN	1	7	כֵֽן\׃	H3651	H3651	HD
+GEN	1	8	וַ	H9001	H7121	Hc/Vqw3ms
+GEN	1	8	יִּקְרָ֧א	H7121	H7121	Hc/Vqw3ms
+GEN	1	8	אֱלֹהִ֛ים	H0430	H0430	HNcmpa
+GEN	1	8	לָֽ	H9005	H7549	HRd/Ncmsa
+GEN	1	8	רָקִ֖יעַ	H7549	H7549	HRd/Ncmsa
+GEN	1	8	שָׁמָ֑יִם	H8064	H8064	HNcmpa
+GEN	1	8	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	8	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	8	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	8	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	8	י֥וֹם	H3117	H3117	HNcmsa
+GEN	1	8	שֵׁנִֽי\׃\ \פ	H8145	H8145	HAomsa
+GEN	1	9	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	9	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	9	אֱלֹהִ֗ים	H0430	H0430	HNcmpa
+GEN	1	9	יִקָּו֨וּ	H6960	H6960	HVNi3mp
+GEN	1	9	הַ	H9009	H4325	HTd/Ncmpa
+GEN	1	9	מַּ֜יִם	H4325	H4325	HTd/Ncmpa
+GEN	1	9	מִ	H9006	H8478	HR/Ncmsc
+GEN	1	9	תַּ֤חַת	H8478	H8478	HR/Ncmsc
+GEN	1	9	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	9	שָּׁמַ֙יִם֙	H8064	H8064	HTd/Ncmpa
+GEN	1	9	אֶל\־	H0413	H0413	HR
+GEN	1	9	מָק֣וֹם	H4725	H4725	HNcmsa
+GEN	1	9	אֶחָ֔ד	H0259	H0259	HAcfsa
+GEN	1	9	וְ	H9002	H7200	HC/VNu3fs
+GEN	1	9	תֵרָאֶ֖ה	H7200	H7200	HC/VNu3fs
+GEN	1	9	הַ	H9009	H3004	HTd/Ncfsa
+GEN	1	9	יַּבָּשָׁ֑ה	H3004	H3004	HTd/Ncfsa
+GEN	1	9	וַֽ/יְהִי\־	H9001	H1961	Hc/Vqw3ms
+GEN	1	9	כֵֽן\׃	H3651	H3651	HD
+GEN	1	10	וַ	H9001		Hc/Vqw3ms
+GEN	1	10	יִּקְרָ֨א	H7121		Hc/Vqw3ms
+GEN	1	10	אֱלֹהִ֤ים\׀	H0430		HNcmpa
+GEN	1	10	לַ	H9005	H3004	HRd/Ncfsa
+GEN	1	10	יַּבָּשָׁה֙	H3004	H3004	HRd/Ncfsa
+GEN	1	10	אֶ֔רֶץ	H0776	H0776	HNcfsa
+GEN	1	10	וּ	H9002	H4723	HC/R/Ncmsc
+GEN	1	10	לְ	H9005	H4723	HC/R/Ncmsc
+GEN	1	10	מִקְוֵ֥ה	H4723	H4723	HC/R/Ncmsc
+GEN	1	10	הַ	H9009	H4325	HTd/Ncmpa
+GEN	1	10	מַּ֖יִם	H4325	H4325	HTd/Ncmpa
+GEN	1	10	קָרָ֣א	H7121		HVqp3ms
+GEN	1	10	יַמִּ֑ים	H3220	H3220	HNcmpa
+GEN	1	10	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	10	יַּ֥רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	10	אֱלֹהִ֖ים	H0430		HNcmpa
+GEN	1	10	כִּי\־	H3588	H3588	HTc
+GEN	1	10	טֽוֹב\׃	H2895	H2895	HVqp3ms
+GEN	1	11	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	11	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	11	אֱלֹהִ֗ים	H0430	H0430	HNcmpa
+GEN	1	11	תַּֽדְשֵׁ֤א	H1876	H1876	HVhj3fs
+GEN	1	11	הָ	H9009		HTd/Ncfsa
+GEN	1	11	אָ֙רֶץ֙	H0776		HTd/Ncfsa
+GEN	1	11	דֶּ֔שֶׁא	H1877	H1877	HNcmsa
+GEN	1	11	עֵ֚שֶׂב	H6212	H6212	HNcmsa
+GEN	1	11	מַזְרִ֣יעַ	H2232	H2232	HVhrmsa
+GEN	1	11	זֶ֔רַע	H2233		HNcmsa
+GEN	1	11	עֵ֣ץ	H6086	H6086	HNcmsc
+GEN	1	11	פְּרִ֞י	H6529		HNcmsa
+GEN	1	11	עֹ֤שֶׂה	H6213	H6213	HVqrmsa
+GEN	1	11	פְּרִי֙	H6529		HNcmsa
+GEN	1	11	לְ	H9005	H4327	HR/Ncmsc/Sp3ms
+GEN	1	11	מִינ֔	H4327	H4327	HR/Ncmsc/Sp3ms
+GEN	1	11	וֹ	H9023	H4327	HR/Ncmsc/Sp3ms
+GEN	1	11	אֲשֶׁ֥ר	H0834	H0834	HTr
+GEN	1	11	זַרְע/וֹ\־	H2233		HNcmsc/Sp3ms
+GEN	1	11	ב֖	H9003	H9033	HRd/Sp3ms
+GEN	1	11	וֹ	H9033	H9033	HRd/Sp3ms
+GEN	1	11	עַל\־	H5921	H5921	HR
+GEN	1	11	הָ	H9009		HTd/Ncfsa
+GEN	1	11	אָ֑רֶץ	H0776		HTd/Ncfsa
+GEN	1	11	וַֽ/יְהִי\־	H9001	H1961	Hc/Vqw3ms
+GEN	1	11	כֵֽן\׃	H3651	H3651	HD
+GEN	1	12	וַ	H9001	H3318	Hc/Vhw3fs
+GEN	1	12	תּוֹצֵ֨א	H3318	H3318	Hc/Vhw3fs
+GEN	1	12	הָ	H9009	H0776	HTd/Ncfsa
+GEN	1	12	אָ֜רֶץ	H0776	H0776	HTd/Ncfsa
+GEN	1	12	דֶּ֠שֶׁא	H1877	H1877	HNcmsa
+GEN	1	12	עֵ֣שֶׂב	H6212	H6212	HNcmsa
+GEN	1	12	מַזְרִ֤יעַ	H2232	H2232	HVhrmsa
+GEN	1	12	זֶ֙רַע֙	H2233		HNcmsa
+GEN	1	12	לְ	H9005		HR/Ncmsc/Sp3ms
+GEN	1	12	מִינֵ֔	H4327		HR/Ncmsc/Sp3ms
+GEN	1	12	הוּ	H9023		HR/Ncmsc/Sp3ms
+GEN	1	12	וְ	H9002	H6086	HC/Ncmsa
+GEN	1	12	עֵ֧ץ	H6086	H6086	HC/Ncmsa
+GEN	1	12	עֹֽשֶׂה\־	H6213	H6213	HVqrmsa
+GEN	1	12	פְּרִ֛י	H6529	H6529	HNcmsa
+GEN	1	12	אֲשֶׁ֥ר	H0834	H0834	HTr
+GEN	1	12	זַרְע/וֹ\־	H2233		HNcmsc/Sp3ms
+GEN	1	12	ב֖	H9003	H9033	HRd/Sp3ms
+GEN	1	12	וֹ	H9033	H9033	HRd/Sp3ms
+GEN	1	12	לְ	H9005		HR/Ncmsc/Sp3ms
+GEN	1	12	מִינֵ֑	H4327		HR/Ncmsc/Sp3ms
+GEN	1	12	הוּ	H9023		HR/Ncmsc/Sp3ms
+GEN	1	12	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	12	יַּ֥רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	12	אֱלֹהִ֖ים	H0430	H0430	HNcmpa
+GEN	1	12	כִּי\־	H3588	H3588	HTc
+GEN	1	12	טֽוֹב\׃	H2895	H2895	HVqp3ms
+GEN	1	13	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	13	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	13	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	13	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	13	י֥וֹם	H3117	H3117	HNcmsa
+GEN	1	13	שְׁלִישִֽׁי\׃\ \פ	H7992	H7992	HAomsa
+GEN	1	14	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	14	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	14	אֱלֹהִ֗ים	H0430	H0430	HNcmpa
+GEN	1	14	יְהִ֤י	H1961		HVqj3ms
+GEN	1	14	מְאֹרֹת֙	H3974	H3974	HNcmpa
+GEN	1	14	בִּ	H9003	H7549	HR/Ncmsc
+GEN	1	14	רְקִ֣יעַ	H7549	H7549	HR/Ncmsc
+GEN	1	14	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	14	שָּׁמַ֔יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	14	לְ	H9005	H0914	HR/Vhcc
+GEN	1	14	הַבְדִּ֕יל	H0914	H0914	HR/Vhcc
+GEN	1	14	בֵּ֥ין	H0996		HAcmsc
+GEN	1	14	הַ	H9009		HTd/Ncmsa
+GEN	1	14	יּ֖וֹם	H3117		HTd/Ncmsa
+GEN	1	14	וּ	H9002		HC/Acmsc
+GEN	1	14	בֵ֣ין	H0996		HC/Acmsc
+GEN	1	14	הַ	H9009	H3915	HTd/Ncmsa
+GEN	1	14	לָּ֑יְלָה	H3915	H3915	HTd/Ncmsa
+GEN	1	14	וְ	H9001		Hc/Vqq3cp
+GEN	1	14	הָי֤וּ	H1961		Hc/Vqq3cp
+GEN	1	14	לְ	H9005	H0226	HR/Ncfpa
+GEN	1	14	אֹתֹת֙	H0226	H0226	HR/Ncfpa
+GEN	1	14	וּ	H9002	H4150	HC/R/Ncmpa
+GEN	1	14	לְ	H9005	H4150	HC/R/Ncmpa
+GEN	1	14	מ֣וֹעֲדִ֔ים	H4150	H4150	HC/R/Ncmpa
+GEN	1	14	וּ	H9002		HC/R/Ncmpa
+GEN	1	14	לְ	H9005		HC/R/Ncmpa
+GEN	1	14	יָמִ֖ים	H3117		HC/R/Ncmpa
+GEN	1	14	וְ/שָׁנִֽים\׃	H9002	H8141	HC/Ncmpa
+GEN	1	15	וְ	H9001		Hc/Vqq3cp
+GEN	1	15	הָי֤וּ	H1961		Hc/Vqq3cp
+GEN	1	15	לִ	H9005	H3974	HR/Ncmpa
+GEN	1	15	מְאוֹרֹת֙	H3974	H3974	HR/Ncmpa
+GEN	1	15	בִּ	H9003	H7549	HR/Ncmsc
+GEN	1	15	רְקִ֣יעַ	H7549	H7549	HR/Ncmsc
+GEN	1	15	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	15	שָּׁמַ֔יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	15	לְ	H9005	H0215	HR/Vhcc
+GEN	1	15	הָאִ֖יר	H0215	H0215	HR/Vhcc
+GEN	1	15	עַל\־	H5921	H5921	HR
+GEN	1	15	הָ	H9009	H0776	HTd/Ncfsa
+GEN	1	15	אָ֑רֶץ	H0776	H0776	HTd/Ncfsa
+GEN	1	15	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	15	כֵֽן\׃	H3651	H3651	HD
+GEN	1	16	וַ	H9001	H6213	Hc/Vqw3ms
+GEN	1	16	יַּ֣עַשׂ	H6213	H6213	Hc/Vqw3ms
+GEN	1	16	אֱלֹהִ֔ים	H0430	H0430	HNcmpa
+GEN	1	16	אֶת\־	H0853		HTo
+GEN	1	16	שְׁנֵ֥י	H8147	H8147	HAcbdc
+GEN	1	16	הַ	H9009		HTd/Ncmpa
+GEN	1	16	מְּאֹרֹ֖ת	H3974		HTd/Ncmpa
+GEN	1	16	הַ	H9009		HTd/Aampa
+GEN	1	16	גְּדֹלִ֑ים	H1419		HTd/Aampa
+GEN	1	16	אֶת\־	H0853		HTo
+GEN	1	16	הַ	H9009		HTd/Ncmsa
+GEN	1	16	מָּא֤וֹר	H3974		HTd/Ncmsa
+GEN	1	16	הַ	H9009		HTd/Aamsa
+GEN	1	16	גָּדֹל֙	H1419		HTd/Aamsa
+GEN	1	16	לְ	H9005		HR/Ncfsc
+GEN	1	16	מֶמְשֶׁ֣לֶת	H4475		HR/Ncfsc
+GEN	1	16	הַ	H9009	H3117	HTd/Ncmsa
+GEN	1	16	יּ֔וֹם	H3117	H3117	HTd/Ncmsa
+GEN	1	16	וְ/אֶת\־	H9002		HC/To
+GEN	1	16	הַ	H9009		HTd/Ncmsa
+GEN	1	16	מָּא֤וֹר	H3974		HTd/Ncmsa
+GEN	1	16	הַ	H9009	H6996	HTd/Aamsa
+GEN	1	16	קָּטֹן֙	H6996	H6996	HTd/Aamsa
+GEN	1	16	לְ	H9005		HR/Ncfsc
+GEN	1	16	מֶמְשֶׁ֣לֶת	H4475		HR/Ncfsc
+GEN	1	16	הַ	H9009	H3915	HTd/Ncmsa
+GEN	1	16	לַּ֔יְלָה	H3915	H3915	HTd/Ncmsa
+GEN	1	16	וְ	H9002		HC/To
+GEN	1	16	אֵ֖ת	H0853		HC/To
+GEN	1	16	הַ/כּוֹכָבִֽים\׃	H9009	H3556	HTd/Ncmpa
+GEN	1	17	וַ	H9001	H5414	Hc/Vqw3ms
+GEN	1	17	יִּתֵּ֥ן	H5414	H5414	Hc/Vqw3ms
+GEN	1	17	אֹתָ֛	H0853	H0853	HTo/Sp3mp
+GEN	1	17	ם	H9038	H0853	HTo/Sp3mp
+GEN	1	17	אֱלֹהִ֖ים	H0430	H0430	HNcmpa
+GEN	1	17	בִּ	H9003	H7549	HR/Ncmsc
+GEN	1	17	רְקִ֣יעַ	H7549	H7549	HR/Ncmsc
+GEN	1	17	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	17	שָּׁמָ֑יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	17	לְ	H9005	H0215	HR/Vhcc
+GEN	1	17	הָאִ֖יר	H0215	H0215	HR/Vhcc
+GEN	1	17	עַל\־	H5921	H5921	HR
+GEN	1	17	הָ/אָֽרֶץ\׃	H9009	H0776	HTd/Ncfsa
+GEN	1	18	וְ	H9002	H4910	HC/R/Vqcc
+GEN	1	18	לִ	H9005	H4910	HC/R/Vqcc
+GEN	1	18	מְשֹׁל֙	H4910	H4910	HC/R/Vqcc
+GEN	1	18	בַּ	H9003	H3117	HRd/Ncmsa
+GEN	1	18	יּ֣וֹם	H3117	H3117	HRd/Ncmsa
+GEN	1	18	וּ	H9002	H3915	HC/Rd/Ncmsa
+GEN	1	18	בַ	H9003	H3915	HC/Rd/Ncmsa
+GEN	1	18	לַּ֔יְלָה	H3915	H3915	HC/Rd/Ncmsa
+GEN	1	18	וּֽ	H9002	H0914	HC/R/Vhcc
+GEN	1	18	לֲ	H9005	H0914	HC/R/Vhcc
+GEN	1	18	הַבְדִּ֔יל	H0914	H0914	HC/R/Vhcc
+GEN	1	18	בֵּ֥ין	H0996		HAcmsc
+GEN	1	18	הָ	H9009	H0216	HTd/Ncfsa
+GEN	1	18	א֖וֹר	H0216	H0216	HTd/Ncfsa
+GEN	1	18	וּ	H9002		HC/Acmsc
+GEN	1	18	בֵ֣ין	H0996		HC/Acmsc
+GEN	1	18	הַ	H9009	H2822	HTd/Ncmsa
+GEN	1	18	חֹ֑שֶׁךְ	H2822	H2822	HTd/Ncmsa
+GEN	1	18	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	18	יַּ֥רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	18	אֱלֹהִ֖ים	H0430	H0430	HNcmpa
+GEN	1	18	כִּי\־	H3588	H3588	HTc
+GEN	1	18	טֽוֹב\׃	H2895	H2895	HVqp3ms
+GEN	1	19	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	19	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	19	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	19	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	19	י֥וֹם	H3117	H3117	HNcmsa
+GEN	1	19	רְבִיעִֽי\׃\ \פ	H7243	H7243	HAomsa
+GEN	1	20	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	20	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	20	אֱלֹהִ֔ים	H0430	H0430	HNcmpa
+GEN	1	20	יִשְׁרְצ֣וּ	H8317	H8317	HVqi3mp
+GEN	1	20	הַ	H9009	H4325	HTd/Ncmpa
+GEN	1	20	מַּ֔יִם	H4325	H4325	HTd/Ncmpa
+GEN	1	20	שֶׁ֖רֶץ	H8318	H8318	HNcmsc
+GEN	1	20	נֶ֣פֶשׁ	H5315	H5315	HNcfsa
+GEN	1	20	חַיָּ֑ה	H2416	H2416	HAafsa
+GEN	1	20	וְ	H9002	H5775	HC/Ncmsa
+GEN	1	20	עוֹף֙	H5775	H5775	HC/Ncmsa
+GEN	1	20	יְעוֹפֵ֣ף	H5774	H5774	HVpi3ms
+GEN	1	20	עַל\־	H5921		HR
+GEN	1	20	הָ	H9009	H0776	HTd/Ncfsa
+GEN	1	20	אָ֔רֶץ	H0776	H0776	HTd/Ncfsa
+GEN	1	20	עַל\־	H5921		HR
+GEN	1	20	פְּנֵ֖י	H6440	H6440	HNcmpc
+GEN	1	20	רְקִ֥יעַ	H7549	H7549	HNcmsc
+GEN	1	20	הַ/שָּׁמָֽיִם\׃	H9009	H8064	HTd/Ncmpa
+GEN	1	21	וַ	H9001	H1254	Hc/Vqw3ms
+GEN	1	21	יִּבְרָ֣א	H1254	H1254	Hc/Vqw3ms
+GEN	1	21	אֱלֹהִ֔ים	H0430		HNcmpa
+GEN	1	21	אֶת\־	H0853		HTo
+GEN	1	21	הַ	H9009	H8577	HTd/Ncmpa
+GEN	1	21	תַּנִּינִ֖ם	H8577	H8577	HTd/Ncmpa
+GEN	1	21	הַ	H9009	H1419	HTd/Aampa
+GEN	1	21	גְּדֹלִ֑ים	H1419	H1419	HTd/Aampa
+GEN	1	21	וְ	H9002		HC/To
+GEN	1	21	אֵ֣ת	H0853		HC/To
+GEN	1	21	כָּל\־	H3605		HNcmsc
+GEN	1	21	נֶ֣פֶשׁ	H5315	H5315	HNcfsa
+GEN	1	21	הַֽ/חַיָּ֣ה\׀	H9009	H2416	HTd/Aafsa
+GEN	1	21	הָֽ	H9009	H7430	HTd/Vqrfsa
+GEN	1	21	רֹמֶ֡שֶׂת	H7430	H7430	HTd/Vqrfsa
+GEN	1	21	אֲשֶׁר֩	H0834	H0834	HTr
+GEN	1	21	שָׁרְצ֨וּ	H8317	H8317	HVqp3cp
+GEN	1	21	הַ	H9009	H4325	HTd/Ncmpa
+GEN	1	21	מַּ֜יִם	H4325	H4325	HTd/Ncmpa
+GEN	1	21	לְ	H9005		HR/Ncmsc/Sp3mp
+GEN	1	21	מִֽינֵ	H4327		HR/Ncmsc/Sp3mp
+GEN	1	21	הֶ֗ם	H9028		HR/Ncmsc/Sp3mp
+GEN	1	21	וְ	H9002		HC/To
+GEN	1	21	אֵ֨ת	H0853		HC/To
+GEN	1	21	כָּל\־	H3605		HNcmsc
+GEN	1	21	ע֤וֹף	H5775	H5775	HNcmsc
+GEN	1	21	כָּנָף֙	H3671	H3671	HNcfsa
+GEN	1	21	לְ	H9005		HR/Ncmsc/Sp3ms
+GEN	1	21	מִינֵ֔	H4327		HR/Ncmsc/Sp3ms
+GEN	1	21	הוּ	H9023		HR/Ncmsc/Sp3ms
+GEN	1	21	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	21	יַּ֥רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	21	אֱלֹהִ֖ים	H0430		HNcmpa
+GEN	1	21	כִּי\־	H3588	H3588	HTc
+GEN	1	21	טֽוֹב\׃	H2895	H2895	HVqp3ms
+GEN	1	22	וַ	H9001	H1288	Hc/Vpw3ms
+GEN	1	22	יְבָ֧רֶךְ	H1288	H1288	Hc/Vpw3ms
+GEN	1	22	אֹתָ֛	H0853		HTo/Sp3mp
+GEN	1	22	ם	H9038		HTo/Sp3mp
+GEN	1	22	אֱלֹהִ֖ים	H0430	H0430	HNcmpa
+GEN	1	22	לֵ	H9005	H0559	HR/Vqcc
+GEN	1	22	אמֹ֑ר	H0559	H0559	HR/Vqcc
+GEN	1	22	פְּר֣וּ	H6509	H6509	HVqv2mp
+GEN	1	22	וּ	H9002		HC/Vqv2mp
+GEN	1	22	רְב֗וּ	H7235		HC/Vqv2mp
+GEN	1	22	וּ	H9002	H4390	HC/Vqv2mp
+GEN	1	22	מִלְא֤וּ	H4390	H4390	HC/Vqv2mp
+GEN	1	22	אֶת\־	H0853		HTo
+GEN	1	22	הַ	H9009	H4325	HTd/Ncmpa
+GEN	1	22	מַּ֙יִם֙	H4325	H4325	HTd/Ncmpa
+GEN	1	22	בַּ	H9003	H3220	HRd/Ncmpa
+GEN	1	22	יַּמִּ֔ים	H3220	H3220	HRd/Ncmpa
+GEN	1	22	וְ	H9002	H5775	HC/Td/Ncmsa
+GEN	1	22	הָ	H9009	H5775	HC/Td/Ncmsa
+GEN	1	22	ע֖וֹף	H5775	H5775	HC/Td/Ncmsa
+GEN	1	22	יִ֥רֶב	H7235		HVqj3ms
+GEN	1	22	בָּ/אָֽרֶץ\׃	H9003	H0776	HRd/Ncfsa
+GEN	1	23	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	23	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	23	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	23	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	23	י֥וֹם	H3117	H3117	HNcmsa
+GEN	1	23	חֲמִישִֽׁי\׃\ \פ	H2549	H2549	HAomsa
+GEN	1	24	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	24	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	24	אֱלֹהִ֗ים	H0430	H0430	HNcmpa
+GEN	1	24	תּוֹצֵ֨א	H3318	H3318	HVhj3fs
+GEN	1	24	הָ	H9009		HTd/Ncfsa
+GEN	1	24	אָ֜רֶץ	H0776		HTd/Ncfsa
+GEN	1	24	נֶ֤פֶשׁ	H5315	H5315	HNcfsa
+GEN	1	24	חַיָּה֙	H2416		HAafsa
+GEN	1	24	לְ	H9005		HR/Ncmsc/Sp3fs
+GEN	1	24	מִינָ֔	H4327		HR/Ncmsc/Sp3fs
+GEN	1	24	הּ	H9024		HR/Ncmsc/Sp3fs
+GEN	1	24	בְּהֵמָ֥ה	H0929	H0929	HNcfsa
+GEN	1	24	וָ	H9002	H7431	HC/Ncmsa
+GEN	1	24	רֶ֛מֶשׂ	H7431	H7431	HC/Ncmsa
+GEN	1	24	וְ/חַֽיְתוֹ\־	H9002		HC/Ncfsc
+GEN	1	24	אֶ֖רֶץ	H0776		HNcfsa
+GEN	1	24	לְ	H9005		HR/Ncmsc/Sp3fs
+GEN	1	24	מִינָ֑	H4327		HR/Ncmsc/Sp3fs
+GEN	1	24	הּ	H9024		HR/Ncmsc/Sp3fs
+GEN	1	24	וַֽ/יְהִי\־	H9001	H1961	Hc/Vqw3ms
+GEN	1	24	כֵֽן\׃	H3651	H3651	HD
+GEN	1	25	וַ	H9001	H6213	Hc/Vqw3ms
+GEN	1	25	יַּ֣עַשׂ	H6213	H6213	Hc/Vqw3ms
+GEN	1	25	אֱלֹהִים֩	H0430		HNcmpa
+GEN	1	25	אֶת\־	H0853		HTo
+GEN	1	25	חַיַּ֨ת	H2416	H2416	HNcfsc
+GEN	1	25	הָ	H9009	H0776	HTd/Ncfsa
+GEN	1	25	אָ֜רֶץ	H0776	H0776	HTd/Ncfsa
+GEN	1	25	לְ	H9005		HR/Ncmsc/Sp3fs
+GEN	1	25	מִינָ֗	H4327		HR/Ncmsc/Sp3fs
+GEN	1	25	הּ	H9024		HR/Ncmsc/Sp3fs
+GEN	1	25	וְ/אֶת\־	H9002		HC/To
+GEN	1	25	הַ	H9009	H0929	HTd/Ncfsa
+GEN	1	25	בְּהֵמָה֙	H0929	H0929	HTd/Ncfsa
+GEN	1	25	לְ	H9005		HR/Ncmsc/Sp3fs
+GEN	1	25	מִינָ֔	H4327		HR/Ncmsc/Sp3fs
+GEN	1	25	הּ	H9024		HR/Ncmsc/Sp3fs
+GEN	1	25	וְ	H9002		HC/To
+GEN	1	25	אֵ֛ת	H0853		HC/To
+GEN	1	25	כָּל\־	H3605	H3605	HNcmsc
+GEN	1	25	רֶ֥מֶשׂ	H7431	H7431	HNcmsc
+GEN	1	25	הָֽ	H9009	H0127	HTd/Ncfsa
+GEN	1	25	אֲדָמָ֖ה	H0127	H0127	HTd/Ncfsa
+GEN	1	25	לְ	H9005		HR/Ncmsc/Sp3ms
+GEN	1	25	מִינֵ֑	H4327		HR/Ncmsc/Sp3ms
+GEN	1	25	הוּ	H9023		HR/Ncmsc/Sp3ms
+GEN	1	25	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	25	יַּ֥רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	25	אֱלֹהִ֖ים	H0430		HNcmpa
+GEN	1	25	כִּי\־	H3588	H3588	HTc
+GEN	1	25	טֽוֹב\׃	H2895	H2895	HVqp3ms
+GEN	1	26	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	26	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	26	אֱלֹהִ֔ים	H0430	H0430	HNcmpa
+GEN	1	26	נַֽעֲשֶׂ֥ה	H6213	H6213	HVqi1cp
+GEN	1	26	אָדָ֛ם	H0120	H0120	HNcmsa
+GEN	1	26	בְּ	H9003	H6754	HR/Ncmsc/Sp1bp
+GEN	1	26	צַלְמֵ֖	H6754	H6754	HR/Ncmsc/Sp1bp
+GEN	1	26	נוּ	H9025	H6754	HR/Ncmsc/Sp1bp
+GEN	1	26	כִּ	H9004	H1823	HR/Ncfsc/Sp1bp
+GEN	1	26	דְמוּתֵ֑	H1823	H1823	HR/Ncfsc/Sp1bp
+GEN	1	26	נוּ	H9025	H1823	HR/Ncfsc/Sp1bp
+GEN	1	26	וְ	H9002	H7287	HC/Vqu3mp
+GEN	1	26	יִרְדּוּ֩	H7287	H7287	HC/Vqu3mp
+GEN	1	26	בִ	H9003	H1710	HR/Ncfsc
+GEN	1	26	דְגַ֨ת	H1710	H1710	HR/Ncfsc
+GEN	1	26	הַ	H9009	H3220	HTd/Ncmsa
+GEN	1	26	יָּ֜ם	H3220	H3220	HTd/Ncmsa
+GEN	1	26	וּ	H9002	H5775	HC/R/Ncmsc
+GEN	1	26	בְ	H9003	H5775	HC/R/Ncmsc
+GEN	1	26	ע֣וֹף	H5775	H5775	HC/R/Ncmsc
+GEN	1	26	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	26	שָּׁמַ֗יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	26	וּ	H9002	H0929	HC/Rd/Ncfsa
+GEN	1	26	בַ	H9003	H0929	HC/Rd/Ncfsa
+GEN	1	26	בְּהֵמָה֙	H0929	H0929	HC/Rd/Ncfsa
+GEN	1	26	וּ/בְ/כָל\־	H9002		HC/R/Ncmsc
+GEN	1	26	הָ	H9009		HTd/Ncfsa
+GEN	1	26	אָ֔רֶץ	H0776		HTd/Ncfsa
+GEN	1	26	וּ/בְ/כָל\־	H9002		HC/R/Ncmsc
+GEN	1	26	הָ	H9009	H7431	HTd/Ncmsa
+GEN	1	26	רֶ֖מֶשׂ	H7431	H7431	HTd/Ncmsa
+GEN	1	26	הָֽ	H9009	H7430	HTd/Vqrmsa
+GEN	1	26	רֹמֵ֥שׂ	H7430	H7430	HTd/Vqrmsa
+GEN	1	26	עַל\־	H5921	H5921	HR
+GEN	1	26	הָ/אָֽרֶץ\׃	H9009		HTd/Ncfsa
+GEN	1	27	וַ	H9001		Hc/Vqw3ms
+GEN	1	27	יִּבְרָ֨א	H1254		Hc/Vqw3ms
+GEN	1	27	אֱלֹהִ֤ים\׀	H0430		HNcmpa
+GEN	1	27	אֶת\־	H0853		HTo
+GEN	1	27	הָֽ	H9009	H0120	HTd/Ncmsa
+GEN	1	27	אָדָם֙	H0120	H0120	HTd/Ncmsa
+GEN	1	27	בְּ	H9003		HR/Ncmsc/Sp3ms
+GEN	1	27	צַלְמ֔	H6754		HR/Ncmsc/Sp3ms
+GEN	1	27	וֹ	H9023		HR/Ncmsc/Sp3ms
+GEN	1	27	בְּ	H9003		HR/Ncmsc
+GEN	1	27	צֶ֥לֶם	H6754		HR/Ncmsc
+GEN	1	27	אֱלֹהִ֖ים	H0430		HNcmpa
+GEN	1	27	בָּרָ֣א	H1254		HVqp3ms
+GEN	1	27	אֹת֑	H0853		HTo/Sp3ms
+GEN	1	27	וֹ	H9033		HTo/Sp3ms
+GEN	1	27	זָכָ֥ר	H2145	H2145	HAamsa
+GEN	1	27	וּ	H9002	H5347	HC/Aafsa
+GEN	1	27	נְקֵבָ֖ה	H5347	H5347	HC/Aafsa
+GEN	1	27	בָּרָ֥א	H1254		HVqp3ms
+GEN	1	27	אֹתָֽ/ם\׃	H0853		HTo/Sp3mp
+GEN	1	28	וַ	H9001	H1288	Hc/Vpw3ms
+GEN	1	28	יְבָ֣רֶךְ	H1288	H1288	Hc/Vpw3ms
+GEN	1	28	אֹתָ	H0853		HTo/Sp3mp
+GEN	1	28	ם֮	H9038		HTo/Sp3mp
+GEN	1	28	אֱלֹהִים֒	H0430		HNcmpa
+GEN	1	28	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	28	יֹּ֨אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	28	לָ	H9005	H9038	HRd/Sp3mp
+GEN	1	28	הֶ֜ם	H9038	H9038	HRd/Sp3mp
+GEN	1	28	אֱלֹהִ֗ים	H0430		HNcmpa
+GEN	1	28	פְּר֥וּ	H6509	H6509	HVqv2mp
+GEN	1	28	וּ	H9002	H7235	HC/Vqv2mp
+GEN	1	28	רְב֛וּ	H7235	H7235	HC/Vqv2mp
+GEN	1	28	וּ	H9002	H4390	HC/Vqv2mp
+GEN	1	28	מִלְא֥וּ	H4390	H4390	HC/Vqv2mp
+GEN	1	28	אֶת\־	H0853		HTo
+GEN	1	28	הָ	H9009		HTd/Ncfsa
+GEN	1	28	אָ֖רֶץ	H0776		HTd/Ncfsa
+GEN	1	28	וְ	H9002	H3533	HC/Vqv2mp/Sp3fs
+GEN	1	28	כִבְשֻׁ֑	H3533	H3533	HC/Vqv2mp/Sp3fs
+GEN	1	28	הָ	H9034	H3533	HC/Vqv2mp/Sp3fs
+GEN	1	28	וּ	H9002	H7287	HC/Vqv2mp
+GEN	1	28	רְד֞וּ	H7287	H7287	HC/Vqv2mp
+GEN	1	28	בִּ	H9003	H1710	HR/Ncfsc
+GEN	1	28	דְגַ֤ת	H1710	H1710	HR/Ncfsc
+GEN	1	28	הַ	H9009	H3220	HTd/Ncmsa
+GEN	1	28	יָּם֙	H3220	H3220	HTd/Ncmsa
+GEN	1	28	וּ	H9002	H5775	HC/R/Ncmsc
+GEN	1	28	בְ	H9003	H5775	HC/R/Ncmsc
+GEN	1	28	ע֣וֹף	H5775	H5775	HC/R/Ncmsc
+GEN	1	28	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	28	שָּׁמַ֔יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	28	וּ/בְ/כָל\־	H9002	H3605	HC/R/Ncmsc
+GEN	1	28	חַיָּ֖ה	H2416	H2416	HNcfsa
+GEN	1	28	הָֽ	H9009	H7430	HTd/Vqrfsa
+GEN	1	28	רֹמֶ֥שֶׂת	H7430	H7430	HTd/Vqrfsa
+GEN	1	28	עַל\־	H5921	H5921	HR
+GEN	1	28	הָ/אָֽרֶץ\׃	H9009		HTd/Ncfsa
+GEN	1	29	וַ	H9001	H0559	Hc/Vqw3ms
+GEN	1	29	יֹּ֣אמֶר	H0559	H0559	Hc/Vqw3ms
+GEN	1	29	אֱלֹהִ֗ים	H0430	H0430	HNcmpa
+GEN	1	29	הִנֵּה֩	H2009	H2009	HTj
+GEN	1	29	נָתַ֨תִּי	H5414	H5414	HVqp1cs
+GEN	1	29	לָ	H9005		HRd/Sp2mp
+GEN	1	29	כֶ֜ם	H9036		HRd/Sp2mp
+GEN	1	29	אֶת\־	H0853		HTo
+GEN	1	29	כָּל\־	H3605		HNcmsc
+GEN	1	29	עֵ֣שֶׂב\׀	H6212	H6212	HNcmsa
+GEN	1	29	זֹרֵ֣עַ	H2232		HVqrmsa
+GEN	1	29	זֶ֗רַע	H2233		HNcmsa
+GEN	1	29	אֲשֶׁר֙	H0834		HTr
+GEN	1	29	עַל\־	H5921	H5921	HR
+GEN	1	29	פְּנֵ֣י	H6440	H6440	HNcmpc
+GEN	1	29	כָל\־	H3605		HNcmsc
+GEN	1	29	הָ	H9009	H0776	HTd/Ncfsa
+GEN	1	29	אָ֔רֶץ	H0776	H0776	HTd/Ncfsa
+GEN	1	29	וְ/אֶת\־	H9002		HC/To
+GEN	1	29	כָּל\־	H3605		HNcmsc
+GEN	1	29	הָ	H9009		HTd/Ncmsa
+GEN	1	29	עֵ֛ץ	H6086		HTd/Ncmsa
+GEN	1	29	אֲשֶׁר\־	H0834		HTr
+GEN	1	29	בּ֥	H9003	H9033	HRd/Sp3ms
+GEN	1	29	וֹ	H9033	H9033	HRd/Sp3ms
+GEN	1	29	פְרִי\־	H6529	H6529	HNcmsc
+GEN	1	29	עֵ֖ץ	H6086		HNcmsa
+GEN	1	29	זֹרֵ֣עַ	H2232		HVqrmsa
+GEN	1	29	זָ֑רַע	H2233		HNcmsa
+GEN	1	29	לָ	H9005		HRd/Sp2mp
+GEN	1	29	כֶ֥ם	H9036		HRd/Sp2mp
+GEN	1	29	יִֽהְיֶ֖ה	H1961	H1961	HVqi3ms
+GEN	1	29	לְ/אָכְלָֽה\׃	H9005	H0402	HR/Ncfsa
+GEN	1	30	וּֽ/לְ/כָל\־	H9002		HC/R/Ncmsc
+GEN	1	30	חַיַּ֣ת	H2416		HNcfsc
+GEN	1	30	הָ֠	H9009		HTd/Ncfsa
+GEN	1	30	אָרֶץ	H0776		HTd/Ncfsa
+GEN	1	30	וּ/לְ/כָל\־	H9002		HC/R/Ncmsc
+GEN	1	30	ע֨וֹף	H5775	H5775	HNcmsc
+GEN	1	30	הַ	H9009	H8064	HTd/Ncmpa
+GEN	1	30	שָּׁמַ֜יִם	H8064	H8064	HTd/Ncmpa
+GEN	1	30	וּ/לְ/כֹ֣ל\׀	H9002		HC/R/Ncmsc
+GEN	1	30	רוֹמֵ֣שׂ	H7430	H7430	HVqrmsa
+GEN	1	30	עַל\־	H5921	H5921	HR
+GEN	1	30	הָ	H9009		HTd/Ncfsa
+GEN	1	30	אָ֗רֶץ	H0776		HTd/Ncfsa
+GEN	1	30	אֲשֶׁר\־	H0834	H0834	HTr
+GEN	1	30	בּ	H9003	H9033	HRd/Sp3ms
+GEN	1	30	וֹ֙	H9033	H9033	HRd/Sp3ms
+GEN	1	30	נֶ֣פֶשׁ	H5315	H5315	HNcfsa
+GEN	1	30	חַיָּ֔ה	H2416		HAafsa
+GEN	1	30	אֶת\־	H0853	H0853	HTo
+GEN	1	30	כָּל\־	H3605		HNcmsc
+GEN	1	30	יֶ֥רֶק	H3418	H3418	HNcmsc
+GEN	1	30	עֵ֖שֶׂב	H6212	H6212	HNcmsa
+GEN	1	30	לְ	H9005	H0402	HR/Ncfsa
+GEN	1	30	אָכְלָ֑ה	H0402	H0402	HR/Ncfsa
+GEN	1	30	וַֽ/יְהִי\־	H9001	H1961	Hc/Vqw3ms
+GEN	1	30	כֵֽן\׃	H3651	H3651	HD
+GEN	1	31	וַ	H9001	H7200	Hc/Vqw3ms
+GEN	1	31	יַּ֤רְא	H7200	H7200	Hc/Vqw3ms
+GEN	1	31	אֱלֹהִים֙	H0430	H0430	HNcmpa
+GEN	1	31	אֶת\־	H0853	H0853	HTo
+GEN	1	31	כָּל\־	H3605	H3605	HNcmsa
+GEN	1	31	אֲשֶׁ֣ר	H0834	H0834	HTr
+GEN	1	31	עָשָׂ֔ה	H6213	H6213	HVqp3ms
+GEN	1	31	וְ/הִנֵּה\־	H9002	H2009	HC/Tj
+GEN	1	31	ט֖וֹב	H2896	H2896	HAamsa
+GEN	1	31	מְאֹ֑ד	H3966	H3966	HAcmsa
+GEN	1	31	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	31	עֶ֥רֶב	H6153	H6153	HNcmsa
+GEN	1	31	וַֽ/יְהִי\־	H9001		Hc/Vqw3ms
+GEN	1	31	בֹ֖קֶר	H1242	H1242	HNcmsa
+GEN	1	31	י֥וֹם	H3117	H3117	HNcmsc
+GEN	1	31	הַ/שִּׁשִּֽׁי\׃\ \פ	H9009	H8345	HTd/Aomsa
