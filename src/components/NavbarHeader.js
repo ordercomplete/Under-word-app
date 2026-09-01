@@ -15,6 +15,8 @@ import ModalLanguage from "../modals/ModalLanguage";
 import ModalFeedback from "../modals/ModalFeedback";
 import ModalAbout from "../modals/ModalAbout";
 import ModalAdmin from "../modals/ModalAdmin";
+import HistoryModal from "../modals/HistoryModal";
+import ModalFAQ from "../modals/ModalFAQ";
 import { useMediaQuery } from "react-responsive";
 import "../styles/NavbarHeader.css";
 
@@ -29,6 +31,8 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [showFAQModal, setShowFAQModal] = useState(false);
 
   const [allLangData, setAllLangData] = useState(null);
 
@@ -64,7 +68,12 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
   const IconLink = ({ icon, text, onClick, href, target }) => (
     <OverlayTrigger placement="bottom" overlay={<Tooltip>{text}</Tooltip>}>
       <Nav.Link
-        onClick={onClick}
+        onClick={(e) => {
+          if (href && onClick) {
+            e.preventDefault();
+          }
+          onClick?.();
+        }}
         href={href}
         target={target}
         className="d-flex align-items-center p-2"
@@ -118,7 +127,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
             <IconLink
               icon="bi-bookmark"
               text={lang.bookmarks}
-              onClick={() => alert(lang.developing)}
+              onClick={() => setShowHistoryModal(true)}
             />
             <IconLink
               icon="bi-fonts"
@@ -143,7 +152,7 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
             <IconLink
               icon="bi-question-circle"
               text={lang.faq}
-              onClick={() => alert(lang.developing)}
+              onClick={() => setShowFAQModal(true)}
             />
 
             <NavDropdown
@@ -207,6 +216,18 @@ const NavbarHeader = ({ lang, onLanguageChange }) => {
       <ModalAdmin
         isOpen={showAdminModal}
         onRequestClose={() => setShowAdminModal(false)}
+        lang={lang}
+      />
+
+      <HistoryModal
+        isOpen={showHistoryModal}
+        onRequestClose={() => setShowHistoryModal(false)}
+        lang={lang}
+      />
+
+      <ModalFAQ
+        isOpen={showFAQModal}
+        onRequestClose={() => setShowFAQModal(false)}
         lang={lang}
       />
     </Navbar>

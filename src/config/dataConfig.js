@@ -3,7 +3,12 @@ export const DATA_CONFIG = {
   // Автоматично визначаємо, чи використовувати скорочений формат
   useCompressed: () => {
     // У розробці - завжди використовуємо скорочений
-    if (process.env.NODE_ENV === "development") return true;
+    if (
+      typeof process !== "undefined" &&
+      process.env &&
+      process.env.NODE_ENV === "development"
+    )
+      return true;
 
     // У продакшені - перевіряємо, чи існує папка data_compressed
     // Можна зробити асинхронну перевірку

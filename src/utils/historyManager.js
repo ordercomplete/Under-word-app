@@ -603,9 +603,9 @@ class HistoryManager {
       if (!word || !origVer) return null;
 
       const entryId = `${origVer}:${word.strong || word.dict}:${Date.now()}`;
-      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
-        origVer.toUpperCase(),
-      );
+      const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+      const bible = bibles.find((b) => b.initials === origVer.toUpperCase());
+      const isOriginal = bible?.type === "original" || false;
 
       const entry = {
         id: entryId,
@@ -781,9 +781,9 @@ export const globalHistoryManager = {
       if (!word || !origVer) return null;
 
       // Визначаємо тип за версією
-      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
-        origVer.toUpperCase(),
-      );
+      const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+      const bible = bibles.find((b) => b.initials === origVer.toUpperCase());
+      const isOriginal = bible?.type === "original" || false;
       const type = isOriginal ? "strong" : "dictionary";
       const manager = this.getManager(type);
 
@@ -822,9 +822,9 @@ export const globalHistoryManager = {
       if (!word || !origVer) return null;
 
       const entryId = `${origVer}:${word.strong || word.dict}:${Date.now()}`;
-      const isOriginal = ["LXX", "THOT", "TR", "GNT"].includes(
-        origVer.toUpperCase(),
-      );
+      const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+      const bible = bibles.find((b) => b.initials === origVer.toUpperCase());
+      const isOriginal = bible?.type === "original" || false;
 
       const entry = {
         id: entryId,

@@ -1,0 +1,182 @@
+.history-modal-content {
+  max-width: 450px;
+  max-height: 70vh;
+  margin: 10vh auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1060;
+  position: relative;
+}
+
+.history-modal-content .modal-header {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-modal-content .modal-header h5 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.history-modal-content .modal-header .modal-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.history-modal-content .modal-body {
+  padding: 0.6rem 0.8rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.history-modal-content .modal-footer {
+  padding: 0.5rem 0.4rem;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.history-modal-content .modal-footer .btn {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.75rem;
+  white-space: normal;
+  text-align: center;
+  word-wrap: break-word;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.history-list {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.history-item {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  margin-bottom: 0.35rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.history-ref {
+  color: #212529;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.history-date {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.history-versions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.version-badge {
+  display: inline-block;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: #e7f3ff;
+  color: #0056b3;
+  border-radius: 3px;
+  border: 1px solid #b3d7ff;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+}
+
+.empty-history p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1055;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.modal.in {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .history-modal-content {
+    max-width: 95%;
+    margin: 5vh auto;
+  }
+
+  .history-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .history-date {
+    font-size: 0.8rem;
+  }
+}
+
+/* Заборона скролу на body коли відкрите модальне вікно */
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+}
+
+/* Прибираємо зовнішній скрол для модальних вікон */
+.modal-backdrop ~ .modal {
+  overflow-y: auto;
+  max-height: 90vh;
+}

@@ -79,10 +79,10 @@ export const getStrongPath = (strongCode) => {
 export const getWindowTypeByVersion = (origVer) => {
   if (!origVer) return "unknown";
 
-  const originalVersions = ["LXX", "THOT", "TR", "GNT"];
-  return originalVersions.includes(origVer.toUpperCase())
-    ? "original"
-    : "translation";
+  // Використовуємо глобальні дані translations.json або window.__TRANSLATIONS_DATA__
+  const bibles = window.__TRANSLATIONS_DATA__?.bibles || [];
+  const bible = bibles.find((b) => b.initials === origVer.toUpperCase());
+  return bible?.type === "original" ? "original" : "translation";
 };
 
 /**

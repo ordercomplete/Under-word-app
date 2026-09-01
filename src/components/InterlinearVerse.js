@@ -11,6 +11,7 @@ import "../styles/Interlinear.css";
 // import "../styles/PassagePage.css";
 import { jsonAdapter, getValue } from "../utils/jsonAdapter";
 import { logger } from "../utils/logger"; // Додати цей імпорт
+import translationUtils from "../utils/translationUtils";
 
 const InterlinearVerse = ({
   verseNum,
@@ -393,10 +394,7 @@ const InterlinearVerse = ({
   }, [pairs]);
 
   const isOriginalVersion = useCallback((version) => {
-    const upper = version.toUpperCase();
-    return (
-      upper === "LXX" || upper === "THOT" || upper === "TR" || upper === "GNT"
-    );
+    return translationUtils.isOriginalInitials(version);
   }, []);
 
   // ==================== ОПТИМІЗОВАНИЙ РЕНДЕРИНГ ====================
@@ -416,7 +414,7 @@ const InterlinearVerse = ({
       onMouseMove={handleMouseMove}
     >
       <div className="verse-content" data-verse={verseNum}>
-        <div className="verse-number">{verseNum}</div>
+        {/* <div className="verse-number">{verseNum}</div> */}
 
         {isFirstInChapter && (
           <div className="verse-headers verse-row">
@@ -438,6 +436,7 @@ const InterlinearVerse = ({
             ))}
           </div>
         )}
+        <div className="verse-number">{verseNum}</div>
 
         {wordBlocks.map((block) => (
           <div key={block.id} className="word-block">
