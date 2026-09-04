@@ -1,0 +1,30 @@
+﻿- ✅ План у `AGENT/skills/auto-restart-stream/PLAN-vercel-supervisor.md` — оновлено з результатами тестування
+- ✅ Тест пройдено: помилка виявлена → авторестарт → наступний запуск успішний
+
+### Вирішена проблема кодування:
+- Файл `.ps1` з українськими символами спочатку не парсився у Windows PowerShell 5.1 (читав як ANSI)
+- Вирішено: перезаписано у **UTF-8 з BOM** — тепер працює в обох PowerShell (5.1 та 7)
+
+
+---
+
+## Створення Vercel Error Tracker Hook + реорганізація логів
+
+**Час:** 22:18
+**Статус:** завершено ✅
+
+### Події сесії:
+- ✅ Створено `AGENT/hooks/vercel_error_tracker.py` — Python-хук для відстідковування помилок Vercel (за паттерном anti_loop.py)
+- ✅ Хук рахує послідовні помилки у вікні 5 хв, при досягненні порогу (3) — логує алерт
+- ✅ Перенесено `AGENT/logs/vercel-supervisor` → `AGENT/memories_agent/logs/vercel-supervisor`
+- ✅ Видалено порожню папку `AGENT/logs`
+- ✅ Оновлено шлях LogDir у `vercel-supervisor.ps1`
+- ✅ Збережено повну документацію в `AGENT/knowledge-base/history-check/BUG-vercel-ai-gateway.md`
+
+### Паттерн хука:
+- Аналогічно `anti_loop.py`: читає payload з stdin, перевіряє на патерни, веде state, логує події
+- Патерни Vercel: "Failed to create stream", "inference request failed", "giving up after", "ai-gateway.vercel.sh" тощо
+- Поріг: 3 послідовні помилки у вікні 5 хвилин
+
+---
+---

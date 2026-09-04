@@ -1,0 +1,3521 @@
+{
+    "version": "1.4.2",
+    "agent_name": "Comfy-smart-lady",
+    "source_root": "AGENT",
+    "update_check": {
+        "repo_url": "https://raw.githubusercontent.com/ordercomplete/Comfy-smart-lady-agent/main/agent_config/VERSION",
+        "git_url": "https://github.com/ordercomplete/Comfy-smart-lady-agent.git",
+        "mode": "notify",
+        "interval_hours": 24,
+        "timeout_seconds": 5
+    },
+    "files": {
+        ".gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "AGENT/.gitignore"
+            ]
+        },
+        "agents/Comfy-smart-lady.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/copilot-instructions.md"
+            ],
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        },
+        "skills/auto-restart-stream/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/auto-restart-stream/SKILL.md",
+                ".clinerules/skills/auto-restart-stream/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/auto-restart-stream/SKILL.md"
+        },
+        "skills/context-management/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/context-management/SKILL.md",
+                ".clinerules/skills/context-management/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/context-management/SKILL.md"
+        },
+        "skills/errors/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/errors/SKILL.md",
+                ".clinerules/skills/errors/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/errors/SKILL.md"
+        },
+        "skills/information-search/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/information-search/SKILL.md",
+                ".clinerules/skills/information-search/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/information-search/SKILL.md"
+        },
+        "skills/localization-qa/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/localization-qa/SKILL.md",
+                ".clinerules/skills/localization-qa/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/localization-qa/SKILL.md"
+        },
+        "skills/safe-edit/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/safe-edit/SKILL.md",
+                ".clinerules/skills/safe-edit/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/safe-edit/SKILL.md"
+        },
+        "skills/session-history/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/session-history/SKILL.md",
+                ".clinerules/skills/session-history/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/session-history/SKILL.md"
+        },
+        "skills/small-steps/SKILL.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/skills/small-steps/SKILL.md",
+                ".clinerules/skills/small-steps/SKILL.md"
+            ],
+            "source_ref": "${workspace}/AGENT/skills/small-steps/SKILL.md"
+        },
+        "hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                ".clinerules/hooks/Loops.json",
+                ".continue/hooks/Loops.json",
+                ".github/hooks/Loops.json"
+            ]
+        },
+        "plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                ".opencode/plugins/anti-loop.js"
+            ]
+        },
+        "plugin/startup.js": {
+            "action": "copy_full",
+            "target_paths": [
+                ".opencode/plugins/startup.js"
+            ]
+        },
+        "knowledge-base/README.md": {
+            "action": "stub",
+            "target_paths": [
+                ".github/knowledge-base/README.md",
+                ".clinerules/knowledge-base/README.md"
+            ],
+            "source_ref": "${workspace}/AGENT/knowledge-base/README.md"
+        }
+    },
+    "stub_files": {
+        ".opencode/agents/Comfy-smart-lady.md": {
+            "template": "templates/stub_agents.md",
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        },
+        ".clinerules/agents/Comfy-smart-lady.md": {
+            "template": "templates/stub_agents.md",
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        },
+        ".github/agents/Comfy-smart-lady.md": {
+            "template": "templates/stub_agents.md",
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        },
+        ".continue/agents/Comfy-smart-lady.md": {
+            "template": "templates/stub_agents.md",
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        },
+        ".agent/instructions.md": {
+            "template": "templates/stub_agents.md",
+            "source_ref": "${workspace}/AGENT/agents/Comfy-smart-lady.md"
+        }
+    },
+    "root_files": {
+        "opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "opencode.json"
+            ]
+        },
+        ".github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                ".github/.gitignore"
+            ]
+        },
+        ".clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                ".clinerules/.gitignore"
+            ]
+        },
+        ".continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                ".continue/.gitignore"
+            ]
+        },
+        "trash/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "trash/.gitignore"
+            ]
+        },
+        "trash/deletion_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "trash/deletion_log.md"
+            ]
+        },
+        "agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/.gitignore"
+            ]
+        },
+        "agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/README.md"
+            ]
+        },
+        "agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/VERSION"
+            ]
+        },
+        "agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/manifest.json"
+            ]
+        },
+        "agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_13-16-47.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_13-16-47.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_13-18-47.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_13-18-47.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_13-19-47.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_13-19-47.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_13-34-47.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_13-34-47.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_13-35-47.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_13-35-47.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_16-02-50.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_16-02-50.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_18-22-52.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_18-22-52.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_19-39-01.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_19-39-01.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_19-41-01.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_19-41-01.zip"
+            ]
+        },
+        "agent_config/backup-agent/AGENT_2026-09-02_20-33-38.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-agent/AGENT_2026-09-02_20-33-38.zip"
+            ]
+        },
+        "agent_config/backup-chat/test_backup_file.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/test_backup_file.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_13-50-03/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-18/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-26/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-22_20-35-59.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-26_15-34-33.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-26_15-36-32.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_12-43-58.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-39-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-45-45.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/Comfy-smart-lady_2026-08-28_15-53-15.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-29_14-17-52/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_17-42-11/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/backup-agent/AGENT_2026-08-31_18-30-24.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/backup-agent/AGENT_2026-08-31_18-30-24.zip"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/backup-agent/AGENT_2026-08-31_18-30-28.zip": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_19-45-42/agent_config/backup-agent/AGENT_2026-08-31_18-30-28.zip"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/_fix_indent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/_fix_indent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/cleanup_backup_agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/cleanup_backup_agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-08-31_23-58-02/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.agent/instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.agent/instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/vercel_error_tracker.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/hooks/vercel_error_tracker.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/vercel_error_tracker.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.continue/hooks/vercel_error_tracker.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/anti_loop.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/anti_loop.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/vercel_error_tracker.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/vercel_error_tracker.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/watch_agent_file.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/hooks/watch_agent_file.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/scripts/agent_startup.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/scripts/agent_startup.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/hooks/str.translate.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/hooks/str.translate.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/hooks/vercel_error_tracker.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/hooks/vercel_error_tracker.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/_fix_indent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/_fix_indent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/cleanup_backup_agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/cleanup_backup_agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-01_00-02-00/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.agent/instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.agent/instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/.opencode/plugin/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/.opencode/plugin/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/_fix_indent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/_fix_indent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/cleanup_backup_agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/cleanup_backup_agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_12-47-38/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/opencode.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/opencode.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.agent/instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.agent/instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.clinerules/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.continue/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/copilot-instructions.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/copilot-instructions.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/hooks/Loops.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/hooks/Loops.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/knowledge-base/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/knowledge-base/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/auto-restart-stream/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/auto-restart-stream/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/context-management/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/context-management/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/errors/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/errors/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/information-search/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/information-search/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/localization-qa/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/localization-qa/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/safe-edit/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/safe-edit/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/session-history/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/session-history/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/small-steps/SKILL.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.github/skills/small-steps/SKILL.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/agents/Comfy-smart-lady.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/agents/Comfy-smart-lady.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/plugins/anti-loop.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/plugins/anti-loop.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/plugins/startup.js": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/.opencode/plugins/startup.js"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/AGENT/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/AGENT/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/.gitignore": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/.gitignore"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/CHANGELOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/CHANGELOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/FINAL_STATUS.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/FINAL_STATUS.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/Install_Comfy-smart-lady-agent.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/Install_Comfy-smart-lady-agent.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/README.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/README.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/SCRIPTS_CATALOG.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/SCRIPTS_CATALOG.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/VERSION": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/VERSION"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/manifest-notes.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/manifest-notes.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/manifest.json": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/manifest.json"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/reinstall_log.md": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/reinstall_log.md"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/watcher_log.txt"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/_fix_indent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/_fix_indent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/cleanup_backup_agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/cleanup_backup_agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/backup-chat/backup_2026-09-02_13-17-00/agent_config/templates/watcher_log.txt"
+            ]
+        },
+        "agent_config/scripts/_fix_indent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/_fix_indent.py"
+            ]
+        },
+        "agent_config/scripts/cleanup_backup_agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/cleanup_backup_agent.py"
+            ]
+        },
+        "agent_config/scripts/delete_to_trash.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/delete_to_trash.py"
+            ]
+        },
+        "agent_config/scripts/install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/install.ps1"
+            ]
+        },
+        "agent_config/scripts/install.sh": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/install.sh"
+            ]
+        },
+        "agent_config/scripts/sync-agent.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/sync-agent.py"
+            ]
+        },
+        "agent_config/scripts/test_install.ps1": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/test_install.ps1"
+            ]
+        },
+        "agent_config/scripts/update-manifest.py": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/scripts/update-manifest.py"
+            ]
+        },
+        "agent_config/templates/watcher_log.txt": {
+            "action": "copy_full",
+            "target_paths": [
+                "agent_config/templates/watcher_log.txt"
+            ]
+        }
+    }
+}
