@@ -1,6 +1,0 @@
-# Локальний .gitignore .clinerules/ (дистрибутивні копії ядра Агента)
-__pycache__/
-*.pyc
-*.pyo
-*.log
-state/

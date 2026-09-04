@@ -1,0 +1,11 @@
+<!-- 🔴 INIT-GATE: DO NOT PROCEED WITHOUT READING THIS FILE FIRST -->
+<!-- TOOL_CALL_REQUIRED: read_files ${workspace}/AGENT/agents/Comfy-smart-lady.md -->
+<!-- THIS IS A HARD GATE — READ CANONICAL INSTRUCTIONS BEFORE ANY OTHER ACTION -->
+
+# Comfy-smart-lady — посилання на канонічні інструкції
+
+Після привітання прочитайте канонічний файл агента:
+
+`${workspace}/AGENT/agents/Comfy-smart-lady.md`
+
+Цей файл є stub-посиланням. Усі зміни до інструкцій вносяться тільки в канонічний файл у `AGENT/`.
